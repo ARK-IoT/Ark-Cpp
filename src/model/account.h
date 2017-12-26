@@ -6,7 +6,7 @@
 namespace ARK {
   namespace Model {
   
-    typedef struct Account {
+    struct Account {
       public:
         String username;
         String address;

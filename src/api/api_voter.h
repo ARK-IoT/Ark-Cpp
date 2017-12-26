@@ -3,11 +3,13 @@
 #ifndef api_voter_h
 #define api_voter_h
 
-#include "../models/voter.h"
+#include "../model/voter.h"
 
-namespace api_n {
-  namespace voter_n {
-    
+namespace ARK {
+  namespace API {
+    namespace voter_n {
+      
+    };
   };
 };
 
