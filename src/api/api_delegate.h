@@ -16,20 +16,16 @@ namespace ARK {
             long int count;
         };
         
-        struct DelegateSearchResult{
+        struct searchResult {
           public:
-            String username;
-            String address;
-            String publicKey;
-            long int vote;
-            long int producedblocks;
-            long int missedblocks;
+            bool success;
+            ARK::Model::Delegate delegates[];
         };
         
         struct searchResponse {
           public:
             bool success;
-            DelegateSearchResult delegates[];
+            ARK::Model::Delegate delegates[];
         };
         
         struct getVotersResponse{
@@ -38,8 +34,57 @@ namespace ARK {
             bool accounts;
         };
         
-      };
-      
+        struct getDelegateResponse {
+          public:
+            bool success;
+            ARK::Model::Delegate delegate;
+        };
+        
+        struct getDelegatesResponse {
+          public:
+            bool success;
+            ARK::Model::Delegate delegates[];
+        };
+        
+        struct addDelegateResponse {
+          public:
+            bool success;
+        };
+        
+        struct getFeeResponse {
+          public:
+            bool success;
+            long double fee;
+        };
+        
+        struct getForgedByAccountResponse {
+          public:
+            bool success;
+            long double fees;
+            long int rewards;
+            long int forged;
+        };
+        
+        struct getNextForgersResponse {
+          public:
+            bool success;
+            long int currentBlock;
+            int currentSlot;
+            ARK::Model::Delegate delegates[];
+        };
+        
+        struct enableForgingResponse {
+          public:
+            bool success;
+        };
+        
+
+        struct disableForgingResponse {
+          public:
+            bool success;
+        };
+        
+      };      
       
     };
   };

@@ -9,14 +9,6 @@ namespace ARK {
   namespace API { 
     namespace Account {
 
-      struct TopAccount {
-        public:
-          String address;
-          long double balance;
-          String publicKey;
-      };
-
-
       namespace accounts_cb {
 
         struct getBalanceResponse {
@@ -64,7 +56,7 @@ namespace ARK {
             Signature multisignatures[];
             Signature u_multisignatures [];
         };
-        struct getAccountResponse{
+        struct getAccountResponse {
           public:
             bool success;
             getAccountResponse_t getAccountResponse [];
@@ -75,20 +67,18 @@ namespace ARK {
             bool success; // Indicates whether or not errors occurred
         };
 
-        struct topAccountResponse_t {
-          public:
-            String address;
-            long double balance;
-            String publicKey;
-        };
         struct topResponse{
           public:
             bool success;
-            topAccountResponse_t accounts[];
+            struct TopAccount {
+            public:
+              String address;
+              long double balance;
+              String publicKey;
+            };
         };
 
       };
-
       
     };
   };

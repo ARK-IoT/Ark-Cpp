@@ -7,7 +7,7 @@
 
 namespace ARK {
   namespace API {
-    namespace voter_n {
+    namespace Voter {
       
     };
   };

@@ -8,7 +8,8 @@
 namespace ARK {
   namespace API {
 
-    
+    namespace Endpoints {
+
       /* Accounts */
       namespace Account {
         String getBalance_s = "/api/accounts/getBalance";
@@ -99,6 +100,8 @@ namespace ARK {
         String height_s = "/peer/height";
         String status_s = "/peer/status";
       };
+      
+    };
 
   };
 };
