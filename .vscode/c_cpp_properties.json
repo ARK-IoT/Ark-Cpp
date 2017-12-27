@@ -8,7 +8,7 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,
                 "path": [
-                    "/Users/simon/Documents/Arduino/hardware/esp8266com/esp8266/cores/esp8266"
+                    "/Users/$User/Documents/Arduino/hardware/esp8266com/esp8266/cores/esp8266"
                 ]
             },
             "intelliSenseMode": "clang-x64",
