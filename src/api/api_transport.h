@@ -3,15 +3,12 @@
 #ifndef api_transport_h
 #define api_transport_h
 
-// #include "../model/transport.h"
-
 namespace ARK {
   namespace API {
     namespace Transport {
 
-      namespace transport_cb {
 
-using namespace ARK::API::Helpers;
+      namespace transport_cb {
 
         struct statusResponse : virtual ARK::API::Helpers::Successable {
           public:
@@ -45,6 +42,7 @@ using namespace ARK::API::Helpers;
         };
 
       };
+      
       
     };
   };

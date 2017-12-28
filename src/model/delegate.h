@@ -17,8 +17,6 @@ namespace ARK {
         long int rate;
         double approval;
         double productivity;
-
-        // Delegate();
     };
 
   };
