@@ -11,9 +11,25 @@ namespace ARK {
 
 		class Manager {
 			public:
+
 				ARK::Model::Network network;
-				bool connected = false;
-				Manager();
+				bool isConnected = false;
+
+				Manager(ARK::Model::Network _network) {
+					network = _network;
+					isConnected = true;
+				};
+
+				bool disconnect() {
+					if (!isConnected) {
+						printf("Manager already disconnected from network");
+						return false;
+					}
+					network = ARK::Model::Network();
+					this->isConnected = false;
+					return !this->isConnected;
+				};
+
 		};
 		
 
@@ -22,22 +38,28 @@ namespace ARK {
 
 #endif
 
+
 /*
 Manager(ARK::Model::Network _network) {
-	connect(_network);
+	if (connect(_network) && this->network.nethash == _network.nethash)
+		printf("Manager connected");
 };
+
 bool connect(ARK::Model::Network _network) {
-	if (ARK::Model::isValid(_network)) {
-		network = _network;
-		connected = true;
-	}
-	return connected;
+	network = _network;
+	isConnected = true;
+	printf("Manager connected to network");
+	return this->isConnected;
 };
+
 bool disconnect() {
-	if (connected) {
-		network = ARK::Model::Network();
-		connected = false;
+	if (!isConnected) {
+		printf("Manager already disconnected from network");
+		return false;
 	}
-	return !connected;
+	network = ARK::Model::Network();
+	isConnected = false;
+	return !this->isConnected;
 };
+
 */

@@ -7,7 +7,6 @@
 #include "block.h"
 #include "currency.h"
 #include "delegate.h"
-#include "error.h"
 #include "network.h"
 #include "peer.h"
 #include "seed.h"

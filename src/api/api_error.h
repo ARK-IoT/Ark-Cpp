@@ -6,7 +6,11 @@
 namespace ARK {
   namespace API {
 
-    namespace Error {};
+    struct Error : virtual ARK::API::Helpers::Successable {
+      public:
+        bool success;
+        String error;
+    };
     
   };
 };

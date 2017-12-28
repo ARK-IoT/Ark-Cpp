@@ -24,20 +24,19 @@ namespace ARK {
           return false;
         };
         bool operator!=(Network*& rhs) const { return !(this == rhs); };
-
     };
 
     namespace Network_ADV {
       
 	    struct bip32_t {
-		    long pub; // base58 will have a prefix 'apub'
-		    long priv; // base58Priv will have a prefix 'apriv'
+		    long pub;         // base58 will have a prefix 'apub'
+		    long priv;        // base58Priv will have a prefix 'apriv'
 	    };
       struct network_t {
         const char* messagePrefix;
         bip32_t bip32;
-        long pubKeyHash; // Addresses will begin with 'A'
-        long wif; // Network prefix for wif generation
+        long pubKeyHash;  // Addresses will begin with 'A'
+        long wif;         // Network prefix for wif generation
       };
 
     };
@@ -48,20 +47,3 @@ namespace ARK {
 
 
 #endif
-
-
-
-/*
-namespace Network_ADV {
-	struct bip32_t {
-		long pub; // base58 will have a prefix 'apub'
-		long priv; // base58Priv will have a prefix 'apriv'
-	};
-	struct network_t {
-		const char* messagePrefix;
-		bip32_t bip32;
-		long pubKeyHash; // Addresses will begin with 'A'
-		long wif; // Network prefix for wif generation
-	};
-};
-*/
