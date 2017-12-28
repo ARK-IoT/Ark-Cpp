@@ -7,20 +7,18 @@ namespace ARK {
   namespace API {
     namespace Signature {
 
+
       namespace signature_cb {
 
-        struct feeResponse {
+        struct feeResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long int fee;
         };
 
-        struct addSignatureResponse {
-          public:
-            bool success;
-        };
+        struct addSignatureResponse : virtual ARK::API::Helpers::Successable {};
 
       };
+      
       
     };
   };

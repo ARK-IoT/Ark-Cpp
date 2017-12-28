@@ -21,6 +21,8 @@ namespace ARK {
         String signature;
         asset_t asset;
         long int confirmations;
+
+        Transaction();
     };
 
   };

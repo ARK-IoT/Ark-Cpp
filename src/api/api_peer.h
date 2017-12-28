@@ -3,34 +3,31 @@
 #ifndef api_peer_h
 #define api_peer_h
     
-#include "../model/peer.h"
-
 namespace ARK {
   namespace API {
     namespace Peer {
 
+
       namespace peer_cb {
     
-        struct getPeerResponse {
+        struct getPeerResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Peer peer;
         };
         
-        struct getPeersResponse {
+        struct getPeersResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Peer peers[];
         };
         
-        struct versionResponse {
+        struct versionResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             String version;
             String build;
         };    
 
       };
+      
         
     };
   };

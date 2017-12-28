@@ -3,42 +3,31 @@
 #ifndef api_transaction_h
 #define api_transaction_h
 
-#include "../model/transaction.h"
-
 namespace ARK {
   namespace API {
     namespace Transaction {
         
+
       namespace transaction_cb {
         
-        struct TransactionsGetTransactionResponse {
+        struct getTransactionResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Transaction transaction;
         };
           
-        struct TransactionsGetTransactionsResponse {
+        struct getTransactionsResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Transaction transactions[];
         };
         
-        struct TransactionsAddTransactionsResponse {
-          public:
-            bool success;
-        };
+        struct addTransactionsResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransactionsGetUnconfirmedTransactionResponse {
-          public:
-            bool success;
-        };
+        struct getUnconfirmedTransactionResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransactionsGetUnconfirmedTransactionsResponse {
-          public:
-            bool success;
-        };
+        struct getUnconfirmedTransactionsResponse : virtual ARK::API::Helpers::Successable {};
           
       };
+
 
     };
   };

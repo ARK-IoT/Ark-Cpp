@@ -16,6 +16,16 @@ namespace ARK {
         String height;
         String status;
         double delay;
+
+        Peer();
+    };
+
+    struct Seed {
+      const char* nethash;
+      byte peers;
+      int port;
+
+      Seed();
     };
 
   };

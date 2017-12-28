@@ -3,7 +3,7 @@
 #ifndef api_transport_h
 #define api_transport_h
 
-#include "../model/transport.h"
+// #include "../model/transport.h"
 
 namespace ARK {
   namespace API {
@@ -11,54 +11,35 @@ namespace ARK {
 
       namespace transport_cb {
 
-        struct TransportStatusResponse {
+using namespace ARK::API::Helpers;
+
+        struct statusResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;  
             long int height;
             bool forgingAllowed;
             int currentSlot;
             ARK::Model::TransportPeerHeader header;
         };
         
-        struct TransportListBroadcastPeersResponse {
+        struct listBroadcastPeersResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Peer peers[];
         };
         
-        struct TransportCommonBlockResponse{
-          public:
-            bool success;
-        };
+        struct commonBlockResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransportGetBlockResponse{
-          public:
-            bool success;
-        };
+        struct getBlockResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransportGetBlocksResponse{
-          public:
-            bool success;
-        };
+        struct getBlocksResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransportGetTransactionsResponse{
-          public:
-            bool success;
-        };
+        struct getTransactionsResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransportAddTransactionsResponse{
-          public:
-            bool success;
-        };
+        struct addTransactionsResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransportTransactionsFromIdsResponse {
-          public:
-            bool success;
-        };
+        struct transactionsFromIdsResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct TransportHeightResponse{
+        struct heightResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success; 
             long int height;
             ARK::Model::TransportPeerHeader header;
         };

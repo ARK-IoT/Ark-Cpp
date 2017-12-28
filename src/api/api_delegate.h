@@ -1,90 +1,71 @@
 
 #ifndef api_delegate_h
 #define api_delegate_h
-
-#include "../model/delegate.h"
     
 namespace ARK {
   namespace API {
     namespace Delegate {
 
+
       namespace delegates_cb {
         
-        struct countResponse {
+        struct countResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long int count;
         };
         
-        struct searchResult {
+        struct searchResult : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Delegate delegates[];
         };
         
-        struct searchResponse {
+        struct searchResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Delegate delegates[];
         };
         
-        struct getVotersResponse{
+        struct getVotersResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             bool accounts;
         };
         
-        struct getDelegateResponse {
+        struct getDelegateResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Delegate delegate;
         };
         
-        struct getDelegatesResponse {
+        struct getDelegatesResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Delegate delegates[];
         };
         
-        struct addDelegateResponse {
-          public:
-            bool success;
-        };
+        struct addDelegateResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct getFeeResponse {
+        struct getFeeResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long double fee;
         };
         
-        struct getForgedByAccountResponse {
+        struct getForgedByAccountResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long double fees;
             long int rewards;
             long int forged;
         };
         
-        struct getNextForgersResponse {
+        struct getNextForgersResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long int currentBlock;
             int currentSlot;
             ARK::Model::Delegate delegates[];
         };
         
-        struct enableForgingResponse {
-          public:
-            bool success;
-        };
+        struct enableForgingResponse : virtual ARK::API::Helpers::Successable {};
         
-
-        struct disableForgingResponse {
-          public:
-            bool success;
-        };
+        struct disableForgingResponse : virtual ARK::API::Helpers::Successable {};
         
       };      
+      
       
     };
   };

@@ -3,40 +3,35 @@
 #ifndef api_account_h
 #define api_account_h
 
-#include "api_model.h"
-
 namespace ARK {
   namespace API { 
     namespace Account {
 
+
       namespace accounts_cb {
 
-        struct getBalanceResponse {
+        struct getBalanceResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long double balance;
             long double unconfirmedBalance;
         };
         
-        struct getPublickeyResponse {
+        struct getPublickeyResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             String publicKey;
         };
 
-        struct getDelegatesFeeResponse {
+        struct getDelegatesFeeResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long double fee;
         };
         
-        struct getDelegatesResponse {
+        struct getDelegatesResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             ARK::Model::Delegate delegates[];
         };
 
-        struct addDelegatesResponse{
+        struct addDelegatesResponse {
           public:
             String secret;
             String publicKey;
@@ -56,29 +51,25 @@ namespace ARK {
             Signature multisignatures[];
             Signature u_multisignatures [];
         };
-        struct getAccountResponse {
+        struct getAccountResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             getAccountResponse_t getAccountResponse [];
         };
 
-        struct getAllAccountsResponse {
+        struct getAllAccountsResponse :virtual ARK::API::Helpers::Successable {};// whether or not errors occurred
+        
+        struct topResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success; // Indicates whether or not errors occurred
-        };
-
-        struct topResponse{
-          public:
-            bool success;
             struct TopAccount {
-            public:
-              String address;
-              long double balance;
-              String publicKey;
+              public:
+                String address;
+                long double balance;
+                String publicKey;
             };
         };
 
       };
+      
       
     };
   };

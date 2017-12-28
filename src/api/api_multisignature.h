@@ -7,30 +7,22 @@ namespace ARK {
   namespace API {
     namespace MultiSignature {
 
+
       namespace multisignature_cb {
 
-        struct pendingResponse {
+        struct pendingResponse : virtual ARK::API::Helpers::Successable {
           public:
-            bool success;
             long int fee;
         };
 
-        struct signResponse {
-          public:
-            bool success;
-        };
+        struct signResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct addMultisignatureResponse {
-          public:
-            bool success;
-        };
+        struct addMultisignatureResponse : virtual ARK::API::Helpers::Successable {};
         
-        struct getAccountsResponse {
-          public:
-            bool success;
-        };
+        struct getAccountsResponse : virtual ARK::API::Helpers::Successable {};
 
       };
+
 
     };
   };
