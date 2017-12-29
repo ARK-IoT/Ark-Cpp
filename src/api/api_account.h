@@ -7,7 +7,6 @@ namespace ARK {
   namespace API { 
     namespace Account {
 
-
       namespace accounts_cb {
 
         struct getBalanceResponse : virtual ARK::API::Helpers::Successable {

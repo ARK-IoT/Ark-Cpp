@@ -18,7 +18,9 @@ namespace ARK {
 
           ARK::Model::Network network;
           String networkPeer;
+          ARK::Model::NetworkType netType;
 
+          Manager() {};
           Manager(ARK::Model::Network _network) {
             connect(_network);
           };
@@ -45,7 +47,6 @@ namespace ARK {
 
 
         private:
-          ARK::Model::NetworkType netType;
           bool isConnected = false;
 
           String randomPeer() {

@@ -4,6 +4,8 @@
 #define api_model_h
 
 #include "../model/model.h"
+#include "../utilities/utilities.h"
+
 #include "api_helpers.h"
 
 #include "api_account.h"
