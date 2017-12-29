@@ -6,9 +6,11 @@
 namespace ARK {
   namespace Model {
     
+    enum NetworkType { DEV, MAIN };
+
     struct Network {
       public:
-        String nethash;
+        const char* nethash;
         String token;
         String symbol;
         String explorer;
