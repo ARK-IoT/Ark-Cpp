@@ -20,7 +20,12 @@ namespace ARK {
           String networkPeer;
           ARK::Model::NetworkType netType;
 
-          Manager() {};
+          Manager() {
+            network = ARK::Model::Network();
+            networkPeer = "";
+            netType = ARK::Model::NetworkType();
+          };
+
           Manager(ARK::Model::Network _network) {
             connect(_network);
           };

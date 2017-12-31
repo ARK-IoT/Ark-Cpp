@@ -14,22 +14,35 @@ namespace ARK {
 
       public:
 
-        API_Manager();
+        API_Manager() {
+          ARK::Model::Network _network;
+          this->connect(_network);
+        };
 
         API_Manager(ARK::Model::Network _network) {          
-          this->connectNetwork(_network);
+          this->connect(_network);
+        };
+
+        void connect(ARK::Model::Network _network) {
+          this->netManager = ARK::Utilities::Network::Manager(_network);
+          this->networkPeer = netManager.networkPeer;
         };
 
 
+        String networkPeer;
+
+
         String getBalance(String _arkAddress) {
-          String basepoint = netManager.networkPeer + ARK::API::Endpoints::Account::getBalance_s;
+          String basepoint = this->networkPeer + ARK::API::Endpoints::Account::getBalance_s;
           String address = "?address=" + _arkAddress;
+
+
           return basepoint + address;
         };
 
         String getPublickey(String _arkAddress) {
 
-          String basepoint = netManager.networkPeer + ARK::API::Endpoints::Account::getPublickey_s;
+          String basepoint = this->networkPeer + ARK::API::Endpoints::Account::getPublickey_s;
           String address = "?address=" + _arkAddress;
           return basepoint + address;
         };
@@ -67,9 +80,9 @@ namespace ARK {
 
         ARK::Utilities::Network::Manager netManager;
 
-        void connectNetwork(ARK::Model::Network _network) {
-          this->netManager = ARK::Utilities::Network::Manager(_network);
-        };
+
+
+
 
     };
 
