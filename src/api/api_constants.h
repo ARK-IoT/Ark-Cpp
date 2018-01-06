@@ -15,8 +15,8 @@ namespace ARK {
         const String delegatesFee_s = "/api/accounts/delegates/fee";
         const String delegates_s = "/api/accounts/delegates";
         const String accounts_s = "/api/accounts";
-        const String top_s = "/api/accounts/top";
       };
+      
       /* Blocks */  
       namespace Block {
         const String get_s = "/api/blocks/get"; //using ID

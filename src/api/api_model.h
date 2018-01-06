@@ -7,6 +7,7 @@
 #include "../utilities/utilities.h"
 
 #include "api_helpers.h"
+#include "api_constants.h"
 
 #include "api_account.h"
 #include "api_block.h"

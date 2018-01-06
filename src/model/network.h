@@ -6,7 +6,7 @@
 namespace ARK {
   namespace Model {
     
-    enum NetworkType { DEV, MAIN };
+    enum NetworkType { DEV, MAIN, CUSTOM };
 
     struct Network {
       public:

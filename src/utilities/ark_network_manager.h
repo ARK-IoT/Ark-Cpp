@@ -41,31 +41,44 @@ namespace ARK {
               netType = ARK::Model::NetworkType::MAIN;
             this->network = _network;
             this->setNetworkPeer(this->randomPeer());
-            this->isConnected = true;
+            this->isReachable = true;
+          };
+
+          void connectCustom(ARK::Model::Network _network, String _peer, int _port) {
+            this->netType = ARK::Model::NetworkType::CUSTOM;
+            this->network = _network;
+            this->networkPeer = _peer;
+            this->networkPort = _port;
+            this->isReachable = true;
           };
 
           bool disconnect() {
-            if (!this->isConnected) {
+            if (!this->isReachable) {
               return false;
             }
             network = ARK::Model::Network();
             this->networkPeer = "";
-            this->isConnected = false;
-            return !this->isConnected;
+            this->isReachable = false;
+            return !this->isReachable;
           };
 
           String cb(String _request) {
             HTTPClient http;
+            http.setReuse(true);
             http.begin(this->networkPeer, this->networkPort, _request);
+              delay(500);
             int httpCode = http.GET();
-            if (httpCode > 0 && httpCode == HTTP_CODE_OK) {
-              return http.getString(); 
-            }
-            return "Error: Connection to Peer could not be established";
+              delay(500);
+            this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
+            switch (this->isReachable) {
+              case true: return http.getString(); break;
+              default: return "Error: Connection to Peer could not be established";
+            };
           };
           
         private:
-          bool isConnected = false;
+
+          bool isReachable = false;
 
           String randomPeer() {
             if (this->netType == ARK::Model::NetworkType::DEV)

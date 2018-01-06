@@ -28,73 +28,72 @@ namespace ARK {
 
 
 
+          /*  /api/accounts/getBalance?address=arkAddress */
+          String getBalance(String _arkAddress)
+          { return ARK::API::Account::getBalance(this->netManager, _arkAddress); };
 
-        /*  /api/accounts/getBalance?address=arkAddress */
-        String getBalance(String _arkAddress) {
-          String uri = ARK::API::Endpoints::Account::getBalance_s;
-            uri += "?address=" + _arkAddress;
-          String callback = this->netManager.cb(uri);
-          if (callback.indexOf("false") >= 0)
-            return callback;
-          return ARK::API::Account::getBalancefromJSON(callback);
-        };
+          /*  /api/accounts/getPublickey?address=arkAddress */
+          String getPublickey(String _arkAddress)
+          { return ARK::API::Account::getPublickey(this->netManager, _arkAddress); };
 
+          /*  /api/accounts/delegates/fee?address=arkAddress  */
+          String delegatesFee(String _arkAddress)
+          { return ARK::API::Account::delegatesFee(this->netManager, _arkAddress); };
 
-        /*  /api/accounts/getPublickey?address=arkAddress */
-        String getPublickey(String _arkAddress) {
-          String uri = ARK::API::Endpoints::Account::getPublickey_s;
-            uri += "?address=" + _arkAddress;
-          String callback = this->netManager.cb(uri);
-          if (callback.indexOf("false") >= 0)
-            return callback;
-          return ARK::API::Account::getPublickeyfromJSON(callback);
-        };
+          /*  /api/accounts/delegates?address=arkAddress  */
+          String delegates(String _arkAddress)
+          { return ARK::API::Account::delegates(this->netManager, _arkAddress); };
+
+          /*  /api/accounts?address=arkAddress  */
+          String accounts(String _arkAddress)
+          { return ARK::API::Account::accounts(this->netManager, _arkAddress); };
 
 
-        /*  /api/accounts/delegates/fee?address=arkAddress  */
-        String delegatesFee(String _arkAddress) {
-          String uri = ARK::API::Endpoints::Account::delegatesFee_s;
-            uri += "?address=" + _arkAddress;
-          String callback = this->netManager.cb(uri);
-          if (callback.indexOf("false") >= 0)
-            return callback;
-          return ARK::API::Account::getDelegatesFeefromJSON(callback);
-        };
 
+      // Delegate:
+      //   const String count_s = "/api/delegates/count";
+      //   const String search_s = "/api/delegates/search";
+      //   const String voters_s = "/api/delegates/voters";
+      //   const String get_s = "/api/delegates/get";
+      //   const String delegates_s = "/api/delegates";
+      //   const String fee_s = "/api/delegates/fee";
+      //   const String getForgedByAccount_s = "/api/delegates/forging/getForgedByAccount";
+      //   const String getNextForgers_s = "/api/delegates/getNextForgers";
 
-        /*  /api/accounts/delegates?address=arkAddress  */
-        String delegates(String _arkAddress) {
-          String uri = ARK::API::Endpoints::Account::delegates_s;
-            uri += "?address=" + _arkAddress;
-          String callback = this->netManager.cb(uri);
-          if (callback.indexOf("false") >= 0)
-            return callback;
-          return ARK::API::Account::getDelegatesfromJSON(callback);
-        };
+      // Loader:
+      //   const String status_s = "/api/loader/status";
+      //   const String sync_s = "/api/loader/status/sync";
+      //   const String autoconfigure_s = "/api/loader/autoconfigure";
 
+      // Peer:
+      //   const String get_s = "/api/peers/get";
+      //   const String peers_s = "/api/peers";
+      //   const String version_s = "/api/peers/version";
 
-        /*  /api/accounts?address=arkAddress  */
-        String accounts(String _arkAddress) {
-          String uri = ARK::API::Endpoints::Account::accounts_s;
-            uri += "?address=" + _arkAddress;
-          String callback = this->netManager.cb(uri);
-          if (callback.indexOf("false") >= 0)
-            return callback;
-          return ARK::API::Account::getAccountfromJSON(callback);
-        };
+      // Signatures:
+      //   const String fee_s = "/api/signatures/fee";
 
+      // MultiSignatures:
+      //   const String pending_s = "/api/multisignatures/pending";
+      //   const String accounts_s = "/api/multisignatures/accounts";
 
-        /**/
-        String top(int _limit = 0, int _offset = 0) {
-          if (this->netManager.network.nethash != ARK::Constants::Networks::Mainnet::nethash)
-            return "Only available on Mainnet";
-          String basepoint = this->netManager.networkPeer + ARK::API::Endpoints::Account::top_s;
-          if (_limit + _offset == 0)
-            return basepoint;
-          String limit = String("?") + "limit=" + String(_limit);
-          String offset = String("&") + "offset=" + String(_offset);
-          return basepoint + limit + offset;
-        };
+      // Transaction:
+      //   const String getSingle_s = "/api/transactions/get";
+      //   const String transactions_s = "/api/transactions";
+      //   const String getSingleUnconfirmed_s = "/api/transactions/unconfirmed/get"; //
+      //   const String unconfirmed_s = "/api/transactions/unconfirmed";
+
+      // Transport:
+      //   const String list_s = "/peer/list";
+      //   const String common_s = "/peer/blocks/common";
+      //   const String block_s = "/peer/block";
+      //   const String blocks_s = "/peer/blocks";
+      //   const String transactions_s = "/peer/transactions";
+      //   const String transactionsPost_s = "/peer/transactions"; // post
+      //   const String transactionsFromIds_s = "/peer/transactionsFromIds";
+      //   const String height_s = "/peer/height";
+      //   const String status_s = "/peer/status";
+
 
       private:
 
