@@ -19,10 +19,34 @@ namespace ARK {
         String recipientId;
         String senderPublicKey;
         String signature;
-        asset_t asset;
+        String asset;
         long int confirmations;
 
-        Transaction();
+        Transaction(  String _id,
+                      long int _blockid,
+                      int _type,
+                      long int _timestamp,
+                      long double _amount,
+                      long double _fee,
+                      String _senderId,
+                      String _recipientId,
+                      String _senderPublicKey,
+                      String _signature,
+                      String _asset,
+                      long int _confirmations ) {
+          this->id = _id;
+          this->blockid = _blockid;
+          this->type = _type;
+          this->timestamp = _timestamp;
+          this->amount = _amount;
+          this->fee = _fee;
+          this->senderId = _senderId;
+          this->recipientId = _recipientId;
+          this->senderPublicKey = _senderPublicKey;
+          this->signature = _signature;
+          this->asset = _asset;
+          this->confirmations = _confirmations;
+        };
     };
 
   };

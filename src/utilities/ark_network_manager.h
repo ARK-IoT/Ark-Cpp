@@ -3,6 +3,9 @@
 #ifndef ark_network_manager_h
 #define ark_network_manager_h
 
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+
 namespace ARK {
   namespace Utilities {
     namespace Network {
@@ -18,6 +21,7 @@ namespace ARK {
 
           ARK::Model::Network network;
           String networkPeer;
+          int networkPort;
           ARK::Model::NetworkType netType;
 
           Manager() {
@@ -50,7 +54,16 @@ namespace ARK {
             return !this->isConnected;
           };
 
-
+          String cb(String _request) {
+            HTTPClient http;
+            http.begin(this->networkPeer, this->networkPort, _request);
+            int httpCode = http.GET();
+            if (httpCode > 0 && httpCode == HTTP_CODE_OK) {
+              return http.getString(); 
+            }
+            return "Error: Connection to Peer could not be established";
+          };
+          
         private:
           bool isConnected = false;
 
@@ -63,12 +76,11 @@ namespace ARK {
           };
 
           void setNetworkPeer(String _peer) {
-            String p = ":";
             if (this->netType == ARK::Model::NetworkType::DEV)
-              p.concat(ARK::Constants::Networks::Devnet::port);
+              this->networkPort = ARK::Constants::Networks::Devnet::port;
             if (this->netType == ARK::Model::NetworkType::MAIN)
-              p.concat(ARK::Constants::Networks::Mainnet::port);
-            this->networkPeer = _peer + p;
+              this->networkPort = ARK::Constants::Networks::Mainnet::port;
+            this->networkPeer = _peer;
           };
 
       };
