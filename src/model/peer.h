@@ -4,7 +4,7 @@
 #define peer_h
 
 namespace ARK {
-  namespace Model {
+  // namespace Model {
     
 
     struct Peer {
@@ -20,7 +20,7 @@ namespace ARK {
     };
 
 
-  };
+  // };
 };
 
 #endif

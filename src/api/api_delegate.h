@@ -9,8 +9,7 @@ namespace ARK {
 
       
 
-
-
+    
 
       namespace delegates_cb {
         
@@ -21,12 +20,12 @@ namespace ARK {
         
         struct searchResult : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Delegate delegates[];
+            ARK::Delegate delegates[];
         };
         
         struct searchResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Delegate delegates[];
+            ARK::Delegate delegates[];
         };
         
         struct getVotersResponse : virtual ARK::API::Helpers::Successable {
@@ -36,12 +35,12 @@ namespace ARK {
         
         struct getDelegateResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Delegate delegate;
+            ARK::Delegate delegate;
         };
         
         struct getDelegatesResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Delegate delegates[];
+            ARK::Delegate delegates[];
         };
         
         struct addDelegateResponse : virtual ARK::API::Helpers::Successable {};
@@ -62,7 +61,7 @@ namespace ARK {
           public:
             long int currentBlock;
             int currentSlot;
-            ARK::Model::Delegate delegates[];
+            ARK::Delegate delegates[];
         };
         
         struct enableForgingResponse : virtual ARK::API::Helpers::Successable {};

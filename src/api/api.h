@@ -14,15 +14,15 @@ namespace ARK {
       public:
 
         API_Manager() {
-          ARK::Model::Network _network;
+          ARK::Network _network;
           this->connect(_network);
         };
 
-        API_Manager(ARK::Model::Network _network) {          
+        API_Manager(ARK::Network _network) {          
           this->connect(_network);
         };
 
-        void connect(ARK::Model::Network _network) {
+        void connect(ARK::Network _network) {
           this->netManager = ARK::Utilities::Network::Manager(_network);
         };
 

@@ -4,7 +4,7 @@
 #define voter_h
 
 namespace ARK {
-  namespace Model {
+  // namespace Model { API???
     
     struct Voter {
       public:
@@ -14,7 +14,7 @@ namespace ARK {
         long double balance;
     };
 
-  };
+  // };
 };
 
 #endif

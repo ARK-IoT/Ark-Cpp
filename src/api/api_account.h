@@ -95,7 +95,7 @@ namespace ARK {
           String endStr = "}]}";
             int endIndex = _jsonStr.indexOf(endStr); 
 
-          ARK::Model::Delegate delegate = {
+          ARK::Delegate delegate = {
             _jsonStr.substring(usernameIndex + usernameStrLength, addressIndex),
             _jsonStr.substring(addressIndex + addressStrLength, publicKeyIndex),
             _jsonStr.substring(publicKeyIndex + publicKeyStrLength, voteIndex),
@@ -106,7 +106,7 @@ namespace ARK {
             _jsonStr.substring(approvalIndex + approvalStrLength, productivityIndex).toFloat(),
             _jsonStr.substring(productivityIndex + productivityStrLength, endIndex).toFloat()
           };
-
+  
           return delegate.getDescription();
         };
 
@@ -157,7 +157,7 @@ namespace ARK {
           String endStr = "}}";
             int endIndex = _jsonStr.indexOf(endStr);   
 
-          ARK::Model::Account account = {
+          ARK::Account account = {
             _jsonStr.substring(addressIndex + addressStrLength, unconfirmedBalanceIndex),
             _jsonStr.substring(unconfirmedBalanceIndex + unconfirmedBalanceStrLength, balanceIndex),
             _jsonStr.substring(balanceIndex + balanceStrLength, publicKeyIndex),

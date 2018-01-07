@@ -27,7 +27,7 @@ namespace ARK {
 
         struct autoconfigureResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Network network;
+            ARK::Network network;
         };
 
       };

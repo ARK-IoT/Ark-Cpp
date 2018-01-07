@@ -12,12 +12,12 @@ namespace ARK {
         
         struct getBlockResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Block block;
+            ARK::Block block;
         };
       
         struct getBlocksResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Block blocks[];
+            ARK::Block blocks[];
         };
       
         struct getEpochResponse : virtual ARK::API::Helpers::Successable {

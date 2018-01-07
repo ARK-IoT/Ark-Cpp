@@ -13,7 +13,7 @@ namespace ARK {
 			namespace Devnet {
 
 				/*	TEST
-					ARK::Model::Network devnet = ARK::Constants::Networks::Devnet::model;
+					ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
 					ARK::API::Manager mngr(devnet);
 					Serial.println(mngr.network.nethash);
 					Serial.println(mngr.network.token);
@@ -41,7 +41,7 @@ namespace ARK {
 				/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
 				String randomPeer() { return seeds[random(0,4)]; };
 
-				ARK::Model::Network model {
+				ARK::Network model {
 					nethash,
 					"DARK",
 					"DѦ",
@@ -55,7 +55,7 @@ namespace ARK {
 			namespace Mainnet {
 
 								/*	TEST
-					ARK::Model::Network mainnet = ARK::Constants::Networks::Mainnet::model;
+					ARK::Network mainnet = ARK::Constants::Networks::Mainnet::model;
 					ARK::API::Manager mngr(mainnet);
 					Serial.println(mngr.network.nethash);
 					Serial.println(mngr.network.token);
@@ -94,7 +94,7 @@ namespace ARK {
 				/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
 				String randomPeer() { return seeds[random(0, 45)]; };
 
-				ARK::Model::Network model {
+				ARK::Network model {
 					nethash,
 					"ARK",
 					"Ѧ",
@@ -110,7 +110,7 @@ namespace ARK {
 		
 		namespace Network_ADV  {
 
-			ARK::Model::Network_ADV::network_t devnet {
+			ARK::Network_ADV::network_t devnet {
 				"\x18 Ark Devnet Signed message:\n",
 				{
 					0x43587CF, //<-hex dec: 70617039,
@@ -120,7 +120,7 @@ namespace ARK {
 				0xBB //<-hex dec: 187
 			};
 
-			ARK::Model::Network_ADV::network_t main {
+			ARK::Network_ADV::network_t main {
 				" \x18 Ark Signed Message: \n",
 				{
 					0x2bf4968, // base58 will have a prefix 'apub'
@@ -130,7 +130,7 @@ namespace ARK {
 				0xaa // Network prefix for wif generation
 			};
 
-			ARK::Model::Network_ADV::network_t testnet {
+			ARK::Network_ADV::network_t testnet {
 				"\x18 Ark Testnet Signed Message:\n",
 				{
 					0x043587cf,
@@ -140,7 +140,7 @@ namespace ARK {
 				0xba // Network prefix for wif generation
 			};
 
-			ARK::Model::Network_ADV::network_t bitcoin {
+			ARK::Network_ADV::network_t bitcoin {
 				"\x18 Bitcoin Signed Message:\n",
 				{
 					0x0488b21e,

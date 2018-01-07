@@ -12,12 +12,12 @@ namespace ARK {
     
         struct getPeerResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Peer peer;
+            ARK::Peer peer;
         };
         
         struct getPeersResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Peer peers[];
+            ARK::Peer peers[];
         };
         
         struct versionResponse : virtual ARK::API::Helpers::Successable {

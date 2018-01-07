@@ -15,12 +15,12 @@ namespace ARK {
             long int height;
             bool forgingAllowed;
             int currentSlot;
-            ARK::Model::TransportPeerHeader header;
+            ARK::TransportPeerHeader header;
         };
         
         struct listBroadcastPeersResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Peer peers[];
+            ARK::Peer peers[];
         };
         
         struct commonBlockResponse : virtual ARK::API::Helpers::Successable {};
@@ -38,7 +38,7 @@ namespace ARK {
         struct heightResponse : virtual ARK::API::Helpers::Successable {
           public:
             long int height;
-            ARK::Model::TransportPeerHeader header;
+            ARK::TransportPeerHeader header;
         };
 
       };

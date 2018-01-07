@@ -12,12 +12,12 @@ namespace ARK {
         
         struct getTransactionResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Transaction transaction;
+            ARK::Transaction transaction;
         };
           
         struct getTransactionsResponse : virtual ARK::API::Helpers::Successable {
           public:
-            ARK::Model::Transaction transactions[];
+            ARK::Transaction transactions[];
         };
         
         struct addTransactionsResponse : virtual ARK::API::Helpers::Successable {};

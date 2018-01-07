@@ -11,7 +11,7 @@ namespace ARK {
     namespace Network {
 
       /*
-        ARK::Model::Network mainnet = ARK::Constants::Networks::Mainnet::model;
+        ARK::Network mainnet = ARK::Constants::Networks::Mainnet::model;
         ARK::Utilities::Network::Manager manager(mainnet);
         const char* manager.network.nethash;
         String manager.networkPeer;
@@ -19,33 +19,33 @@ namespace ARK {
       class Manager {
         public:
 
-          ARK::Model::Network network;
+          ARK::Network network;
           String networkPeer;
           int networkPort;
-          ARK::Model::NetworkType netType;
+          ARK::NetworkType netType;
 
           Manager() {
-            network = ARK::Model::Network();
+            network = ARK::Network();
             networkPeer = "";
-            netType = ARK::Model::NetworkType();
+            netType = ARK::NetworkType();
           };
 
-          Manager(ARK::Model::Network _network) {
+          Manager(ARK::Network _network) {
             connect(_network);
           };
 
-          void connect(ARK::Model::Network _network) {
+          void connect(ARK::Network _network) {
             if (_network.nethash == ARK::Constants::Networks::Devnet::nethash)
-              netType = ARK::Model::NetworkType::DEV;
+              netType = ARK::NetworkType::DEV;
             if (_network.nethash == ARK::Constants::Networks::Mainnet::nethash)
-              netType = ARK::Model::NetworkType::MAIN;
+              netType = ARK::NetworkType::MAIN;
             this->network = _network;
             this->setNetworkPeer(this->randomPeer());
             this->isReachable = true;
           };
 
-          void connectCustom(ARK::Model::Network _network, String _peer, int _port) {
-            this->netType = ARK::Model::NetworkType::CUSTOM;
+          void connectCustom(ARK::Network _network, String _peer, int _port) {
+            this->netType = ARK::NetworkType::CUSTOM;
             this->network = _network;
             this->networkPeer = _peer;
             this->networkPort = _port;
@@ -56,7 +56,7 @@ namespace ARK {
             if (!this->isReachable) {
               return false;
             }
-            network = ARK::Model::Network();
+            network = ARK::Network();
             this->networkPeer = "";
             this->isReachable = false;
             return !this->isReachable;
@@ -81,17 +81,17 @@ namespace ARK {
           bool isReachable = false;
 
           String randomPeer() {
-            if (this->netType == ARK::Model::NetworkType::DEV)
+            if (this->netType == ARK::NetworkType::DEV)
               return ARK::Constants::Networks::Devnet::randomPeer();
-            if (this->netType == ARK::Model::NetworkType::MAIN)
+            if (this->netType == ARK::NetworkType::MAIN)
               return ARK::Constants::Networks::Mainnet::randomPeer();
             return "Error: Nethash does not match ARK::Constants";
           };
 
           void setNetworkPeer(String _peer) {
-            if (this->netType == ARK::Model::NetworkType::DEV)
+            if (this->netType == ARK::NetworkType::DEV)
               this->networkPort = ARK::Constants::Networks::Devnet::port;
-            if (this->netType == ARK::Model::NetworkType::MAIN)
+            if (this->netType == ARK::NetworkType::MAIN)
               this->networkPort = ARK::Constants::Networks::Mainnet::port;
             this->networkPeer = _peer;
           };

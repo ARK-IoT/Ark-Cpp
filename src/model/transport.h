@@ -4,7 +4,6 @@
 #define transport_h
 
 namespace ARK {
-  namespace Model {
     
     struct TransportPeerHeader {
       public:
@@ -23,7 +22,6 @@ namespace ARK {
         String blockSignature;
     }; 
 
-  };
 };
 
 #endif
