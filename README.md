@@ -42,3 +42,9 @@ It will be changing quite a bit before a final release version.
     - [ ] add ripemd160
     - [ ] add base58
     - [ ] add Signing and Address generation.
+
+
+- [ ] Needs Fixed
+  - [ ] Stack Network Calls
+  - [ ] Handle Array Values in Callback
+  - [ ] Handle Large Callback Strings 
