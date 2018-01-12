@@ -9,11 +9,42 @@ namespace ARK {
 
   struct Network {
     public:
-      const char* nethash;
+      String nethash;
       String token;
       String symbol;
       String explorer;
-      String version;
+      int version;
+
+      Network() {
+        this->nethash = "";
+        this->token = "";
+        this->symbol = "";
+        this->explorer = "";
+        this->version = 0;
+      };
+
+      Network(String _nethash, String _token, String _symbol, String _explorer, int _version) {
+        this->nethash = _nethash;
+        this->token = _token;
+        this->symbol = _symbol;
+        this->explorer = _explorer;
+        this->version = _version;
+      };
+
+      String description() {
+        String resp;
+          resp += "nethash: ";
+            resp += this->nethash; resp += "\n";           
+          resp += "token: ";
+            resp += this->token; resp += "\n";
+          resp += "symbol: ";
+            resp += this->symbol; resp += "\n";
+          resp += "explorer: ";
+            resp += this->explorer; resp += "\n";
+          resp += "version: ";
+            resp += this->version; resp += "\n";
+        return resp;
+      };
 
       bool operator==(Network*& rhs) const {
         if (this->nethash==rhs->nethash

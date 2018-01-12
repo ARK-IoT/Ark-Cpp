@@ -1,0 +1,65 @@
+
+
+#ifndef api_multisignatures_h
+#define api_multisignatures_h
+
+namespace ARK {
+  namespace API {
+    namespace MultiSignatures {
+
+        // const String pending_s = "/api/multisignatures/pending";
+        // const String accounts_s = "/api/multisignatures/accounts";
+      namespace Get {
+
+
+
+        /*  {"success":true,"transactions":[]}  */
+        String pendingfromJSON(String _jsonStr) {
+          ARK::Utilities::JSONString jString(_jsonStr);
+          return jString.valueFor("transactions");
+        };
+        /*  /api/multisignatures/pending?publicKey=  */
+        String pending(ARK::Utilities::Network::Manager _netManager, String _publicKey) {
+          String uri = ARK::API::Endpoints::MultiSignatures::pending_s;
+            uri += "?publicKey=";
+            uri += _publicKey;
+          String callback = _netManager.cb(uri);
+          if (callback.indexOf("false") >= 0)
+            return callback;
+          return ARK::API::MultiSignatures::Get::pendingfromJSON(callback);
+        };
+
+
+        /*  ???  */
+        String accountsfromJSON(String _jsonStr) {
+          ARK::Utilities::JSONString jString(_jsonStr);
+          return jString.valueFor("??");
+        };
+        /*  /api/multisignatures/accounts?publicKey=  */
+        String accounts(ARK::Utilities::Network::Manager _netManager, String _publicKey) {
+          String uri = ARK::API::Endpoints::MultiSignatures::accounts_s;
+            uri += "?publicKey=";
+            uri += _publicKey;
+          String callback = _netManager.cb(uri);
+          if (callback.indexOf("false") >= 0)
+            return callback;
+          return ARK::API::MultiSignatures::Get::accountsfromJSON(callback);
+        };
+
+
+      };
+
+      namespace multisignature_cb {
+
+        struct signResponse : virtual ARK::API::Helpers::Successable {};
+        
+        struct addMultisignatureResponse : virtual ARK::API::Helpers::Successable {};
+        
+      };
+
+
+    };
+  };
+};
+
+#endif

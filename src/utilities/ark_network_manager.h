@@ -62,18 +62,23 @@ namespace ARK {
             return !this->isReachable;
           };
 
+
+/* needs stream->string size fix for large callbacks */
           String cb(String _request) {
             HTTPClient http;
             http.setReuse(true);
+            http.setTimeout(5000);
             http.begin(this->networkPeer, this->networkPort, _request);
               delay(500);
+
+            // while (!http.connected()) { delay(1000); Serial.println("waiting for HTTP connection.."); };
+
             int httpCode = http.GET();
-              delay(500);
             this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
             switch (this->isReachable) {
-              case true: return http.getString(); break;
+              case true: return http.getStreamPtr()->readString(); break;
               default: return "Error: Connection to Peer could not be established";
-            };
+            }
           };
           
         private:

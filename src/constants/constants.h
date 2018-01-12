@@ -6,7 +6,6 @@
 #include "../model/model.h"
 
 #include "const_currencies.h"
-#include "const_fees.h"
 #include "const_networks.h"
 
 #endif

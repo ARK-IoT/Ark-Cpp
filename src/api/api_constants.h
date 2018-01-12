@@ -67,7 +67,7 @@ namespace ARK {
       namespace Transaction {
         const String getSingle_s = "/api/transactions/get";
         const String transactions_s = "/api/transactions";
-        const String getSingleUnconfirmed_s = "/api/transactions/unconfirmed/get"; //
+        const String getSingleUnconfirmed_s = "/api/transactions/unconfirmed/get";
         const String unconfirmed_s = "/api/transactions/unconfirmed";
       };
       /* Transport */

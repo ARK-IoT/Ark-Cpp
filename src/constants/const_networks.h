@@ -26,7 +26,7 @@ namespace ARK {
 						DARK
 						DѦ
 						https://dexplorer.ark.io/
-						1.1.0
+						30
 					==============
 				*/
 
@@ -46,7 +46,7 @@ namespace ARK {
 					"DARK",
 					"DѦ",
 					"https://dexplorer.ark.io/",
-					"1.1.0"
+					30
 				};
 
 			};
@@ -68,7 +68,7 @@ namespace ARK {
 						ARK
 						Ѧ
 						https://explorer.ark.io/
-						1.0.2
+						23
 					==============
 				*/
 
@@ -99,7 +99,7 @@ namespace ARK {
 					"ARK",
 					"Ѧ",
 					"https://explorer.ark.io/",
-					"1.0.2"
+					23
 				};
 
 			};
