@@ -12,8 +12,9 @@ namespace ARK {
       {
           if (sub.length() == 0) return 0;
           int count = 0;
-          for (size_t offset = str.indexOf(sub); offset != std::string::npos;
-        offset = str.indexOf(sub, offset + sub.length()))
+          for ( size_t offset = str.indexOf(sub);
+                offset != std::string::npos;
+                offset = str.indexOf(sub, offset + sub.length()))
           {
             ++count;
           }

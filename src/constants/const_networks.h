@@ -31,15 +31,16 @@ namespace ARK {
 				*/
 
 				const char* nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
-				String seeds[5] {
-					/*"167.114.29.51",*/ "167.114.29.52",
-					"167.114.29.53", /*"167.114.29.54",*/
-					"167.114.29.55"
+				String seeds[1] {
+					// /*"167.114.29.51",*/ /*"167.114.29.52",*/
+					// "167.114.29.53", /*"167.114.29.54",*/
+					// "167.114.29.55",
+					"35.202.169.237"
 				};
 				int port = 4002;
 
 				/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-				String randomPeer() { return seeds[random(0,4)]; };
+				String randomPeer() { return seeds[random(0,1)]; };
 
 				ARK::Network model {
 					nethash,

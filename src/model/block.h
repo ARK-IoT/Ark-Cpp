@@ -7,29 +7,30 @@ namespace ARK {
   
 	struct Block {
 		public:
-			int id;
+			String id;
 			int version;
-			int timestamp;
-			int height;
-			int previousBlock;
-			int numberOfTransactions;
-			int totalAmount;
-			int totalFee;
-			int reward;
-			int intpayloadLength;
+			String timestamp;
+			String height;
+			String previousBlock;
+			String numberOfTransactions;
+			String totalAmount;
+			String totalFee;
+			String reward;
+			String intpayloadLength;
 			String payloadHash;
 			String generatorPublicKey;
 			String generatorId;
 			String blockSignature;
-			int confirmations;
-			int totalForged;
+			String confirmations;
+			String totalForged;
 
 			Block();
-			Block(int, int, int, int, int, int, int, int, int, int, String, String, String, String, int, int);
+			Block(String, int, String, String, String, String, String, String, String, String, String, String, String, String, String, String);
 
 			String description();
 
-			struct getStatusResponse;
+			struct BlockStatusResponse;
+			struct BlockHeightResponse;
 
 	};
 
@@ -53,45 +54,48 @@ namespace ARK {
 
 	};
 
+
+
+
 };
 
 
 ARK::Block::Block() {
-  id = 0;
+  id = "";
   version = 0;
-  timestamp = 0;
-  height = 0;
-  previousBlock = 0;
-  numberOfTransactions = 0;
-  totalAmount = 0;
-  totalFee = 0;
-  reward = 0;
-  intpayloadLength = 0;
+  timestamp = "";
+  height = "";
+  previousBlock = "";
+  numberOfTransactions = "";
+  totalAmount = "";
+  totalFee = "";
+  reward = "";
+  intpayloadLength = "";
   payloadHash = "";
   generatorPublicKey = "";
   generatorId = "";
   blockSignature = "";
-  confirmations = 0;
-  totalForged = 0;
+  confirmations = "";
+  totalForged = "";
 }
 
 ARK::Block::Block (
-	int _id,
+	String _id,
 	int _version,
-	int _timestamp,
-	int _height,
-	int _previousBlock,
-	int _numberOfTransactions,
-	int _totalAmount,
-	int _totalFee,
-	int _reward,
-	int _intpayloadLength,
+	String _timestamp,
+	String _height,
+	String _previousBlock,
+	String _numberOfTransactions,
+	String _totalAmount,
+	String _totalFee,
+	String _reward,
+	String _intpayloadLength,
 	String _payloadHash,
 	String _generatorPublicKey,
 	String _generatorId,
 	String _blockSignature,
-	int _confirmations,
-	int _totalForged) :
+	String _confirmations,
+	String _totalForged) :
 		id(_id),
 		version(_version),
 		timestamp(_timestamp),
@@ -108,7 +112,6 @@ ARK::Block::Block (
 		blockSignature(_blockSignature),
 		confirmations(_confirmations),
 		totalForged(_totalForged) {}
-
 
 String ARK::Block::Block::description() {
   String resp;
@@ -143,7 +146,7 @@ String ARK::Block::Block::description() {
 		resp += "confirmations: ";
 			resp += this->confirmations; resp += "\n";
 		resp += "totalForged: ";
-			resp += this->totalForged; resp += "\n";
+			resp += this->totalForged;
   return resp;
 }
 
@@ -151,42 +154,38 @@ String ARK::Block::Block::description() {
 
 
 
-struct ARK::Block::Block::getStatusResponse {
+struct ARK::Block::Block::BlockStatusResponse {
 	public:
 		String epoch;
-		int height;
-		int fee;
+		String height;
+		String fee;
 		int milestone;
 		String nethash;
-		int reward;
-		int supply;
-
-		getStatusResponse();
-		getStatusResponse(String, int, int, int, String, int, int);
-
+		String reward;
+		String supply;
+		BlockStatusResponse();
+		BlockStatusResponse(String, String, String, int, String, String, String);
 		String description();
 };
 
-
-ARK::Block::Block::getStatusResponse::getStatusResponse() { 
+ARK::Block::Block::BlockStatusResponse::BlockStatusResponse() { 
 	this->epoch = "";
-	this->height = 0000000000;
-	this->fee = 000000000;
+	this->height = "";
+	this->fee = "";
 	this->milestone = 0;
 	this->nethash = "";
-	this->reward = 000000000;
-	this->supply = 0000000000;
+	this->reward = "";
+	this->supply = "";
 }
 
-
-ARK::Block::Block::getStatusResponse::getStatusResponse (
+ARK::Block::Block::BlockStatusResponse::BlockStatusResponse (
 	String _epoch,
-	int _height,
-	int _fee,
+	String _height,
+	String _fee,
 	int _milestone,
 	String _nethash,
-	int _reward,
-	int _supply) :
+	String _reward,
+	String _supply) :
 		epoch(_epoch),
 		height(_height),
 		fee(_fee),
@@ -195,8 +194,7 @@ ARK::Block::Block::getStatusResponse::getStatusResponse (
 		reward(_reward),
 		supply(_supply) {}
 
-
-String ARK::Block::Block::getStatusResponse::description() {
+String ARK::Block::Block::BlockStatusResponse::description() {
 	String resp;
 		resp += "epoch: ";
 				resp += this->epoch; resp += "\n";
@@ -211,10 +209,29 @@ String ARK::Block::Block::getStatusResponse::description() {
 		resp += "reward: ";
 				resp += this->reward; resp += "\n";
 		resp += "supply: ";
-				resp += this->supply; resp += "\n";
+				resp += this->supply;
 	return resp;
 }
 
+
+
+
+
+struct ARK::Block::Block::BlockHeightResponse {
+	public:
+		String height;
+		String id;
+		String description();
+};
+
+String ARK::Block::Block::BlockHeightResponse::description() {
+	String resp;
+		resp += "height: ";
+				resp += this->height; resp += "\n";
+		resp += "id: ";
+				resp += this->id;
+	return resp;
+}
 
 
 #endif

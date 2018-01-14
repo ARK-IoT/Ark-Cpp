@@ -47,7 +47,7 @@ namespace ARK {
         // String fee(ARK::Utilities::Network::Manager _netManager) {
         //   String uri = ARK::API::Endpoints::Signatures::fee_s;
         //   String callback = _netManager.cb(uri);
-        //   if (callback.indexOf("false") >= 0)
+        //   if (callback.indexOf("true") <= 0)
         //     return callback;
         //   return ARK::API::Signatures::Get::feefromJSON(callback);
         // };

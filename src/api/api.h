@@ -6,10 +6,20 @@
 #include "api_model.h"
 #include "api_constants.h"
 
+
+
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+
+
+
 namespace ARK {
   namespace API {
-    
+
+
+
     class API_Manager {
+
 
       public:
 
@@ -26,6 +36,10 @@ namespace ARK {
           this->netManager = ARK::Utilities::Network::Manager(_network);
         };
 
+
+
+
+/* ==================== Accounts ====================*/
 
 
           /*  /api/accounts/getBalance?address=arkAddress */
@@ -45,15 +59,17 @@ namespace ARK {
           { return ARK::API::Account::Get::delegates(this->netManager, _arkAddress); };
 
           /*  /api/accounts?address=arkAddress  */
-          String accounts(String _arkAddress)
-          { return ARK::API::Account::Get::accounts(this->netManager, _arkAddress); };
+          String account(String _arkAddress)
+          { return ARK::API::Account::Get::account(this->netManager, _arkAddress); };
+
+/* ==================== /Accounts ====================*/
 
 
 
 
 
 
-
+/* ==================== Blocks ====================*/
 
           /*  /api/blocks/get?id=_blockID */
           String block(String _blockId)
@@ -100,10 +116,12 @@ namespace ARK {
           String blockStatus()
           { return ARK::API::Block::Get::status(this->netManager); };
 
+/* ==================== /Blocks ====================*/
 
 
 
 
+/* ==================== Delegates ====================*/
 
           /*  /api/delegates/count  */
           String delegatesCount()
@@ -113,17 +131,19 @@ namespace ARK {
           String delegateSearch(String _username)
           { return ARK::API::Delegate::Get::search(this->netManager, _username); };
 
-          // /*  /api/delegates/voters?publicKey=_pubKey  */
-          // String delegateVoters(String _publicKey)
-          // { return ARK::API::Delegate::Get::voters(this->netManager, _publicKey); };
+          /*  /api/delegates/voters?publicKey=_pubKey  */
+          String delegateVoters(String _publicKey)
+          { return ARK::API::Delegate::Get::voters(this->netManager, _publicKey); };
 
-          // /* 
-          //   /api/delegates/get?username=sleepdeficit
-          //   /api/delegates/get?publicKey=_pubKey
-          // */
-          // String delegate(String _parameter)
-          // { return ARK::API::Delegate::Get::delegate(this->netManager, _parameter); };
+          /* 
+            /api/delegates/get?username=sleepdeficit
+            /api/delegates/get?publicKey=_pubKey
+          */
+          String delegate(String _parameter)
+          { return ARK::API::Delegate::Get::delegate(this->netManager, _parameter); };
 
+      /*    BROKEN: fix for large callbacks    */
+      /*  Delegates callback is ~13,564 bytes  */
           // /*  /api/delegates  */
           // String delegates()
           // { return ARK::API::Delegate::Get::delegates(this->netManager); };
@@ -140,11 +160,13 @@ namespace ARK {
           String delegateNextForgers()
           { return ARK::API::Delegate::Get::nextForgers(this->netManager); };
 
+/* ==================== /Delegates ====================*/
 
 
 
 
 
+/* ==================== Loader ====================*/
 
           /*  /api/loader/status  */
           String loaderStatus()
@@ -158,44 +180,54 @@ namespace ARK {
           String loaderAutoconfigure()
           { return ARK::API::Loader::Get::autoconfigure(this->netManager); };
 
+/* ==================== /Loader ====================*/
 
 
 
+/* ==================== Peer ====================*/
 
           /*  /api/peers/get?ip=167.114.29.55&port=4002  */
           String peer(String _ip, int _port)
           { return ARK::API::Peer::Get::peer(this->netManager, _ip, _port); };
 
-          /*  /api/peers  */
-          String peers()
-          { return ARK::API::Peer::Get::peers(this->netManager); };
+      /*    BROKEN: fix for large callbacks  */
+      /*    Peers callback is ~10,792 bytes  */
+          // /*  /api/peers  */
+          // String peers()
+          // { return ARK::API::Peer::Get::peers(this->netManager); };
 
           /*  /api/peers/version  */
           String peerVersion()
           { return ARK::API::Peer::Get::version(this->netManager); };
 
+/* ==================== /Peer ====================*/
 
 
 
 
-
+/* ==================== Signatures ====================*/
 
           /*  /api/signatures/fee  */
           String signaturesFee()
           { return ARK::API::Signatures::Get::fee(this->netManager); };
 
+/* ==================== /Signatures ====================*/
 
 
 
 
+/* ==================== MultiSignatures ====================*/
 
           /*  /api/multisignatures/pending?publicKey=  */
           String multisignaturesPending(String _publicKey)
           { return ARK::API::MultiSignatures::Get::pending(this->netManager, _publicKey); };
 
-          /*  /api/multisignatures/accounts?publicKey=  */
-          String multisignaturesAccounts(String _publicKey)
-          { return ARK::API::MultiSignatures::Get::accounts(this->netManager, _publicKey); };
+      // /*  Only on Mainnet?  */
+      //     /*  /api/multisignatures/accounts?publicKey=  */
+      //     String multisignaturesAccounts(String _publicKey)
+      //     { return ARK::API::MultiSignatures::Get::accounts(this->netManager, _publicKey); };
+
+/* ==================== /MultiSignatures ====================*/
 
 
 

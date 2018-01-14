@@ -42,7 +42,7 @@ namespace ARK {
           resp += "explorer: ";
             resp += this->explorer; resp += "\n";
           resp += "version: ";
-            resp += this->version; resp += "\n";
+            resp += this->version;
         return resp;
       };
 

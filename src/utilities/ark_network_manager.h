@@ -63,25 +63,63 @@ namespace ARK {
           };
 
 
-/* needs stream->string size fix for large callbacks */
+/* move client out of CB */
+
+            // HTTPClient http2;
+
+
           String cb(String _request) {
+
             HTTPClient http;
-            http.setReuse(true);
-            http.setTimeout(5000);
-            http.begin(this->networkPeer, this->networkPort, _request);
+
+
+            if (this->isConnected == false) {
+              http.setReuse(true);
+              http.setTimeout(1000);
+              http.begin(this->networkPeer, this->networkPort, _request);
+              this->isConnected = true;
+            } else {
+
+              http.begin(_request);
+
+            };
+
               delay(500);
 
-            // while (!http.connected()) { delay(1000); Serial.println("waiting for HTTP connection.."); };
-
             int httpCode = http.GET();
+
+            while (!http.connected()) { delay(1000); Serial.println("waiting for HTTP connection"); };
+
+
             this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
-            switch (this->isReachable) {
-              case true: return http.getStreamPtr()->readString(); break;
-              default: return "Error: Connection to Peer could not be established";
-            }
+
+
+            if (this->isReachable) {
+            
+              String streamStr = String(http.getStreamPtr()->readString());
+              http.end();
+              return streamStr; 
+               
+              
+            } else {
+
+              http.end();
+              this->isConnected = false;
+              return "Error: Connection to Peer could not be established";
+
+
+            };
+            // switch (this->isReachable) {
+            //   case true:
+            //     String streamStr = http.getStreamPtr()->readString();
+            //    return streamStr; break;
+            //   default: return "Error: Connection to Peer could not be established";
+            // }
           };
           
         private:
+
+          bool isConnected = false;
 
           bool isReachable = false;
 
@@ -94,6 +132,11 @@ namespace ARK {
           };
 
           void setNetworkPeer(String _peer) {
+            
+            Serial.println("setNetworkPeer");
+            Serial.println(_peer);
+            Serial.println();
+
             if (this->netType == ARK::NetworkType::DEV)
               this->networkPort = ARK::Constants::Networks::Devnet::port;
             if (this->netType == ARK::NetworkType::MAIN)
