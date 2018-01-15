@@ -1,17 +1,51 @@
 
 
-#ifndef api_peer_h
-#define api_peer_h
+#ifndef peerable_h
+#define peerable_h
     
 namespace ARK {
   namespace API {
-    namespace Peer {
 
-      namespace Get {
+
+    class PeerGettable {
+      protected:
 
         /*  /api/delegates/fee  */
         String peer(ARK::Utilities::Network::Manager _netManager, String _ip, int _port);
         String peerfromJSON(String _jsonStr);
+
+
+/*    BROKEN: fix for large callbacks  */
+/*    Peers callback is ~10,792 bytes  */
+        // String peersfromJSON(String _jsonStr) {
+        // String peers(ARK::Utilities::Network::Manager _netManager) {
+
+
+        /*  /api/peers/version  */
+        String version(ARK::Utilities::Network::Manager _netManager);
+        String versionfromJSON(String _jsonStr);
+
+    };
+
+
+    class Peerable : public PeerGettable, virtual ARK::Utilities::Network::Managable {
+      public: 
+
+        /*  /api/peers/get?ip=167.114.29.55&port=4002  */
+        String peer(String _ip, int _port)
+        { return ARK::API::PeerGettable::peer(this->netManager, _ip, _port); };
+
+
+    /*    BROKEN: fix for large callbacks  */
+    /*    Peers callback is ~10,792 bytes  */
+        // /*  /api/peers  */
+        // String peers()
+        // { return ARK::API::PeerGettable::peers(this->netManager); };
+
+
+        /*  /api/peers/version  */
+        String peerVersion()
+        { return ARK::API::PeerGettable::version(this->netManager); };
 
 
 /*    BROKEN: fix for large callbacks  */
@@ -73,17 +107,13 @@ namespace ARK {
         //   String callback = _netManager.cb(uri);
         //   if (callback.indexOf("true") <= 0)
         //     return callback;
-        //   return ARK::API::Peer::Get::peersfromJSON(callback);
+        //   return ARK::API::PeerGettable::peersfromJSON(callback);
         // };
 
 
-        /*  /api/peers/version  */
-        String version(ARK::Utilities::Network::Manager _netManager);
-        String versionfromJSON(String _jsonStr);
-
-      };
-       
     };
+
+
   };
 };
 
@@ -104,7 +134,7 @@ namespace ARK {
   }
 }
 */
-String ARK::API::Peer::Get::peerfromJSON(String _jsonStr) {
+String ARK::API::PeerGettable::peerfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   ARK::Peer peer = {
     jString.valueIn("peer", "ip"),
@@ -120,16 +150,15 @@ String ARK::API::Peer::Get::peerfromJSON(String _jsonStr) {
 }
 
 /*  /api/delegates/fee  */
-String ARK::API::Peer::Get::peer(ARK::Utilities::Network::Manager _netManager, String _ip, int _port) {
+String ARK::API::PeerGettable::peer(ARK::Utilities::Network::Manager _netManager, String _ip, int _port) {
   String uri = ARK::API::Endpoints::Peer::get_s;
     uri += "?ip=";
     uri += _ip;
     uri += "&port=";
     uri += _port;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0)
-    return callback;
-  return ARK::API::Peer::Get::peerfromJSON(callback);
+  if (callback.indexOf("false") > 0) { return callback; }
+  return ARK::API::PeerGettable::peerfromJSON(callback);
 }
 
 
@@ -142,7 +171,7 @@ String ARK::API::Peer::Get::peer(ARK::Utilities::Network::Manager _netManager, S
   "build":""
 }
 */
-String ARK::API::Peer::Get::versionfromJSON(String _jsonStr) {
+String ARK::API::PeerGettable::versionfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   ARK::Peer::Version peerVersion = {
     jString.valueFor("version"),
@@ -152,12 +181,11 @@ String ARK::API::Peer::Get::versionfromJSON(String _jsonStr) {
 };
 
 /*  /api/peers/version  */
-String ARK::API::Peer::Get::version(ARK::Utilities::Network::Manager _netManager) {
+String ARK::API::PeerGettable::version(ARK::Utilities::Network::Manager _netManager) {
   String uri = ARK::API::Endpoints::Peer::version_s;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0)
-    return callback;
-  return ARK::API::Peer::Get::versionfromJSON(callback);
+  if (callback.indexOf("false") > 0) { return callback; }
+  return ARK::API::PeerGettable::versionfromJSON(callback);
 };
 
 

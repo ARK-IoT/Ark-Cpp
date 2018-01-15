@@ -10,13 +10,16 @@ namespace ARK {
   namespace Utilities {
     namespace Network {
 
+
+
       /*
         ARK::Network mainnet = ARK::Constants::Networks::Mainnet::model;
         ARK::Utilities::Network::Manager manager(mainnet);
         const char* manager.network.nethash;
         String manager.networkPeer;
       */
-      class Manager {
+      class Manager{
+
         public:
 
           ARK::Network network;
@@ -63,51 +66,29 @@ namespace ARK {
           };
 
 
-/* move client out of CB */
-
-            // HTTPClient http2;
-
 
           String cb(String _request) {
-
             HTTPClient http;
-
-
             if (this->isConnected == false) {
               http.setReuse(true);
               http.setTimeout(1000);
               http.begin(this->networkPeer, this->networkPort, _request);
               this->isConnected = true;
             } else {
-
               http.begin(_request);
-
             };
-
               delay(500);
-
             int httpCode = http.GET();
-
             while (!http.connected()) { delay(1000); Serial.println("waiting for HTTP connection"); };
-
-
             this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
-
-
             if (this->isReachable) {
-            
               String streamStr = String(http.getStreamPtr()->readString());
               http.end();
               return streamStr; 
-               
-              
             } else {
-
               http.end();
               this->isConnected = false;
               return "Error: Connection to Peer could not be established";
-
-
             };
             // switch (this->isReachable) {
             //   case true:
@@ -146,9 +127,22 @@ namespace ARK {
 
       };
 
-    };
-    
 
+
+
+
+
+
+
+      class Managable {
+        public:
+          ARK::Utilities::Network::Manager netManager;
+      };
+
+
+
+
+    };
   };
 };
 

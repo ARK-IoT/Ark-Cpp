@@ -1,6 +1,6 @@
 
-#ifndef api_delegate_h
-#define api_delegate_h
+#ifndef delegatable_h
+#define delegatable_h
 
 
 
@@ -9,9 +9,10 @@
     
 namespace ARK {
   namespace API {
-    namespace Delegate {
 
-      namespace Get {
+
+    class DelegateGettable {
+      protected:
 
         /*  /api/delegates/count  */
         String count(ARK::Utilities::Network::Manager _netManager);
@@ -31,6 +32,69 @@ namespace ARK {
        */
         String delegate(ARK::Utilities::Network::Manager _netManager, String _parameter);
         String delegatefromJSON(String _jsonStr);
+
+
+/*    BROKEN: fix for large callbacks    */
+/*  Delegates callback is ~13,564 bytes  */
+        // String delegates(ARK::Utilities::Network::Manager _netManager) {
+        // String delegatesfromJSON(String _jsonStr) {
+
+
+        /*  /api/delegates/fee  */
+        String fee(ARK::Utilities::Network::Manager _netManager);
+        String feefromJSON(String _jsonStr);
+
+        /*  /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  */
+        String forgedByAccount(ARK::Utilities::Network::Manager _netManager, String _generatorPublicKey);
+        String forgedByAccountfromJSON(String _jsonStr);
+
+        /*  /api/delegates/forging/getNextForgers  */
+        String nextForgers(ARK::Utilities::Network::Manager _netManager);
+        String nextForgersfromJSON(String _jsonStr);
+
+    };
+
+    class Delegatable : public DelegateGettable, virtual ARK::Utilities::Network::Managable {
+      public: 
+
+          /*  /api/delegates/count  */
+          String delegatesCount()
+          { return ARK::API::DelegateGettable::count(this->netManager); };
+
+          /*  /api/delegates/search?q=sleepdeficit  */
+          String delegateSearch(String _username)
+          { return ARK::API::DelegateGettable::search(this->netManager, _username); };
+
+          /*  /api/delegates/voters?publicKey=_pubKey  */
+          String delegateVoters(String _publicKey)
+          { return ARK::API::DelegateGettable::voters(this->netManager, _publicKey); };
+
+          /* 
+            /api/delegates/get?username=sleepdeficit
+            /api/delegates/get?publicKey=_pubKey
+          */
+          String delegate(String _parameter)
+          { return ARK::API::DelegateGettable::delegate(this->netManager, _parameter); };
+
+
+      /*    BROKEN: fix for large callbacks    */
+      /*  Delegates callback is ~13,564 bytes  */
+        // /*  /api/delegates  */
+        // String delegates(ARK::Utilities::Network::Manager _netManager) {
+        // String delegatesfromJSON(String _jsonStr) {
+
+
+          /*  /api/delegates/fee  */
+          String delegateFee()
+          { return ARK::API::DelegateGettable::fee(this->netManager); };
+
+          /*  /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  */
+          String delegateForgedByAccount(String _generatorPublicKey)
+          { return ARK::API::DelegateGettable::forgedByAccount(this->netManager, _generatorPublicKey); };
+
+          /*  /api/delegates/getNextForgers  */
+          String delegateNextForgers()
+          { return ARK::API::DelegateGettable::nextForgers(this->netManager); };
 
 
 /*    BROKEN: fix for large callbacks    */
@@ -96,33 +160,22 @@ namespace ARK {
         //   String uri = ARK::API::Endpoints::Delegate::delegates_s;
         //   String callback = _netManager.cb(uri);
         //   if (callback.indexOf("true") <= 0) { return callback; }
-        //   else { return ARK::API::Delegate::Get::delegatesfromJSON(callback); };
+        //   else { return ARK::API::DelegateGettable::delegatesfromJSON(callback); };
         // };
 
 
-
-        /*  /api/delegates/fee  */
-        String fee(ARK::Utilities::Network::Manager _netManager);
-        String feefromJSON(String _jsonStr);
-
-        /*  /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  */
-        String forgedByAccount(ARK::Utilities::Network::Manager _netManager, String _generatorPublicKey);
-        String forgedByAccountfromJSON(String _jsonStr);
-
-        /*  /api/delegates/forging/getNextForgers  */
-        String nextForgers(ARK::Utilities::Network::Manager _netManager);
-        String nextForgersfromJSON(String _jsonStr);
-
-      };
-
-
-      namespace delegates_cb {
-        struct addDelegateResponse : virtual ARK::API::Helpers::Successable {};
-        struct enableForgingResponse : virtual ARK::API::Helpers::Successable {};
-        struct disableForgingResponse : virtual ARK::API::Helpers::Successable {};
-      };      
-      
     };
+
+
+    // namespace Delegate {
+    //   namespace delegates_cb {
+    //     struct addDelegateResponse : virtual ARK::API::Helpers::Successable {};
+    //     struct enableForgingResponse : virtual ARK::API::Helpers::Successable {};
+    //     struct disableForgingResponse : virtual ARK::API::Helpers::Successable {};
+    //   };      
+    // };
+
+
   };
 };
 
@@ -130,16 +183,16 @@ namespace ARK {
 
 
 /*  {"success":true,"count":166}  */
-String ARK::API::Delegate::Get::countfromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::countfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   return jString.valueFor("count");
 };
 /*  /api/delegates/count  */
-String ARK::API::Delegate::Get::count(ARK::Utilities::Network::Manager _netManager) {
+String ARK::API::DelegateGettable::count(ARK::Utilities::Network::Manager _netManager) {
   String uri = ARK::API::Endpoints::Delegate::count_s;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; }
-  else { return ARK::API::Delegate::Get::countfromJSON(callback); };
+  if (callback.indexOf("false") > 0) { return callback; }
+  else { return ARK::API::DelegateGettable::countfromJSON(callback); };
 };
 
 
@@ -158,7 +211,7 @@ String ARK::API::Delegate::Get::count(ARK::Utilities::Network::Manager _netManag
   ]
 }
 */
-String ARK::API::Delegate::Get::searchfromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::searchfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);          
   ARK::Delegate::SearchResponse delegateResp = {
     jString.subarrayValueIn("delegates", 0, "username"),
@@ -172,13 +225,13 @@ String ARK::API::Delegate::Get::searchfromJSON(String _jsonStr) {
 };
 
 /*  /api/delegates/search?q=sleepdeficit  */
-String ARK::API::Delegate::Get::search(ARK::Utilities::Network::Manager _netManager, String _username) {
+String ARK::API::DelegateGettable::search(ARK::Utilities::Network::Manager _netManager, String _username) {
   String uri = ARK::API::Endpoints::Delegate::search_s;
     uri += "?q=";
     uri += _username;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; }
-  else { return ARK::API::Delegate::Get::searchfromJSON(callback); };
+  if (callback.indexOf("false") > 0) { return callback; }
+  else { return ARK::API::DelegateGettable::searchfromJSON(callback); };
 };
 
 
@@ -200,7 +253,7 @@ String ARK::API::Delegate::Get::search(ARK::Utilities::Network::Manager _netMana
   ]
 }
 */
-String ARK::API::Delegate::Get::votersfromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::votersfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   int voterCount = ARK::API::Helpers::substringCount(_jsonStr, "username");
   if (voterCount == 0) { return "No Voters found"; };
@@ -226,12 +279,12 @@ String ARK::API::Delegate::Get::votersfromJSON(String _jsonStr) {
 };
 
 /*  /api/delegates/voters?publicKey=_pubKey  */
-String ARK::API::Delegate::Get::voters(ARK::Utilities::Network::Manager _netManager, String _publicKey) {
+String ARK::API::DelegateGettable::voters(ARK::Utilities::Network::Manager _netManager, String _publicKey) {
   String uri = ARK::API::Endpoints::Delegate::voters_s;
     uri += "?publicKey=" + _publicKey;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; }
-  else { return ARK::API::Delegate::Get::votersfromJSON(callback); };
+  if (callback.indexOf("false") > 0) { return callback; }
+  else { return ARK::API::DelegateGettable::votersfromJSON(callback); };
 };
 
 
@@ -252,7 +305,7 @@ String ARK::API::Delegate::Get::voters(ARK::Utilities::Network::Manager _netMana
   }
 }
 */
-String ARK::API::Delegate::Get::delegatefromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::delegatefromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   ARK::Delegate delegate = {
     jString.subvalueIn("delegate", "username"),
@@ -272,7 +325,7 @@ String ARK::API::Delegate::Get::delegatefromJSON(String _jsonStr) {
   /api/delegates/get?username=sleepdeficit
   /api/delegates/get?publicKey=_pubKey
 */
-String ARK::API::Delegate::Get::delegate(ARK::Utilities::Network::Manager _netManager, String _parameter) {
+String ARK::API::DelegateGettable::delegate(ARK::Utilities::Network::Manager _netManager, String _parameter) {
   String uri = ARK::API::Endpoints::Delegate::get_s;
   if (_parameter.length() > 20) {
     uri += "?publicKey="; 
@@ -281,25 +334,25 @@ String ARK::API::Delegate::Get::delegate(ARK::Utilities::Network::Manager _netMa
   };
   uri += _parameter;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; };
-  return ARK::API::Delegate::Get::delegatefromJSON(callback);
+  if (callback.indexOf("false") > 0) { return callback; }
+  return ARK::API::DelegateGettable::delegatefromJSON(callback);
 };
 
 
 
 
 /*  {"success":true,"fee":2500000000} */
-String ARK::API::Delegate::Get::feefromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::feefromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   return jString.valueFor("fee");
 };
 
 /*  /api/delegates/fee  */
-String ARK::API::Delegate::Get::fee(ARK::Utilities::Network::Manager _netManager) {
+String ARK::API::DelegateGettable::fee(ARK::Utilities::Network::Manager _netManager) {
   String uri = ARK::API::Endpoints::Delegate::fee_s;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; }
-  else { return ARK::API::Delegate::Get::feefromJSON(callback); };
+  if (callback.indexOf("false") > 0) { return callback; }
+  else { return ARK::API::DelegateGettable::feefromJSON(callback); };
 };
 
 
@@ -313,7 +366,7 @@ String ARK::API::Delegate::Get::fee(ARK::Utilities::Network::Manager _netManager
   "forged":"7670300000000"
 }
 */
-String ARK::API::Delegate::Get::forgedByAccountfromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::forgedByAccountfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   ARK::Delegate::ForgedByAccountResponse forgedByAccount = {
     jString.valueFor("fees"),
@@ -324,12 +377,12 @@ String ARK::API::Delegate::Get::forgedByAccountfromJSON(String _jsonStr) {
 };
 
 /*  /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  */
-String ARK::API::Delegate::Get::forgedByAccount(ARK::Utilities::Network::Manager _netManager, String _generatorPublicKey) {
+String ARK::API::DelegateGettable::forgedByAccount(ARK::Utilities::Network::Manager _netManager, String _generatorPublicKey) {
   String uri = ARK::API::Endpoints::Delegate::getForgedByAccount_s;
     uri += "?generatorPublicKey=" + _generatorPublicKey;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; }
-  else { return ARK::API::Delegate::Get::forgedByAccountfromJSON(callback); };
+  if (callback.indexOf("false") > 0) { return callback; }
+  else { return ARK::API::DelegateGettable::forgedByAccountfromJSON(callback); };
 };
 
 
@@ -353,7 +406,7 @@ String ARK::API::Delegate::Get::forgedByAccount(ARK::Utilities::Network::Manager
   ]
 }
 */
-String ARK::API::Delegate::Get::nextForgersfromJSON(String _jsonStr) {
+String ARK::API::DelegateGettable::nextForgersfromJSON(String _jsonStr) {
   ARK::Utilities::JSONString jString(_jsonStr);
   String delegates[10];
   for (int i = 0; i < 10; i++) {
@@ -368,11 +421,11 @@ String ARK::API::Delegate::Get::nextForgersfromJSON(String _jsonStr) {
 };
 
 /*  /api/delegates/forging/getNextForgers  */
-String ARK::API::Delegate::Get::nextForgers(ARK::Utilities::Network::Manager _netManager) {
+String ARK::API::DelegateGettable::nextForgers(ARK::Utilities::Network::Manager _netManager) {
   String uri = ARK::API::Endpoints::Delegate::getNextForgers_s;
   String callback = _netManager.cb(uri);
-  if (callback.indexOf("true") <= 0) { return callback; }
-  else { return ARK::API::Delegate::Get::nextForgersfromJSON(callback); };
+  if (callback.indexOf("false") > 0) { return callback; }
+  else { return ARK::API::DelegateGettable::nextForgersfromJSON(callback); };
 };
 
 

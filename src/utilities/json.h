@@ -27,10 +27,6 @@ namespace ARK {
         String subvalueIn(String _key, String _subkey);
         String subarrayValueIn(String _key, int _pos, String _subkey);
 
-        /*    BROKEN: fix for large callbacks    */
-        /*  Delegates callback is ~13,564 bytes  */
-        /*     Peers callback is ~10,792 bytes   */
-        // String largeSubarrayValueIn(String _key, int _pos, String _subkey, int _objectSize);
     };
 
   };
@@ -79,17 +75,6 @@ String ARK::Utilities::JSONString::subarrayValueIn(String _key, int _pos, String
   return root[_key][_pos][_subkey];
 }
 
-/*    BROKEN: fix for large callbacks    */
-/*  Delegates callback is ~13,564 bytes  */
-/*     Peers callback is ~10,792 bytes   */
-// String ARK::Utilities::JSONString::largeSubarrayValueIn(String _key, int _pos, String _subkey, int _objectSize) {
-//   StaticJsonBuffer<11000> jsonBuffer;
-//   JsonObject& root = jsonBuffer.parseObject(this->jsonStr);
-//   // return root[_key][_pos][_subkey];
-//   JsonArray& rootArray = root[_key];
-//   JsonObject& newRoot = rootArray[_pos];
-//   return newRoot[_subkey];
-// }
 
 #endif
 

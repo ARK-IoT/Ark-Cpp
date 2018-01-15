@@ -1,68 +1,5 @@
 
 
-#ifndef api_h
-#define api_h
-
-#include "../utilities/utilities.h"
-
-#include "api_helpers.h"
-#include "api_constants.h"
-
-#include "accountable.h"
-#include "blockable.h"
-#include "delegatable.h"
-#include "errorable.h"
-#include "loadable.h"
-#include "multisignaturable.h"
-#include "networkable.h"
-#include "peerable.h"
-#include "signaturable.h"
-#include "transactionable.h"
-#include "transportable.h"
-#include "votable.h"
-
-
-namespace ARK {
-  namespace API {
-
-    class Manager :
-      public ARK::API::Accountable, 
-      public ARK::API::Blockable,
-      public Delegatable, 
-      public Loadable,
-      public MultiSignaturable,
-      public Peerable,
-      public Signaturable,
-      public Transactionable,
-      virtual ARK::Utilities::Network::Managable {
-
-      public:
-
-        Manager();
-        Manager(ARK::Network _network);
-        void connect(ARK::Network _network);
-
-    };
-
-  };
-};
-
-
-ARK::API::Manager::Manager() {
-  ARK::Network _network;
-  this->connect(_network);
-};
-
-ARK::API::Manager::Manager(ARK::Network _network) {          
-  this->connect(_network);
-};
-
-void ARK::API::Manager::connect(ARK::Network _network) {
-  this->netManager = ARK::Utilities::Network::Manager(_network);
-};
-
-
-
 /* ==================== Accounts ==================== */
   /*
 
@@ -248,27 +185,3 @@ void ARK::API::Manager::connect(ARK::Network _network) {
         
   */
 /* ==================== /Transaction ====================*/
-
-
-
-
-// Transport:
-//   const String list_s = "/peer/list";
-//   const String common_s = "/peer/blocks/common";
-//   const String block_s = "/peer/block";
-//   const String blocks_s = "/peer/blocks";
-//   const String transactions_s = "/peer/transactions";
-//   const String transactionsPost_s = "/peer/transactions"; // post
-//   const String transactionsFromIds_s = "/peer/transactionsFromIds";
-//   const String height_s = "/peer/height";
-//   const String status_s = "/peer/status";
-
-/* ==================== Transport ====================*/
-  /*
-  
-        
-  */
-/* ==================== /Transport ====================*/
-
-
-#endif

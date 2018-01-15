@@ -1,7 +1,7 @@
 
 
-#ifndef api_error_h
-#define api_error_h
+#ifndef errorable_h
+#define errorable_h
 
 namespace ARK {
   namespace API {
