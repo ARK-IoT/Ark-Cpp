@@ -1,7 +1,6 @@
 
-
-/* ==================== Accounts ==================== */
-  /*
+```
+==================== Accounts ====================  
 
     /api/accounts/getBalance?address=arkAddress
       String accountBalance(String _arkAddress)
@@ -18,170 +17,163 @@
     /api/accounts?address=arkAddress
       String account(String _arkAddress)
 
-  */
-/* ==================== /Accounts ====================  */
+==================== /Accounts ====================
+```
+
+```
+==================== Blocks ====================  
+
+    /api/blocks/get?id=_blockID  
+      String block(String _blockId)  
 
 
-/* ==================== Blocks ==================== */
-  /* 
-
-    /api/blocks/get?id=_blockID
-      String block(String _blockId)
-
-
-// *    BROKEN: fix for large callbacks    *
-    // /api/blocks
-    //   String blocks()
+// BROKEN: fix for large callbacks  
+//     /api/blocks  
+//       String blocks()  
 
 
     /api/blocks/getEpoch
-      String blockEpoch()
+      String blockEpoch()  
 
     /api/blocks/getHeight
-      String blockHeight()
+      String blockHeight()  
 
-    /api/blocks/getNethash
-      String blockNethash()
+    /api/blocks/getNethash  
+      String blockNethash()  
 
-    /api/blocks/getFee
-      String blockFee()
+    /api/blocks/getFee  
+      String blockFee()  
 
-    /api/blocks/getFees
-      String blockFees()
+    /api/blocks/getFees  
+      String blockFees()  
 
-    /api/blocks/getMilestone
+    /api/blocks/getMilestone  
       String blockMilestone()
 
-    /api/blocks/getReward
-      String blockReward()
+    /api/blocks/getReward  
+      String blockReward()  
 
-    /api/blocks/getSupply
-      String blockSupply()
+    /api/blocks/getSupply  
+      String blockSupply()  
 
-    /api/blocks/getStatus
-      String blockStatus()
+    /api/blocks/getStatus  
+      String blockStatus()  
 
-  */
-/* ==================== /Blocks ====================  */
+==================== /Blocks ====================  
+```
 
+```
+==================== Delegates ====================  
 
-/* ==================== Delegates ====================  */
-  /*
+    /api/delegates/count  
+      String delegatesCount()  
 
-    /api/delegates/count
-      String delegatesCount()
+    /api/delegates/search?q=sleepdeficit  
+      String delegateSearch(String _username)  
 
-    /api/delegates/search?q=sleepdeficit
-      String delegateSearch(String _username)
-
-    /api/delegates/voters?publicKey=_pubKey
-      String delegateVoters(String _publicKey)
+    /api/delegates/voters?publicKey=_pubKey  
+      String delegateVoters(String _publicKey)  
 
   
-    /api/delegates/get?username=sleepdeficit
-    /api/delegates/get?publicKey=_pubKey
-      String delegate(String _parameter)
+    /api/delegates/get?username=sleepdeficit  
+    /api/delegates/get?publicKey=_pubKey  
+      String delegate(String _parameter)  
 
 
-// *    BROKEN: fix for large callbacks    *
-// *  Delegates callback is ~13,564 bytes  *
-    // /api/delegates
-    //   String delegates()
+// BROKEN: fix for large callbacks  
+// Delegates callback is ~13,564 bytes  
+//    /api/delegates  
+//      String delegates()  
 
 
-    /api/delegates/fee
-      String delegateFee()
+    /api/delegates/fee  
+      String delegateFee()  
 
-    /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey
-      String delegateForgedByAccount(String _generatorPublicKey)
+    /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  
+      String delegateForgedByAccount(String _generatorPublicKey)  
 
-    /api/delegates/getNextForgers
-      String delegateNextForgers()
+    /api/delegates/getNextForgers  
+      String delegateNextForgers()  
 
-  */
-/* ==================== /Delegates ====================*/
+==================== /Delegates ====================  
+```
 
+```
+==================== Loader ====================  
 
-/* ==================== Loader ====================*/
-  /*
+    /api/loader/status  
+      String loaderStatus()  
 
-    /api/loader/status
-      String loaderStatus()
+    /api/loader/status/sync  
+      String loaderSync()  
 
-    /api/loader/status/sync
-      String loaderSync()
+    /api/loader/autoconfigure  
+      String loaderAutoconfigure()  
 
-    /api/loader/autoconfigure
-      String loaderAutoconfigure()
+==================== /Loader ====================  
+```
 
-  */
-/* ==================== /Loader ====================*/
+```
+==================== MultiSignatures ====================  
 
-
-/* ==================== MultiSignatures ====================*/
-  /*
-
-    /api/multisignatures/pending?publicKey=
-      String multisignaturesPending(String _publicKey)
+    /api/multisignatures/pending?publicKey=  
+      String multisignaturesPending(String _publicKey)  
 
 
-// *  Only on Mainnet?  *
-    // /api/multisignatures/accounts?publicKey=
-    //   String multisignaturesAccounts(String _publicKey)
+// Only on Mainnet?  
+//     /api/multisignatures/accounts?publicKey=  
+//       String multisignaturesAccounts(String _publicKey)  
 
 
-  */
-/* ==================== /MultiSignatures ====================*/
+==================== /MultiSignatures ====================  
+```
+
+```
+==================== Peer ====================  
+
+    /api/peers/get?ip=167.114.29.55&port=4002  
+      String peer(String _ip, int _port)  
 
 
-/* ==================== Peer ====================*/
-  /*
-
-    /api/peers/get?ip=167.114.29.55&port=4002
-      String peer(String _ip, int _port)
-
-
-// *    BROKEN: fix for large callbacks  *
-// *    Peers callback is ~10,792 bytes  *
-    // /api/peers
-    //  String peers()
+// BROKEN: fix for large callbacks  
+// Peers callback is ~10,792 bytes  
+//     /api/peers  
+//      String peers()  
 
 
-    /api/peers/version
-      String peerVersion()
+    /api/peers/version  
+      String peerVersion()  
 
-  */
-/* ==================== /Peer ====================*/
+==================== /Peer ====================  
+```
 
+```
+==================== Signatures ====================  
 
-/* ==================== Signatures ====================*/
-  /*
-  
     /api/signatures/fee
       String signaturesFee()
 
-  */
-/* ==================== /Signatures ====================*/
+==================== /Signatures ====================  
+```
+
+```
+==================== Transaction ====================  
+
+    /api/transactions/get?id=  
+      String transaction(String _id)  
 
 
-/* ==================== Transaction ====================*/
-  /*
-  
-    /api/transactions/get?id=
-      String transaction(String _id)
+//  BROKEN: fix for large callbacks  
+//  Peers callback is ~28,908 bytes  
+//    /api/transactions  
+//      String transactions()  
 
 
-// *    BROKEN: fix for large callbacks  *
-// *    Peers callback is ~28,908 bytes  *
-    /api/transactions
-      String transactions()
+    /api/transactions/unconfirmed/get?id=  
+      String transactionUnconfirmed(String _id)  
 
-
-    /api/transactions/unconfirmed/get?id=
-      String transactionUnconfirmed(String _id)
-
-    /api/transactions/unconfirmed
-      String transactionsUnconfirmed()
-        
-  */
-/* ==================== /Transaction ====================*/
+    /api/transactions/unconfirmed  
+      String transactionsUnconfirmed()  
+   
+==================== /Transaction ====================  
+```
