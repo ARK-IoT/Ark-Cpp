@@ -1,292 +1,323 @@
+
+
+
 #include <ark.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
- 
-
-const char* ssid     = "yourSSID";
-const char* password = "yourPASSWORD";
 
 
+/*  ==========================================================================  */
+const char* ssid = "yourSSID";
+const char* password = "yourWiFiPassword";
+/*  ==========================================================================  */
+
+
+/*  ==========================================================================  */
+extern "C" {
+#include "user_interface.h"
+}
+/*  ==========================================================================  */
+
+
+/*  ==========================================================================  */
+Address darkAddress = { "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA" };
+String darkBlockID = "4367122150875693402";
+Hash darkHash = { "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23" };
+Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" };
+Hash transactionID = { "4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e" };
+/*  ==========================================================================  */
+
+
+/*  ==========================================================================  */
+void reportFreeHeap() {
+  Serial.println("system_get_free_heap_size: ");
+  Serial.println(system_get_free_heap_size());
+  Serial.println("\n=====\n");
+  delay(500);
+};
+/*  ==========================================================================  */
+
+
+/*  ==========================================================================  */
 void testAccount(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Account Test ==========\n\n=====\n");
-
- String balance = _arkManager.accountBalance("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-    Serial.println("balance: ");
-    Serial.println(balance);
+/*  ==================================  */
+ String balanceDescription = _arkManager.accountBalance(darkAddress).description();
+    Serial.println("balanceDescription: ");
+    Serial.println(balanceDescription);
     Serial.println("\n=====\n");
     delay(500); 
-
-  String publicKey = _arkManager.accountPublickey("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-    Serial.println("publicKey: ");
-    Serial.println(publicKey);
+/*  ==================================  */
+  String publicKeyDescription = _arkManager.accountPublickey(darkAddress).description();
+    Serial.println("publicKeyDescription: ");
+    Serial.println(publicKeyDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegatesFee = _arkManager.accountDelegatesFee("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-    Serial.println("delegatesFee: ");
-    Serial.println(delegatesFee);
+/*  ==================================  */
+  String delegatesFeeArk = _arkManager.accountDelegatesFee(darkAddress).ark;
+    Serial.println("delegatesFeeArk: ");
+    Serial.println(delegatesFeeArk);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegates = _arkManager.accountDelegates("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-    Serial.println("delegates: ");
-    Serial.println(delegates);
+/*  ==================================  */
+  String delegatesDescription = _arkManager.accountDelegates(darkAddress).description();
+    Serial.println("delegatesDescription: ");
+    Serial.println(delegatesDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String account = _arkManager.account("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-    Serial.println("account: ");
-    Serial.println(account);
+/*  ==================================  */
+  String accountDescription = _arkManager.account(darkAddress).description();
+    Serial.println("accountDescription: ");
+    Serial.println(accountDescription);
     Serial.println();
-
+/*  ==================================  */
   Serial.println("========== /Account Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
-
-
+/*  ==========================================================================  */
 void testBlock(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Block Test ==========\n\n=====\n");
-
-  String block = _arkManager.block("4367122150875693402");
-    Serial.println("block: ");
-    Serial.println(block);
+/*  ==================================  */
+  String blockDescription = _arkManager.block(darkBlockID).description();
+    Serial.println("blockDescription: ");
+    Serial.println(blockDescription);
     Serial.println("\n=====\n");
     delay(500);
-
+/*  ==================================  */
 /* needs stream->string size fix for large callbacks */
 //  String blocks = _arkManager.blocks();
 //    Serial.println(blocks);
 //    Serial.println();
 //    delay(500);
-
-
+/*  ==================================  */
   String blockEpoch = _arkManager.blockEpoch();
     Serial.println("blockEpoch: ");
     Serial.println(blockEpoch);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockHeight = _arkManager.blockHeight();
-    Serial.println("blockHeight: ");
-    Serial.println(blockHeight);
+/*  ==================================  */
+  String blockHeightDescription = _arkManager.blockHeight().description();
+    Serial.println("blockHeightDescription: ");
+    Serial.println(blockHeightDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockNethash = _arkManager.blockNethash();
-    Serial.println("blockNethash: ");
-    Serial.println(blockNethash);
+/*  ==================================  */
+  String blockNethashDescription = _arkManager.blockNethash().description();
+    Serial.println("blockNethashDescription: ");
+    Serial.println(blockNethashDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockFee = _arkManager.blockFee();
-    Serial.println("blockFee: ");
-    Serial.println(blockFee);
+/*  ==================================  */
+  String blockFeeArk = _arkManager.blockFee().ark;
+    Serial.println("blockFeeArk: ");
+    Serial.println(blockFeeArk);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockFees = _arkManager.blockFees();
-    Serial.println("blockFees: ");
-    Serial.println(blockFees);
+/*  ==================================  */
+  String blockFeesDescription = _arkManager.blockFees().description();
+    Serial.println("blockFeesDescription: ");
+    Serial.println(blockFeesDescription);
     Serial.println("\n=====\n");
     delay(500);
-
+/*  ==================================  */
   String blockMilestone = _arkManager.blockMilestone();
     Serial.println("blockMilestone: ");
     Serial.println(blockMilestone);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockReward = _arkManager.blockReward();
-    Serial.println("blockReward: ");
-    Serial.println(blockReward);
+/*  ==================================  */
+  String blockRewardArk = _arkManager.blockReward().ark;
+    Serial.println("blockRewardArk: ");
+    Serial.println(blockRewardArk);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockSupply = _arkManager.blockSupply();
-    Serial.println("blockSupply: ");
-    Serial.println(blockSupply);
+/*  ==================================  */
+  String blockSupplyArk = _arkManager.blockSupply().ark;
+    Serial.println("blockSupplyArk: ");
+    Serial.println(blockSupplyArk);
     Serial.println("\n=====\n");
     delay(500);
-
-  String blockStatus = _arkManager.blockStatus();
-    Serial.println("blockStatus: ");
-    Serial.println(blockStatus);
+/*  ==================================  */
+  String blockStatusDescription = _arkManager.blockStatus().description();
+    Serial.println("blockStatusDescription: ");
+    Serial.println(blockStatusDescription);
     delay(500);
-    
-  Serial.println("\n\n========== /Block Test ==========\n");
+/*  ==================================  */
+  Serial.println("========== /Block Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
-
-
-
+/*  ==========================================================================  */
 void testDelegate(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Delegate Test ==========\n\n=====\n");
-
-  String delegatesCount = _arkManager.delegatesCount();
+/*  ==================================  */
+  int delegatesCount = _arkManager.delegatesCount();
     Serial.println("delegatesCount: ");
     Serial.println(delegatesCount);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegateSearch = _arkManager.delegateSearch("sleepdeficit");
-    Serial.println("delegateSearch: ");
-    Serial.println(delegateSearch);
+/*  ==================================  */
+  String delegateSearchDescription = _arkManager.delegateSearch("sleepdeficit").description();
+    Serial.println("delegateSearchDescription: ");
+    Serial.println(delegateSearchDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegateVoters = _arkManager.delegateVoters("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
-    Serial.println("delegateVoters: ");
-    Serial.println(delegateVoters);
+/*  ==================================  */
+  String delegateVotersDescription = _arkManager.delegateVoters(darkPubkey).description();
+    Serial.println("delegateVotersDescription: ");
+    Serial.println(delegateVotersDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegateByUsername = _arkManager.delegate("sleepdeficit");
-    Serial.println("delegateByUsername: ");
-    Serial.println(delegateByUsername);
+/*  ==================================  */
+  String delegateByUsernameDescription = _arkManager.delegate("sleepdeficit").description();
+    Serial.println("delegateByUsernameDescription: ");
+    Serial.println(delegateByUsernameDescription);
     Serial.println("\n=====\n");
     delay(500);
-    
-  String delegateByPublickey = _arkManager.delegate("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
-    Serial.println("delegateByPublickey: ");
-    Serial.println(delegateByPublickey);
+/*  ==================================  */
+  String delegateByPublickeyDescription = _arkManager.delegate(darkPubkey.description()).description();
+    Serial.println("delegateByPublickeyDescription: ");
+    Serial.println(delegateByPublickeyDescription);
     Serial.println("\n=====\n");
     delay(500);
-
+/*  ==================================  */
 /*    BROKEN: fix for large callbacks    */
 /*  Delegates callback is ~13,564 bytes  */
-//  String delegates = _arkManager.delegates();
+//  String delegates = _arkManager.getDelegates();
 //    Serial.println("delegates: ");
 //    Serial.println(delegates);
 //    Serial.println("\n=====\n");
 //    delay(500);
-
-  String delegateFee = _arkManager.delegateFee();
-    Serial.println("delegateFee: ");
-    Serial.println(delegateFee);
+/*  ==================================  */
+  String delegateFeeArk = _arkManager.delegateFee().ark;
+    Serial.println("delegateFeeArk: ");
+    Serial.println(delegateFeeArk);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegateForgedByAccount = _arkManager.delegateForgedByAccount("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+/*  ==================================  */
+  String delegateForgedByAccount = _arkManager.delegateForgedByAccount(darkPubkey);
     Serial.println("delegateForgedByAccount: ");
     Serial.println(delegateForgedByAccount);
     Serial.println("\n=====\n");
     delay(500);
-
-  String delegateNextForgers = _arkManager.delegateNextForgers();
-    Serial.println("delegateNextForgers: ");
-    Serial.println(delegateNextForgers);
+/*  ==================================  */
+  String delegateNextForgersDescription = _arkManager.delegateNextForgers().description();
+    Serial.println("delegateNextForgersDescription: ");
+    Serial.println(delegateNextForgersDescription);
     Serial.println("\n=====\n");
     delay(500);        
-    
+/*  ==================================  */
   Serial.println("========== /Delegate Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
-
+/*  ==========================================================================  */
 void testLoader(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Loader Test ==========\n\n=====\n");
-
-  String loaderStatus = _arkManager.loaderStatus();
-    Serial.println("loaderStatus: ");
-    Serial.println(loaderStatus);
+/*  ==================================  */
+  String loaderStatusDescription = _arkManager.loaderStatus().description();
+    Serial.println("loaderStatusDescription: ");
+    Serial.println(loaderStatusDescription);
     Serial.println("\n=====\n");
     delay(500);
-      
-  String loaderSync = _arkManager.loaderSync();
-    Serial.println("loaderSync: ");
-    Serial.println(loaderSync);
+/*  ==================================  */
+  String loaderSyncDescription = _arkManager.loaderSync().description();
+    Serial.println("loaderSyncDescription: ");
+    Serial.println(loaderSyncDescription);
     Serial.println("\n=====\n");
     delay(500);
-
-  String loaderAutoconfigure = _arkManager.loaderAutoconfigure();
-    Serial.println("loaderAutoconfigure: ");
-    Serial.println(loaderAutoconfigure);
+/*  ==================================  */
+  String loaderAutoconfigureDescription = _arkManager.loaderAutoconfigure().description();
+    Serial.println("loaderAutoconfigureDescription: ");
+    Serial.println(loaderAutoconfigureDescription);
     Serial.println("\n=====\n");
     delay(500); 
-    
+/*  ==================================  */
   Serial.println("========== /Loader Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
+/*  ==========================================================================  */
 void testPeer(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Peer Test ==========\n\n=====\n");
-
-  String peer = _arkManager.peer("167.114.29.55", 4002);
-    Serial.println("peer: ");
-    Serial.println(peer);
+/*  ==================================  */
+  String peerDescription = _arkManager.peer("167.114.29.55", 4002).description();
+    Serial.println("peerDescription: ");
+    Serial.println(peerDescription);
     Serial.println("\n=====\n");
     delay(500);
-    
+/*  ==================================  */
 /*    BROKEN: fix for large callbacks  */
-/*    Peers callback is ~10,792 bytes  */
-//  String peers = _arkManager.peers();
-//    Serial.println("peers: ");
-//    Serial.println(peers);
+/*    Peers callback is ~10,000 bytes  */
+//  String peersDescription = _arkManager.peers().description();
+//    Serial.println("peersDescription: ");
+//    Serial.println(peersDescription);
 //    Serial.println("\n=====\n");
 //    delay(500);
-  
-  String peerVersion = _arkManager.peerVersion();
-    Serial.println("peerVersion: ");
-    Serial.println(peerVersion);
+/*  ==================================  */
+  String peerVersionDescription = _arkManager.peerVersion().description();
+    Serial.println("peerVersionDescription: ");
+    Serial.println(peerVersionDescription);
     Serial.println("\n=====\n");
     delay(500);
-    
+/*  ==================================  */
   Serial.println("========== /Peer Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
-
+/*  ==========================================================================  */
 void testSignatures(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Signatures Test ==========\n\n=====\n");
-  
-  String signaturesFee = _arkManager.signaturesFee();
-    Serial.println("signaturesFee: ");
-    Serial.println(signaturesFee);
+/*  ==================================  */
+  String signaturesFeeArk = _arkManager.signaturesFee().ark;
+    Serial.println("signaturesFeeArk: ");
+    Serial.println(signaturesFeeArk);
     Serial.println();
     delay(500);
-    
+/*  ==================================  */
   Serial.println("========== /Signatures Test ==========\n");
 };
+/*  ==========================================================================  */
 
+
+/*  ==========================================================================  */
 void testMultiSignatures(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== MultiSignatures Test ==========\n\n=====\n");
-  
-  String multisignaturesPending = _arkManager.multisignaturesPending("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+/*  ==================================  */
+  String multisignaturesPending = _arkManager.multisignaturesPending(darkHash);
     Serial.println("multisignaturesPending: ");
     Serial.println(multisignaturesPending);
     Serial.println("\n=====\n");
     delay(500);
-
- /*  Only on Mainnet?  */
-//  String multisignaturesAccounts = _arkManager.multisignaturesAccounts("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+/*  ==================================  */
+/*  Only on Mainnet?  */
+//  String multisignaturesAccounts = _arkManager.multisignaturesAccounts(darkHash);
 //    Serial.println("multisignaturesAccounts: ");
 //    Serial.println(multisignaturesAccounts);
 //    Serial.println("\n=====\n");
 //    delay(500);
-    
+/*  ==================================  */
   Serial.println("========== /MultiSignatures Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
-
-
+/*  ==========================================================================  */
 void testTransaction(ARK::API::Manager _arkManager) {
   Serial.println("\n\n========== Transaction Test ==========\n\n=====\n");
-  
-  String transactionFromID = _arkManager.transaction("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e"); //has vendorField value
-    Serial.println("transactionFromID: ");
-    Serial.println(transactionFromID);
+/*  ==================================  */
+  String transactionFromIDDescription = _arkManager.transaction(transactionID).description(); //has vendorField value
+    Serial.println("transactionFromIDDescription: ");
+    Serial.println(transactionFromIDDescription);
     Serial.println("\n=====\n");
     delay(500);
-
+/*  ==================================  */
 /*    BROKEN: fix for large callbacks  */
 /*    Peers callback is ~28,908 bytes  */
 //  String transactions = _arkManager.transactions();
@@ -294,49 +325,83 @@ void testTransaction(ARK::API::Manager _arkManager) {
 //    Serial.println(transactions);
 //    Serial.println("\n=====\n");
 //    delay(500);
-
-  String transactionUnconfirmedFromId = _arkManager.transactionUnconfirmed("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
-    Serial.println("transactionUnconfirmedFromId: ");
-    Serial.println(transactionUnconfirmedFromId);
+/*  ==================================  */
+  String transactionUnconfirmedFromIdDescription = _arkManager.transactionUnconfirmed(transactionID).description();
+    Serial.println("transactionUnconfirmedFromIdDescription: ");
+    Serial.println(transactionUnconfirmedFromIdDescription);
     Serial.println("\n=====\n");
     delay(500);
-    
-  String transactionsUnconfirmed = _arkManager.transactionsUnconfirmed();
-    Serial.println("transactionsUnconfirmed: ");
-    Serial.println(transactionsUnconfirmed);
+/*  ==================================  */
+  String transactionsUnconfirmedDescription = _arkManager.transactionsUnconfirmed().description();
+    Serial.println("transactionsUnconfirmedDescription: ");
+    Serial.println(transactionsUnconfirmedDescription);
     Serial.println("\n=====\n");
     delay(500);
-    
+/*  ==================================  */
   Serial.println("========== /Transaction Test ==========\n");
 };
+/*  ==========================================================================  */
 
 
-
-
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-
+/*  ==========================================================================  */
+void setupWiFi() {
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);   //WiFi connection
+  WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
   { delay(500); Serial.println("waiting for connection..."); }
   Serial.print("local IP: "); Serial.println(WiFi.localIP());
+};
+/*  ==========================================================================  */
 
-  delay(500);
 
+/*  ==========================================================================  */
+void test() {
+/*  ==================================  */
+  reportFreeHeap();
+/*  ==================================  */
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet); // || arkManager.connect(mainnet);
-
+    reportFreeHeap();
+/*  ==================================  */
   testAccount(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testBlock(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testDelegate(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testLoader(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testPeer(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testSignatures(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testMultiSignatures(arkManager);
+    reportFreeHeap();
+/*  ==================================  */
   testTransaction(arkManager);
-  
-} 
+    reportFreeHeap();
+/*  ==================================  */
+};
+/*  ==========================================================================  */
 
-void loop() {}
+
+/*  ==========================================================================  */
+void setup() {
+  Serial.begin(115200);
+  setupWiFi();
+}
+/*  ==========================================================================  */
+
+
+/*  ==========================================================================  */
+void loop() {
+  test();
+  ESP.deepSleep(4294967000);
+}
+/*  ==========================================================================  */
