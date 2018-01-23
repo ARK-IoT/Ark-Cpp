@@ -30,17 +30,17 @@ namespace ARK {
 					==============
 				*/
 
-				const char* nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
-				String seeds[1] {
-					// /*"167.114.29.51",*/ /*"167.114.29.52",*/
-					// "167.114.29.53", /*"167.114.29.54",*/
-					"167.114.29.55"
-					// "35.193.172.57"
+				String nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
+				String seeds[6] {
+					"167.114.29.32", "167.114.29.33",
+					"167.114.29.34", "167.114.29.35",
+					"167.114.29.36",
+					"130.211.155.75"
 				};
 				int port = 4002;
 
 				/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-				String randomPeer() { return seeds[random(0,1)]; };
+				String randomPeer() { return seeds[random(0,6)]; };
 
 				ARK::Network model {
 					nethash,
@@ -73,7 +73,7 @@ namespace ARK {
 					==============
 				*/
 
-				const char* nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988";
+				String nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988";
 				String seeds[46] {
 					"5.39.9.240", "5.39.9.241", "5.39.9.242", "5.39.9.243",
 					"5.39.9.244", "5.39.9.250", "5.39.9.251", "5.39.9.252",
