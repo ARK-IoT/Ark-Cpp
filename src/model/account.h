@@ -3,108 +3,130 @@
 #ifndef account_h
 #define account_h
 
+
 namespace ARK {
 
-  struct Account {
+  /*  ============  */
+  /*  ARK::Account  */
+    struct Account {
     public:
-      String address;
-      String unconfirmedBalance;    /*  needs Bigint */
-      String balance;               /*  needs Bigint */
-      String publicKey;
+      Address address;
+      Balance unconfirmedBalance;
+      Balance balance;
+      Publickey publicKey;
       int unconfirmedSignature;
       int secondSignature;
-      String secondPublicKey;
-      String multisignatures;
-      String u_multisignatures;
+      Publickey secondPublicKey;
+      Signature multisignatures;
+      Signature u_multisignatures;
 
       Account();
-      Account(String, String, String, String, int, int, String, String, String);
-
+      Account(Address, Balance, Balance, Publickey, int, int, Publickey, Signature, Signature);
       String description();
 
-      struct AccountBalanceResponse;
+      struct BalanceResponse;
 
   };
+  /*  ============  */
 
 };
 
+/*  ==========================================================================  */
 
+/*  ============  */
+/*  ARK::Account  */
+
+/*  Constructor  */
 ARK::Account::Account() {
-  address = "";
-  unconfirmedBalance = "";
-  balance = "";
-  publicKey = "";
+  address = { "" };
+  unconfirmedBalance = { "" };
+  balance = { "" };
+  publicKey = { "" };
   unconfirmedSignature = 0;
   secondSignature = 0;
-  secondPublicKey = "";
-  multisignatures = "";
-  u_multisignatures = "";
+  secondPublicKey = { "" };
+  multisignatures = { "" };
+  u_multisignatures = { "" };
 }
 
+/*  =====  */
+
+/*  Constructor  */
 ARK::Account::Account(
-  String _address,
-  String _unconfirmedBalance,
-  String _balance,
-  String _publicKey,
+  Address _address,
+  Balance _unconfirmedBalance,
+  Balance _balance,
+  Publickey _publicKey,
   int _unconfirmedSignature,
   int _secondSignature,
-  String _secondPublicKey,
-  String _multisignatures,
-  String _u_multisignatures) :
-    address(_address),
-    unconfirmedBalance(_unconfirmedBalance),
-    balance(_balance),
-    publicKey(_publicKey),
+  Publickey _secondPublicKey,
+  Signature _multisignatures,
+  Signature _u_multisignatures) :
+    address( Address(_address) ),
+    unconfirmedBalance( Balance(_unconfirmedBalance) ),
+    balance( Balance(_balance) ),
+    publicKey( Publickey(_publicKey) ),
     unconfirmedSignature(_unconfirmedSignature),
     secondSignature(_secondSignature),
-    secondPublicKey(_secondPublicKey),
-    multisignatures(_multisignatures),
-    u_multisignatures(_u_multisignatures) {}
+    secondPublicKey( Publickey(_secondPublicKey) ),
+    multisignatures( Signature(_multisignatures) ),
+    u_multisignatures( Signature(_u_multisignatures) ) {}
 
+/*  =====  */
+
+/*  Description  */
 String ARK::Account::Account::description() {
   String resp;
     resp += "address: ";
-      resp += this->address; resp += "\n";
-    resp += "unconfirmedBalance: ";
-      resp += this->unconfirmedBalance; resp += "\n";
-    resp += "balance: ";
-      resp += this->balance; resp += "\n";
-    resp += "publicKey: ";
-      resp += this->publicKey; resp += "\n";
+      resp += this->address.description(); resp += "\n";
+    resp += "unconfirmedBalance.ark: ";
+      resp += this->unconfirmedBalance.ark; resp += "\n";
+    resp += "balance.ark: ";
+      resp += this->balance.ark; resp += "\n";
+    resp += "publicKey.description: ";
+      resp += this->publicKey.description(); resp += "\n";
     resp += "unconfirmedSignature: ";
       resp += this->unconfirmedSignature; resp += "\n";
     resp += "secondSignature: ";
       resp += this->secondSignature; resp += "\n";
-    resp += "secondPublicKey: ";
-      resp += this->secondPublicKey; resp += "\n";
-    resp += "multisignatures: ";
-      resp += this->multisignatures; resp += "\n";
-    resp += "u_multisignatures: ";
-      resp += this->u_multisignatures;
+    resp += "secondPublicKey.description: ";
+      resp += this->secondPublicKey.description(); resp += "\n";
+    resp += "multisignatures.description: ";
+      resp += this->multisignatures.description(); resp += "\n";
+    resp += "u_multisignatures.description: ";
+      resp += this->u_multisignatures.description();
   return resp;
 }
+/*  ============  */
 
+/*  ==========================================================================  */
 
-
-
-
-struct ARK::Account::Account::AccountBalanceResponse {
+/*  ============  */
+/*  ARK::Account::Account::BalanceResponse  */
+/*  Definition  */
+struct ARK::Account::Account::BalanceResponse {
   public:
-    String confirmed;     /*  needs Bigint */
-    String unconfirmed;   /*  needs Bigint */
-
+    Balance confirmed;
+    Balance unconfirmed;
     String description();
-
 };
 
-String ARK::Account::Account::AccountBalanceResponse::AccountBalanceResponse::description() {
+/*  =====  */
+
+/*  Description  */
+String ARK::Account::Account::BalanceResponse::BalanceResponse::description() {
   String resp;
-    resp += "confirmed balance: ";
-        resp += this->confirmed; resp += "\n";
-    resp += "unconfirmed balance: ";
-        resp += this->unconfirmed;
+    resp += "confirmed balance.ark: ";
+        resp += this->confirmed.ark; resp += "\n";
+    resp += "confirmed balance.arktoshi: ";
+        resp += this->confirmed.arktoshi; resp += "\n\n";
+    resp += "unconfirmed balance.ark: ";
+        resp += this->unconfirmed.ark; resp += "\n";
+    resp += "unconfirmed balance.arktoshi: ";
+        resp += this->unconfirmed.arktoshi;
   return resp;
 }
+/*  ============  */
 
 
 #endif

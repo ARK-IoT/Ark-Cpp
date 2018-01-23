@@ -5,6 +5,8 @@
 
 namespace ARK {
 
+	/*  =========  */
+	/*  ARK::Peer  */
 	struct Peer {
 		public:
 			String ip;
@@ -12,32 +14,46 @@ namespace ARK {
 			String version;
 			int errors;
 			String os;
-			int height;
+			String height;
 			String status;
 			int delay;
 
 			Peer();
-			Peer( String _ip, int _port, String _version, int _errors, String _os, int _height, String _status, int _delay);
+			Peer(String, int, String, int, String, String, String, int);
 			
 			String description();
 			
 			struct Version;
+			struct PeersResponse;
+
 	};
+	/*  =========  */
+
 
 };
 
 
+
+
+/*  =========  */
+/*  ARK::Peer  */
+
+/*  Constructor  */
 ARK::Peer::Peer() {
 	this->ip = "";
 	this->port = 0;
 	this->version = "";
 	this->errors = 0;
 	this->os = "";
-	this->height = 0;
+	this->height = "";
 	this->status = "";
 	this->delay = 0;
 }
-ARK::Peer::Peer(String _ip, int _port, String _version, int _errors, String _os, int _height, String _status, int _delay) {
+
+/*  =====  */
+
+/*  Constructor  */
+ARK::Peer::Peer(String _ip, int _port, String _version, int _errors, String _os, String _height, String _status, int _delay) {
 		this->ip = _ip;
 		this->port = _port;
 		this->version = _version;
@@ -47,6 +63,10 @@ ARK::Peer::Peer(String _ip, int _port, String _version, int _errors, String _os,
 		this->status = _status;
 		this->delay = _delay;
 }
+
+/*  =====  */
+
+/*  Description  */
 String ARK::Peer::Peer::description() {
 	String resp;
 		resp += "ip: ";
@@ -67,10 +87,16 @@ String ARK::Peer::Peer::description() {
 				resp += this->delay;
 	return resp;
 }
+/*  =========  */
 
 
+/*  ================================================  */
 
 
+/*  ========================  */
+/*  ARK::Peer::Peer::Version  */
+
+/*  Definition  */
 struct ARK::Peer::Peer::Version {
 	public:
 		String version;
@@ -79,15 +105,27 @@ struct ARK::Peer::Peer::Version {
 		Version(String _version, String _build);
 		String description();
 };
-ARK::Peer::Version::Version() {
+
+/*  =====  */
+
+/*  Constructor  */
+ARK::Peer::Peer::Version::Version() {
 	this->version = "";
 	this->build = "";
 }
+
+/*  =====  */
+
+/*  Constructor  */
 ARK::Peer::Version::Version(String _version, String _build) {
 	this->version = _version;
 	this->build = _build;
 }
-String ARK::Peer::Version::Version::description() {
+
+/*  =====  */
+
+/*  Description  */
+String ARK::Peer::Version::description() {
 	String resp;
 		resp += "version: ";
 			resp += this->version; resp += "\n";
@@ -95,6 +133,48 @@ String ARK::Peer::Version::Version::description() {
 			resp += this->build; resp += "\n";
 	return resp;
 }
+/*  ========================  */
+
+
+/*  ================================================  */
+
+
+/*  ==============================  */
+/*  ARK::Peer::Peer::PeersResponse  */
+
+/*  Definition  */
+struct ARK::Peer::Peer::PeersResponse {
+	public:
+		int count;
+		ARK::Peer list[10];// = {{}};
+		PeersResponse(int);
+		String description();
+};
+
+/*  =====  */
+
+/*  Constructor  */
+ARK::Peer::Peer::PeersResponse::PeersResponse(int _count){
+  this->count = _count;
+}
+
+/*  =====  */
+
+/*  Description  */
+String ARK::Peer::Peer::PeersResponse::PeersResponse::description() {
+  String resp;
+  if (this->count > 0) {
+    for (int i = 0; i < this->count; i++) {
+      resp += "\npeer ";
+      resp += i + 1;
+      resp += ":\n";
+      resp += this->list[i].description();
+      resp += "\n";
+    };
+  };
+  return resp;
+}
+/*  ==============================  */
 
 
 #endif

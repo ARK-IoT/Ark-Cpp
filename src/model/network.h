@@ -4,9 +4,18 @@
 #define network_h
 
 namespace ARK {
-    
-  enum NetworkType { DEV, MAIN, CUSTOM };
 
+/*  ================  */
+/*  ARK::NetworkType  */
+  enum NetworkType { DEV, MAIN, CUSTOM };
+/*  ================  */
+
+
+/*  ================================================  */
+
+
+  /*  ============  */
+  /*  ARK::Network  */
   struct Network {
     public:
       String nethash;
@@ -16,14 +25,21 @@ namespace ARK {
       int version;
 
       Network();
-      Network(String _nethash, String _token, String _symbol, String _explorer, int _version);
+      Network(String, String, String, String, int);
 
       String description();
 
       bool operator==(Network*& rhs) const;
       bool operator!=(Network*& rhs) const;
   };
+  /*  ============  */
 
+
+/*  ================================================  */
+
+
+  /*  ================  */
+  /*  ARK::Network_ADV  */
   namespace Network_ADV {
     struct bip32_t {
       long pub;         // base58 will have a prefix 'apub'
@@ -36,10 +52,18 @@ namespace ARK {
       long wif;         // Network prefix for wif generation
     };
   };
+/*  ================  */
+
 
 };
 
 
+
+
+/*  ============  */
+/*  ARK::Delegate  */
+
+/*  Constructor  */
 ARK::Network::Network() {
   this->nethash = "";
   this->token = "";
@@ -48,6 +72,9 @@ ARK::Network::Network() {
   this->version = 0;
 };
 
+/*  =====  */
+
+/*  Constructor  */
 ARK::Network::Network(String _nethash, String _token, String _symbol, String _explorer, int _version) {
   this->nethash = _nethash;
   this->token = _token;
@@ -56,6 +83,9 @@ ARK::Network::Network(String _nethash, String _token, String _symbol, String _ex
   this->version = _version;
 };
 
+/*  =====  */
+
+/*  Description  */
 String ARK::Network::Network::description() {
   String resp;
     resp += "nethash: ";
@@ -71,6 +101,10 @@ String ARK::Network::Network::description() {
   return resp;
 };
 
+/*  =====  */
+
+/*  Operator  */
+/*  ARK::Network == ARK::Network  */
 bool ARK::Network::Network::operator==(Network*& rhs) const {
   if (this->nethash==rhs->nethash
       && this->token==rhs->token
@@ -81,7 +115,12 @@ bool ARK::Network::Network::operator==(Network*& rhs) const {
   return false;
 };
 
+/*  =====  */
+
+/*  Operator  */
+/*  ARK::Network != ARK::Network  */
 bool ARK::Network::Network::operator!=(Network*& rhs) const { return !(this == rhs); };
+/*  ============  */
 
 
 #endif

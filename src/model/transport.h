@@ -5,59 +5,72 @@
 
 namespace ARK {
     
+	/*  ========================  */
+	/*  ARK::TransportPeerHeader  */
     struct TransportPeerHeader {
       public:
-        long int id;
-        long int height;
-        long double version;
-        long double totalAmount;
-        long double totalFee;
-        long double reward;
-        String payloadHash;
+        String id;
+        String height;
+        int version;
+        Balance totalAmount;
+        Balance totalFee;
+        Balance reward;
+        Hash payloadHash;
         int payloadLength;
-        long int timestamp;
-        long int numberOfTransactions;
-        long int previousBlock;
-        String generatorPublicKey;
-        String blockSignature;
+        String timestamp;
+        int numberOfTransactions;
+        String previousBlock;
+        Publickey generatorPublicKey;
+        Signature blockSignature;
 
 				TransportPeerHeader();
-				TransportPeerHeader(long int, long int, long double, long double, long double, long double, String, int, long int, long int, long int, String, String);
+				TransportPeerHeader(String, String, int, Balance, Balance, Balance, Hash, int, String, int, String, Publickey, Signature);
     
 		}; 
+	/*  ========================  */
 
 };
 
 
+
+
+/*  ========================  */
+/*  ARK::TransportPeerHeader  */
+
+/*  Constructor  */
 ARK::TransportPeerHeader::TransportPeerHeader() {
-  height = 0;
-  version = 0.0;
-  totalAmount = 0.0;
-  totalFee = 0.0;
-  reward = 0.0;
-  payloadHash = "";
+	id = "";
+  height = "";
+  version = 0;
+  totalAmount = { "0" };
+  totalFee = { "0" };
+  reward = { "0" };
+  payloadHash = { "" };
   payloadLength = 0;
-  timestamp = 0;
+  timestamp = "";
   numberOfTransactions = 0;
-  previousBlock = 0;
-  generatorPublicKey = "";
-  blockSignature = "";
+  previousBlock = "";
+  generatorPublicKey = { "" };
+  blockSignature = { "" };
 }
 
+/*  =====  */
+
+/*  Constructor  */
 ARK::TransportPeerHeader::TransportPeerHeader(
-	long int _id,
-	long int _height,
-	long double _version,
-	long double _totalAmount,
-	long double _totalFee,
-	long double _reward,
-	String _payloadHash,
+	String _id,
+	String _height,
+	int _version,
+	Balance _totalAmount,
+	Balance _totalFee,
+	Balance _reward,
+	Hash _payloadHash,
 	int _payloadLength,
-	long int _timestamp,
-	long int _numberOfTransactions,
-	long int _previousBlock,
-	String _generatorPublicKey,
-	String _blockSignature) :
+	String _timestamp,
+	int _numberOfTransactions,
+	String _previousBlock,
+	Publickey _generatorPublicKey,
+	Signature _blockSignature) :
 		id(_id),
 		height(_height),
 		version(_version),
@@ -71,6 +84,7 @@ ARK::TransportPeerHeader::TransportPeerHeader(
 		previousBlock(_previousBlock),
 		generatorPublicKey(_generatorPublicKey),
 		blockSignature(_blockSignature) {}
+/*  ========================  */
 
 
 #endif

@@ -5,12 +5,14 @@
 
 namespace ARK {
 
+	/*  =============  */
+	/*  ARK::Delegate  */
 	struct Delegate {
 		public:
 			String username;
-			String address;
-			String publicKey;
-			String vote;
+			Address address;
+			Publickey publicKey;
+			Balance vote;
 			int producedblocks;
 			int missedblocks;
 			int rate;
@@ -18,23 +20,44 @@ namespace ARK {
 			double productivity;
 
 			Delegate();
-			Delegate(String, String, String, String, int, int, int, double, double);
+			Delegate(String, Address, Publickey, Balance, int, int, int, double, double);
 
 			String description();
 
-			struct NextForgersResponse;
-			struct ForgedByAccountResponse;
 			struct SearchResponse;
+			struct ForgedByAccountResponse;
+			struct NextForgersResponse;
 	};
+	/*  =============  */
+
+
+	/*  =====================  */
+	/*  ARK::DelegateResponse  */
+  struct DelegatesResponse {
+    public:
+      int count;
+      ARK::Delegate list[5];// = {{}};
+      DelegatesResponse(int);
+      String description();
+
+  };
+	/*  =====================  */
 
 };
 
 
+/*  ================================================  */
+
+
+/*  =============  */
+/*  ARK::Delegate  */
+
+/*  Constructor  */
 ARK::Delegate::Delegate() {
   username = "";
-  address = "";
-  publicKey = "";
-  vote = "";
+  address = { "" };
+  publicKey = { "" };
+  vote = { "" };
   producedblocks = 0;
   missedblocks = 0;
   rate = 0;
@@ -42,37 +65,42 @@ ARK::Delegate::Delegate() {
   productivity = 0.00;
 }
 
+/*  =====  */
+
+/*  Constructor  */
 ARK::Delegate::Delegate(
 	String _username,
-	String _address,
-	String _publicKey,
-	String _vote,
+	Address _address,
+	Publickey _publicKey,
+	Balance _vote,
 	int _producedblocks,
 	int _missedblocks,
 	int _rate,
 	double _approval,
 	double _productivity) :
 		username(_username),
-		address(_address),
-		publicKey(_publicKey),
-		vote(_vote),
+		address( { _address }),
+		publicKey( { _publicKey } ),
+		vote( { _vote } ),
 		producedblocks(_producedblocks),
 		missedblocks(_missedblocks),
 		rate(_rate),
 		approval(_approval),
 		productivity(_productivity) {}
+		
+/*  =====  */
 
-
+/*  Description  */
 String ARK::Delegate::Delegate::description() {
   String resp;
     resp += "username: ";
         resp += this->username; resp += "\n";
-    resp += "address: ";
-        resp += this->address; resp += "\n";
-    resp += "publicKey: ";
-        resp += this->publicKey; resp += "\n";
-    resp += "vote: ";
-        resp += this->vote; resp += "\n";
+    resp += "address.description: ";
+        resp += this->address.description(); resp += "\n";
+    resp += "publicKey.description: ";
+        resp += this->publicKey.description(); resp += "\n";
+    resp += "vote.ark: ";
+        resp += this->vote.ark; resp += "\n";
     resp += "producedblocks: ";
         resp += this->producedblocks; resp += "\n";
     resp += "missedblocks: ";
@@ -85,20 +113,119 @@ String ARK::Delegate::Delegate::description() {
         resp += this->productivity; resp += "%";
   return resp;
 }
+/*  =====  */
 
 
+/*  ================================================  */
 
 
+/*  ============  */
+/*  ARK::Delegate::Delegate::SearchResponse  */
+
+/*  Definition  */
+struct ARK::Delegate::Delegate::SearchResponse {
+	public:
+		String username;
+		Address address;
+		Publickey publicKey;
+		Balance vote;
+		int producedblocks;
+		int missedblocks;
+		SearchResponse(String, Address, Publickey, Balance, int, int);
+		String description();
+};
+
+/*  =====  */
+
+/*  Constructor  */
+ARK::Delegate::Delegate::SearchResponse::SearchResponse (
+	String _username,
+	Address _address,
+	Publickey _publicKey,
+	Balance _vote,
+	int _producedblocks,
+	int _missedblocks ) {
+		this->username = _username;
+		this->address = { _address };
+		this->publicKey = { _publicKey };
+		this->vote = { _vote };
+		this->producedblocks = _producedblocks;
+		this->missedblocks = _missedblocks;
+}
+
+/*  =====  */
+
+/*  Description  */
+String ARK::Delegate::Delegate::SearchResponse::description() {
+	String resp;
+		resp += "username: ";
+				resp += this->username; resp += "\n";
+		resp += "address.description: ";
+				resp += this->address.description(); resp += "\n";
+		resp += "publicKey.description: ";
+			resp += this->publicKey.description(); resp += "\n";
+		resp += "vote.ark: ";
+				resp += this->vote.ark; resp += "\n";
+		resp += "producedblocks: ";
+				resp += this->producedblocks; resp += "\n";
+		resp += "missedblocks: ";
+			resp += this->missedblocks;
+	return resp;
+}
+/*  ============  */
+
+
+/*  ================================================  */
+
+
+/*  ============  */
+/*  ARK::Delegate::Delegate::ForgedByAccountResponse  */
+
+/*  Definition  */
+struct ARK::Delegate::Delegate::ForgedByAccountResponse {
+	public:
+		Balance fees;
+		Balance rewards;
+		Balance forged;
+		String description();
+};
+
+/*  =====  */
+
+/*  Description  */
+String ARK::Delegate::Delegate::ForgedByAccountResponse::description() {
+	String resp;
+		resp += "fees.ark: ";
+				resp += this->fees.ark; resp += "\n";
+		resp += "rewards.ark: ";
+				resp += this->rewards.ark; resp += "\n";
+		resp += "forged.ark: ";
+			resp += this->forged.ark;
+	return resp;
+}
+/*  ============  */
+
+
+/*  ================================================  */
+
+
+/*  ============  */
+/*  ARK::Delegate::Delegate::NextForgersResponse  */
+
+/*  Definition  */
 struct ARK::Delegate::Delegate::NextForgersResponse {
 	public:
 		String currentBlock;
 		String currentSlot;
-		String delegates[10];
-		NextForgersResponse(String _currentBlock, String _currentSlot, String _delegates[10]);
+		Publickey delegates[10];
+		NextForgersResponse(String _currentBlock, String _currentSlot, Publickey _delegates[10]);
 		String description();
 };
 
-ARK::Delegate::Delegate::NextForgersResponse::NextForgersResponse(String _currentBlock, String _currentSlot, String _delegates[10]) {
+/*  =====  */
+
+/*  Constructor  */
+ARK::Delegate::Delegate::NextForgersResponse::NextForgersResponse(String _currentBlock, String _currentSlot, Publickey _delegates[10]) {
 	this->currentBlock = _currentBlock;
 	this->currentSlot = _currentSlot;
 	for (int i = 0; i < 10; i++) {
@@ -106,6 +233,9 @@ ARK::Delegate::Delegate::NextForgersResponse::NextForgersResponse(String _curren
 	};
 }
 
+/*  =====  */
+
+/*  Description  */
 String ARK::Delegate::Delegate::NextForgersResponse::description() {
 	String resp;
 		resp += "currentBlock: ";
@@ -115,84 +245,49 @@ String ARK::Delegate::Delegate::NextForgersResponse::description() {
 		for (int i = 0; i < 10; i++ ) {
 			resp += "delegate ";
 			resp += i + 1;
-			resp += ": \n	";
-			resp += delegates[i];
+			resp += ": \n publicKey: ";
+			resp += delegates[i].description();
 			resp += "\n";
 		};
 	return resp;
 }
+/*  ============  */
 
 
+/*  ================================================  */
 
 
+/*  =============  */
+/*  ARK::DelegatesResponse  */
 
-struct ARK::Delegate::Delegate::ForgedByAccountResponse {
-	public:
-		String fees;
-		String rewards;
-		String forged;
-		String description();
-};
-
-
-
-String ARK::Delegate::Delegate::ForgedByAccountResponse::description() {
-	String resp;
-		resp += "fees: ";
-				resp += this->fees; resp += "\n";
-		resp += "rewards: ";
-				resp += this->rewards; resp += "\n";
-		resp += "forged: ";
-			resp += this->forged;
-	return resp;
+/*  Constructor  */
+ARK::DelegatesResponse::DelegatesResponse(int _count){
+  this->count = _count;
 }
 
+/*  =====  */
 
-
-
-
-struct ARK::Delegate::Delegate::SearchResponse {
-	public:
-		String username;
-		String address;
-		String publicKey;
-		String vote;
-		int producedblocks;
-		int missedblocks;
-		SearchResponse(String, String, String, String, int, int);
-		String description();
-};
-
-ARK::Delegate::Delegate::SearchResponse::SearchResponse (
-	String _username,
-	String _address,
-	String _publicKey,
-	String _vote,
-	int _producedblocks,
-	int _missedblocks ) {
-		this->username = _username;
-		this->address = _address;
-		this->publicKey = _publicKey;
-		this->vote = _vote;
-		this->producedblocks = _producedblocks;
-		this->missedblocks = _missedblocks;
+/*  Description  */
+String ARK::DelegatesResponse::DelegatesResponse::description() {
+  String resp;
+  if (this->count > 0) {
+    for (int i = 0; i < this->count; i++) {
+      resp += "\ndelegate ";
+      resp += i + 1;
+      resp += ":\n";
+      resp += this->list[i].description();
+      resp += "\n";
+    };
+  };
+  return resp;
 }
+/*  =============  */
 
-String ARK::Delegate::Delegate::SearchResponse::description() {
-	String resp;
-		resp += "username: ";
-				resp += this->username; resp += "\n";
-		resp += "address: ";
-				resp += this->address; resp += "\n";
-		resp += "publicKey: ";
-			resp += this->publicKey; resp += "\n";
-		resp += "vote: ";
-				resp += this->vote; resp += "\n";
-		resp += "producedblocks: ";
-				resp += this->producedblocks; resp += "\n";
-		resp += "missedblocks: ";
-			resp += this->missedblocks;
-	return resp;
-}
+
+/*  ========================  */
+
+
+
+
 
 #endif

@@ -5,6 +5,8 @@
 
 namespace ARK {
     
+  /*  ================  */
+  /*  ARK::Transaction  */
   struct Transaction {
 
     public:
@@ -13,63 +15,60 @@ namespace ARK {
       String height;
       int type;
       String timestamp;
-      String amount;
-      String fee;
+      Balance amount;
+      Balance fee;
       String vendorField;
-      String senderId;
+      Address senderId;
       String recipientId;
       String senderPublicKey;
       String signature;
       String confirmations;
 
       Transaction();
-      Transaction(
-        String _id,
-        String _blockid,
-        String _height,
-        int _type,
-        String _timestamp,
-        String _amount,
-        String _fee,
-        String _vendorField,
-        String _senderId,
-        String _recipientId,
-        String _senderPublicKey,
-        String _signature,
-        String _confirmations);
+      Transaction(String, String, String, int, String, Balance, Balance, String, Address, String, String, String, String);
 
       String description();
   };
+  /*  ================  */
 
 };
 
 
+
+
+/*  ================  */
+/*  ARK::Transaction  */
+
+/*  Constructor  */
 ARK::Transaction::Transaction() {
   id = "";
   blockid = "";
   height = "";
   type = 0;
   timestamp = "";
-  amount = "";
-  fee = "";
+  amount = { "0" };
+  fee = { "0" };
   vendorField = "";
-  senderId = "";
+  senderId = { "" };
   recipientId = "";
   senderPublicKey ="";
   signature = "";
   confirmations = "";
 }
 
+/*  =====  */
+
+/*  Constructor  */
 ARK::Transaction::Transaction(
   String _id,
   String _blockid,
   String _height,
   int _type,
   String _timestamp,
-  String _amount,
-  String _fee,
+  Balance _amount,
+  Balance _fee,
   String _vendorField,
-  String _senderId,
+  Address _senderId,
   String _recipientId,
   String _senderPublicKey,
   String _signature,
@@ -79,15 +78,18 @@ ARK::Transaction::Transaction(
     height(_height),
     type(_type),
     timestamp(_timestamp),
-    amount(_amount),
-    fee(_fee),
+    amount( { _amount } ),
+    fee( { _fee } ),
     vendorField(_vendorField),
-    senderId(_senderId),
+    senderId( { _senderId }),
     recipientId(_recipientId),
     senderPublicKey(_senderPublicKey),
     signature(_signature),
     confirmations(_confirmations) {}
 
+/*  =====  */
+
+/*  Description  */
 String ARK::Transaction::Transaction::description() {
   String resp;
     resp += "id: ";
@@ -100,14 +102,14 @@ String ARK::Transaction::Transaction::description() {
       resp += this->type; resp += "\n";
     resp += "timestamp: ";
       resp += this->timestamp; resp += "\n";
-    resp += "amount: ";
-      resp += this->amount; resp += "\n";
-    resp += "fee: ";
-      resp += this->fee; resp += "\n";
+    resp += "amount.ark: ";
+      resp += this->amount.ark; resp += "\n";
+    resp += "fee.ark: ";
+      resp += this->fee.ark; resp += "\n";
     resp += "vendorField: ";
       resp += this->vendorField; resp += "\n";      
-    resp += "senderId: ";
-      resp += this->senderId; resp += "\n";
+    resp += "senderId.description: ";
+      resp += this->senderId.description(); resp += "\n";
     resp += "recipientId: ";
       resp += this->recipientId; resp += "\n";
     resp += "senderPublicKey: ";
@@ -120,5 +122,8 @@ String ARK::Transaction::Transaction::description() {
       resp += this->confirmations;
   return resp;
 }
+/*  ================  */
+
+
 #endif
  

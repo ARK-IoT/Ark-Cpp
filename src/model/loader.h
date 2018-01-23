@@ -6,40 +6,67 @@
  
  
  
- namespace ARK {
-   
-   struct Loader {
-     public:
-      struct StatusResponse;
-      struct SyncResponse;
+namespace ARK {
+  namespace Loader {
+
+
+    /*  ============  */
+    /*  ARK::Loader::Loader::StatusResponse  */
+    struct StatusResponse {
+      public:
+        bool loaded;
+        int now;
+        String blocksCount;
+        StatusResponse();
+        StatusResponse(bool _loaded, int _now, String _blocksCount);
+        String description();
+    };
+    /*  ============  */
+
+
+    /*  ============  */
+    /*  ARK::Loader::Loader::SyncResponse  */
+    struct SyncResponse {
+      public:
+        bool syncing;
+        int blocks;
+        String height;
+        String id;
+        SyncResponse();
+        SyncResponse(bool _syncing, int _blocks, String _height, String _id);
+        String description();
+    };
+    /*  ============  */
+
+
    };
- 
-};
-
-struct ARK::Loader::Loader::StatusResponse {
-  public:
-    bool loaded;
-    int now;
-    int blocksCount;
-    StatusResponse();
-    StatusResponse(bool _loaded, int _now, int _blocksCount);
-    String description();
 };
 
 
 
+
+/*  ============  */
+/*  ARK::Loader::StatusResponse  */
+
+/*  Constructor  */
 ARK::Loader::StatusResponse::StatusResponse() {
   this->loaded = false;
   this->now = 0;
-  this->blocksCount = 0;
+  this->blocksCount = "";
 };
 
-ARK::Loader::StatusResponse::StatusResponse(bool _loaded, int _now, int _blocksCount) {
+/*  =====  */
+
+/*  Constructor  */
+ARK::Loader::StatusResponse::StatusResponse(bool _loaded, int _now, String _blocksCount) {
   this->loaded =_loaded;
   this->now = _now;
   this->blocksCount = _blocksCount;
 };
 
+/*  =====  */
+
+/*  Description  */
 String ARK::Loader::StatusResponse::StatusResponse::description() {
   String resp;
     resp += "loaded: ";
@@ -50,35 +77,37 @@ String ARK::Loader::StatusResponse::StatusResponse::description() {
       resp += this->blocksCount;
   return resp;
 };
+/*  ============  */
 
 
+/*  ================================================  */
 
-struct ARK::Loader::Loader::SyncResponse {
-  public:
-    bool syncing;
-    int blocks;
-    int height;
-    int id;
-    SyncResponse();
-    SyncResponse(bool _syncing, int _blocks, int _height, int _id);
-    String description();
-};
 
+/*  ============  */
+/*  ARK::Loader::Loader::SyncResponse  */
+
+/*  Constructor  */
 ARK::Loader::SyncResponse::SyncResponse() {
   this->syncing = false;
   this->blocks = 0;
-  this->height = 0;
-  this->id = 0;
+  this->height = "";
+  this->id = "";
 };
 
-ARK::Loader::SyncResponse::SyncResponse(bool _syncing, int _blocks, int _height, int _id) {
+/*  =====  */
+
+/*  Constructor  */
+ARK::Loader::SyncResponse::SyncResponse(bool _syncing, int _blocks, String _height, String _id) {
   this->syncing = _syncing;
   this->blocks = _blocks;
   this->height = _height;
   this->id = _id;
 };
 
-String ARK::Loader::SyncResponse::SyncResponse::description() {
+/*  =====  */
+
+/*  Description  */
+String ARK::Loader::SyncResponse::description() {
   String resp;
     resp += "syncing: ";
       resp += this->syncing; resp += "\n";           
@@ -90,6 +119,7 @@ String ARK::Loader::SyncResponse::SyncResponse::description() {
       resp += this->id;
   return resp;
 };
+/*  ============  */
 
 
 #endif

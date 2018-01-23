@@ -4,7 +4,6 @@
 #define model_h
 
 #include "account.h"
-#include "address.h"
 #include "block.h"
 #include "currency.h"
 #include "delegate.h"
