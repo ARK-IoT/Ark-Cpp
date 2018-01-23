@@ -3,7 +3,7 @@
 #ifndef json_h
 #define json_h
 
-#include "../../include/ArduinoJson/ArduinoJson.h"
+// #include "../../include/ArduinoJson/ArduinoJson.h"
 
 
 namespace ARK {
@@ -44,6 +44,7 @@ String ARK::Utilities::JSONString::valueFor(String _key) {
   JsonObject& root = jsonBuffer.parseObject(this->jsonStr);
   return root[_key];
 }
+
 /*    { "key": { subValue1, subvalue2 } }    */
 String ARK::Utilities::JSONString::subvalueFor(String _key, int _pos) {
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
