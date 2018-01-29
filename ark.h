@@ -1,9 +1,10 @@
 
 
-#ifndef ark_h
-#define ark_h
+#ifndef ARK_H
+#define ARK_H
 
 #include <Arduino.h>
+
 #include "include/include.h"
 #include "src/types/types.h"
 #include "src/constants/constants.h"
