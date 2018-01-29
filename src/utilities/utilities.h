@@ -1,11 +1,11 @@
 
 
-#ifndef utilities_h
-#define utilities_h
-
+#ifndef UTILITIES_H
+#define UTILITIES_H
 #pragma once
 
-#include "ark_network_manager.h"
+#include "http.h"
+#include "connector.h"
 #include "json.h"
 
 #endif
