@@ -18,7 +18,7 @@ It will be changing quite a bit before a final release version.
     - [X] add network client
   - [ ] API Gets
     - [X] test api calls
-    - [ ] finish api calls
+    - [X] finish api calls
   - [ ] API Posts
     - [ ] test api posts
     - [ ] finish api posts
@@ -44,7 +44,9 @@ It will be changing quite a bit before a final release version.
     - [ ] add Signing and Address generation.
 
 
-- [ ] Needs Fixed
-  - [ ] Stack Network Calls
-  - [ ] Handle Array Values in Callback
-  - [ ] Handle Large Callback Strings 
+- [ ] TODO
+  - [ ] Documentation 
+  - [ ] Tests 
+  - [ ] Handle Large Callbacks 
+  - [ ] Remove 'String' objects in favor of 'const char*'
+
