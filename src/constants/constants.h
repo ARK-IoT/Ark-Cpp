@@ -1,11 +1,11 @@
 
 
-#ifndef constants_h
-#define constants_h
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 #include "../model/model.h"
 
-#include "const_currencies.h"
-#include "const_networks.h"
+#include "currencies.h"
+#include "networks.h"
 
 #endif
