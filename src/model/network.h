@@ -5,15 +5,23 @@
 
 namespace ARK {
 
-/*  ================  */
+/*  ================================================  */
 /*  ARK::NetworkType  */
   enum NetworkType { DEV, MAIN, CUSTOM };
-/*  ================  */
-
-
 /*  ================================================  */
 
+/********************************************************************************
+*
+* Network: 
+*  	578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23
+*		DARK
+*		DѦ
+*		https://dexplorer.ark.io/
+*		30
+*
+********************************************************************************/
 
+/*  ================================================  */
   /*  ============  */
   /*  ARK::Network  */
   struct Network {
@@ -24,20 +32,13 @@ namespace ARK {
       String explorer;
       int version;
 
-      Network();
-      Network(String, String, String, String, int);
-
       String description();
 
       bool operator==(Network*& rhs) const;
       bool operator!=(Network*& rhs) const;
   };
   /*  ============  */
-
-
-/*  ================================================  */
-
-
+  /*  ================================================  */
   /*  ================  */
   /*  ARK::Network_ADV  */
   namespace Network_ADV {
@@ -54,37 +55,11 @@ namespace ARK {
   };
 /*  ================  */
 
-
 };
 
-
-
-
+/*  ================================================  */
 /*  ============  */
 /*  ARK::Delegate  */
-
-/*  Constructor  */
-ARK::Network::Network() {
-  this->nethash = "";
-  this->token = "";
-  this->symbol = "";
-  this->explorer = "";
-  this->version = 0;
-};
-
-/*  =====  */
-
-/*  Constructor  */
-ARK::Network::Network(String _nethash, String _token, String _symbol, String _explorer, int _version) {
-  this->nethash = _nethash;
-  this->token = _token;
-  this->symbol = _symbol;
-  this->explorer = _explorer;
-  this->version = _version;
-};
-
-/*  =====  */
-
 /*  Description  */
 String ARK::Network::Network::description() {
   String resp;
@@ -100,9 +75,7 @@ String ARK::Network::Network::description() {
       resp += this->version;
   return resp;
 };
-
 /*  =====  */
-
 /*  Operator  */
 /*  ARK::Network == ARK::Network  */
 bool ARK::Network::Network::operator==(Network*& rhs) const {
@@ -114,13 +87,12 @@ bool ARK::Network::Network::operator==(Network*& rhs) const {
     return true;
   return false;
 };
-
 /*  =====  */
-
 /*  Operator  */
 /*  ARK::Network != ARK::Network  */
 bool ARK::Network::Network::operator!=(Network*& rhs) const { return !(this == rhs); };
 /*  ============  */
+/*  ================================================  */
 
 
 #endif

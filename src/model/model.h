@@ -8,7 +8,6 @@
 #include "currency.h"
 #include "delegate.h"
 #include "fees.h"
-#include "loader.h"
 #include "network.h"
 #include "peer.h"
 #include "transaction.h"

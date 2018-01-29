@@ -1,27 +1,28 @@
 
-#ifndef currency_h
-#define currency_h
+#ifndef CURRENCY_H
+#define CURRENCY_H
 
 namespace ARK {
   namespace Model {
 
+/*  ================================================  */
+    struct Currency {
+      public:
+        String ticker;
+        String name;
+        String symbol;
 
-    // struct Currency {
-    //   public:
-    //     String ticker;
-    //     String name;
-    //     String symbol;
+        Currency(String _ticker, String _name, String _symbol) {
+          ticker = _ticker;
+          name = _name;
+          symbol = _symbol;
+        };
 
-    //     Currency(String _ticker, String _name, String _symbol) {
-    //       ticker = _ticker;
-    //       name = _name;
-    //       symbol = _symbol;
-    //     };
-
-    //     String asString() {
-    //       return ("ticker: " + ticker + ", " + "name: " + name + ", " + "symbol: " + symbol);
-    //     };
-    // };
+        String description() {
+          return ("ticker: " + ticker + ", " + "name: " + name + ", " + "symbol: " + symbol);
+        };
+    };
+/*  ================================================  */
 
 
   };
