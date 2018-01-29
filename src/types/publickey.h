@@ -1,18 +1,18 @@
 
 
-#ifndef publickey_h
-#define publickey_h
+#ifndef PUBLICKEY_H
+#define PUBLICKEY_H
 #pragma once
 
+/********************************************************************************
+*
+* publicKey: 
+*   "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456"
+*   
+*   66 Characters | Base64-encoded
+*
+********************************************************************************/
 
-// namespace ARK {
-//   namespace Utilities {
-
-
-
-// {"success":true,"publicKey":"0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456"}
-// base64
-// 66 characters
 
     #define PUBLICKEY_SIZE 66
 

@@ -1,7 +1,7 @@
 
 
-#ifndef types_h
-#define types_h
+#ifndef TYPES_H
+#define TYPES_H
 
 #include "address.h"
 #include "balance.h"
