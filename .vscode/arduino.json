@@ -1,5 +1,0 @@
-{
-    "board": "esp8266com:esp8266:huzzah",
-    "configuration": "CpuFrequency=80,FlashSize=4M1M,LwIPVariant=open,Debug=Disabled,DebugLevel=None____,UploadSpeed=115200",
-    "sketch": "examples/Ark-Metal/Ark-Metal.ino"
-}
