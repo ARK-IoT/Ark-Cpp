@@ -5,8 +5,8 @@
 
 #include "../utilities/utilities.h"
 
-#include "api_helpers.h"
-#include "api_constants.h"
+#include "helpers.h"
+#include "paths.h"
 
 #include "accountable/accountable.h"
 #include "blockable/blockable.h"
@@ -17,6 +17,6 @@
 #include "signaturable/signaturable.h"
 #include "transactionable/transactionable.h"
 
-#include "api_manager.h"
+#include "manager.h"
 
 #endif

@@ -1,53 +1,67 @@
 
 
-#ifndef transactionable_h
-#define transactionable_h
+#ifndef TRANSACTIONABLE_H
+#define TRANSACTIONABLE_H
 
+#include "transaction_respondable.h"
 #include "transaction_gettable.h"
 
-namespace ARK {
-  namespace API {
-
-    /*  =================================  */
-    /*  PUBLIC: ARK::API::Transactionable  */
-    class Transactionable : public TransactionGettable, virtual ARK::Utilities::Network::Managable {
-      public: 
+namespace ARK
+{
+namespace API
+{
 
 /*  ==========================================================================  */
-
-        /*  /api/transactions/get?id=  */
-        ARK::Transaction transaction(Hash _id)
-        { return ARK::API::TransactionGettable::transaction(this->netManager, _id); };
-
+/*  =================================  */
+/*  PUBLIC: ARK::API::Transactionable  */
+class Transactionable :
+		public Transaction::Gettable,
+		virtual ARK::Utilities::Network::Connectable
+{
+  public:
 /*  ==========================================================================  */
-    /*    BROKEN: fix for large callbacks  */
-    /*    Peers callback is ~28,908 bytes  */
-        /*  /api/transactions  */
-        // String transactions()
-        // { return ARK::API::TransactionGettable::transactions(this->netManager); };
-/*  ==========================================================================  */
-
-        /*  /api/transactions/unconfirmed/get?id=  */
-        ARK::Transaction transactionUnconfirmed(Hash _id)
-        { return ARK::API::TransactionGettable::transactionUnconfirmed(this->netManager, _id); };
-
+		/*  /api/transactions/get?id=  */
+		ARK::Transaction transaction(Hash _id)
+		{
+			return ARK::API::Transaction::Gettable::transaction(this->netConnector, _id);
+		};
 /*  ==========================================================================  */
 
-        /*  /api/transactions/unconfirmed/  */
-        ARK::Transaction transactionsUnconfirmed()
-        { return ARK::API::TransactionGettable::transactionsUnconfirmed(this->netManager); };
-
+/*  ==========================================================================  */
+/*  ==========================================================================  */
+		/*    BROKEN: fix for large callbacks  */
+		/*    Peers callback is ~28,908 bytes  */
+		/*  /api/transactions  */
+		// String transactions()
+		// { return ARK::API::Transaction::Gettable::transactions(this->netConnector); };
+/*  ==========================================================================  */
 /*  ==========================================================================  */
 
-    };
-    /*  =================================  */
+/*  ==========================================================================  */
+		/*  /api/transactions/unconfirmed/get?id=  */
+		String transactionUnconfirmed(Hash _id)
+		{
+			return ARK::API::Transaction::Gettable::transactionUnconfirmed(this->netConnector, _id);
+		};
+/*  ==========================================================================  */
 
-  // namespace transaction_cb {
-  //   struct addTransactionsResponse : virtual ARK::API::Helpers::Successable {};
-  // };
+/*  ==========================================================================  */
+		/*  /api/transactions/unconfirmed/  */
+		String transactionsUnconfirmed()
+		{
+			return ARK::API::Transaction::Gettable::transactionsUnconfirmed(this->netConnector);
+		};
+/*  ==========================================================================  */
 
-  };
 };
+/*  =================================  */
+/*  ==========================================================================  */
 
+// namespace transaction_cb {
+//   struct addTransactionsResponse : virtual ARK::API::Helpers::Successable {};
+// };
+
+};
+};
 
 #endif

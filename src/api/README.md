@@ -1,179 +1,227 @@
 
+
+
+## Whats Here
+
+1) Modelable
+> Primary Model for entering of API's syntax  
+
+    ARK::API::Accountable  
+    ARK::API::Blockable  
+    ARK::API::Delegatable  
+    ARK::API::Loadable  
+    ARK::API::MultiSignaturable  
+    ARK::API:: Peerable  
+    ARK::API:: Signaturable  
+    ARK::API::Transactionable  
+
+2) Gettable
+> These methods return API Respondables to their corresponding API Modelables  
+
+    ARK::API::Account::Gettable  
+    ARK::API::Block::Gettable  
+    ARK::API::Delegate::Gettable  
+    ARK::API::Loader::Gettable  
+    ARK::API::MultiSignature::Gettable  
+    ARK::API::Peer::Gettable  
+    ARK::API::Signature::Gettable  
+    ARK::API::Transaction::Gettable  
+
+3) Respondable
+> These are structs that model certain API Responses  
+
+    ARK::API::Account::Respondable  
+    ARK::API::Block::Respondable  
+    ARK::API::Delegate::Respondable  
+    ARK::API::Loader::Respondable  
+    ARK::API::Peer::Respondable  
+
+
+##
+
 ```
-==================== Accounts ====================  
+======================= Accounts ====================  
 
-    /api/accounts/getBalance?address=arkAddress
-      String accountBalance(String _arkAddress)
 
-    /api/accounts/getPublickey?address=arkAddress
-      String accountPublickey(String _arkAddress)
+/api/accounts/getBalance?address=arkAddress
+ ARK::API::Account::Respondable::Balances accountBalance(Address arkAddress)
 
-    /api/accounts/delegates/fee?address=arkAddress
-      String accountDelegatesFee(String _arkAddress)
+/api/accounts/getPublickey?address=arkAddress
+ Publickey accountPublickey(String arkAddress)
 
-    /api/accounts/delegates?address=arkAddress
-      String accountDelegates(String _arkAddress)
+/api/accounts/delegates/fee?address=arkAddress
+ Balance accountDelegatesFee(String arkAddress)
 
-    /api/accounts?address=arkAddress
-      String account(String _arkAddress)
+/api/accounts/delegates?address=arkAddress
+ ARK::Delegate accountDelegates(String arkAddress)
 
-==================== /Accounts ====================
+/api/accounts?address=arkAddress
+ ARK::Account account(String _arkAddress)
+
+===================== /Accounts =====================
 ```
 
+
 ```
-==================== Blocks ====================  
+======================= Blocks ======================  
 
-    /api/blocks/get?id=_blockID  
-      String block(String _blockId)  
+/api/blocks/get?id=_blockID  
+ ARK::Block  block(String _blockId)  
 
-/*  ==========================================================================  */
+/*  =================================================  */
 // BROKEN: fix for large callbacks  
-//     /api/blocks  
-//       String blocks()  
-/*  ==========================================================================  */
+///api/blocks  
+// String blocks()  
+/*  =================================================  */
 
-    /api/blocks/getEpoch
-      String blockEpoch()  
+/api/blocks/getEpoch
+ String blockEpoch()  
 
-    /api/blocks/getHeight
-      String blockHeight()  
+/api/blocks/getHeight
+ ARK::API::Block::Respondable::Height blockHeight()  
 
-    /api/blocks/getNethash  
-      String blockNethash()  
+/api/blocks/getNethash  
+ Hash blockNethash()  
 
-    /api/blocks/getFee  
-      String blockFee()  
+/api/blocks/getFee  
+ Balance blockFee()  
 
-    /api/blocks/getFees  
-      String blockFees()  
+/api/blocks/getFees  
+ ARK::Fees blockFees()  
 
-    /api/blocks/getMilestone  
-      String blockMilestone()
+/api/blocks/getMilestone  
+ String blockMilestone()
 
-    /api/blocks/getReward  
-      String blockReward()  
+/api/blocks/getReward  
+ Balance blockReward()  
 
-    /api/blocks/getSupply  
-      String blockSupply()  
+/api/blocks/getSupply  
+ Balance blockSupply()  
 
-    /api/blocks/getStatus  
-      String blockStatus()  
+/api/blocks/getStatus  
+ ARK::API::Block::Respondable::Status blockStatus()  
 
-==================== /Blocks ====================  
+======================= /Blocks =====================  
 ```
 
+
 ```
-==================== Delegates ====================  
+====================== Delegates ====================  
 
-    /api/delegates/count  
-      String delegatesCount()  
+/api/delegates/count  
+ int delegatesCount()  
 
-    /api/delegates/search?q=sleepdeficit  
-      String delegateSearch(String _username)  
+/api/delegates/search?q=sleepdeficit  
+ ARK::API::Delegate::Respondable::Search delegateSearch(String username)  
 
-    /api/delegates/voters?publicKey=_pubKey  
-      String delegateVoters(String _publicKey)  
+/api/delegates/voters?publicKey=_pubKey  
+ ARK::API::Delegate::Respondable::Voters delegateVoters(String publicKey)  
 
   
-    /api/delegates/get?username=sleepdeficit  
-    /api/delegates/get?publicKey=_pubKey  
-      String delegate(String _parameter)  
+/api/delegates/get?username=sleepdeficit  
+/api/delegates/get?publicKey=_pubKey  
+ ARK::Delegate delegate(String parameter)  
 
-/*  ==========================================================================  */
+/*  =================================================  */
 // BROKEN: fix for large callbacks  
 // Delegates callback is ~13,564 bytes  
 //    /api/delegates  
 //      String delegates()  
-/*  ==========================================================================  */
+/*  =================================================  */
 
-    /api/delegates/fee  
-      String delegateFee()  
+/api/delegates/fee  
+ Balance delegateFee()  
 
-    /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  
-      String delegateForgedByAccount(String _generatorPublicKey)  
+/api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  
+ ARK::API::Delegate::Respondable::ForgedByAccount delegateForgedByAccount(String generatorPublicKey)  
 
-    /api/delegates/getNextForgers  
-      String delegateNextForgers()  
+/api/delegates/getNextForgers  
+ ARK::API::Delegate::Respondable::NextForgers delegateNextForgers()  
 
-==================== /Delegates ====================  
+===================== /Delegates ====================  
 ```
 
-```
-==================== Loader ====================  
-
-    /api/loader/status  
-      String loaderStatus()  
-
-    /api/loader/status/sync  
-      String loaderSync()  
-
-    /api/loader/autoconfigure  
-      String loaderAutoconfigure()  
-
-==================== /Loader ====================  
-```
 
 ```
-==================== MultiSignatures ====================  
+====================== Loader =======================  
 
-    /api/multisignatures/pending?publicKey=  
-      String multisignaturesPending(String _publicKey)  
+/api/loader/status  
+ ARK::API::Loader::Respondable::Status loaderStatus()  
 
-/*  ==========================================================================  */
+/api/loader/status/sync  
+ ARK::API::Loader::Respondable::Sync loaderSync()  
+
+/api/loader/autoconfigure  
+ ARK::Network loaderAutoconfigure()  
+
+======================= /Loader =====================  
+```
+
+
+```
+================== MultiSignatures ==================  
+
+/api/multisignatures/pending?publicKey=  
+ String multisignaturesPending(String _publicKey)  
+
+/*  =================================================  */
 // Only on Mainnet?  
-//     /api/multisignatures/accounts?publicKey=  
-//       String multisignaturesAccounts(String _publicKey)  
-/*  ==========================================================================  */
+///api/multisignatures/accounts?publicKey=  
+// String multisignaturesAccounts(String _publicKey)  
+/*  =================================================  */
 
-==================== /MultiSignatures ====================  
+
+================== /MultiSignatures =================  
 ```
 
 ```
-==================== Peer ====================  
+======================= Peer ========================  
 
-    /api/peers/get?ip=167.114.29.55&port=4002  
-      String peer(String _ip, int _port)  
+/api/peers/get?ip=167.114.29.55&port=4002  
+ ARK::Peer peer(String _ip, int _port)  
 
-/*  ==========================================================================  */
+/*  =================================================  */
 // BROKEN: fix for large callbacks  
 // Peers callback is ~10,792 bytes  
 //     /api/peers  
 //      String peers()  
-/*  ==========================================================================  */
+/*  =================================================  */
 
-    /api/peers/version  
-      String peerVersion()  
+/api/peers/version  
+ ARK::API::Peer::Respondable::Version peerVersion()  
 
-==================== /Peer ====================  
+======================= /Peer =======================  
 ```
 
-```
-==================== Signatures ====================  
 
-    /api/signatures/fee
-      String signaturesFee()
-
-==================== /Signatures ====================  
 ```
+==================== Signatures =====================  
+
+/api/signatures/fee
+ Balance signaturesFee()
+
+=================== /Signatures =====================  
+```
+
 
 ```
 ==================== Transaction ====================  
 
-    /api/transactions/get?id=  
-      String transaction(String _id)  
+/api/transactions/get?id=  
+ ARK::Transaction transaction(String _id)  
 
-/*  ==========================================================================  */
+/*  =================================================  */
 //  BROKEN: fix for large callbacks  
 //  Peers callback is ~28,908 bytes  
 //    /api/transactions  
 //      String transactions()  
-/*  ==========================================================================  */
+/*  =================================================  */
 
-    /api/transactions/unconfirmed/get?id=  
-      String transactionUnconfirmed(String _id)  
+/api/transactions/unconfirmed/get?id=  
+ String transactionUnconfirmed(String _id)  
 
-    /api/transactions/unconfirmed  
-      String transactionsUnconfirmed()  
+/api/transactions/unconfirmed  
+ String transactionsUnconfirmed()  
    
-==================== /Transaction ====================  
+==================== /Transaction ===================  
 ```

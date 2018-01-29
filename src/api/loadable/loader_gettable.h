@@ -1,139 +1,160 @@
 
 
-#ifndef loader_gettable_h
-#define loader_gettable_h
+#ifndef LOADER_GETTABLE_H
+#define LOADER_GETTABLE_H
 
-namespace ARK {
-  namespace API {
-
-    /*  ===================================  */
-    /*  PROTECTED: ARK::API::LoaderGettable  */
-    class LoaderGettable {
-      protected:
-
-/*  ==========================================================================  */
-
-        /*  /api/loader/status  */
-        ARK::Loader::StatusResponse status(ARK::Utilities::Network::Manager _netManager);
-        ARK::Loader::StatusResponse statusfromJSON(String _jsonStr);
+namespace ARK
+{
+namespace API
+{
+namespace Loader
+{
 
 /*  ==========================================================================  */
-
-        /*  /api/loader/status/sync  */
-        ARK::Loader::SyncResponse sync(ARK::Utilities::Network::Manager _netManager);
-        ARK::Loader::SyncResponse syncfromJSON(String _jsonStr);
-      
+/*  =====================================  */
+/*  PROTECTED: ARK::API::Loader::Gettable  */
+class Gettable
+{
+  protected:
+/*  ==========================================================================  */
+    /*  /api/loader/status  */
+    ARK::API::Loader::Respondable::Status status(ARK::Utilities::Network::Connector _netConnector);
+    ARK::API::Loader::Respondable::Status statusfromJSON(String _jsonStr);
 /*  ==========================================================================  */
 
-        /*  /api/loader/autoconfigure  */
-        ARK::Network autoconfigure(ARK::Utilities::Network::Manager _netManager);
-        ARK::Network autoconfigurefromJSON(String _jsonStr);
-
+/*  ==========================================================================  */
+    /*  /api/loader/status/sync  */
+    ARK::API::Loader::Respondable::Sync sync(ARK::Utilities::Network::Connector _netConnector);
+    ARK::API::Loader::Respondable::Sync syncfromJSON(String _jsonStr);
 /*  ==========================================================================  */
 
-    };
-    /*  ===================================  */
-
-  };
+/*  ==========================================================================  */
+    /*  /api/loader/autoconfigure  */
+    ARK::Network autoconfigure(ARK::Utilities::Network::Connector _netConnector);
+    ARK::Network autoconfigurefromJSON(String _jsonStr);
+/*  ==========================================================================  */
+};
+/*  =====================================  */
+/*  ==========================================================================  */
+};
+};
 };
 
+
+
+
 /*  ==========================================================================  */
-
 /*  ================================  */
-/*  ARK::API::LoaderGettable::status  */
-
+/*  ARK::API::Loader::Gettable::status  */
 /*  /api/loader/status  */
-ARK::Loader::StatusResponse ARK::API::LoaderGettable::status(ARK::Utilities::Network::Manager _netManager) {
-  String uri = ARK::API::Endpoints::Loader::status_s;
-  String callback = _netManager.cb(uri);
-  return ARK::API::LoaderGettable::statusfromJSON(callback);
+ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(ARK::Utilities::Network::Connector _netConnector)
+{
+  String uri = ARK::API::Paths::Loader::status_s;
+
+  String callback = _netConnector.cb(uri);
+
+  return ARK::API::Loader::Gettable::statusfromJSON(callback);
 }
 
 /*
 { 
   "success":true,
-  "loaded":false,
-  "now":1912029,
-  "blocksCount":0
+  "loaded": bool,
+  "now":  int,
+  "blocksCount":  String
 }
 */
-ARK::Loader::StatusResponse ARK::API::LoaderGettable::statusfromJSON(String _jsonStr) {
+ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::statusfromJSON(String _jsonStr)
+{
   ARK::Utilities::JSONString jString(_jsonStr);
+
   return {
-    jString.valueFor("loaded"),
-    jString.valueFor("now").toInt(),
-    jString.valueFor("blocksCount")
-  };
+      jString.valueFor("loaded"),
+      jString.valueFor("now").toInt(),
+      jString.valueFor("blocksCount")};
 }
 /*  ================================  */
-
 /*  ==========================================================================  */
 
-/*  ==============================  */
-/*  ARK::API::LoaderGettable::sync  */
 
+
+
+/*  ==========================================================================  */
+/*  ==============================  */
+/*  ARK::API::Loader::Gettable::sync  */
 /*  /api/loader/status/sync  */
-ARK::Loader::SyncResponse ARK::API::LoaderGettable::sync(ARK::Utilities::Network::Manager _netManager) {
-  String uri = ARK::API::Endpoints::Loader::sync_s;
-  String callback = _netManager.cb(uri);
-  return ARK::API::LoaderGettable::syncfromJSON(callback);
+ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(ARK::Utilities::Network::Connector _netConnector)
+{
+  String uri = ARK::API::Paths::Loader::sync_s;
+
+  String callback = _netConnector.cb(uri);
+
+  return ARK::API::Loader::Gettable::syncfromJSON(callback);
 }
 
 /*
 { 
   "success":true,
-  "syncing":false,
-  "blocks":-16,
-  "height":2313438,
-  "id":"16889110256993862505"
+  "syncing":  bool,
+  "blocks": int,
+  "height": String,
+  "id": "String"
 }
 */
-ARK::Loader::SyncResponse ARK::API::LoaderGettable::syncfromJSON(String _jsonStr) {
+ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::syncfromJSON(String _jsonStr)
+{
   ARK::Utilities::JSONString jString(_jsonStr);
+
   return {
-    jString.valueFor("syncing"),
-    jString.valueFor("blocks").toInt(),
-    jString.valueFor("height"),
-    jString.valueFor("id")
-  };
+      jString.valueFor("syncing"),
+      jString.valueFor("blocks").toInt(),
+      jString.valueFor("height"),
+      jString.valueFor("id")};
 }
 /*  ==============================  */
-
 /*  ==========================================================================  */
 
-/*  =======================================  */
-/*  ARK::API::LoaderGettable::autoconfigure  */
 
+
+
+/*  ==========================================================================  */
+/*  =======================================  */
+/*  ARK::API::Loader::Gettable::autoconfigure  */
 /*  /api/loader/autoconfigure  */
-ARK::Network ARK::API::LoaderGettable::autoconfigure(ARK::Utilities::Network::Manager _netManager) {
-  String uri = ARK::API::Endpoints::Loader::autoconfigure_s;
-  String callback = _netManager.cb(uri);
-  return ARK::API::LoaderGettable::autoconfigurefromJSON(callback);
+ARK::Network ARK::API::Loader::Gettable::autoconfigure(ARK::Utilities::Network::Connector _netConnector)
+{
+  String uri = ARK::API::Paths::Loader::autoconfigure_s;
+
+  String callback = _netConnector.cb(uri);
+
+  return ARK::API::Loader::Gettable::autoconfigurefromJSON(callback);
 }
 
 /*
 {
   "success":true,
   "network":{
-    "nethash":"578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23",
-    "token":"DARK",
-    "symbol":"DѦ",
-    "explorer":"http://dexplorer.ark.io",
-    "version":30
+    "nethash":  "Hash",
+    "token":  "String",
+    "symbol": "String,
+    "explorer": "String",
+    "version":  int
   }
 }
 */
-ARK::Network ARK::API::LoaderGettable::autoconfigurefromJSON(String _jsonStr) {
+ARK::Network ARK::API::Loader::Gettable::autoconfigurefromJSON(String _jsonStr)
+{
   ARK::Utilities::JSONString jString(_jsonStr);
-   return {
-    jString.valueIn("network", "nethash"),
-    jString.valueIn("network", "token"),
-    jString.valueIn("network", "symbol"),
-    jString.valueIn("network", "explorer"),
-    jString.valueIn("network", "version").toInt()
-  };
+
+  return {
+      jString.valueIn("network", "nethash"),
+      jString.valueIn("network", "token"),
+      jString.valueIn("network", "symbol"),
+      jString.valueIn("network", "explorer"),
+      jString.valueIn("network", "version").toInt()};
 }
 /*  =======================================  */
+/*  ==========================================================================  */
 
 
 #endif
