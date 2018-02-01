@@ -1,0 +1,30 @@
+#include <ark.h>
+
+
+
+
+/*  ==========================================================================  */
+extern "C" {
+#include "user_interface.h"
+}
+void reportFreeHeap() {
+  Serial.print("\n\nsystem_get_free_heap_size: ");
+  Serial.print(system_get_free_heap_size());
+  Serial.println("\n\n");
+};
+/*  ==========================================================================  */
+
+
+void check() {
+
+    reportFreeHeap();
+  ESP.deepSleep(4294967000);
+}
+
+void setup() {
+  Serial.begin(115200);
+    reportFreeHeap();
+  check();
+}
+
+void loop() {}

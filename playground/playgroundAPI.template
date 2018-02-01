@@ -1,0 +1,48 @@
+#include <ark.h>
+#include <yourWiFiLibrary.h>
+/*  example: #include <ESP8266WiFi.h> */
+
+const char* ssid = "yourSSID";
+const char* password = "yourWiFiPassword";
+
+
+/********************************************************************************
+*
+*
+********************************************************************************/
+
+
+void checkAPI() {
+/*  ==================================  */
+  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+  ARK::API::Manager arkManager(devnet);
+/*  ==================================  */
+
+}
+
+
+/*  ==========================================================================  */
+extern "C" {
+#include "user_interface.h"
+}
+void reportFreeHeap() {
+  Serial.print("\n\nsystem_get_free_heap_size: ");
+  Serial.print(system_get_free_heap_size());
+  Serial.println("\n\n");
+};
+/*  ==========================================================================  */
+
+
+void check() {
+  constructAccount();
+    reportFreeHeap();
+  ESP.deepSleep(4294967000);
+}
+
+void setup() {
+  Serial.begin(115200);
+    reportFreeHeap();
+  check();
+}
+
+void loop() {}
