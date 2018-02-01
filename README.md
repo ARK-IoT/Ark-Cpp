@@ -37,7 +37,7 @@ or
     - [X] add network client
   - [ ] API Gets
     - [X] test api calls
-    - [ ] finish api calls
+    - [X] finish api calls
   - [ ] API Posts
     - [ ] test api posts
     - [ ] finish api posts
@@ -63,7 +63,9 @@ or
     - [ ] add Signing and Address generation.
 
 
-- [ ] Needs Fixed
-  - [ ] Stack Network Calls
-  - [ ] Handle Array Values in Callback
-  - [ ] Handle Large Callback Strings 
+- [ ] TODO
+  - [ ] Documentation 
+  - [ ] Tests 
+  - [ ] Handle Large Callbacks 
+  - [ ] Remove 'String' objects in favor of 'const char*'
+
