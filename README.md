@@ -1,4 +1,4 @@
-<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="800px">  
+<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="800px" align="center">
 
 # Ark for Machines v0.4  
 
