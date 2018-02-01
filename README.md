@@ -1,4 +1,4 @@
-<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="500px">
+<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="800px">
 
 
 This is not production ready.
@@ -12,7 +12,13 @@ It will be changing quite a bit before a final release version.
 
 or  
 
-> 	ARK::Network devnet { "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", "DARK", "DѦ", "https://dexplorer.ark.io/", 30 };  
+> ARK::Network devnet {  
+  "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23",  
+  "DARK",  
+  "DѦ",  
+  "https://dexplorer.ark.io/",  
+  30  
+};  
 
 
 
@@ -21,7 +27,12 @@ or
 
 3) Use manager to get info from the Ark Blockchain  
 > String statusDescription = arkManager.loaderStatus().description()  
-> prints {"success":true,"loaded":false,"now":2348744,"blocksCount":0}  
+> prints {  
+  "success":true,  
+  "loaded":false,  
+  "now":2348744,  
+  "blocksCount":0  
+}  
 
 
 ## todo
