@@ -11,15 +11,27 @@ namespace Utilities
 namespace Network
 {
 
-class Connectable; /* Inheritable Connector object  */
+/*  ==========================================================================  */
+/**************************************************
+* ARK::Utilities::Network::Connectable
+*   Inheritable Connector object
+**************************************************/
+class Connectable; 
+/*  ==========================================================================  */
 
-/*  ==================================  */
-/*  ARK::Utilities::Network::Connector  */
-class Connector : virtual HTTPConnectable
+
+
+
+/*  ==========================================================================  */
+/**************************************************
+* ARK::Utilities::Network::Connector
+**************************************************/
+class Connector
+    : virtual HTTPConnectable
 {
-
-public:
-
+/*  ==================================  */
+  public:
+  
 /****************************************
 *  ARK::Utilities::Network::Connectable
 *  virtual HTTPConnectable
@@ -27,98 +39,108 @@ public:
 *  ARK::Utilities::Network::HTTP http; 
 *****************************************/
 
-  ARK::Network network;
-  ARK::NetworkType netType;
+    ARK::Network network;
+    ARK::NetworkType netType;
 
-  String networkPeer;
-  int networkPort;
+    String networkPeer;
+    int networkPort;
 
-  Connector();
-  Connector(ARK::Network network);
-  Connector(ARK::NetworkType networktype);
+    Connector();
+    Connector(ARK::Network network);
+    Connector(ARK::NetworkType networktype);
 
-  void connect(ARK::Network network);
-  void connectCustom(ARK::Network network, String peer, int port);
+    void connect(ARK::Network network);
+    void connectCustom(ARK::Network network, String peer, int port);
 
-  bool disconnect();
+    bool disconnect();
 
-  String cb(String request);
-
-private:
-
-  bool isConnected = false;
-
-  String randomPeer();
-  void setNetworkPeer(String peer);
+    String cb(String request);
+/*  ==================================  */
 
 
-
+/*  ==================================  */
+  private:
   
+    String randomPeer();
+    void setNetworkPeer(String peer);
+/*  ==================================  */
+/*  ==========================================================================  */
+
 };
 };
 };
 };
 
-/*  ====================================  */
-/*  ARK::Utilities::Network::Connectable  */
-/*      Inheritable Connector object      */
+
+
+
+
+/*  ==========================================================================  */
+/**************************************************
+* ARK::Utilities::Network::Connectable
+*   Inheritable Connector object
+**************************************************/
 class ARK::Utilities::Network::Connectable
 {
 public:
 
   ARK::Utilities::Network::Connector netConnector;
 };
-/*  =====================================  */
+/*  ==========================================================================  */
 
-/*  ================================  */
-/*  ARK::Utilities::Network::Connector  */
 
+
+
+/*  ==========================================================================  */
+/**************************************************
+* ARK::Utilities::Network::Connector
+*   Default empty constructor
+**************************************************/
 ARK::Utilities::Network::Connector::Connector()
 {
   this->network = ARK::Network();
-
   networkPeer = "";
-
   netType = ARK::NetworkType();
 };
 
+/**************************************************
+* Connects this to the supplied ARK::Network
+**************************************************/
 ARK::Utilities::Network::Connector::Connector(ARK::Network network)
 {
   this->connect(network);
 }
 
-ARK::Utilities::Network::Connector::Connector(ARK::NetworkType networktype)
+/**************************************************
+* Connects this to the supplied ARK::NetworkType
+**************************************************/
+ARK::Utilities::Network::Connector::Connector(ARK::NetworkType networkType)
 {
-  ARK::Network network;
-
-  switch (networktype)
-  {
-  case DEV:
-    network = ARK::Constants::Networks::Devnet::model;
-    break;
-  case MAIN:
-    network = ARK::Constants::Networks::Mainnet::model;
-    break;
-  default:
-    break;
-  };
-  this->connect(network);
+  (networkType == DEV)
+      ? (this->connect(ARK::Constants::Networks::Devnet::model))
+      : (this->connect(ARK::Constants::Networks::Mainnet::model));
 }
 
+/**************************************************
+* Sets networktype, network, and peer
+*
+**************************************************/
 void ARK::Utilities::Network::Connector::connect(ARK::Network network)
 {
-  if (network.nethash == ARK::Constants::Networks::Devnet::nethash)
-    netType = ARK::NetworkType::DEV;
-
-  if (network.nethash == ARK::Constants::Networks::Mainnet::nethash)
-    netType = ARK::NetworkType::MAIN;
+  this->netType = (
+      (network.nethash == ARK::Constants::Networks::Devnet::nethash)
+      && (network.nethash != ARK::Constants::Networks::Mainnet::nethash))
+          ? (ARK::NetworkType::DEV)
+          : (ARK::NetworkType::MAIN);
 
   this->network = network;
   this->setNetworkPeer(this->randomPeer());
-
-  this->isConnected = true;
 }
 
+/**************************************************
+*
+*
+**************************************************/
 void ARK::Utilities::Network::Connector::connectCustom(ARK::Network network, String peer, int port)
 {
   this->netType = ARK::NetworkType::CUSTOM;
@@ -126,25 +148,12 @@ void ARK::Utilities::Network::Connector::connectCustom(ARK::Network network, Str
 
   this->networkPeer = peer;
   this->networkPort = port;
-
-  this->isConnected = true;
 }
 
-bool ARK::Utilities::Network::Connector::disconnect()
-{
-  if (!this->isConnected)
-  {
-    return false;
-  }
-  network = ARK::Network();
-
-  this->networkPeer = "";
-
-  this->isConnected = false;
-
-  return !this->isConnected;
-}
-
+/**************************************************
+* Sets Random Peer based on this->NetworkType
+*   returns error String if error
+**************************************************/
 String ARK::Utilities::Network::Connector::randomPeer()
 {
   if (this->netType == ARK::NetworkType::DEV)
@@ -156,6 +165,10 @@ String ARK::Utilities::Network::Connector::randomPeer()
   return "Error: Nethash does not match ARK::Constants";
 }
 
+/**************************************************
+* Checks this->NetworkType
+* Assigns ip & port to this
+**************************************************/
 void ARK::Utilities::Network::Connector::setNetworkPeer(String peer)
 {
   if (this->netType == ARK::NetworkType::DEV)
@@ -167,53 +180,16 @@ void ARK::Utilities::Network::Connector::setNetworkPeer(String peer)
   this->networkPeer = peer;
 }
 
+/**************************************************
+* Manages directing the callback from
+*   the devices HTTPClient Library
+**************************************************/
 String ARK::Utilities::Network::Connector::cb(String request)
 {
   String resp = this->http.get(this->networkPeer, this->networkPort, request);
   return resp;
-
-  // HTTPClient http;
-  // if (this->isConnected == false)
-  // {
-  //   http.setReuse(true);
-  //   http.setTimeout(1000);
-  //   http.begin(this->networkPeer, this->networkPort, request);
-
-  //   this->isConnected = true;
-  // }
-  // else
-  // {
-  //   http.begin(request);
-  // };
-
-  // int httpCode = http.GET();
-
-  // while (!http.connected())
-  // {
-  //   delay(1000);
-  //   Serial.println("waiting for HTTP connection");
-  // };
-
-  // this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
-
-  // if (this->isReachable)
-  // {
-  //   String streamStr = String(http.getStreamPtr()->readString());
-
-  //   http.end();
-
-  //   return streamStr;
-  // }
-  // else
-  // {
-  //   http.end();
-
-  //   this->isConnected = false;
-
-  //   return "Error: Connection to Peer could not be established";
-  // };
 }
+/*  ==========================================================================  */
 
-  /*  ================================  */
 
 #endif
