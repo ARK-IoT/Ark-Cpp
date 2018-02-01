@@ -1,8 +1,27 @@
-<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_metal_logo.png" width="400px">
+<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="500px">
 
 
 This is not production ready.
 It will be changing quite a bit before a final release version.
+
+
+# How to use this
+
+1) Define the network  
+>  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;  
+
+or  
+
+> 	ARK::Network devnet { "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", "DARK", "DѦ", "https://dexplorer.ark.io/", 30 };  
+
+
+
+2) Create the manager instance  
+> ARK::API::Manager arkManager(devnet)  
+
+3) Use manager to get info from the Ark Blockchain  
+> String statusDescription = arkManager.loaderStatus().description()  
+> prints {"success":true,"loaded":false,"now":2348744,"blocksCount":0}  
 
 
 ## todo
