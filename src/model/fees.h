@@ -9,6 +9,7 @@ namespace ARK
 /*  ================================================  */
 /*  =========  */
 /*  ARK::Fees  */
+/*  /api/blocks/getFees */
 struct Fees
 {
     Balance send;
@@ -16,14 +17,6 @@ struct Fees
     Balance delegate;
     Balance secondsignature;
     Balance multisignature;
-
-    // Fees();
-    // Fees(
-    //     Balance,
-    //     Balance,
-    //     Balance,
-    //     Balance,
-    //     Balance);
 
     String description();
 };
@@ -35,32 +28,6 @@ struct Fees
 /*  ================================================  */
 /*  =========  */
 /*  ARK::Fees  */
-
-// /*  Constructor  */
-// ARK::Fees::Fees()
-// {
-//     send = {""};
-//     vote = {""};
-//     delegate = {""};
-//     secondsignature = {""};
-//     multisignature = {""};
-// }
-
-// /*  =====  */
-
-// /*  Constructor  */
-// ARK::Fees::Fees(
-//     Balance _send,
-//     Balance _vote,
-//     Balance _delegate,
-//     Balance _secondsignature,
-//     Balance _multisignature) : send({_send}),
-//                                vote({_vote}),
-//                                delegate({_delegate}),
-//                                secondsignature({_secondsignature}),
-//                                multisignature({_multisignature}) {}
-
-/*  =====  */
 /*  Description  */
 String ARK::Fees::Fees::description()
 {
