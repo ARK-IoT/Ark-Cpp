@@ -7,6 +7,8 @@
 
 /********************************************************************************
 *
+* Currently very verbose, needs bigint implementation using pow(10,8)
+*
 * Balance: 
 *   arktoshi : "100000000"
 *   ark : "1.00000000"
@@ -33,13 +35,46 @@ public:
 
   Balance(String _balanceStr)
   {
-    this->setBalance(_balanceStr);
+    bool isNumeric = true;
+
+    for (auto i : _balanceStr) {
+      if (!isDigit(i))
+        isNumeric = false;
+    }
+    if (isNumeric)
+      this->setBalance(_balanceStr);
   };
 
+
 private:
+
+  void setArktoshi(String balanceStr) {
+    for (unsigned int i = 0; i < balanceStr.length() + 1; i++)
+    {
+      this->arktoshi[i] = balanceStr[i];
+    };
+  }
+
+  void setArk(String balanceStr)
+  {
+    int length = balanceStr.length();
+    if (length < 8) {
+      for (int i = 0; i < length; i++)
+        this->ark[i] = balanceStr[i];
+    }
+    else
+    {
+      for (int i = length; i >= 0; i--)
+      {
+        if (i < length - 8) { this->ark[i] = balanceStr[i]; }
+        if (i == length - 8) { this->ark[i] = '.'; }
+        if (i > length - 8 && i <= length) { this->ark[i] = balanceStr[i - 1]; }
+      };
+    };
+  }
+
   void setBalance(String _balanceStr)
   {
-    int _length = _balanceStr.length();
     if (_balanceStr == "0")
     {
       this->arktoshi[0] = '0';
@@ -47,25 +82,8 @@ private:
     }
     else
     {
-      for (int i = 0; i < _length + 1; i++)
-      {
-        this->arktoshi[i] = _balanceStr[i];
-      };
-      for (int i = 0; i < _length + 1; i++)
-      {
-        if (i < _length - 8)
-        {
-          this->ark[i] = this->arktoshi[i];
-        }
-        if (i == _length - 8)
-        {
-          this->ark[i] = '.';
-        }
-        if (i > _length - 8 && i <= _length)
-        {
-          this->ark[i] = this->arktoshi[i - 1];
-        };
-      };
+      this->setArktoshi(_balanceStr);
+      this->setArk(_balanceStr);
     };
   };
 };

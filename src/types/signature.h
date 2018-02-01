@@ -8,11 +8,12 @@
 /********************************************************************************
 *
 * signature: 
-*   "3044022019ace92e5b91eb70ca13ff63d834aea38b7629c48876094f7abb97b39b28d2c6022012d5df269621473575ee364d5e86a6ca1ea7abedf27c98d2adce103939f45aaa"
+*   "3045022100e0fc6b066209fd9a70e61372cda2e38431ace5cf79ee0557eb2b1b14315d70f302201978696b71c9a177fa1ce9480ceb1ad04a15471d4c6e8d5b2dcd6d931f350efe"
 *   
-*   143 Characters | ?-encoded
+*   142 Characters | ?-encoded
 *
 ********************************************************************************/
+
 
 #define SIGNATURE_SIZE 143
 
@@ -20,7 +21,7 @@ struct signature_t {
   public:
     char value[SIGNATURE_SIZE / sizeof(char)] = { '\0' };    ;
 
-    signature_t();
+    signature_t(){};
 
     signature_t(String _signatureString) {      
       for (int i = 0; i < SIGNATURE_SIZE; i++) {
@@ -34,10 +35,14 @@ struct signature_t {
         resp += value[i];
       };
       return resp;
-    };      
+    }; 
+
+  
 };
 
 
 typedef signature_t Signature;
+
+const  Signature SIGNATURE_EMPTY();
 
 #endif
