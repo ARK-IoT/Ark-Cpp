@@ -1,9 +1,20 @@
-<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="800px">
+<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="800px">  
+
+# Ark for Machines v0.4  
+
+![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
+![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
+![version](https://img.shields.io/badge/version-v0.4-orange.svg?style=flat)
+![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
+![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
+
+Not production ready.  
 
 
-This is not production ready.
-It will be changing quite a bit before a final release version.
-
+# Supported Boards
+- [X] ESP8266 https://www.adafruit.com/product/2821   // Development board
+- [ ] ESP32 https://www.adafruit.com/product/3405     // currently testing
+- [ ] Uno r3 https://www.adafruit.com/product/50      // currently testing
 
 # How to use this
 
