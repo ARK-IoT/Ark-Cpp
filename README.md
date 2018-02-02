@@ -1,4 +1,6 @@
-<img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png" width="800px">  
+<p align="center">
+  <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
+</p>
 
 # Ark for Machines v0.4  
 
@@ -10,11 +12,21 @@
 
 Not production ready.  
 
-
 # Supported Boards
 - [X] ESP8266 https://www.adafruit.com/product/2821   // Development board
 - [ ] ESP32 https://www.adafruit.com/product/3405     // currently testing
 - [ ] Uno r3 https://www.adafruit.com/product/50      // currently testing
+
+
+
+#### What can this do?  
+GET information from the Ark Blockchain using Arduino boards.  
+Create models of basic Ark "types." (e.g. Accounts, Blocks, Delegates, Peers, etc)  
+
+#### What CAN'T this do (yet)?  
+Generate Ark Addresses & Signatures.  
+Create Signed transaction for broadcast to the Ark Ecosystem.  
+
 
 # How to use this
 
@@ -57,7 +69,7 @@ or
   - [X] Network Client
     - [X] test network client
     - [X] add network client
-  - [ ] API Gets
+  - [X] API Gets
     - [X] test api calls
     - [X] finish api calls
   - [ ] API Posts
@@ -71,7 +83,7 @@ or
 - [ ] Crypto
   - [ ] Test Crypto
     - [X] test sha256
-    - [X] test bigint
+    - [ ] test bigint
     - [ ] test secp256k1 ECDSA
     - [X] test ripemd160
     - [X] test base58
