@@ -42,7 +42,7 @@ namespace ARK
       Signature multisignatures;
       Signature u_multisignatures;
 
-      String description();
+      void description(char* buf, size_t len);
   };
 /*  ============  */
 /*  ================================================  */
@@ -52,36 +52,27 @@ namespace ARK
 /*  ================================================  */
 /*  ============  */
 /*  Description  */
-String ARK::Account::Account::description()
+void ARK::Account::Account::description(char* const buf, size_t len)
 {
-  String resp;
-  resp += "address: ";
-  resp += this->address.description();
-  resp += "\n";
-  resp += "unconfirmedBalance.ark: ";
-  resp += this->unconfirmedBalance.ark;
-  resp += "\n";
-  resp += "balance.ark: ";
-  resp += this->balance.ark;
-  resp += "\n";
-  resp += "publicKey.description: ";
-  resp += this->publicKey.description();
-  resp += "\n";
-  resp += "unconfirmedSignature: ";
-  resp += this->unconfirmedSignature;
-  resp += "\n";
-  resp += "secondSignature: ";
-  resp += this->secondSignature;
-  resp += "\n";
-  resp += "secondPublicKey.description: ";
-  resp += this->secondPublicKey.description();
-  resp += "\n";
-  resp += "multisignatures.description: ";
-  resp += this->multisignatures.description();
-  resp += "\n";
-  resp += "u_multisignatures.description: ";
-  resp += this->u_multisignatures.description();
-  return resp;
+    //TODO:  check len for sufficient size  
+    strcpy(buf, "address: ");
+    strcat(buf, address.description());
+    strcat(buf, "\nunconfirmedBalance.ark: ");
+    strcat(buf, this->unconfirmedBalance.ark());
+    strcat(buf, "\nbalance.ark: ");
+    strcat(buf, this->balance.ark());
+    strcat(buf, "\npublicKey.description: ");
+    strcat(buf, this->publicKey.description());
+    strcat(buf, "\nunconfirmedSignature: ");
+    sprintf(buf + strlen(buf), "%d", this->unconfirmedSignature);
+    strcat(buf, "\nsecondSignature: ");
+    sprintf(buf + strlen(buf), "%d", this->secondSignature);
+    strcat(buf, "\nsecondPublicKey.description: ");
+    strcat(buf, this->secondPublicKey.description());
+    strcat(buf, "\nmultisignatures.description: ");
+    strcat(buf, this->multisignatures.description());
+    strcat(buf, "\nu_multisignatures.description: ");
+    strcat(buf, this->u_multisignatures.description());
 }
 /*  ============  */
 /*  ================================================  */

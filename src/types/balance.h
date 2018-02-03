@@ -24,61 +24,67 @@
 
 struct Balance
 {
-public:
-  char arktoshi[17 * sizeof(int)] = {'\0'};
-  char ark[18 * sizeof(int)] = {'\0'};
+private:
+    static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
+    static const auto ARK_SIZE = 18 * sizeof(int);
 
+    char arktoshi_[ARKTOSHI_SIZE] = {'\0'};
+    char ark_[ARK_SIZE] = {'\0'};
+
+public:
   Balance()
   {
     this->setBalance("0");
   };
 
-  Balance(String _balanceStr)
+  Balance(const char* const balanceStr)
   {
-    bool isNumeric = true;
+        bool isNumeric = true;
 
-    for (auto i : _balanceStr) {
-      if (!isDigit(i))
-        isNumeric = false;
-    }
-    if (isNumeric)
-      this->setBalance(_balanceStr);
+        for (auto i = 0; i < strlen(balanceStr); ++i) {
+          if (!isDigit(balanceStr[i])) {
+                isNumeric = false;
+                break;
+            }
+        }
+        if (isNumeric) {
+          this->setBalance(balanceStr);
+        }
   };
 
 
-private:
+    const char* const ark() const { return ark_; }
 
-  void setArktoshi(String balanceStr) {
-    for (unsigned int i = 0; i < balanceStr.length() + 1; i++)
-    {
-      this->arktoshi[i] = balanceStr[i];
-    };
-  }
+    void setArktoshi(const char* const balanceStr) {
+        strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
+    }
 
-  void setArk(String balanceStr)
+  void setArk(const char* const balanceStr)
   {
-    int length = balanceStr.length();
+    const auto length = strlen(balanceStr);
     if (length < 8) {
-      for (int i = 0; i < length; i++)
-        this->ark[i] = balanceStr[i];
+      for (int i = 0; i < length; ++i)
+      {
+        this->ark_[i] = balanceStr[i];
+      }
     }
     else
     {
-      for (int i = length; i >= 0; i--)
+      for (int i = length; i >= 0; --i)
       {
-        if (i < length - 8) { this->ark[i] = balanceStr[i]; }
-        if (i == length - 8) { this->ark[i] = '.'; }
-        if (i > length - 8 && i <= length) { this->ark[i] = balanceStr[i - 1]; }
+        if (i < length - 8) { this->ark_[i] = balanceStr[i]; }
+        if (i == length - 8) { this->ark_[i] = '.'; }
+        if (i > length - 8 && i <= length) { this->ark_[i] = balanceStr[i - 1]; }
       };
     };
   }
 
-  void setBalance(String _balanceStr)
+  void setBalance(const char* const _balanceStr)
   {
-    if (_balanceStr == "0")
+    if (strcmp(_balanceStr, "0") == 0)
     {
-      this->arktoshi[0] = '0';
-      this->ark[0] = '0';
+      this->arktoshi_[0] = '0';
+      this->ark_[0] = '0';
     }
     else
     {

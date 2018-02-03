@@ -13,46 +13,24 @@
 *
 ********************************************************************************/
 
-#define ADDRESS_LENGTH 34
+#define ADDRESS_SIZE 34
 
 struct address_t
 {
+private:
+	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
+	char value_[ADDRESS_LENGTH] = {'\0'};
 
 public:
-  char value[ADDRESS_LENGTH / sizeof(char)] = {'\0'};
+    address_t() { };
 
-  address_t()
-  {
-    // for (int i = 0; i < ADDRESS_LENGTH; i++) {
-    this->value[0] = 0;
-    // };
-  };
+	address_t(const char* const addressString)
+	{
+        strncpy(value_, addressString, ADDRESS_LENGTH);
+        value_[ADDRESS_LENGTH - 1] = '\0';
+	}
 
-  address_t(String _addressString)
-  {
-    for (int i = 0; i < ADDRESS_LENGTH; i++)
-    {
-      this->value[i] = _addressString[i];
-    };
-  };
-
-  address_t(const char *addressString)
-  {
-    for (int i = 0; i < ADDRESS_LENGTH; i++)
-    {
-      this->value[i] = addressString[i];
-    };
-  };
-
-  String description()
-  {
-    String resp;
-    for (int i = 0; i < ADDRESS_LENGTH; i++)
-    {
-      resp += value[i];
-    };
-    return resp;
-  };
+	const char* const description() const { return value_; }
 };
 
 typedef address_t Address;

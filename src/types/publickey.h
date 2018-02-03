@@ -17,28 +17,19 @@
     #define PUBLICKEY_SIZE 66
 
     struct publickey_t {
-      public:
-        char value[PUBLICKEY_SIZE / sizeof(char)] = { '\0' };    ;
+    private:
+        static const auto PUBLICKEY_LEN = PUBLICKEY_SIZE / sizeof(char);
+        char value_[PUBLICKEY_LEN] = { '\0' };
 
-        publickey_t(){
-          for (int i = 0; i < PUBLICKEY_SIZE; i++) {
-            this->value[i] = 0;
-          };
+    public:
+        publickey_t() { };
+
+        publickey_t(const char* const _base64String) {      
+          strncpy(value_, _base64String, PUBLICKEY_LEN);
+          value_[PUBLICKEY_LEN - 1] = '\0';
         };
 
-        publickey_t(String _base64String) {      
-          for (int i = 0; i < PUBLICKEY_SIZE; i++) {
-            this->value[i] = _base64String[i];
-          };
-        };
-
-        String description() {
-          String resp;
-          for (int i = 0; i < PUBLICKEY_SIZE; i++) {
-            resp += value[i];
-          };
-          return resp;
-        };      
+        const char* const description() const { return value_; };      
     };
 
     typedef publickey_t Publickey;

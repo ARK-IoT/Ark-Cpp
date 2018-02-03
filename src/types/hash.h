@@ -17,38 +17,25 @@
 
 struct Hash
 {
+private:
+  static const auto HASH_LEN = HASH_SIZE / sizeof(byte);
+
+  char value_[HASH_LEN] = { '\0' };
+
 public:
-  char value[HASH_SIZE / sizeof(byte)]; // = { '\0' };
-
-  Hash()
-  {
-    for (int i = 0; i < HASH_SIZE; i++)
-    {
-      this->value[i] = '0';
-    };
-  };
+  Hash() { }
 
   /*  =====  */
 
-  Hash(String hashStr)
+  Hash(const char* const hashStr)
   {
-    for (int i = 0; i < HASH_SIZE; i++)
-    {
-      this->value[i] = hashStr[i];
-    };
-  };
+    strncpy(value_, hashStr, HASH_LEN);
+    value_[HASH_LEN - 1] = '\0';
+  }
 
   /*  =====  */
 
-  String description()
-  {
-    String resp;
-    for (int i = 0; i < HASH_SIZE; i++)
-    {
-      resp += value[i];
-    };
-    return resp;
-  };
+  const char* const description() const { return value_; }
 };
 
 #endif
