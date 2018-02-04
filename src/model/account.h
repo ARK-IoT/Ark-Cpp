@@ -42,7 +42,7 @@ namespace ARK
       Signature multisignatures;
       Signature u_multisignatures;
 
-      void description(char* buf, size_t len);
+      void description(char* const buf, size_t len);
   };
 /*  ============  */
 /*  ================================================  */

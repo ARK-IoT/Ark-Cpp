@@ -26,16 +26,16 @@ namespace ARK {
   /*  ARK::Network  */
   struct Network {
     public:
-      String nethash;
-      String token;
-      String symbol;
-      String explorer;
+      char nethash[64] = { '\0' };		//TODO: review sizes
+      char token[8] = { '\0' };
+      char symbol[4] = { '\0' };
+      char explorer[64] = { '\0' };
       int version;
 
-      String description();
+      void description(char* const buf, size_t size);
 
-      bool operator==(Network*& rhs) const;
-      bool operator!=(Network*& rhs) const;
+      bool operator==(const Network& rhs) const;
+      bool operator!=(const Network& rhs) const;
   };
   /*  ============  */
   /*  ================================================  */
@@ -61,36 +61,32 @@ namespace ARK {
 /*  ============  */
 /*  ARK::Delegate  */
 /*  Description  */
-String ARK::Network::Network::description() {
-  String resp;
-    resp += "nethash: ";
-      resp += this->nethash; resp += "\n";           
-    resp += "token: ";
-      resp += this->token; resp += "\n";
-    resp += "symbol: ";
-      resp += this->symbol; resp += "\n";
-    resp += "explorer: ";
-      resp += this->explorer; resp += "\n";
-    resp += "version: ";
-      resp += this->version;
-  return resp;
+void ARK::Network::Network::description(char* const buf, size_t size) {
+	strcpy(buf, "nethash: ");
+	strcat(buf, this->nethash);
+	strcat(buf, "\ntoken: ");
+	strcat(buf, this->token);
+	strcat(buf, "\nsymbol: ");
+	strcat(buf, this->symbol);
+	strcat(buf, "\nexplorer: ");
+	strcat(buf, this->explorer);
+	strcat(buf, "\nversion: ");
+	sprintf(buf, "%d", this->version);
 };
 /*  =====  */
 /*  Operator  */
 /*  ARK::Network == ARK::Network  */
-bool ARK::Network::Network::operator==(Network*& rhs) const {
-  if (this->nethash==rhs->nethash
-      && this->token==rhs->token
-      && this->symbol==rhs->symbol
-      && this->explorer==rhs->explorer
-      && this->version==rhs->version)
-    return true;
-  return false;
+bool ARK::Network::Network::operator==(const Network& rhs) const {
+  return (strcmp(this->nethash, rhs->nethash) == 0
+      && strcmp(this->token, rhs->token) == 0
+      && strcmp(this->symbol, rhs->symbol) == 0
+      && strcmp(this->explorer, rhs->explorer) == 0
+      && strcmp(this->version, rhs->version) == 0);
 };
 /*  =====  */
 /*  Operator  */
 /*  ARK::Network != ARK::Network  */
-bool ARK::Network::Network::operator!=(Network*& rhs) const { return !(this == rhs); };
+bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(this == rhs); };
 /*  ============  */
 /*  ================================================  */
 
