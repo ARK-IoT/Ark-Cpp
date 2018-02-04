@@ -29,7 +29,7 @@ namespace ARK
 struct Delegate
 {
 public:
-	String username;
+	char username[1024];
 	Address address;
 	Publickey publicKey;
 	Balance vote;
@@ -39,7 +39,7 @@ public:
 	double approval;
 	double productivity;
 
-	String description();
+	void description(char* const buf, size_t size);
 
 };
 /*  =============  */
@@ -50,37 +50,28 @@ public:
 /*  ================================================  */
 /*  =====  */
 /*  Description  */
-String ARK::Delegate::Delegate::description()
+void ARK::Delegate::Delegate::description(char* const buf, size_t size)
 {
-	String resp;
-	resp += "username: ";
-	resp += this->username;
-	resp += "\n";
-	resp += "address.description: ";
-	resp += this->address.description();
-	resp += "\n";
-	resp += "publicKey.description: ";
-	resp += this->publicKey.description();
-	resp += "\n";
-	resp += "vote.ark: ";
-	resp += this->vote.ark;
-	resp += "\n";
-	resp += "producedblocks: ";
-	resp += this->producedblocks;
-	resp += "\n";
-	resp += "missedblocks: ";
-	resp += this->missedblocks;
-	resp += "\n";
-	resp += "rate: ";
-	resp += this->rate;
-	resp += "\n";
-	resp += "approval: ";
-	resp += this->approval;
-	resp += "%\n";
-	resp += "productivity: ";
-	resp += this->productivity;
-	resp += "%";
-	return resp;
+    //TODO:  check len for sufficient size  
+    strcpy(buf, "username: ");
+    strcat(buf, this->username);
+    strcat(buf, "\naddress.description: ");
+    strcat(buf, this->address.description());
+    strcat(buf, "\npublicKey.description: ");
+    strcat(buf, this->publicKey.description());
+    strcat(buf, "\nvote.ark: ");
+    strcat(buf, this->vote.ark());
+    strcat(buf, "\nproducedblocks: ");
+    sprintf(buf + strlen(buf), "%d", this->producedblocks);
+    strcat(buf, "\nmissedblocks: ");
+    sprintf(buf + strlen(buf), "%d", this->missedblocks);
+    strcat(buf, "\nrate: ");
+    sprintf(buf + strlen(buf), "%d", this->rate);
+    strcat(buf, "\napproval: ");
+    sprintf(buf + strlen(buf), "%f", this->approval);
+    strcat(buf, "%\nproductivity: ");
+    sprintf(buf + strlen(buf), "%f", this->productivity);
+    strcat(buf, "%");
 }
 /*  =====  */
 /*  ================================================  */

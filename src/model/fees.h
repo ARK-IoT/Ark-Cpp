@@ -18,7 +18,7 @@ struct Fees
     Balance secondsignature;
     Balance multisignature;
 
-    String description();
+    void description(char* const buf, size_t size);
 };
 /*  =========  */
 /*  ================================================  */
@@ -29,24 +29,19 @@ struct Fees
 /*  =========  */
 /*  ARK::Fees  */
 /*  Description  */
-String ARK::Fees::Fees::description()
+void ARK::Fees::Fees::description(char* const buf, size_t size)
 {
-    String resp;
-    resp += "send.ark: ";
-    resp += this->send.ark;
-    resp += "\n";
-    resp += "vote.ark: ";
-    resp += this->vote.ark;
-    resp += "\n";
-    resp += "delegate.ark: ";
-    resp += this->delegate.ark;
-    resp += "\n";
-    resp += "secondsignature.ark: ";
-    resp += this->secondsignature.ark;
-    resp += "\n";
-    resp += "multisignature.ark: ";
-    resp += this->multisignature.ark;
-    return resp;
+    //TODO:  check len for sufficient size  
+    strcpy(buf, "send.ark: ");
+    strcat(buf, this->send.ark());
+    strcat(buf, "\nvote.ark: ");
+    strcat(buf, this->vote.ark());
+    strcat(buf, "\ndelegate.ark: ");
+    strcat(buf, this->delegate.ark());
+    strcat(buf, "\nsecondsignature.ark: ");
+    strcat(buf, this->secondsignature.ark());
+    strcat(buf, "\nmultisignature.ark: ");
+    strcat(buf, this->multisignature.ark());
 }
 /*  =========  */
 /*  ================================================  */
