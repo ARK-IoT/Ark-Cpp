@@ -3,6 +3,8 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <stdint.h>
+
 namespace ARK
 {
 
@@ -35,25 +37,28 @@ namespace ARK
 /*  ARK::Block  */
 struct Block
 {
+private:
+    static const auto MAX_UINT128_CHARS = 40;
+
 public:
-	String id;
+	char id[MAX_UINT128_CHARS];
 	int version;
-	String timestamp;
-	String height;
-	String previousBlock;
-	String numberOfTransactions;
+	char timestamp[MAX_UINT128_CHARS];
+	uint32_t height;
+	char previousBlock[MAX_UINT128_CHARS];
+	uint32_t numberOfTransactions;
 	Balance totalAmount;
 	Balance totalFee;
 	Balance reward;
-	String payloadLength;
+	uint32_t payloadLength;
 	Hash payloadHash;
 	Publickey generatorPublicKey;
 	Address generatorId;
 	Signature blockSignature;
-	String confirmations;
+	uint32_t confirmations;
 	Balance totalForged;
 
-	String description();
+	void description(char* const buf, size_t size);
 };
 /*  ==========  */
 /*  ================================================  */
@@ -86,57 +91,41 @@ blockEpoch:
 /*  ================================================  */
 /*  ===========  */
 /*  Description  */
-String ARK::Block::Block::description()
+void ARK::Block::Block::description(char* const buf, size_t size)
 {
-	String resp;
-	resp += "id: ";
-	resp += this->id;
-	resp += "\n";
-	resp += "version: ";
-	resp += this->version;
-	resp += "\n";
-	resp += "timestamp: ";
-	resp += this->timestamp;
-	resp += "\n";
-	resp += "height: ";
-	resp += this->height;
-	resp += "\n";
-	resp += "previousBlock: ";
-	resp += this->previousBlock;
-	resp += "\n";
-	resp += "numberOfTransactions: ";
-	resp += this->numberOfTransactions;
-	resp += "\n";
-	resp += "totalAmount.ark: ";
-	resp += this->totalAmount.ark;
-	resp += "\n";
-	resp += "totalFee.ark: ";
-	resp += this->totalFee.ark;
-	resp += "\n";
-	resp += "reward.ark: ";
-	resp += this->reward.ark;
-	resp += "\n";
-	resp += "payloadLength: ";
-	resp += this->payloadLength;
-	resp += "\n";
-	resp += "payloadHash.description: ";
-	resp += this->payloadHash.description();
-	resp += "\n";
-	resp += "generatorPublicKey.description: ";
-	resp += this->generatorPublicKey.description();
-	resp += "\n";
-	resp += "generatorId.description: ";
-	resp += this->generatorId.description();
-	resp += "\n";
-	resp += "blockSignature.description: ";
-	resp += this->blockSignature.description();
-	resp += "\n";
-	resp += "confirmations: ";
-	resp += this->confirmations;
-	resp += "\n";
-	resp += "totalForged.ark: ";
-	resp += this->totalForged.ark;
-	return resp;
+    //TODO:  check len for sufficient size  
+    strcpy(buf, "id: ");
+    strcat(buf, this->id);
+    strcat(buf, "\nversion: ");
+    sprintf(buf + strlen(buf), "%d", this->version);
+    strcat(buf, "\ntimestamp: ");
+    strcat(buf, this->timestamp);
+    strcat(buf, "\nheight: ");
+    sprintf(buf + strlen(buf), "%d", this->height);
+    strcat(buf, "\npreviousBlock: ");
+    strcat(buf, this->previousBlock);
+    strcat(buf, "\nnumberOfTransactions: ");
+    sprintf(buf + strlen(buf), "%d", this->numberOfTransactions);
+    strcat(buf, "\ntotalAmount.ark: ");
+    strcat(buf, this->totalAmount.ark());
+    strcat(buf, "\ntotalFee.ark: ");
+    strcat(buf, this->totalFee.ark());
+    strcat(buf, "\nreward.ark: ");
+    strcat(buf, this->reward.ark());
+    strcat(buf, "\npayloadLength: ");
+    sprintf(buf + strlen(buf), "%d", this->payloadLength);
+    strcat(buf, "\npayloadHash.description: ");
+    strcat(buf, this->payloadHash.description());
+    strcat(buf, "\ngeneratorPublicKey.description: ");
+    strcat(buf, this->generatorPublicKey.description());
+    strcat(buf, "\ngeneratorId.description: ");
+    strcat(buf, this->generatorId.description());
+    strcat(buf, "\nblockSignature.description: ");
+    strcat(buf, this->blockSignature.description());
+    strcat(buf, "\nconfirmations: ");
+    sprintf(buf + strlen(buf), "%d", this->confirmations);
+    strcat(buf, "\ntotalForged.ark: ");
+    strcat(buf, this->totalForged.ark());
 }
 /*  ==========  */
 /*  ================================================  */
