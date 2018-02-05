@@ -3,6 +3,8 @@
 #ifndef network_h
 #define network_h
 
+#include <cstring>
+
 namespace ARK {
 
 /*  ================================================  */
@@ -77,16 +79,16 @@ void ARK::Network::Network::description(char* const buf, size_t size) {
 /*  Operator  */
 /*  ARK::Network == ARK::Network  */
 bool ARK::Network::Network::operator==(const Network& rhs) const {
-  return (strcmp(this->nethash, rhs->nethash) == 0
-      && strcmp(this->token, rhs->token) == 0
-      && strcmp(this->symbol, rhs->symbol) == 0
-      && strcmp(this->explorer, rhs->explorer) == 0
-      && strcmp(this->version, rhs->version) == 0);
+  return (strcmp(this->nethash, rhs.nethash) == 0
+      && strcmp(this->token, rhs.token) == 0
+      && strcmp(this->symbol, rhs.symbol) == 0
+      && strcmp(this->explorer, rhs.explorer) == 0
+      && this->version == rhs.version);
 };
 /*  =====  */
 /*  Operator  */
 /*  ARK::Network != ARK::Network  */
-bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(this == rhs); };
+bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(*this == rhs); };
 /*  ============  */
 /*  ================================================  */
 
