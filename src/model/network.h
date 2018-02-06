@@ -28,11 +28,25 @@ namespace ARK {
   /*  ARK::Network  */
   struct Network {
     public:
-      char nethash[64] = { '\0' };		//TODO: review sizes
-      char token[8] = { '\0' };
-      char symbol[4] = { '\0' };
-      char explorer[64] = { '\0' };
+      //char nethash[64] = { '\0' };		//TODO: review sizes
+      //char token[8] = { '\0' };
+      //char symbol[4] = { '\0' };
+      //char explorer[64] = { '\0' };
+        const char* const nethash;
+        const char* const token;
+        const char* const symbol;
+        const char* const explorer;
       int version;
+
+      Network() : nethash(nullptr), token(nullptr), symbol(nullptr), explorer(nullptr), version(-1) { }
+      Network(const char* const n, const char* const t, const char* const s, const char* const e, int v) :
+          nethash(n), token(t), symbol(s), explorer(e), version(v) { }
+
+      Network(Network&&) = delete;
+      Network& operator=(Network&&) = delete;
+
+      Network(const Network&) = delete;
+      Network& operator=(const Network&) = delete;
 
       void description(char* const buf, size_t size);
 

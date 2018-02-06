@@ -10,12 +10,12 @@ namespace ARK {
   /*  ARK::Voter  */
   struct Voter {
     public:
-      String username;
+      char username[64];
       Address address;
       Publickey publicKey;
       Balance balance;
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ==========  */
 /*  ================================================  */
@@ -26,17 +26,15 @@ namespace ARK {
 /*  ================================================  */
 /*  =====  */
 /*  Description  */
-String ARK::Voter::Voter::description() {
-  String resp;
-    resp += "username: ";
-      resp += this->username; resp += "\n";
-    resp += "address.description: ";
-      resp += this->address.description(); resp += "\n";
-    resp += "publicKey.description: ";
-      resp += this->publicKey.description(); resp += "\n";
-    resp += "balance.ark: ";
-      resp += this->balance.ark;
-  return resp;
+void ARK::Voter::Voter::description(char* const buf, size_t size) {
+    strcpy(buf, "username: ");
+    strcat(buf, this->username);
+    strcat(buf, "\naddress.description: ");
+    strcat(buf, this->address.description());
+    strcat(buf, "\npublicKey.description: ");
+    strcat(buf, this->publicKey.description());
+    strcat(buf, "\nbalance.ark: ");
+    strcat(buf, this->balance.ark());
 }
 /*  =====  */
 /*  ================================================  */

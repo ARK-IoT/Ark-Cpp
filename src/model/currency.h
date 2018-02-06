@@ -8,9 +8,13 @@ namespace ARK {
 /*  ================================================  */
     struct Currency {
       public:
-        char ticker[8] = {'\0' }; //TODO: review sizes
-        char name[32] = { '\0' };
-        char symbol[4] = { '\0' };  //TODO:  single character, unicode???, multi-byte chars??? 
+        //char ticker[8] = {'\0' }; //TODO: review sizes
+        //char name[32] = { '\0' };
+        //char symbol[4] = { '\0' };  //TODO:  single character, unicode???, multi-byte chars??? 
+          const char* const ticker;
+          const char* const name;
+          const char* const symbol;
+
 
         void description(char* const buf, size_t size) {
 			//TODO:  check len for sufficient size  

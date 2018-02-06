@@ -54,6 +54,7 @@ public:
 
 
     const char* const ark() const { return ark_; }
+    const char* const arktoshi() const { return arktoshi_; }
 
     void setArktoshi(const char* const balanceStr) {
         strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);

@@ -5,7 +5,7 @@
 
 namespace ARK {
 
-#define TRANSACTION_MAX_SIZE 600
+static const auto TRANSACTION_MAX_SIZE = 600;
     
 /*  ==========================================================================  */
   /*  ================  */
@@ -13,21 +13,21 @@ namespace ARK {
   struct Transaction {
 
     public:
-      String id;
-      String blockid;
-      String height;
+      char id[64];  //TODO: review array sizes
+      char blockid[64];
+      char height[64];
       int type;
-      String timestamp;
+      char timestamp[64];
       Balance amount;
       Balance fee;
-      String vendorField;
+      char vendorField[64];
       Address senderId;
       Address recipientId;
       Publickey senderPublicKey;
-      String signature;
-      String confirmations;
+      char signature[64];
+      char confirmations[64];
 
-      String description();
+      void description(char* const buf, size_t size);
   };
   /*  ================  */
 /*  ==========================================================================  */
@@ -40,37 +40,35 @@ namespace ARK {
 /*  ================  */
 /*  ARK::Transaction  */
 /*  Description  */
-String ARK::Transaction::Transaction::description() {
-  String resp;
-    resp += "id: ";
-      resp += this->id; resp += "\n";
-    resp += "blockid: ";
-      resp += this->blockid; resp += "\n";
-    resp += "height: ";
-      resp += this->height; resp += "\n";
-    resp += "type: ";
-      resp += this->type; resp += "\n";
-    resp += "timestamp: ";
-      resp += this->timestamp; resp += "\n";
-    resp += "amount.ark: ";
-      resp += this->amount.ark; resp += "\n";
-    resp += "fee.ark: ";
-      resp += this->fee.ark; resp += "\n";
-    resp += "vendorField: ";
-      resp += this->vendorField; resp += "\n";      
-    resp += "senderId.description: ";
-      resp += this->senderId.description(); resp += "\n";
-    resp += "recipientId.description: ";
-      resp += this->recipientId.description(); resp += "\n";
-    resp += "senderPublicKey.description: ";
-      resp += this->senderPublicKey.description(); resp += "\n";
-    resp += "signature: ";
-      resp += this->signature; resp += "\n";
-    // resp += "asset: ";
-    //   resp += this->asset; resp += "\n";
-    resp += "confirmations: ";
-      resp += this->confirmations;
-  return resp;
+void ARK::Transaction::Transaction::description(char* const buf, size_t size) {
+    strcpy(buf, "id: ");
+    strcat(buf, this->id);
+    strcat(buf, "\nblockid: ");
+    strcat(buf, this->blockid);
+    strcat(buf, "\nheight: ");
+    strcat(buf, this->height);
+    strcat(buf, "\ntype: ");
+    sprintf(buf, "%d", this->type);
+    strcat(buf, "\ntimestamp: ");
+    strcat(buf, this->timestamp);
+    strcat(buf, "\namount.ark: ");
+    strcat(buf, this->amount.ark());
+    strcat(buf, "\nfee.ark: ");
+    strcat(buf, this->fee.ark());
+    strcat(buf, "\nvendorField: ");
+    strcat(buf, this->vendorField);
+    strcat(buf, "\nsenderId.description: ");
+    strcat(buf, this->senderId.description());
+    strcat(buf, "\nrecipientId.description: ");
+    strcat(buf, this->recipientId.description());
+    strcat(buf, "\nsenderPublicKey.description: ");
+    strcat(buf, this->senderPublicKey.description());
+    strcat(buf, "\nsignature: ");
+    strcat(buf, this->signature);
+    //strcat(buf, "\nasset: ");
+    //strcat(buf, this->asset);
+    strcat(buf, "\nconfirmations: ");
+    strcat(buf, this->confirmations);
 }
 /*  ================  */
 /*  ==========================================================================  */

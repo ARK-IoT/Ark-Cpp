@@ -21,7 +21,7 @@ class Accountable : public API::Account::Gettable, virtual ARK::Utilities::Netwo
 
 /*  ==========================================================================  */
 		/*  /api/accounts/getBalance?address=arkAddress */
-		ARK::API::Account::Respondable::Balances accountBalance(Address _arkAddress)
+		ARK::API::Account::Respondable::Balances accountBalance(const Address& _arkAddress)
 		{
 						return ARK::API::Account::Gettable::balance(this->netConnector, _arkAddress);
 		};
@@ -29,7 +29,7 @@ class Accountable : public API::Account::Gettable, virtual ARK::Utilities::Netwo
 
 /*  ==========================================================================  */
 		/*  /api/accounts/getPublickey?address=arkAddress */
-		Publickey accountPublickey(Address _arkAddress)
+		Publickey accountPublickey(const Address& _arkAddress)
 		{
 						return ARK::API::Account::Gettable::publickey(this->netConnector, _arkAddress);
 		};
@@ -37,7 +37,7 @@ class Accountable : public API::Account::Gettable, virtual ARK::Utilities::Netwo
 
 /*  ==========================================================================  */
 		/*  /api/accounts/delegates/fee?address=arkAddress  */
-		Balance accountDelegatesFee(Address _arkAddress)
+		Balance accountDelegatesFee(const Address& _arkAddress)
 		{
 						return ARK::API::Account::Gettable::delegatesFee(this->netConnector, _arkAddress);
 		};
@@ -45,7 +45,7 @@ class Accountable : public API::Account::Gettable, virtual ARK::Utilities::Netwo
 
 /*  ==========================================================================  */
 		/*  /api/accounts/delegates?address=arkAddress  */
-		ARK::Delegate accountDelegates(Address _arkAddress)
+		ARK::Delegate accountDelegates(const Address& _arkAddress)
 		{
 						return ARK::API::Account::Gettable::delegates(this->netConnector, _arkAddress);
 		};
@@ -53,7 +53,7 @@ class Accountable : public API::Account::Gettable, virtual ARK::Utilities::Netwo
 
 /*  ==========================================================================  */
 		/*  /api/accounts?address=arkAddress  */
-		ARK::Account account(Address _arkAddress)
+		ARK::Account account(const Address& _arkAddress)
 		{
 						return ARK::API::Account::Gettable::account(this->netConnector, _arkAddress);
 		};

@@ -21,7 +21,7 @@ class Blockable :
 	public:
 /*  ==========================================================================  */
 		/*  /api/blocks/get?id=_blockID */
-		ARK::Block block(String _blockId)
+		ARK::Block block(const char* const _blockId)
 		{
 			return ARK::API::Block::Gettable::block(this->netConnector, _blockId);
 		};

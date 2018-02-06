@@ -19,10 +19,10 @@ class Gettable
 /*  ==========================================================================  */
     /*  /api/blocks/get?id=_blockID */
     ARK::Block block(
-        ARK::Utilities::Network::Connector _netConnector,
-        String _blockId);
+        const ARK::Utilities::Network::Connector& _netConnector,
+        const char* const _blockId);
 
-    ARK::Block blockfromJSON(String _jsonStr);
+    ARK::Block blockfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
@@ -35,56 +35,56 @@ class Gettable
 
 /*  ==========================================================================  */
     /*  /api/blocks/getEpoch  */
-    String epoch(ARK::Utilities::Network::Connector _netConnector);
-    String epochfromJSON(String _jsonStr);
+    String epoch(const ARK::Utilities::Network::Connector& _netConnector);
+    String epochfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getHeight  */
-    ARK::API::Block::Respondable::Height height(ARK::Utilities::Network::Connector _netConnector);
-    ARK::API::Block::Respondable::Height heightfromJSON(String _jsonStr);
+    ARK::API::Block::Respondable::Height height(const ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Block::Respondable::Height heightfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getNethash  */
-    Hash nethash(ARK::Utilities::Network::Connector _netConnector);
-    Hash nethashfromJSON(String _jsonStr);
+    Hash nethash(const ARK::Utilities::Network::Connector& _netConnector);
+    Hash nethashfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getFee  */
-    Balance fee(ARK::Utilities::Network::Connector _netConnector);
-    Balance feefromJSON(String _jsonStr);
+    Balance fee(const ARK::Utilities::Network::Connector& _netConnector);
+    Balance feefromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getFees  */
-    ARK::Fees fees(ARK::Utilities::Network::Connector _netConnector);
-    ARK::Fees feesfromJSON(String _jsonStr);
+    ARK::Fees fees(const ARK::Utilities::Network::Connector& _netConnector);
+    ARK::Fees feesfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getMilestone  */
-    String milestone(ARK::Utilities::Network::Connector _netConnector);
-    String milestonefromJSON(String _jsonStr);
+    String milestone(const ARK::Utilities::Network::Connector& _netConnector);
+    String milestonefromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getReward  */
-    Balance reward(ARK::Utilities::Network::Connector _netConnector);
-    Balance rewardfromJSON(String _jsonStr);
+    Balance reward(const ARK::Utilities::Network::Connector& _netConnector);
+    Balance rewardfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getSupply  */
-    Balance supply(ARK::Utilities::Network::Connector _netConnector);
-    Balance supplyfromJSON(String _jsonStr);
+    Balance supply(const ARK::Utilities::Network::Connector& _netConnector);
+    Balance supplyfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/blocks/getStatus  */
-    ARK::API::Block::Respondable::Status status(ARK::Utilities::Network::Connector _netConnector);
-    ARK::API::Block::Respondable::Status statusfromJSON(String _jsonStr);
+    ARK::API::Block::Respondable::Status status(const ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Block::Respondable::Status statusfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 };
 /*  ====================================  */
@@ -101,13 +101,17 @@ class Gettable
 /*  ARK::API::Block::Gettable::block  */
 /*  /api/blocks/get?id=_blockID */
 ARK::Block ARK::API::Block::Gettable::block(
-    ARK::Utilities::Network::Connector _netConnector,
-    String _blockId)
+    const ARK::Utilities::Network::Connector& _netConnector,
+    const char* const _blockId)
 {
-  String uri = ARK::API::Paths::Block::get_s;
-  uri += "?id=" + _blockId;
-  String callback = _netConnector.cb(uri);
-  return ARK::API::Block::Gettable::blockfromJSON(callback);
+    char uri[256] = { '\0' }; // TODO:  check size
+
+    strcpy(uri, ARK::API::Paths::Block::get_s);
+    strcat(uri, "?id=");
+    strcat(uri, _blockId);
+
+    auto callback = _netConnector.cb(uri);
+    return ARK::API::Block::Gettable::blockfromJSON(callback);
 };
 
 /*
@@ -132,7 +136,7 @@ ARK::Block ARK::API::Block::Gettable::block(
   }
 }
 */
-ARK::Block ARK::API::Block::Gettable::blockfromJSON(String _jsonStr)
+ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -252,11 +256,9 @@ ARK::Block ARK::API::Block::Gettable::blockfromJSON(String _jsonStr)
 /*  ==============================  */
 /*  ARK::API::Block::Gettable::epoch  */
 /*  /api/blocks/getEpoch  */
-String ARK::API::Block::Gettable::epoch(ARK::Utilities::Network::Connector _netConnector)
+String ARK::API::Block::Gettable::epoch(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getEpoch_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getEpoch_s);
 
   return ARK::API::Block::Gettable::epochfromJSON(callback);
 };
@@ -267,7 +269,7 @@ String ARK::API::Block::Gettable::epoch(ARK::Utilities::Network::Connector _netC
   "epoch":  "String"
 }
 */
-String ARK::API::Block::Gettable::epochfromJSON(String _jsonStr)
+String ARK::API::Block::Gettable::epochfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -283,11 +285,9 @@ String ARK::API::Block::Gettable::epochfromJSON(String _jsonStr)
 /*  ===============================  */
 /*  ARK::API::Block::Gettable::height  */
 /*  /api/blocks/getHeight  */
-ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::height(ARK::Utilities::Network::Connector _netConnector)
+ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::height(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getHeight_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getHeight_s);
 
   return ARK::API::Block::Gettable::heightfromJSON(callback);
 };
@@ -299,7 +299,7 @@ ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::height(ARK::Util
   "id": "String"
 }
 */
-ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::heightfromJSON(String _jsonStr)
+ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::heightfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -317,11 +317,9 @@ ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::heightfromJSON(S
 /*  ================================  */
 /*  ARK::API::Block::Gettable::nethash  */
 /*  /api/blocks/getNethash  */
-Hash ARK::API::Block::Gettable::nethash(ARK::Utilities::Network::Connector _netConnector)
+Hash ARK::API::Block::Gettable::nethash(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getNethash_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getNethash_s);
 
   return ARK::API::Block::Gettable::nethashfromJSON(callback);
 };
@@ -332,7 +330,7 @@ Hash ARK::API::Block::Gettable::nethash(ARK::Utilities::Network::Connector _netC
   "nethash":  "Hash"
 }
 */
-Hash ARK::API::Block::Gettable::nethashfromJSON(String _jsonStr)
+Hash ARK::API::Block::Gettable::nethashfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -348,11 +346,9 @@ Hash ARK::API::Block::Gettable::nethashfromJSON(String _jsonStr)
 /*  ============================  */
 /*  ARK::API::Block::Gettable::fee  */
 /*  /api/blocks/getFee  */
-Balance ARK::API::Block::Gettable::fee(ARK::Utilities::Network::Connector _netConnector)
+Balance ARK::API::Block::Gettable::fee(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getFee_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getFee_s);
 
   return ARK::API::Block::Gettable::feefromJSON(callback);
 };
@@ -362,7 +358,7 @@ Balance ARK::API::Block::Gettable::fee(ARK::Utilities::Network::Connector _netCo
   "fee":  Balance
 }
 */
-Balance ARK::API::Block::Gettable::feefromJSON(String _jsonStr)
+Balance ARK::API::Block::Gettable::feefromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -378,11 +374,9 @@ Balance ARK::API::Block::Gettable::feefromJSON(String _jsonStr)
 /*  =============================  */
 /*  ARK::API::Block::Gettable::fees  */
 /*  /api/blocks/getFees  */
-ARK::Fees ARK::API::Block::Gettable::fees(ARK::Utilities::Network::Connector _netConnector)
+ARK::Fees ARK::API::Block::Gettable::fees(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getFees_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getFees_s);
 
   return ARK::API::Block::Gettable::feesfromJSON(callback);
 };
@@ -398,7 +392,7 @@ ARK::Fees ARK::API::Block::Gettable::fees(ARK::Utilities::Network::Connector _ne
   }
 }
 */
-ARK::Fees ARK::API::Block::Gettable::feesfromJSON(String _jsonStr)
+ARK::Fees ARK::API::Block::Gettable::feesfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -419,11 +413,9 @@ ARK::Fees ARK::API::Block::Gettable::feesfromJSON(String _jsonStr)
 /*  ==================================  */
 /*  ARK::API::Block::Gettable::milestone  */
 /*  /api/blocks/getMilestone  */
-String ARK::API::Block::Gettable::milestone(ARK::Utilities::Network::Connector _netConnector)
+String ARK::API::Block::Gettable::milestone(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getMilestone_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getMilestone_s);
 
   return ARK::API::Block::Gettable::milestonefromJSON(callback);
 };
@@ -434,7 +426,7 @@ String ARK::API::Block::Gettable::milestone(ARK::Utilities::Network::Connector _
   "milestone": String
 }
 */
-String ARK::API::Block::Gettable::milestonefromJSON(String _jsonStr)
+String ARK::API::Block::Gettable::milestonefromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -450,11 +442,9 @@ String ARK::API::Block::Gettable::milestonefromJSON(String _jsonStr)
 /*  ===============================  */
 /*  ARK::API::Block::Gettable::reward  */
 /*  /api/blocks/getReward  */
-Balance ARK::API::Block::Gettable::reward(ARK::Utilities::Network::Connector _netConnector)
+Balance ARK::API::Block::Gettable::reward(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getReward_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getReward_s);
 
   return ARK::API::Block::Gettable::rewardfromJSON(callback);
 };
@@ -464,7 +454,7 @@ Balance ARK::API::Block::Gettable::reward(ARK::Utilities::Network::Connector _ne
   "reward": Balance
 }
 */
-Balance ARK::API::Block::Gettable::rewardfromJSON(String _jsonStr)
+Balance ARK::API::Block::Gettable::rewardfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -480,11 +470,9 @@ Balance ARK::API::Block::Gettable::rewardfromJSON(String _jsonStr)
 /*  ===============================  */
 /*  ARK::API::Block::Gettable::supply  */
 /*  /api/blocks/getSupply  */
-Balance ARK::API::Block::Gettable::supply(ARK::Utilities::Network::Connector _netConnector)
+Balance ARK::API::Block::Gettable::supply(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getSupply_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getSupply_s);
 
   return ARK::API::Block::Gettable::supplyfromJSON(callback);
 };
@@ -495,7 +483,7 @@ Balance ARK::API::Block::Gettable::supply(ARK::Utilities::Network::Connector _ne
   "supply": Balance
 }
 */
-Balance ARK::API::Block::Gettable::supplyfromJSON(String _jsonStr)
+Balance ARK::API::Block::Gettable::supplyfromJSON(const char* _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -511,11 +499,9 @@ Balance ARK::API::Block::Gettable::supplyfromJSON(String _jsonStr)
 /*  ===============================  */
 /*  ARK::API::Block::Gettable::status  */
 /*  /api/blocks/getStatus  */
-ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(ARK::Utilities::Network::Connector _netConnector)
+ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Block::getStatus_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Block::getStatus_s);
 
   return ARK::API::Block::Gettable::statusfromJSON(callback);
 };
@@ -531,7 +517,7 @@ ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(ARK::Util
   "supply":_supply
 }
 */
-ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::statusfromJSON(String _jsonStr)
+ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::statusfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
   

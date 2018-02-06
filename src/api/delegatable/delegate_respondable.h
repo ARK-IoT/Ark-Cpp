@@ -19,14 +19,14 @@ namespace Respondable
   struct Search
   {
   public:
-    String username;
+   char username[64] = { '\0' }; //TODO review sizes
     Address address;
     Publickey publicKey;
     Balance vote;
     int producedblocks;
     int missedblocks;
 
-    String description();
+    void description(char* const buf, size_t size);
   };
 /*  =======================================  */
 /*  ==========================================================================  */
@@ -43,7 +43,7 @@ namespace Respondable
 
       Voters(int);
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  =========================================  */
 /*  ==========================================================================  */
@@ -59,7 +59,7 @@ namespace Respondable
       Balance rewards;
       Balance forged;
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ==================================================  */
 /*  ==========================================================================  */
@@ -71,13 +71,13 @@ namespace Respondable
   struct NextForgers
   {
     public:
-      String currentBlock;
-      String currentSlot;
+      char currentBlock[64] = {'\0'};
+      char currentSlot[64] = { '\0' };
       Publickey delegates[10];
 
-      NextForgers(String _currentBlock, String _currentSlot, Publickey _delegates[10]);
+      NextForgers(const char* const _currentBlock, const char* const _currentSlot, Publickey _delegates[10]);
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ==============================================  */
 /*  ==========================================================================  */
@@ -92,27 +92,20 @@ namespace Respondable
 /*  =======================================  */
 /*  ARK::API::Delegate::Respondable::Search  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::Search::description()
+void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t size)
 {
-	String resp;
-	resp += "username: ";
-	resp += this->username;
-	resp += "\n";
-	resp += "address.description: ";
-	resp += this->address.description();
-	resp += "\n";
-	resp += "publicKey.description: ";
-	resp += this->publicKey.description();
-	resp += "\n";
-	resp += "vote.ark: ";
-	resp += this->vote.ark;
-	resp += "\n";
-	resp += "producedblocks: ";
-	resp += this->producedblocks;
-	resp += "\n";
-	resp += "missedblocks: ";
-	resp += this->missedblocks;
-	return resp;
+    strcpy(buf, "username: ");
+    strcat(buf, this->username);
+    strcat(buf, "\naddress.description: ");
+    strcat(buf, this->address.description());
+    strcat(buf, "\npublicKey.description: ");
+    strcat(buf, this->publicKey.description());
+    strcat(buf, "\nvote.ark: ");
+    strcat(buf, this->vote.ark());
+    strcat(buf, "\nproducedblocks: ");
+    strcat(buf, this->producedblocks);
+    strcat(buf, "\nmissedblocks: ");
+    strcat(buf, this->missedblocks);
 }
 /*  =======================================  */
 /*  ==========================================================================  */
@@ -129,9 +122,7 @@ ARK::API::Delegate::Respondable::Voters::Voters(int _count){
 }
 /*  =========================================  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::Voters::description() {
-  String resp;
-
+void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
   if (this->count > 0) {
     for (int i = 0; i < this->count; i++) {
       resp += "\nvoter ";

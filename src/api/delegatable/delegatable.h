@@ -29,7 +29,7 @@ class Delegatable :
 
 /*  ==========================================================================  */
 		/*  /api/delegates/search?q=sleepdeficit  */
-		ARK::API::Delegate::Respondable::Search delegateSearch(String _username)
+		ARK::API::Delegate::Respondable::Search delegateSearch(const char* const _username)
 		{
 			return ARK::API::Delegate::Gettable::search(this->netConnector, _username);
 		};
@@ -37,7 +37,7 @@ class Delegatable :
 
 /*  ==========================================================================  */
 		/*  /api/delegates/voters?publicKey=_pubKey  */
-		ARK::API::Delegate::Respondable::Voters delegateVoters(Publickey _publicKey)
+		ARK::API::Delegate::Respondable::Voters delegateVoters(const Publickey& _publicKey)
 		{
 			return ARK::API::Delegate::Gettable::voters(this->netConnector, _publicKey);
 		};
@@ -48,7 +48,7 @@ class Delegatable :
 			/api/delegates/get?username=sleepdeficit
 			/api/delegates/get?publicKey=_pubKey
 		*/
-		ARK::Delegate delegate(String _parameter)
+		ARK::Delegate delegate(const char* const _parameter)
 		{
 			return ARK::API::Delegate::Gettable::delegate(this->netConnector, _parameter);
 		};
@@ -110,7 +110,7 @@ class Delegatable :
 
 /*  ==========================================================================  */
 		/*  /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey  */
-		ARK::API::Delegate::Respondable::ForgedByAccount delegateForgedByAccount(Publickey _generatorPublicKey)
+		ARK::API::Delegate::Respondable::ForgedByAccount delegateForgedByAccount(const Publickey& _generatorPublicKey)
 		{
 			return ARK::API::Delegate::Gettable::forgedByAccount(this->netConnector, _generatorPublicKey);
 		};

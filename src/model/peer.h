@@ -3,6 +3,8 @@
 #ifndef peer_h
 #define peer_h
 
+#include <cstring>
+
 namespace ARK {
 
 /*  ================================================  */
@@ -10,16 +12,16 @@ namespace ARK {
 	/*  ARK::Peer  */
 	struct Peer {
 		public:
-			String ip;
+			char ip[40];
 			int port;
-			String version;
+			char version[64]; //TODO:  review array sizes
 			int errors;
-			String os;
-			String height;
-			String status;
+			char os[64];
+			char height[64];
+			char status[64];
 			int delay;
 
-			String description();
+			void description(char* const buf, size_t size);
 	};
 	/*  =========  */
 /*  ================================================  */
@@ -29,25 +31,23 @@ namespace ARK {
 /*  ================================================  */
 /*  =========  */
 /*  Description  */
-String ARK::Peer::Peer::description() {
-	String resp;
-		resp += "ip: ";
-				resp += this->ip; resp += "\n";
-		resp += "port: ";
-				resp += this->port; resp += "\n";
-		resp += "version: ";
-				resp += this->version; resp += "\n";
-		resp += "_errors: ";
-				resp += this->errors; resp += "\n";
-		resp += "os: ";
-				resp += this->os; resp += "\n";
-		resp += "height: ";
-				resp += this->height; resp += "\n";
-		resp += "status: ";
-				resp += this->status; resp += "\n";
-		resp += "delay: ";
-				resp += this->delay;
-	return resp;
+void ARK::Peer::Peer::description(char* const buf, size_t size) {
+    strcpy(buf, "ip: ");
+    strcat(buf, this->ip);
+    strcat(buf, "\port: ");
+    sprintf(buf, "%d", this->port);
+    strcat(buf, "\version: ");
+    strcat(buf, this->version);
+    strcat(buf, "\n_errors: ");
+    sprintf(buf, "%d", this->errors);
+    strcat(buf, "\nos: ");
+    strcat(buf, this->os);
+    strcat(buf, "\nheight: ");
+    strcat(buf, this->height);
+    strcat(buf, "\nstatus: ");
+    strcat(buf, this->status);
+    strcat(buf, "\ndelay: ");
+    sprintf(buf, "%d", this->delay);
 }
 /*  =========  */
 /*  ================================================  */

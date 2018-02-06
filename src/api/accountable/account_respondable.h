@@ -20,7 +20,7 @@ namespace Respondable
       Balance confirmed;
       Balance unconfirmed;
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ======================================  */
 /*  ==========================================================================  */
@@ -35,21 +35,16 @@ namespace Respondable
 /*  =====================================================  */
 /*  ARK::API::Account::Respondable::Balances::description  */
 /*  Description  */
-  String ARK::API::Account::Respondable::Balances::description()
+  void ARK::API::Account::Respondable::Balances::description(char* const buf, size_t size)
   {
-    String resp;
-    resp += "confirmed balance.ark: ";
-    resp += this->confirmed.ark;
-    resp += "\n";
-    resp += "confirmed balance.arktoshi: ";
-    resp += this->confirmed.arktoshi;
-    resp += "\n\n";
-    resp += "unconfirmed balance.ark: ";
-    resp += this->unconfirmed.ark;
-    resp += "\n";
-    resp += "unconfirmed balance.arktoshi: ";
-    resp += this->unconfirmed.arktoshi;
-    return resp;
+      strcpy(buf, "confirmed balance.ark: ");
+      strcat(buf, this->confirmed.ark());
+      strcat(buf, "\nconfirmed balance.arktoshi: ");
+      strcat(buf, this->confirmed.arktoshi());
+      strcat(buf, "\n\nunconfirmed balance.ark: ");
+      strcat(buf, this->unconfirmed.ark());
+      strcat(buf, "\nunconfirmed balance.arktoshi: ");
+      strcat(buf, this->unconfirmed.arktoshi());
   }
 /*  =====================================================  */
 /*  ==========================================================================  */
