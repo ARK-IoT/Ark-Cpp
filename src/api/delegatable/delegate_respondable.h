@@ -124,15 +124,16 @@ ARK::API::Delegate::Respondable::Voters::Voters(int _count){
 /*  Description  */
 void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
   if (this->count > 0) {
+      buf[0] = '\0';
     for (int i = 0; i < this->count; i++) {
-      resp += "\nvoter ";
-      resp += i + 1;
-      resp += ":\n";
-      resp += this->list[i].description();
-      resp += "\n";
+        strcat(buf, "\nvoter ");
+        const auto len = strlen(buf);
+        sprintf(buf + len, "%d", i + 1);
+        strcat(buf, ":\n");
+        strcat(buf, this->list[i].description());
+        strcat(buf, "\n");
     };
   };
-  return resp;
 }
 /*  =========================================  */
 /*  ==========================================================================  */
@@ -144,18 +145,14 @@ void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_
 /*  ==================================================  */
 /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::ForgedByAccount::description()
+void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t size)
 {
-	String resp;
-	resp += "fees.ark: ";
-	resp += this->fees.ark;
-	resp += "\n";
-	resp += "rewards.ark: ";
-	resp += this->rewards.ark;
-	resp += "\n";
-	resp += "forged.ark: ";
-	resp += this->forged.ark;
-	return resp;
+    strcpy(buf, "fees.ark: ");
+    strcat(buf, this->fees.ark());
+    strcat(buf, "\nrewards.ark: ");
+    strcat(buf, this->rewards.ark());
+    strcat(buf, "\nforged.ark: ");
+    strcat(buf, this->forged.ark());
 }
 /*  ==================================================  */
 /*  ==========================================================================  */
@@ -168,36 +165,35 @@ String ARK::API::Delegate::Respondable::ForgedByAccount::description()
 /*  ARK::API::Delegate::Respondable::NextForgers  */
 /*  Constructor  */
 ARK::API::Delegate::Respondable::NextForgers::NextForgers(
-    String _currentBlock, String _currentSlot,
+    const char* const _currentBlock, const char* const _currentSlot,
     Publickey _delegates[10])
 {
-	this->currentBlock = _currentBlock;
-	this->currentSlot = _currentSlot;
-	for (int i = 0; i < 10; i++)
+    strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
+    strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
+	for (auto i = 0; i < 10; ++i)
 	{
 		this->delegates[i] = _delegates[i];
 	};
 }
 /*  ============================================  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::NextForgers::description()
+void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t size)
 {
-	String resp;
-	resp += "currentBlock: ";
-	resp += this->currentBlock;
-	resp += "\n";
-	resp += "currentSlot: ";
-	resp += this->currentSlot;
-	resp += "\n";
-	for (int i = 0; i < 10; i++)
+    strcpy(buf, "currentBlock: ");
+    strcat(buf, this->currentBlock);
+    strcat(buf, "\ncurrentSlot: ");
+    strcat(buf, this->currentSlot);
+    strcat(buf, "\n");
+
+	for (auto i = 0; i < 10; ++i)
 	{
-		resp += "delegate ";
-		resp += i + 1;
-		resp += ": \n publicKey: ";
-		resp += delegates[i].description();
-		resp += "\n";
+        strcat(buf, "delegate ");
+        const auto len = strlen(buf);
+        sprintf(buf + len, "%d", i + 1);
+        strcat(buf, ": \n publicKey: ");
+        strcat(buf, delegates[i].description());
+        strcat(buf, "\n");
 	};
-	return resp;
 }
 /*  ============================================  */
 /*  ==========================================================================  */

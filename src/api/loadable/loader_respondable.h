@@ -20,9 +20,9 @@ namespace Respondable
     public:
       bool loaded;
       int now;
-      String blocksCount;
+      char blocksCount[64] = { '\0' };  //TODO review sizes
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ============  */
 /*  ================================================  */
@@ -35,10 +35,10 @@ namespace Respondable
     public:
       bool syncing;
       int blocks;
-      String height;
-      String id;
+      char height[64]; //TODO: review sizes
+      char id[64];
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ============  */
 /*  ================================================  */
@@ -55,18 +55,16 @@ namespace Respondable
 /*  ============  */
 /*  ARK::API::Loader::Respondable::Status  */
 /*  Description  */
-String ARK::API::Loader::Respondable::Status::description()
+void ARK::API::Loader::Respondable::Status::description(char* const buf, size_t size)
 {
-  String resp;
-  resp += "loaded: ";
-  resp += this->loaded;
-  resp += "\n";
-  resp += "now: ";
-  resp += this->now;
-  resp += "\n";
-  resp += "blocksCount: ";
-  resp += this->blocksCount;
-  return resp;
+    //TODO validate size
+    strcpy(buf, "loaded: ");
+    strcat(buf, this->loaded ? "true" : "false");
+    strcat(buf, "\nnow: ");
+    auto len = strlen(buf);
+    sprintf(buf + len, "%d", this->now);
+    strcat(buf, "\nblocksCount: ");
+    strcat(buf, this->blocksCount);
 };
 /*  ============  */
 /*  ================================================  */
@@ -78,21 +76,17 @@ String ARK::API::Loader::Respondable::Status::description()
 /*  ============  */
 /*  ARK::Loader::Loader::Sync  */
 /*  Description  */
-String ARK::API::Loader::Respondable::Sync::description()
+void ARK::API::Loader::Respondable::Sync::description(char* const buf, size_t size)
 {
-  String resp;
-  resp += "syncing: ";
-  resp += this->syncing;
-  resp += "\n";
-  resp += "blocks: ";
-  resp += this->blocks;
-  resp += "\n";
-  resp += "height: ";
-  resp += this->height;
-  resp += "\n";
-  resp += "id: ";
-  resp += this->id;
-  return resp;
+    strcpy(buf, "syncing: ");
+    strcat(buf, this->syncing ? "true" : "false");
+    strcat(buf, "\nblocks: ");
+    auto len = strlen(buf);
+    sprintf(buf, "%d", this->blocks);
+    strcat(buf, "\nheight: ");
+    strcat(buf, this->height);
+    strcat(buf, "\nid: ");
+    strcat(buf, this->id);
 };
 /*  ============  */
 /*  ================================================  */

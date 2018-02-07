@@ -17,8 +17,8 @@ class Gettable
   protected:
 /*  ==========================================================================  */
     /*  /api/signatures/fee  */
-    Balance fee(ARK::Utilities::Network::Connector _netConnector);
-    Balance feefromJSON(String _jsonStr);
+    Balance fee(const ARK::Utilities::Network::Connector& _netConnector);
+    Balance feefromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 };
 /*  ========================================  */
@@ -34,13 +34,11 @@ class Gettable
 /*  ================================  */
 /*  ARK::API::SignatureGettable::fee  */
 /*  /api/signatures/fee  */
-Balance ARK::API::Signature::Gettable::fee(ARK::Utilities::Network::Connector _netConnector)
+Balance ARK::API::Signature::Gettable::fee(const ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Signatures::fee_s;
+    auto callback = _netConnector.cb(ARK::API::Paths::Signatures::fee_s);
 
-  String callback = _netConnector.cb(uri);
-
-  return ARK::API::Signature::Gettable::feefromJSON(callback);
+    return ARK::API::Signature::Gettable::feefromJSON(callback);
 }
 
 /*
@@ -49,7 +47,7 @@ Balance ARK::API::Signature::Gettable::fee(ARK::Utilities::Network::Connector _n
   "fee":  Balance
 }
 */
-Balance ARK::API::Signature::Gettable::feefromJSON(String _jsonStr)
+Balance ARK::API::Signature::Gettable::feefromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 

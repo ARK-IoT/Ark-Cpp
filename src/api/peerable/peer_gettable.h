@@ -19,11 +19,11 @@ class Gettable
 /*  ==========================================================================  */
     /*  /api/delegates/fee  */
     ARK::Peer peer(
-        ARK::Utilities::Network::Connector _netConnector,
-        String _ip,
+        const ARK::Utilities::Network::Connector& _netConnector,
+        const char* const _ip,
         int _port);
 
-    ARK::Peer peerfromJSON(String _jsonStr);
+    ARK::Peer peerfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
@@ -37,8 +37,8 @@ class Gettable
 
 /*  ==========================================================================  */
     /*  /api/peers/version  */
-    ARK::API::Peer::Respondable::Version version(ARK::Utilities::Network::Connector _netConnector);
-    ARK::API::Peer::Respondable::Version versionfromJSON(String _jsonStr);
+    ARK::API::Peer::Respondable::Version version(const ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Peer::Respondable::Version versionfromJSON(const char* const _jsonStr);
 /*  ==========================================================================  */
 };
 /*  ===================================  */
@@ -54,19 +54,21 @@ class Gettable
 /*  ARK::API::Peer::Gettable::peer  */
 /*  /api/delegates/fee  */
 ARK::Peer ARK::API::Peer::Gettable::peer(
-    ARK::Utilities::Network::Connector _netConnector,
-    String _ip,
+    const ARK::Utilities::Network::Connector& _netConnector,
+    const char* const _ip,
     int _port)
 {
-  String uri = ARK::API::Paths::Peer::get_s;
-  uri += "?ip=";
-  uri += _ip;
-  uri += "&port=";
-  uri += _port;
+    char uri[64] = { '\0' };  //TODO: review sizes
+    strcpy(uri, ARK::API::Paths::Peer::get_s);
+    strcat(uri, "?ip=");
+    strcat(uri, _ip);
+    strcat(uri, "&port=");
+    const auto len = strlen(uri);
+    sprintf(uri + len, "%d", _port);
 
-  String callback = _netConnector.cb(uri);
+    auto callback = _netConnector.cb(uri);
 
-  return ARK::API::Peer::Gettable::peerfromJSON(callback);
+    return ARK::API::Peer::Gettable::peerfromJSON(callback);
 }
 
 /*
@@ -84,7 +86,7 @@ ARK::Peer ARK::API::Peer::Gettable::peer(
   }
 }
 */
-ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(String _jsonStr)
+ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
@@ -175,13 +177,13 @@ ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(String _jsonStr)
 /*  ===============================  */
 /*  ARK::API::PeerGettable::version  */
 /*  /api/peers/version  */
-ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::version(ARK::Utilities::Network::Connector _netConnector)
+ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::version(
+    const ARK::Utilities::Network::Connector& _netConnector
+)
 {
-  String uri = ARK::API::Paths::Peer::version_s;
+    auto callback = _netConnector.cb(ARK::API::Paths::Peer::version_s);
 
-  String callback = _netConnector.cb(uri);
-
-  return ARK::API::Peer::Gettable::versionfromJSON(callback);
+    return ARK::API::Peer::Gettable::versionfromJSON(callback);
 };
 
 /*
@@ -191,7 +193,7 @@ ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::version(ARK::Util
   "build":  "String"
 }
 */
-ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::versionfromJSON(String _jsonStr)
+ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::versionfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 

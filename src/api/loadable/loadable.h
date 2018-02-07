@@ -20,7 +20,7 @@ class Loadable : public Loader::Gettable, virtual ARK::Utilities::Network::Conne
 		/*  /api/loader/status  */
 		ARK::API::Loader::Respondable::Status loaderStatus()
 		{
-						return ARK::API::Loader::Gettable::status(this->netConnector);
+			return ARK::API::Loader::Gettable::status(this->netConnector);
 		};
 /*  ==========================================================================  */
 
@@ -28,7 +28,7 @@ class Loadable : public Loader::Gettable, virtual ARK::Utilities::Network::Conne
 		/*  /api/loader/status/sync  */
 		ARK::API::Loader::Respondable::Sync loaderSync()
 		{
-						return ARK::API::Loader::Gettable::sync(this->netConnector);
+			return ARK::API::Loader::Gettable::sync(this->netConnector);
 		};
 /*  ==========================================================================  */
 
@@ -36,7 +36,7 @@ class Loadable : public Loader::Gettable, virtual ARK::Utilities::Network::Conne
 		/*  /api/loader/autoconfigure  */
 		ARK::Network loaderAutoconfigure()
 		{
-						return ARK::API::Loader::Gettable::autoconfigure(this->netConnector);
+			return ARK::API::Loader::Gettable::autoconfigure(this->netConnector);
 		};
 /*  ==========================================================================  */
 };

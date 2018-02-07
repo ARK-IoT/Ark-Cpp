@@ -18,8 +18,8 @@ class Gettable
   protected:
 /*  ==========================================================================  */
     /*  /api/transactions/get?id=  */
-    ARK::Transaction transaction(ARK::Utilities::Network::Connector netConnector, Hash id);
-    ARK::Transaction transactionfromJSON(String jsonStr);
+    ARK::Transaction transaction(const ARK::Utilities::Network::Connector& netConnector, const Hash& id);
+    ARK::Transaction transactionfromJSON(const char* const jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
@@ -34,16 +34,16 @@ class Gettable
 /*  ==========================================================================  */
     /*  /api/transactions/unconfirmed/get?id=  */
     String transactionUnconfirmed(
-        ARK::Utilities::Network::Connector netConnector,
-        Hash id);
+        const ARK::Utilities::Network::Connector& netConnector,
+        const Hash& id);
         
-    String transactionUnconfirmedfromJSON(String jsonStr);
+    String transactionUnconfirmedfromJSON(const char* const jsonStr);
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/transactions/unconfirmed  */
-    String transactionsUnconfirmed(ARK::Utilities::Network::Connector netConnector);
-    String transactionsUnconfirmedfromJSON(String jsonStr);
+    String transactionsUnconfirmed(const ARK::Utilities::Network::Connector& netConnector);
+    String transactionsUnconfirmedfromJSON(const char* const jsonStr);
 /*  ==========================================================================  */
 
 };
@@ -61,12 +61,18 @@ class Gettable
 /*  ============================================  */
 /*  ARK::API::Transaction::Gettable::transaction  */
 /*  /api/transactions/get?id=  */
-ARK::Transaction ARK::API::Transaction::Gettable::transaction(ARK::Utilities::Network::Connector netConnector, Hash id) {
-  String uri = ARK::API::Paths::Transaction::getSingle_s;
-    uri += "?id=";
-    uri += id.description();
-  String callback = netConnector.cb(uri);
-  return ARK::API::Transaction::Gettable::transactionfromJSON(callback);
+ARK::Transaction ARK::API::Transaction::Gettable::transaction(
+    const ARK::Utilities::Network::Connector& netConnector, 
+    const Hash& id
+) {
+    char uri[64] = { '\0' }; //TODO review sizes
+
+    strcpy(uri, ARK::API::Paths::Transaction::getSingle_s);
+    strcat(uri, "?id=");
+    strcat(uri, id.description());
+
+    auto callback = netConnector.cb(uri);
+    return ARK::API::Transaction::Gettable::transactionfromJSON(callback);
 }
 
 /*
@@ -88,7 +94,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(ARK::Utilities::Ne
   }
 }
 */
-ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(String jsonStr) {
+ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char* const jsonStr) {
   ARK::Utilities::JSONString jString(jsonStr); 
 
   char temp[34];
@@ -236,12 +242,18 @@ ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(String jso
 /*  =====================================================  */
 /*  ARK::API::Transaction::Gettable::transactionUnconfirmed  */
 /*  /api/transactions/unconfirmed/get?id=  */
-String ARK::API::Transaction::Gettable::transactionUnconfirmed(ARK::Utilities::Network::Connector netConnector, Hash id) {
-  String uri = ARK::API::Paths::Transaction::getSingleUnconfirmed_s;
-    uri += "?id=";
-    uri += id.description();
-  String callback = netConnector.cb(uri);
-  return ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(callback);
+String ARK::API::Transaction::Gettable::transactionUnconfirmed(
+    const ARK::Utilities::Network::Connector& netConnector, 
+    const Hash& id
+) {
+    char uri[64] = { '\0' }; //TODO review sizes
+
+    strcpy(uri, ARK::API::Paths::Transaction::getSingleUnconfirmed_s);
+    strcat(uri, "?id=");
+    strcat(uri, id.description());
+
+    auto callback = netConnector.cb(uri);
+    return ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(callback);
 }
 
 /*
@@ -269,7 +281,7 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmed(ARK::Utilities::N
   "error":"Transaction not found"
 }
 */
-String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(String jsonStr) {
+String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const char* const jsonStr) {
   ARK::Utilities::JSONString jString(jsonStr); 
   String resp;
   if (jsonStr.indexOf("Transaction not found")) {
@@ -304,12 +316,12 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(String js
 /*  ======================================================  */
 /*  ARK::API::Transaction::Gettable::transactionsUnconfirmed  */
 /*  /api/transactions/unconfirmed  */
-String ARK::API::Transaction::Gettable::transactionsUnconfirmed(ARK::Utilities::Network::Connector netConnector) {
-  String uri = ARK::API::Paths::Transaction::unconfirmed_s;
+String ARK::API::Transaction::Gettable::transactionsUnconfirmed(
+    const ARK::Utilities::Network::Connector& netConnector
+) {
+    auto callback = netConnector.cb(ARK::API::Paths::Transaction::unconfirmed_s);
 
-  String callback = netConnector.cb(uri);
-
-  return ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(callback);
+    return ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(callback);
 }
 
 /*
@@ -318,7 +330,7 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmed(ARK::Utilities::
   "transactions":[]
 }
 */
-String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(String jsonStr) {
+String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const char* const jsonStr) {
   ARK::Utilities::JSONString jString(jsonStr); 
 
   int txCount = ARK::API::Helpers::substringCount(jsonStr, "id");

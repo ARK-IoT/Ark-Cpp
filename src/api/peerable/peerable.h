@@ -21,7 +21,7 @@ class Peerable :
   public:
 /*  ==========================================================================  */
     /*  /api/peers/get?ip=167.114.29.55&port=4002  */
-    ARK::Peer peer(String _ip, int _port)
+    ARK::Peer peer(const char* const _ip, int _port)
     {
       return ARK::API::Peer::Gettable::peer(this->netConnector, _ip, _port);
     };

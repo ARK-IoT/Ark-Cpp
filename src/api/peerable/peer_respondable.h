@@ -17,9 +17,10 @@ namespace Respondable
 /*  ARK::API::Peer::Respondable::Version  */
   struct Version {
     public:
-      String version;
-      String build;
-      String description();
+        char version[64] = { '\0' };  //TODO: review sizes
+        char build[64] = { '\0' };
+
+        void description(char* const buf, size_t size);
   };
 /*  ========================  */
 /*  ==========================================================================  */
@@ -51,13 +52,12 @@ namespace Respondable
 /*  ========================  */
 /*  ARK::API::Peer::Respondable::Version  */
 /*  Description  */
-String ARK::API::Peer::Respondable::Version::description() {
-	String resp;
-		resp += "version: ";
-			resp += this->version; resp += "\n";
-		resp += "build: ";
-			resp += this->build; resp += "\n";
-	return resp;
+void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t size) {
+    strcpy(buf, "version: ");
+    strcat(buf, this->version);
+    strcat(buf, "\nbuild: ");
+    strcat(buf, this->build);
+    strcat(buf, "\n");
 }
 /*  ========================  */
 /*  ==========================================================================  */
