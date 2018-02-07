@@ -3,8 +3,6 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <stdint.h>
-
 namespace ARK
 {
 
@@ -44,19 +42,47 @@ public:
 	char id[MAX_UINT128_CHARS];
 	int version;
 	char timestamp[MAX_UINT128_CHARS];
-	uint32_t height;
+	char height[64];
 	char previousBlock[MAX_UINT128_CHARS];
-	uint32_t numberOfTransactions;
+	char numberOfTransactions[64];
 	Balance totalAmount;
 	Balance totalFee;
 	Balance reward;
-	uint32_t payloadLength;
+	char payloadLength[64];
 	Hash payloadHash;
 	Publickey generatorPublicKey;
 	Address generatorId;
 	Signature blockSignature;
-	uint32_t confirmations;
+	char confirmations[64];
 	Balance totalForged;
+
+    Block(
+        const char* const _id,
+        int v,
+        const char* const t,
+        const char* const h,
+        const char* const pb,
+        const char* const nt,
+        const char* const ta,
+        const char* const tf,
+        const char* const r,
+        const char* const pl,
+        const char* const ph,
+        const char* const gpk,
+        const char* const gid,
+        const char* const bs,
+        const char* const c,
+        const char* const tfg
+    ) : id(), version(v), timestamp(), height(), previousBlock(), numberOfTransactions(), totalAmount(ta), totalFee(tf), reward(r), payloadLength(), payloadHash(ph), generatorPublicKey(gpk), generatorId(gid), blockSignature(bs), confirmations(), totalForged(tfg)
+    { 
+        strncpy(id, _id, sizeof(id) / sizeof(id[0]));
+        strncpy(timestamp, t, sizeof(timestamp) / sizeof(timestamp[0]));
+        strncpy(height, h, sizeof(height) / sizeof(height[0]));
+        strncpy(previousBlock, pb, sizeof(previousBlock) / sizeof(previousBlock[0]));
+        strncpy(numberOfTransactions, nt, sizeof(numberOfTransactions) / sizeof(numberOfTransactions[0]));
+        strncpy(payloadLength, pl, sizeof(payloadLength) / sizeof(payloadLength[0]));
+        strncpy(confirmations, c, sizeof(confirmations) / sizeof(confirmations[0]));
+    }
 
 	void description(char* const buf, size_t size);
 };

@@ -18,6 +18,14 @@ struct Fees
     Balance secondsignature;
     Balance multisignature;
 
+    Fees(
+        const char* const s,
+        const char* const v,
+        const char* const d,
+        const char* const ss,
+        const char* const ms
+    ) : send(s), vote(v), delegate(d), secondsignature(ss), multisignature(ms) { }
+
     void description(char* const buf, size_t size);
 };
 /*  =========  */

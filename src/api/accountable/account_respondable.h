@@ -17,10 +17,13 @@ namespace Respondable
 /*  ARK::API::Account::Respondable::Balance  */
   struct Balances {
     public:
-      Balance confirmed;
-      Balance unconfirmed;
+        Balance confirmed;
+        Balance unconfirmed;
 
-      void description(char* const buf, size_t size);
+        Balances() { }
+        Balances(const Balance& c, const Balance& u) : confirmed(c), unconfirmed(u) { }
+
+        void description(char* const buf, size_t size);
   };
 /*  ======================================  */
 /*  ==========================================================================  */

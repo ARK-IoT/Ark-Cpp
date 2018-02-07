@@ -28,16 +28,16 @@ private:
     static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
     static const auto ARK_SIZE = 18 * sizeof(int);
 
-    char arktoshi_[ARKTOSHI_SIZE] = {'\0'};
-    char ark_[ARK_SIZE] = {'\0'};
+    char arktoshi_[ARKTOSHI_SIZE];
+    char ark_[ARK_SIZE];
 
 public:
-  Balance()
+  Balance() : arktoshi_(), ark_()
   {
     this->setBalance("0");
   };
 
-  Balance(const char* const balanceStr)
+  explicit Balance(const char* const balanceStr) : arktoshi_(), ark_()
   {
         bool isNumeric = true;
 

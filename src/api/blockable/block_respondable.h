@@ -15,19 +15,33 @@ namespace Respondable
 /*  ==========================================================================  */
 /*  ====================================  */
 /*  ARK::API::Block::Respondable::Status  */
-  struct Status
-  {
-    public:
-      char epoch[64] = {'\0'};  //TODO: check sizes
-      char height[64] = {'\0'};
-      Balance fee;
-      int milestone;
-      Hash nethash;
-      Balance reward;
-      Balance supply;
+struct Status
+{
+public:
+    char epoch[64];  //TODO: check sizes
+    char height[64];
+    Balance fee;
+    int milestone;
+    Hash nethash;
+    Balance reward;
+    Balance supply;
 
-      void description(char* const buf, size_t size);
-  };
+    Status(
+        const char* const e, 
+        const char* const h,
+        const char* const f,
+        int m,
+        const char* const nh,
+        const char* const r,
+        const char* const s
+    ) : epoch(), height(), fee(f), milestone(m), nethash(nh), reward(r), supply(s)
+    {
+        strncpy(epoch, e, sizeof(epoch) / sizeof(epoch[0]));
+        strncpy(height, h, sizeof(height) / sizeof(height[0]));
+    }
+
+    void description(char* const buf, size_t size);
+};
 /*  ====================================  */
 /*  ================================================  */
 
@@ -36,14 +50,19 @@ namespace Respondable
 /*  ====================================  */
 /*  ARK::API::Block::Respondable::Height  */
 /*  Definition  */
-  struct Height
-  {
-    public:
-      char height[64] = {'\0' }; // TODO: check sizes 
-      char id[64] = { '\0' };
+struct Height
+{
+public:
+    char height[64]; // TODO: check sizes 
+    char id[64];
 
-      void description(char* const buf, size_t size);
-  };
+    Height(const char* const h, const char* const _id) : height(), id() { 
+        strncpy(height, h, sizeof(height) / sizeof(height[0]));
+        strncpy(id, _id, sizeof(id) / sizeof(id[0]));
+    }
+
+    void description(char* const buf, size_t size);
+};
 /*  ====================================  */
 /*  ==========================================================================  */
 
@@ -68,13 +87,14 @@ void ARK::API::Block::Respondable::Status::description(char* const buf, size_t s
     strcat(buf, "\nfee.ark: ");
     strcat(buf, this->fee.ark());
     strcat(buf, "\nmilestone: ");
-    strcat(buf, this->milestone);
+    const auto len = strlen(buf);
+    sprintf(buf + len, "%d", this->milestone);
     strcat(buf, "\nnethash.description: ");
     strcat(buf, this->nethash.description());
     strcat(buf, "\nreward.ark: ");
     strcat(buf, this->reward.ark());
     strcat(buf, "\supply.ark: ");
-    strcat(buf, this->supply.ark);
+    strcat(buf, this->supply.ark());
 }
 /*  ====================================  */
 /*  ==========================================================================  */

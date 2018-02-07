@@ -24,10 +24,9 @@ private:
 public:
     address_t() { };
 
-	address_t(const char* const addressString)
+	address_t(const char* const addressString) : value_()
 	{
         strncpy(value_, addressString, ADDRESS_LENGTH);
-        value_[ADDRESS_LENGTH - 1] = '\0';
 	}
 
 	const char* const description() const { return value_; }

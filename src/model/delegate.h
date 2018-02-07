@@ -29,7 +29,7 @@ namespace ARK
 struct Delegate
 {
 public:
-	char username[1024];
+	char username[1024] = { '\0' };
 	Address address;
 	Publickey publicKey;
 	Balance vote;
@@ -38,6 +38,21 @@ public:
 	int rate;
 	double approval;
 	double productivity;
+
+    Delegate(
+        const char* const u, 
+        const char* const a, 
+        const char* const p, 
+        const char* const v,
+        int pb,
+        int mb,
+        int r,
+        double ap,
+        double pr
+    ) : address(a), publicKey(p), vote(v), producedblocks(pb), missedblocks(mb), rate(r), approval(ap), productivity(pr)
+    { 
+        strncpy(username, u, sizeof(username) / sizeof(username[0]));
+    }
 
 	void description(char* const buf, size_t size);
 

@@ -19,12 +19,23 @@ namespace Respondable
   struct Search
   {
   public:
-   char username[64] = { '\0' }; //TODO review sizes
+    char username[64]; //TODO review sizes
     Address address;
     Publickey publicKey;
     Balance vote;
     int producedblocks;
     int missedblocks;
+
+    Search(
+        const char* const u, 
+        const char* const a, 
+        const char* const pk, 
+        const char* const v, 
+        int pb, 
+        int mb
+    ) : username(), address(a), publicKey(pk), vote(v), producedblocks(pb), missedblocks(mb) {
+        strncpy(username, u, sizeof(username) / sizeof(username[0]));
+    }
 
     void description(char* const buf, size_t size);
   };
@@ -35,16 +46,21 @@ namespace Respondable
 /*  ==========================================================================  */
 /*  =========================================  */
   /*  ARK::API::Delegate::Respondable::Voters  */
-  struct Voters {
-    public:
+struct Voters {
+public:
+    size_t count;
+    ARK::Voter* const _voters;
 
-      int count;
-      ARK::Voter list[10];// = {{}};
+    Voters(size_t c) : count(c), _voters(new ARK::Voter[c]) { }
+    ~Voters() {
+        delete [] _voters;
+    }
 
-      Voters(int);
+    const Voter& operator[](size_t index) const { return _voters[index]; }
+    Voter& operator[](size_t index) { return _voters[index]; }
 
-      void description(char* const buf, size_t size);
-  };
+    void description(char* const buf, size_t size);
+};
 /*  =========================================  */
 /*  ==========================================================================  */
 
@@ -52,15 +68,17 @@ namespace Respondable
 /*  ==========================================================================  */
 /*  ==================================================  */
   /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
-  struct ForgedByAccount
-  {
-    public:
-      Balance fees;
-      Balance rewards;
-      Balance forged;
+struct ForgedByAccount
+{
+public:
+    Balance fees;
+    Balance rewards;
+    Balance forged;
 
-      void description(char* const buf, size_t size);
-  };
+    ForgedByAccount(const char* const f, const char* const r, const char* const fg) : fees(f), rewards(r), forged(fg) { }
+
+    void description(char* const buf, size_t size);
+};
 /*  ==================================================  */
 /*  ==========================================================================  */
 
@@ -71,11 +89,11 @@ namespace Respondable
   struct NextForgers
   {
     public:
-      char currentBlock[64] = {'\0'};
-      char currentSlot[64] = { '\0' };
+      char currentBlock[64];
+      char currentSlot[64];
       Publickey delegates[10];
 
-      NextForgers(const char* const _currentBlock, const char* const _currentSlot, Publickey _delegates[10]);
+      NextForgers(const char* const _currentBlock, const char* const _currentSlot, const Publickey* const _delegates);
 
       void description(char* const buf, size_t size);
   };
@@ -103,23 +121,17 @@ void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_
     strcat(buf, "\nvote.ark: ");
     strcat(buf, this->vote.ark());
     strcat(buf, "\nproducedblocks: ");
-    strcat(buf, this->producedblocks);
+    auto len = strlen(buf);
+    sprintf(buf + len, "%d", this->producedblocks);
     strcat(buf, "\nmissedblocks: ");
-    strcat(buf, this->missedblocks);
+    len = strlen(buf);
+    sprintf(buf + len, "%d", this->missedblocks);
 }
 /*  =======================================  */
 /*  ==========================================================================  */
 
 
 
-
-/*  ==========================================================================  */
-/*  =========================================  */
-  /*  ARK::API::Delegate::Respondable::Voters  */
-/*  Constructor  */
-ARK::API::Delegate::Respondable::Voters::Voters(int _count){
-  this->count = _count;
-}
 /*  =========================================  */
 /*  Description  */
 void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
@@ -127,10 +139,11 @@ void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_
       buf[0] = '\0';
     for (int i = 0; i < this->count; i++) {
         strcat(buf, "\nvoter ");
-        const auto len = strlen(buf);
+        auto len = strlen(buf);
         sprintf(buf + len, "%d", i + 1);
         strcat(buf, ":\n");
-        strcat(buf, this->list[i].description());
+        len = strlen(buf);
+        (*this)[i].description(buf + len, size - len);
         strcat(buf, "\n");
     };
   };
@@ -166,8 +179,9 @@ void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const b
 /*  Constructor  */
 ARK::API::Delegate::Respondable::NextForgers::NextForgers(
     const char* const _currentBlock, const char* const _currentSlot,
-    Publickey _delegates[10])
+    const Publickey* const _delegates) : currentBlock(), currentSlot()
 {
+    //TODO:  wish i had std::array for _delegates.  pointer decay sucks.
     strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
     strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
 	for (auto i = 0; i < 10; ++i)

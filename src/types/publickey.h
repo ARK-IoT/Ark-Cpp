@@ -22,12 +22,21 @@
         char value_[PUBLICKEY_LEN] = { '\0' };
 
     public:
-        publickey_t() { };
+        publickey_t() : value_() { };
 
-        publickey_t(const char* const _base64String) {      
+        publickey_t(const char* const _base64String) : value_() {      
           strncpy(value_, _base64String, PUBLICKEY_LEN);
-          value_[PUBLICKEY_LEN - 1] = '\0';
         };
+
+        publickey_t(const publickey_t& other) : value_() {
+            strcpy(value_, other.value_);
+        }
+        publickey_t& operator=(const publickey_t& other) {
+            if (this != &other) {
+                strcpy(value_, other.value_);
+            }
+            return *this;
+        }
 
         const char* const description() const { return value_; };      
     };

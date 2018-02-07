@@ -54,7 +54,7 @@ class Connector
 
     bool disconnect();
 
-    String cb(String request);
+    String cb(const char* const request);
 /*  ==================================  */
 
 
@@ -184,7 +184,7 @@ void ARK::Utilities::Network::Connector::setNetworkPeer(String peer)
 * Manages directing the callback from
 *   the devices HTTPClient Library
 **************************************************/
-String ARK::Utilities::Network::Connector::cb(String request)
+String ARK::Utilities::Network::Connector::cb(const char* const request)
 {
   String resp = this->http.get(this->networkPeer, this->networkPort, request);
   return resp;

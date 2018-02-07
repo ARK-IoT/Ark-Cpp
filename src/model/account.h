@@ -29,21 +29,34 @@ namespace ARK
 /*  ================================================  */
 /*  ============  */
 /*  ARK::Account  */
-  struct Account
-  {
-    public:
-      Address address;
-      Balance unconfirmedBalance;
-      Balance balance;
-      Publickey publicKey;
-      int unconfirmedSignature;
-      int secondSignature;
-      Publickey secondPublicKey;
-      Signature multisignatures;
-      Signature u_multisignatures;
+struct Account
+{
+public:
+    Address address;
+    Balance unconfirmedBalance;
+    Balance balance;
+    Publickey publicKey;
+    int unconfirmedSignature;
+    int secondSignature;
+    Publickey secondPublicKey;
+    Signature multisignatures;
+    Signature u_multisignatures;
+    
+    Account(
+        const char* const a, 
+        const char* const ub,
+        const char* const b,
+        const char* const pk,
+        int us,
+        int ss,
+        const char* const spk,
+        const char* const ms,
+        const char* const ums
+    ) : address(a), unconfirmedBalance(ub), balance(b), publicKey(pk), unconfirmedSignature(us), secondSignature(ss), secondPublicKey(spk), multisignatures(ms), u_multisignatures(ums)
+    { }
 
-      void description(char* const buf, size_t len);
-  };
+    void description(char* const buf, size_t len);
+};
 /*  ============  */
 /*  ================================================  */
 

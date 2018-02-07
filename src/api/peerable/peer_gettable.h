@@ -19,11 +19,14 @@ class Gettable
 /*  ==========================================================================  */
     /*  /api/delegates/fee  */
     ARK::Peer peer(
-        const ARK::Utilities::Network::Connector& _netConnector,
+        ARK::Utilities::Network::Connector& _netConnector,
         const char* const _ip,
         int _port);
 
     ARK::Peer peerfromJSON(const char* const _jsonStr);
+    ARK::Peer peerfromJSON(const String& _jsonStr) {
+        return peerfromJSON(_jsonStr.c_str());
+    }
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
@@ -37,8 +40,11 @@ class Gettable
 
 /*  ==========================================================================  */
     /*  /api/peers/version  */
-    ARK::API::Peer::Respondable::Version version(const ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Peer::Respondable::Version version(ARK::Utilities::Network::Connector& _netConnector);
     ARK::API::Peer::Respondable::Version versionfromJSON(const char* const _jsonStr);
+    ARK::API::Peer::Respondable::Version versionfromJSON(const String& _jsonStr) {
+        return versionfromJSON(_jsonStr.c_str());
+    }
 /*  ==========================================================================  */
 };
 /*  ===================================  */
@@ -54,7 +60,7 @@ class Gettable
 /*  ARK::API::Peer::Gettable::peer  */
 /*  /api/delegates/fee  */
 ARK::Peer ARK::API::Peer::Gettable::peer(
-    const ARK::Utilities::Network::Connector& _netConnector,
+    ARK::Utilities::Network::Connector& _netConnector,
     const char* const _ip,
     int _port)
 {
@@ -178,7 +184,7 @@ ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(const char* const _jsonStr)
 /*  ARK::API::PeerGettable::version  */
 /*  /api/peers/version  */
 ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::version(
-    const ARK::Utilities::Network::Connector& _netConnector
+    ARK::Utilities::Network::Connector& _netConnector
 )
 {
     auto callback = _netConnector.cb(ARK::API::Paths::Peer::version_s);
