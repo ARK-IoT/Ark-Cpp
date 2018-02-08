@@ -13,16 +13,16 @@
 *
 ********************************************************************************/
 
-#define ADDRESS_SIZE 34
+#define ADDRESS_SIZE 35
 
 struct address_t
 {
 private:
 	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
-	char value_[ADDRESS_LENGTH] = {'\0'};
+	char value_[ADDRESS_LENGTH];
 
 public:
-    address_t() { };
+    address_t() : value_() { };
 
 	address_t(const char* const addressString) : value_()
 	{
