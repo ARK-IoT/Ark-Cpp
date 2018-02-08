@@ -73,12 +73,13 @@ ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(ARK::Ut
 */
 ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::statusfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueFor("loaded"),
-      jString.valueFor("now").toInt(),
-      jString.valueFor("blocksCount")};
+    return ARK::API::Loader::Respondable::Status(
+        jString.valueFor("loaded").c_str(),
+        jString.valueFor("now").toInt(),
+        jString.valueFor("blocksCount").c_str()
+    );
 }
 /*  ================================  */
 /*  ==========================================================================  */
@@ -108,13 +109,14 @@ ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(ARK::Utilit
 */
 ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::syncfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueFor("syncing"),
-      jString.valueFor("blocks").toInt(),
-      jString.valueFor("height"),
-      jString.valueFor("id")};
+    return ARK::API::Loader::Respondable::Sync(
+        jString.valueFor("syncing").c_str(),
+        jString.valueFor("blocks").toInt(),
+        jString.valueFor("height").c_str(),
+        jString.valueFor("id").c_str()
+    );
 }
 /*  ==============================  */
 /*  ==========================================================================  */
@@ -147,14 +149,15 @@ ARK::Network ARK::API::Loader::Gettable::autoconfigure(ARK::Utilities::Network::
 */
 ARK::Network ARK::API::Loader::Gettable::autoconfigurefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueIn("network", "nethash"),
-      jString.valueIn("network", "token"),
-      jString.valueIn("network", "symbol"),
-      jString.valueIn("network", "explorer"),
-      jString.valueIn("network", "version").toInt()};
+    return ARK::Network(
+        jString.valueIn("network", "nethash").c_str(),
+        jString.valueIn("network", "token").c_str(),
+        jString.valueIn("network", "symbol").c_str(),
+        jString.valueIn("network", "explorer").c_str(),
+        jString.valueIn("network", "version").toInt()
+    );
 }
 /*  =======================================  */
 /*  ==========================================================================  */

@@ -54,7 +54,7 @@ Balance ARK::API::Signature::Gettable::feefromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
 
-  return jString.valueFor("fee");
+  return Balance(jString.valueFor("fee").c_str());
 }
 /*  ================================  */
 /*  ==========================================================================  */

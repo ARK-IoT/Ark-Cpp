@@ -94,17 +94,18 @@ ARK::Peer ARK::API::Peer::Gettable::peer(
 */
 ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueIn("peer", "ip"),
-      jString.valueIn("peer", "port").toInt(),
-      jString.valueIn("peer", "version"),
-      jString.valueIn("peer", "errors").toInt(),
-      jString.valueIn("peer", "os"),
-      jString.valueIn("peer", "height"),
-      jString.valueIn("peer", "status"),
-      jString.valueIn("peer", "delay").toInt()};
+    return ARK::Peer(
+        jString.valueIn("peer", "ip").c_str(),
+        jString.valueIn("peer", "port").toInt(),
+        jString.valueIn("peer", "version").c_str(),
+        jString.valueIn("peer", "errors").toInt(),
+        jString.valueIn("peer", "os").c_str(),
+        jString.valueIn("peer", "height").c_str(),
+        jString.valueIn("peer", "status").c_str(),
+        jString.valueIn("peer", "delay").toInt()
+    );
 }
 /*  ============================  */
 /*  ==========================================================================  */
@@ -201,12 +202,13 @@ ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::version(
 */
 ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::versionfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueFor("version"),
-      jString.valueFor("build")};
-};
+    return ARK::API::Peer::Respondable::Version(
+        jString.valueFor("version").c_str(),
+        jString.valueFor("build").c_str()
+    );
+}
 /*  ===============================  */
 /*  ==========================================================================  */
 

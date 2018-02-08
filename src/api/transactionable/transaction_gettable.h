@@ -50,8 +50,8 @@ class Gettable
     /*  /api/transactions/unconfirmed  */
     String transactionsUnconfirmed(ARK::Utilities::Network::Connector& netConnector);
     String transactionsUnconfirmedfromJSON(const char* const jsonStr);
-    String transactionsUnconfirmed(const String& _jsonStr) {
-        return transactionsUnconfirmed(_jsonStr.c_str());
+    String transactionsUnconfirmedfromJSON(const String& _jsonStr) {
+        return transactionsUnconfirmedfromJSON(_jsonStr.c_str());
     }
 /*  ==========================================================================  */
 
@@ -104,31 +104,31 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 }
 */
 ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char* const jsonStr) {
-  ARK::Utilities::JSONString jString(jsonStr); 
+    ARK::Utilities::JSONString jString(jsonStr); 
 
-  char temp[34];
-  jString.valueIn("transaction", "senderId").toCharArray(temp, 34);
+    char temp[34];
+    jString.valueIn("transaction", "senderId").toCharArray(temp, 34);
 
-  char temp2[34];
-  jString.valueIn("transaction", "recipientId").toCharArray(temp, 34);
+    char temp2[34];
+    jString.valueIn("transaction", "recipientId").toCharArray(temp, 34);
 
-  return {
-    jString.valueIn("transaction", "id"),
-    jString.valueIn("transaction", "blockid"),
-    jString.valueIn("transaction", "height"),
-    jString.valueIn("transaction", "type").toInt(),
-    jString.valueIn("transaction", "timestamp"),
-    jString.valueIn("transaction", "amount"),
-    jString.valueIn("transaction", "fee"),
-    jString.valueIn("transaction", "vendorField"),
-    // jString.valueIn("transaction", "senderId"),
-    temp,
-    // jString.valueIn("transaction", "recipientId"),
-    temp2,
-    jString.valueIn("transaction", "senderPublicKey"),
-    jString.valueIn("transaction", "signature"),
-    jString.valueIn("transaction", "confirmations")
-  };
+    return ARK::Transaction(
+        jString.valueIn("transaction", "id").c_str(),
+        jString.valueIn("transaction", "blockid").c_str(),
+        jString.valueIn("transaction", "height").c_str(),
+        jString.valueIn("transaction", "type").toInt(),
+        jString.valueIn("transaction", "timestamp").c_str(),
+        jString.valueIn("transaction", "amount").c_str(),
+        jString.valueIn("transaction", "fee").c_str(),
+        jString.valueIn("transaction", "vendorField").c_str(),
+        // jString.valueIn("transaction", "senderId").c_str(),
+        temp,
+        // jString.valueIn("transaction", "recipientId").c_str(),
+        temp2,
+        jString.valueIn("transaction", "senderPublicKey").c_str(),
+        jString.valueIn("transaction", "signature").c_str(),
+        jString.valueIn("transaction", "confirmations").c_str()
+    );
 }
 /*  ============================================  */
 /*  ==========================================================================  */
@@ -293,26 +293,28 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmed(
 String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const char* const jsonStr) {
   ARK::Utilities::JSONString jString(jsonStr); 
   String resp;
-  if (jsonStr.indexOf("Transaction not found")) {
+  if (strstr(jsonStr, "Transaction not found") != nullptr) {
     resp += "There are currently No unconfirmed transactions by that transactionID";
   } else {
-    ARK::Transaction transaction = {
-      jString.valueIn("transaction", "id"),
-      jString.valueIn("transaction", "blockid"),
-      jString.valueIn("transaction", "height"),
+    ARK::Transaction transaction(
+      jString.valueIn("transaction", "id").c_str(),
+      jString.valueIn("transaction", "blockid").c_str(),
+      jString.valueIn("transaction", "height").c_str(),
       jString.valueIn("transaction", "type").toInt(),
-      jString.valueIn("transaction", "timestamp"),
-      jString.valueIn("transaction", "amount"),
-      jString.valueIn("transaction", "fee"),
-      jString.valueIn("transaction", "vendorField"),
-      jString.valueIn("transaction", "senderId"),
-      jString.valueIn("transaction", "recipientId"),
-      jString.valueIn("transaction", "senderPublicKey"),
-      jString.valueIn("transaction", "signature"),
-      jString.valueIn("transaction", "confirmations")
-    };
-    resp += transaction.description();
-  };
+      jString.valueIn("transaction", "timestamp").c_str(),
+      jString.valueIn("transaction", "amount").c_str(),
+      jString.valueIn("transaction", "fee").c_str(),
+      jString.valueIn("transaction", "vendorField").c_str(),
+      jString.valueIn("transaction", "senderId").c_str(),
+      jString.valueIn("transaction", "recipientId").c_str(),
+      jString.valueIn("transaction", "senderPublicKey").c_str(),
+      jString.valueIn("transaction", "signature").c_str(),
+      jString.valueIn("transaction", "confirmations").c_str()
+    );
+    char buf[128] = {};
+    transaction.description(buf, sizeof(buf) / sizeof(buf[0]));
+    resp += buf;
+  }
   return resp;
 }
 /*  =====================================================  */
@@ -349,26 +351,27 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const ch
 
     for (int i = 0; i <= txCount; i++) {
 
-      ARK::Transaction transaction = {
-        jString.subarrayValueIn("transaction", i, "id"),
-        jString.subarrayValueIn("transaction", i,  "blockid"),
-        jString.subarrayValueIn("transaction", i,  "height"),
+      ARK::Transaction transaction(
+        jString.subarrayValueIn("transaction", i, "id").c_str(),
+        jString.subarrayValueIn("transaction", i,  "blockid").c_str(),
+        jString.subarrayValueIn("transaction", i,  "height").c_str(),
         jString.subarrayValueIn("transaction", i,  "type").toInt(),
-        jString.subarrayValueIn("transaction", i,  "timestamp"),
-        jString.subarrayValueIn("transaction", i,  "amount"),
-        jString.subarrayValueIn("transaction", i,  "fee"),
-        jString.subarrayValueIn("transaction", i,  "vendorField"),
-        jString.subarrayValueIn("transaction", i,  "senderId"),
-        jString.subarrayValueIn("transaction", i,  "recipientId"),
-        jString.subarrayValueIn("transaction", i,  "senderPublicKey"),
-        jString.subarrayValueIn("transaction", i,  "signature"),
-        jString.subarrayValueIn("transaction", i,  "confirmations")
-      };
+        jString.subarrayValueIn("transaction", i,  "timestamp").c_str(),
+        jString.subarrayValueIn("transaction", i,  "amount").c_str(),
+        jString.subarrayValueIn("transaction", i,  "fee").c_str(),
+        jString.subarrayValueIn("transaction", i,  "vendorField").c_str(),
+        jString.subarrayValueIn("transaction", i,  "senderId").c_str(),
+        jString.subarrayValueIn("transaction", i,  "recipientId").c_str(),
+        jString.subarrayValueIn("transaction", i,  "senderPublicKey").c_str(),
+        jString.subarrayValueIn("transaction", i,  "signature").c_str(),
+        jString.subarrayValueIn("transaction", i,  "confirmations").c_str()
+      );
 
       resp += "\ntransaction ";
       resp += i + 1;
       resp += ":\n";
-      resp += transaction.description();
+      char buf[128] = {};
+      transaction.description(buf, sizeof(buf) / sizeof(buf[0]));
       resp += "\n";
     };
 

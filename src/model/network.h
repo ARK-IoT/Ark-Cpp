@@ -3,7 +3,6 @@
 #ifndef network_h
 #define network_h
 
-#include <cstring>
 
 namespace ARK {
 
@@ -34,7 +33,7 @@ public:
     char explorer[64];
     int version;
 
-    //Network() : nethash(nullptr), token(nullptr), symbol(nullptr), explorer(nullptr), version(-1) { }
+    Network() : nethash(), token(), symbol(), explorer(), version(-1) { }
     Network(
         const char* const n, 
         const char* const t, 

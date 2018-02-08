@@ -42,7 +42,7 @@ namespace Devnet
 	const auto port = 4002;
 
 	/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-	auto randomPeer()
+	const char* const randomPeer()
 	{
 		return seeds[random(0, 6)];
 	};
@@ -100,7 +100,7 @@ namespace Mainnet
 	const auto port = 4001;
 
 	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
-	auto randomPeer()
+	const char* const randomPeer()
 	{
 		return seeds[random(0, 45)];
 	};

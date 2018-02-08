@@ -3,8 +3,6 @@
 #ifndef peer_h
 #define peer_h
 
-#include <cstring>
-
 namespace ARK {
 
 /*  ================================================  */
@@ -21,6 +19,23 @@ namespace ARK {
 			char status[64];
 			int delay;
 
+            Peer(
+                const char* const i,
+                int p,
+                const char* const v,
+                int e,
+                const char* const o,
+                const char* const h,
+                const char* const s,
+                int d
+            ) : ip(), port(p), version(), errors(e), os(), height(), status(), delay(d) {
+                strncpy(ip, i, sizeof(ip) / sizeof(ip[0]));
+                strncpy(version, v, sizeof(version) / sizeof(version[0]));
+                strncpy(os, o, sizeof(os) / sizeof(os[0]));
+                strncpy(height, h, sizeof(height) / sizeof(height[0]));
+                strncpy(status, s, sizeof(status) / sizeof(status[0]));
+            }
+
 			void description(char* const buf, size_t size);
 	};
 	/*  =========  */
@@ -34,11 +49,11 @@ namespace ARK {
 void ARK::Peer::Peer::description(char* const buf, size_t size) {
     strcpy(buf, "ip: ");
     strcat(buf, this->ip);
-    strcat(buf, "\port: ");
+    strcat(buf, "\nport: ");
     sprintf(buf, "%d", this->port);
-    strcat(buf, "\version: ");
+    strcat(buf, "\nversion: ");
     strcat(buf, this->version);
-    strcat(buf, "\n_errors: ");
+    strcat(buf, "\nerrors: ");
     sprintf(buf, "%d", this->errors);
     strcat(buf, "\nos: ");
     strcat(buf, this->os);

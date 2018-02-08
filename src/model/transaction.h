@@ -27,6 +27,44 @@ static const auto TRANSACTION_MAX_SIZE = 600;
       char signature[64];
       char confirmations[64];
 
+      Transaction(
+          const char* const i,
+          const char* const b,
+          const char* const h,
+          int t,
+          const char* const ts,
+          const char* const a,
+          const char* const f,
+          const char* const vf,
+          const char* const si,
+          const char* const ri,
+          const char* const spk,
+          const char* const s,
+          const char* const c
+      ) :
+          id(),
+          blockid(),
+          height(),
+          type(t),
+          timestamp(),
+          amount(a),
+          fee(f),
+          vendorField(),
+          senderId(si),
+          recipientId(ri),
+          senderPublicKey(spk),
+          signature(),
+          confirmations()
+      {
+          strncpy(id, i, sizeof(id) / sizeof(id[0]));
+          strncpy(blockid, b, sizeof(blockid) / sizeof(blockid[0]));
+          strncpy(height, h, sizeof(height) / sizeof(height[0]));
+          strncpy(timestamp, ts, sizeof(timestamp) / sizeof(timestamp[0]));
+          strncpy(vendorField, vf, sizeof(vendorField) / sizeof(vendorField[0]));
+          strncpy(signature, s, sizeof(signature) / sizeof(signature[0]));
+          strncpy(confirmations, c, sizeof(confirmations) / sizeof(confirmations[0]));
+      }
+
       void description(char* const buf, size_t size);
   };
   /*  ================  */

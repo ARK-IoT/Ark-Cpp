@@ -93,7 +93,7 @@ void ARK::API::Block::Respondable::Status::description(char* const buf, size_t s
     strcat(buf, this->nethash.description());
     strcat(buf, "\nreward.ark: ");
     strcat(buf, this->reward.ark());
-    strcat(buf, "\supply.ark: ");
+    strcat(buf, "\nsupply.ark: ");
     strcat(buf, this->supply.ark());
 }
 /*  ====================================  */
