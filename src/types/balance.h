@@ -27,6 +27,7 @@ struct Balance
 private:
     static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
     static const auto ARK_SIZE = 18 * sizeof(int);
+    static const auto DECIMAL_PLACES = 8;
 
     char arktoshi_[ARKTOSHI_SIZE];
     char ark_[ARK_SIZE];
@@ -63,21 +64,27 @@ public:
   void setArk(const char* const balanceStr)
   {
     const auto length = strlen(balanceStr);
-    if (length < 8) {
-      for (int i = 0; i < length; ++i)
-      {
-        this->ark_[i] = balanceStr[i];
-      }
+    if (length < DECIMAL_PLACES) {
+        ark_[0] = '.';
+        const auto num_zero_pad = DECIMAL_PLACES - length;
+        for (auto i = 1; i <= num_zero_pad; ++i)
+        {
+            ark_[i] = '0';
+        }
+        for (auto i = 0; i <= num_zero_pad + 1; ++i) 
+        {
+            ark_[i + num_zero_pad + 1] = balanceStr[i];
+        }
     }
     else
     {
-      for (int i = length; i >= 0; --i)
-      {
-        if (i < length - 8) { this->ark_[i] = balanceStr[i]; }
-        if (i == length - 8) { this->ark_[i] = '.'; }
-        if (i > length - 8 && i <= length) { this->ark_[i] = balanceStr[i - 1]; }
-      };
-    };
+        for (int i = length; i >= 0; --i)
+        {
+            if (i < length - DECIMAL_PLACES) { this->ark_[i] = balanceStr[i]; }
+            if (i == length - DECIMAL_PLACES) { this->ark_[i] = '.'; }
+            if (i > length - DECIMAL_PLACES && i <= length) { this->ark_[i] = balanceStr[i - 1]; }
+        }
+    }
   }
 
   void setBalance(const char* const _balanceStr)
