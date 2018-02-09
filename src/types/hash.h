@@ -13,24 +13,21 @@
 *
 ********************************************************************************/
 
-#define HASH_SIZE 64
-
 struct Hash
 {
 private:
-  static const auto HASH_LEN = HASH_SIZE / sizeof(byte);
+  static const auto HASH_SIZE = 65;
 
-  char value_[HASH_LEN] = { '\0' };
+  char value_[HASH_SIZE];
 
 public:
-  Hash() { }
+  Hash() : value_() { }
 
   /*  =====  */
 
-  Hash(const char* const hashStr)
+  Hash(const char* const hashStr) : value_()
   {
-    strncpy(value_, hashStr, HASH_LEN);
-    value_[HASH_LEN - 1] = '\0';
+    strncpy(value_, hashStr, sizeof(value_) / sizeof(value_[0]));
   }
 
   /*  =====  */
