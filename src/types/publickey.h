@@ -13,19 +13,17 @@
 *
 ********************************************************************************/
 
-
-    #define PUBLICKEY_SIZE 66
-
     struct publickey_t {
     private:
-        static const auto PUBLICKEY_LEN = PUBLICKEY_SIZE / sizeof(char);
-        char value_[PUBLICKEY_LEN] = { '\0' };
+        static const auto PUBLICKEY_SIZE = 67;
+
+        char value_[PUBLICKEY_SIZE];
 
     public:
         publickey_t() : value_() { };
 
         publickey_t(const char* const _base64String) : value_() {      
-          strncpy(value_, _base64String, PUBLICKEY_LEN);
+          strncpy(value_, _base64String, sizeof(value_) / sizeof(value_[0]));
         };
 
         publickey_t(const publickey_t& other) : value_() {
