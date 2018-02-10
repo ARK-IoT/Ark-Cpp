@@ -19,7 +19,7 @@
 
 void constructPeer() {
 
-  ARK::Peer peer = {
+  ARK::Peer peer(
     "167.114.29.55",
     4002,
     "1.1.1",
@@ -27,11 +27,13 @@ void constructPeer() {
     "linux4.4.0-79-generic",
     "2467740",
     "OK",
-    9,
-  };
+    9
+  );
 
   Serial.println("Offline Instantiated Peer Description\n"); 
-  Serial.println(peer.description()); 
+  char buf[512] = {};
+  peer.description(buf, sizeof(buf));
+  Serial.println(buf); 
 
 };
 

@@ -86,7 +86,8 @@ void ARK::Network::Network::description(char* const buf, size_t size) {
 	strcat(buf, "\nexplorer: ");
 	strcat(buf, this->explorer);
 	strcat(buf, "\nversion: ");
-	sprintf(buf, "%d", this->version);
+    const auto len = strlen(buf);
+	sprintf(buf + len, "%d", this->version);
 };
 /*  =====  */
 /*  Operator  */

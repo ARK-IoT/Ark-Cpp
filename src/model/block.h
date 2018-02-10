@@ -139,7 +139,7 @@ void ARK::Block::Block::description(char* const buf, size_t size)
     strcat(buf, "\nreward.ark: ");
     strcat(buf, this->reward.ark());
     strcat(buf, "\npayloadLength: ");
-    sprintf(buf + strlen(buf), "%d", this->payloadLength);
+    strcat(buf, this->payloadLength);
     strcat(buf, "\npayloadHash.description: ");
     strcat(buf, this->payloadHash.description());
     strcat(buf, "\ngeneratorPublicKey.description: ");
@@ -149,7 +149,7 @@ void ARK::Block::Block::description(char* const buf, size_t size)
     strcat(buf, "\nblockSignature.description: ");
     strcat(buf, this->blockSignature.description());
     strcat(buf, "\nconfirmations: ");
-    sprintf(buf + strlen(buf), "%d", this->confirmations);
+    strcat(buf, this->confirmations);
     strcat(buf, "\ntotalForged.ark: ");
     strcat(buf, this->totalForged.ark());
 }

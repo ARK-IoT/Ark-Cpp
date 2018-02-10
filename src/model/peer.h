@@ -50,11 +50,13 @@ void ARK::Peer::Peer::description(char* const buf, size_t size) {
     strcpy(buf, "ip: ");
     strcat(buf, this->ip);
     strcat(buf, "\nport: ");
-    sprintf(buf, "%d", this->port);
+    auto len = strlen(buf);
+    sprintf(buf + len, "%d", this->port);
     strcat(buf, "\nversion: ");
     strcat(buf, this->version);
     strcat(buf, "\nerrors: ");
-    sprintf(buf, "%d", this->errors);
+    len = strlen(buf);
+    sprintf(buf + len, "%d", this->errors);
     strcat(buf, "\nos: ");
     strcat(buf, this->os);
     strcat(buf, "\nheight: ");
@@ -62,7 +64,8 @@ void ARK::Peer::Peer::description(char* const buf, size_t size) {
     strcat(buf, "\nstatus: ");
     strcat(buf, this->status);
     strcat(buf, "\ndelay: ");
-    sprintf(buf, "%d", this->delay);
+    len = strlen(buf);
+    sprintf(buf + len, "%d", this->delay);
 }
 /*  =========  */
 /*  ================================================  */
