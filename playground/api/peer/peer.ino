@@ -1,12 +1,11 @@
 
 
 #include <ark.h>
-#include <yourWiFiLibrary.h>
+//#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
-
 
 /********************************************************************************
 * block: 
@@ -16,13 +15,14 @@ const char* password = "yourWiFiPassword";
 void checkAPI() {
 /*  ==================================  */
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager arkManager(devnet);
+  ARK::API::Manager _arkManager(devnet);
 /*  ==================================  */
 
 /*  ==================================  */
-  String peerDescription = _arkManager.peer("167.114.29.55", 4002).description();
+	char buf[512] = {};
+	_arkManager.peer("167.114.29.55", 4002).description(buf, sizeof(buf));
     Serial.println("peerDescription: ");
-    Serial.println(peerDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
@@ -40,9 +40,9 @@ void checkAPI() {
 /*  ==================================  */
 
 /*  ==================================  */
-  String peerVersionDescription = _arkManager.peerVersion().description();
+	_arkManager.peerVersion().description(buf, sizeof(buf));
     Serial.println("peerVersionDescription: ");
-    Serial.println(peerVersionDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
@@ -70,6 +70,16 @@ void check() {
 void setup() {
   Serial.begin(115200);
     reportFreeHeap();
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 

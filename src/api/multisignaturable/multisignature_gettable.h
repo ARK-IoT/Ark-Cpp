@@ -52,7 +52,7 @@ String ARK::API::MultiSignature::Gettable::pending(
     const Publickey& _publicKey
 )
 {
-    char uri[64] = { '\0' }; //TODO: check size
+    char uri[512] = { '\0' }; //TODO: check size
 
     strcpy(uri, ARK::API::Paths::MultiSignatures::pending_s);
     strcat(uri, "?publicKey=");

@@ -74,7 +74,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
     ARK::Utilities::Network::Connector& netConnector, 
     const Hash& id
 ) {
-    char uri[64] = { '\0' }; //TODO review sizes
+    char uri[512] = { '\0' }; //TODO review sizes
 
     strcpy(uri, ARK::API::Paths::Transaction::getSingle_s);
     strcat(uri, "?id=");
@@ -370,8 +370,9 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const ch
       resp += "\ntransaction ";
       resp += i + 1;
       resp += ":\n";
-      char buf[128] = {};
+      char buf[1024] = {};
       transaction.description(buf, sizeof(buf) / sizeof(buf[0]));
+      resp += buf;
       resp += "\n";
     };
 
