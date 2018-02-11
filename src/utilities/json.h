@@ -23,12 +23,12 @@ namespace Utilities
       String jsonStr;
 
     public:
-      JSONString(String _jsonStr);
-      String valueFor(String _key);
-      String valueIn(String _key, String _subkey);
-      String subvalueFor(String _key, int _pos);
-      String subvalueIn(String _key, String _subkey);
-      String subarrayValueIn(String _key, int _pos, String _subkey);
+      JSONString(const String& _jsonStr);
+      String valueFor(const String& _key);
+      String valueIn(const String& _key, const String& _subkey);
+      String subvalueFor(const String& _key, int _pos);
+      String subvalueIn(const String& _key, const String& _subkey);
+      String subarrayValueIn(const String& _key, int _pos, const String& _subkey);
   };
 /*  ==========================================================================  */
 
@@ -44,7 +44,7 @@ namespace Utilities
 /**************************************************
 * Initialize from a JSON String
 **************************************************/
-ARK::Utilities::JSONString::JSONString(String _jsonStr)
+ARK::Utilities::JSONString::JSONString(const String& _jsonStr)
 {
   this->jsonStr = _jsonStr;
 };
@@ -54,7 +54,7 @@ ARK::Utilities::JSONString::JSONString(String _jsonStr)
 *
 * { "key1": value1, "key2": value2 } 
 **************************************************/
-String ARK::Utilities::JSONString::valueFor(String _key)
+String ARK::Utilities::JSONString::valueFor(const String& _key)
 {
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
@@ -67,7 +67,7 @@ String ARK::Utilities::JSONString::valueFor(String _key)
 *
 * 
 **************************************************/
-String ARK::Utilities::JSONString::valueIn(String _key, String _subkey)
+String ARK::Utilities::JSONString::valueIn(const String& _key, const String& _subkey)
 {
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
@@ -80,7 +80,7 @@ String ARK::Utilities::JSONString::valueIn(String _key, String _subkey)
 *
 * { "key": { subValue1, subvalue2 } } 
 **************************************************/
-String ARK::Utilities::JSONString::subvalueFor(String _key, int _pos)
+String ARK::Utilities::JSONString::subvalueFor(const String& _key, int _pos)
 {
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
@@ -94,7 +94,7 @@ String ARK::Utilities::JSONString::subvalueFor(String _key, int _pos)
 *
 *  
 **************************************************/
-String ARK::Utilities::JSONString::subvalueIn(String _key, String _subkey)
+String ARK::Utilities::JSONString::subvalueIn(const String& _key, const String& _subkey)
 {
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
@@ -108,7 +108,7 @@ String ARK::Utilities::JSONString::subvalueIn(String _key, String _subkey)
 *
 *  
 **************************************************/
-String ARK::Utilities::JSONString::subarrayValueIn(String _key, int _pos, String _subkey)
+String ARK::Utilities::JSONString::subarrayValueIn(const String& _key, int _pos, const String& _subkey)
 {
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
