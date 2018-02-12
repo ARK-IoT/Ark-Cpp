@@ -31,7 +31,7 @@ public:
         strncpy(value_, addressString, ADDRESS_LENGTH);
 	}
 
-	const char* const description() const { return value_; }
+	const char* description() const { return value_; }
 };
 
 typedef address_t Address;

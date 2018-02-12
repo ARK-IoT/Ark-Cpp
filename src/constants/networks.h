@@ -40,7 +40,7 @@ namespace Devnet
     extern const NetworkType type;
 
 	/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-	inline const char* const randomPeer()
+	inline const char* randomPeer()
 	{
 		return seeds[random(0, 5)];
 	};
@@ -79,7 +79,7 @@ namespace Mainnet
     extern const NetworkType type;
 
 	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
-	inline const char* const randomPeer()
+	inline const char* randomPeer()
 	{
 		return seeds[random(0, 45)];
 	};

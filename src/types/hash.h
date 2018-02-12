@@ -32,7 +32,7 @@ public:
 
   /*  =====  */
 
-  const char* const description() const { return value_; }
+  const char* description() const { return value_; }
 };
 
 #endif

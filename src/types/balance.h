@@ -26,7 +26,7 @@ struct Balance
 private:
     static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
     static const auto ARK_SIZE = 18 * sizeof(int);
-    static const auto DECIMAL_PLACES = 8;
+    static const auto DECIMAL_PLACES = 8u;
 
     char arktoshi_[ARKTOSHI_SIZE];
     char ark_[ARK_SIZE];
@@ -62,6 +62,7 @@ public:
 			strcpy(arktoshi_, other.arktoshi_);
 			strcpy(ark_, other.ark_);
 		}
+		return *this;
 	}
 
 	Balance(Balance&& other) : arktoshi_(), ark_() {
@@ -81,8 +82,8 @@ public:
 	}
 
 
-    const char* const ark() const { return ark_; }
-    const char* const arktoshi() const { return arktoshi_; }
+    const char* ark() const { return ark_; }
+    const char* arktoshi() const { return arktoshi_; }
 
     void setArktoshi(const char* const balanceStr) {
         strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
@@ -105,7 +106,8 @@ public:
     }
     else
     {
-        for (int i = length; i >= 0; --i)
+		// TODO: making i unsigned causes problems.  Potential array out of bounds but no investigation has been done.
+        for (int i = static_cast<int>(length); i >= 0; --i)
         {
             if (i < static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = balanceStr[i]; }
             if (i == static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = '.'; }

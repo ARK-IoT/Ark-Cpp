@@ -126,7 +126,7 @@ blockEpoch:
 /*  ================================================  */
 /*  ===========  */
 /*  Description  */
-void ARK::Block::Block::description(char* const buf, size_t size)
+void ARK::Block::Block::description(char* const buf, size_t /*size*/)
 {
     //TODO:  check len for sufficient size  
     strcpy(buf, "id: ");

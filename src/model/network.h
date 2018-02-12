@@ -77,7 +77,7 @@ public:
 /*  ============  */
 /*  ARK::Delegate  */
 /*  Description  */
-void ARK::Network::Network::description(char* const buf, size_t size) const {
+void ARK::Network::Network::description(char* const buf, size_t /*size*/) const {
 	strcpy(buf, "nethash: ");
 	strcat(buf, this->nethash);
 	strcat(buf, "\ntoken: ");

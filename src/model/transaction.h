@@ -85,7 +85,7 @@ static const auto TRANSACTION_MAX_SIZE = 600;
 /*  ================  */
 /*  ARK::Transaction  */
 /*  Description  */
-void ARK::Transaction::Transaction::description(char* const buf, size_t size) {
+void ARK::Transaction::Transaction::description(char* const buf, size_t /*size*/) {
     strcpy(buf, "id: ");
     strcat(buf, this->id);
     strcat(buf, "\nblockid: ");

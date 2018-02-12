@@ -19,7 +19,7 @@ namespace ARK {
             strncpy(symbol, s, sizeof(symbol) / sizeof(symbol[0]));
         }
 
-        void description(char* const buf, size_t size) {
+        void description(char* const buf, size_t /*size*/) {
 			//TODO:  check len for sufficient size  
 			strcpy(buf, "ticker: ");
 			strcat(buf, ticker);

@@ -30,7 +30,7 @@ public:
       value_[SIGNATURE_LEN - 1] = '\0';
     };
 
-    const char* const description() const { return value_; };      
+    const char* description() const { return value_; };      
 };
 
 
