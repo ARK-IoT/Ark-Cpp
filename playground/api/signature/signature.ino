@@ -1,7 +1,5 @@
-
-
 #include <ark.h>
-#include <yourWiFiLibrary.h>
+//#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -16,22 +14,22 @@ const char* password = "yourWiFiPassword";
 void checkAPI() {
 /*  ==================================  */
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager arkManager(devnet);
+  ARK::API::Manager _arkManager(devnet);
 /*  ==================================  */
 
-Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" };
+Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" );
 
 /*  ==================================  */
-  String signaturesFeeArk = _arkManager.signaturesFee().ark;
+  const auto signaturesFee = _arkManager.signaturesFee();
     Serial.println("signaturesFeeArk: ");
-    Serial.println(signaturesFeeArk);
+    Serial.println(signaturesFee.ark());
     Serial.println();
     delay(50);
 /*  ==================================  */
 
 
 /*  ==================================  */
-  String multisignaturesPending = _arkManager.multisignaturesPending(darkPubkey);
+  const auto multisignaturesPending = _arkManager.multisignaturesPending(darkPubkey);
     Serial.println("multisignaturesPending: ");
     Serial.println(multisignaturesPending);
     Serial.println("\n=====\n");
@@ -73,6 +71,16 @@ void check() {
 void setup() {
   Serial.begin(115200);
     reportFreeHeap();
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 

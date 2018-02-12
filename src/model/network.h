@@ -8,7 +8,7 @@ namespace ARK {
 
 /*  ================================================  */
 /*  ARK::NetworkType  */
-  enum NetworkType { DEV, MAIN, CUSTOM };
+  enum NetworkType { INVALID = -1, DEV = 0, MAIN = 1, CUSTOM = 2 };
 /*  ================================================  */
 
 /********************************************************************************
@@ -27,10 +27,10 @@ namespace ARK {
   /*  ARK::Network  */
 struct Network {
 public:
-    char nethash[64];		//TODO: review sizes
+    char nethash[65];		//TODO: review sizes
     char token[8];
     char symbol[4];
-    char explorer[64];
+    char explorer[65];
     int version;
 
     Network() : nethash(), token(), symbol(), explorer(), version(-1) { }
@@ -47,7 +47,7 @@ public:
         strncpy(explorer, e, sizeof(explorer) / sizeof(explorer[0]));
     }
 
-    void description(char* const buf, size_t size);
+    void description(char* const buf, size_t size) const;
 
     bool operator==(const Network& rhs) const;
     bool operator!=(const Network& rhs) const;
@@ -76,7 +76,7 @@ public:
 /*  ============  */
 /*  ARK::Delegate  */
 /*  Description  */
-void ARK::Network::Network::description(char* const buf, size_t size) {
+void ARK::Network::Network::description(char* const buf, size_t size) const {
 	strcpy(buf, "nethash: ");
 	strcat(buf, this->nethash);
 	strcat(buf, "\ntoken: ");

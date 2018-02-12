@@ -33,25 +33,51 @@ private:
     char ark_[ARK_SIZE];
 
 public:
-  Balance() : arktoshi_(), ark_()
-  {
-    this->setBalance("0");
-  };
+	Balance() : arktoshi_(), ark_()
+	{
+		this->setBalance("0");
+	};
 
-  explicit Balance(const char* const balanceStr) : arktoshi_(), ark_()
-  {
-        bool isNumeric = true;
+	explicit Balance(const char* const balanceStr) : arktoshi_(), ark_()
+	{
+		bool isNumeric = true;
 
-        for (auto i = 0; i < strlen(balanceStr); ++i) {
-          if (!isDigit(balanceStr[i])) {
-                isNumeric = false;
-                break;
-            }
-        }
-        if (isNumeric) {
-          this->setBalance(balanceStr);
-        }
-  };
+		for (auto i = 0; i < strlen(balanceStr); ++i) {
+			if (!isDigit(balanceStr[i])) {
+				isNumeric = false;
+				break;
+			}
+		}
+		if (isNumeric) {
+			this->setBalance(balanceStr);
+		}
+	}
+
+	Balance(const Balance& other) : arktoshi_(), ark_() {
+		strcpy(arktoshi_, other.arktoshi_);
+		strcpy(ark_, other.ark_);
+	}
+	Balance& operator=(const Balance& other) {
+		if (this != &other) {
+			strcpy(arktoshi_, other.arktoshi_);
+			strcpy(ark_, other.ark_);
+		}
+	}
+
+	Balance(Balance&& other) : arktoshi_(), ark_() {
+		strcpy(arktoshi_, other.arktoshi_);
+		strcpy(ark_, other.ark_);
+		other.arktoshi_[0] = '\0';
+		other.ark_[0] = '\0';
+	}
+	Balance& operator=(Balance&& other) {
+		if (this != &other) {
+			strcpy(arktoshi_, other.arktoshi_);
+			strcpy(ark_, other.ark_);
+			other.arktoshi_[0] = '\0';
+			other.ark_[0] = '\0';
+		}
+	}
 
 
     const char* const ark() const { return ark_; }

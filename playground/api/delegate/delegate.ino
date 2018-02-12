@@ -1,5 +1,5 @@
 #include <ark.h>
-#include <yourWiFiLibrary.h>
+//#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -14,10 +14,10 @@ const char* password = "yourWiFiPassword";
 void checkAPI() {
 /*  ==================================  */
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager arkManager(devnet);
+  ARK::API::Manager _arkManager(devnet);
 /*  ==================================  */
 
-Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" };
+Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 
 /*  ==================================  */
   int delegatesCount = _arkManager.delegatesCount();
@@ -28,9 +28,10 @@ Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a280
 /*  ==================================  */
 
 /*  ==================================  */
-  String delegateSearchDescription = _arkManager.delegateSearch("sleepdeficit").description();
+	char buf[512] = {};
+	  _arkManager.delegateSearch("sleepdeficit").description(buf, sizeof(buf));
     Serial.println("delegateSearchDescription: ");
-    Serial.println(delegateSearchDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
@@ -44,17 +45,17 @@ Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a280
 /*  ==================================  */
 
 /*  ==================================  */
-  String delegateByUsernameDescription = _arkManager.delegate("sleepdeficit").description();
+    _arkManager.delegate("sleepdeficit").description(buf, sizeof(buf));
     Serial.println("delegateByUsernameDescription: ");
-    Serial.println(delegateByUsernameDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
 
 /*  ==================================  */
-  String delegateByPublickeyDescription = _arkManager.delegate(darkPubkey.description()).description();
+    _arkManager.delegate(darkPubkey.description()).description(buf, sizeof(buf));
     Serial.println("delegateByPublickeyDescription: ");
-    Serial.println(delegateByPublickeyDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
@@ -70,27 +71,28 @@ Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a280
 /*  ==================================  */
 
 /*  ==================================  */
-  String delegateFeeArk = _arkManager.delegateFee().ark;
+	//TODO:  fails here
+	const auto delegateFee = _arkManager.delegateFee();
     Serial.println("delegateFeeArk: ");
-    Serial.println(delegateFeeArk);
+    Serial.println(delegateFee.ark());
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
 
 /*  ==================================  */
-  String delegateForgedByAccountDescription = _arkManager.delegateForgedByAccount(darkPubkey).description();
+    _arkManager.delegateForgedByAccount(darkPubkey).description(buf, sizeof(buf));
     Serial.println("delegateForgedByAccountDescription: ");
-    Serial.println(delegateForgedByAccountDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
 
 /*  ==================================  */
-  String delegateNextForgersDescription = _arkManager.delegateNextForgers().description();
+    _arkManager.delegateNextForgers().description(buf, sizeof(buf));
     Serial.println("delegateNextForgersDescription: ");
-    Serial.println(delegateNextForgersDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
-    delay(50);        
+    delay(50);
 /*  ==================================  */
 }
 
@@ -116,6 +118,16 @@ void check() {
 void setup() {
   Serial.begin(115200);
     reportFreeHeap();
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 

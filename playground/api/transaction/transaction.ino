@@ -1,12 +1,9 @@
-
-
 #include <ark.h>
-#include <yourWiFiLibrary.h>
+//#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
-
 
 /********************************************************************************
 * block: 
@@ -16,15 +13,16 @@ const char* password = "yourWiFiPassword";
 void checkAPI() {
 /*  ==================================  */
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager arkManager(devnet);
+  ARK::API::Manager _arkManager(devnet);
 /*  ==================================  */
 
-Hash transactionID = { "4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e" };
+Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
 
 /*  ==================================  */
-  String transactionFromIDDescription = _arkManager.transaction(transactionID).description(); //has vendorField value
+	char buf[1024] = {};
+	_arkManager.transaction(transactionID).description(buf, sizeof(buf)); //has vendorField value
     Serial.println("transactionFromIDDescription: ");
-    Serial.println(transactionFromIDDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
@@ -42,7 +40,7 @@ Hash transactionID = { "4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86b
 /*  ==================================  */
 
 /*  ==================================  */
-  String transactionUnconfirmedFromId = _arkManager.transactionUnconfirmed(transactionID);
+	const auto transactionUnconfirmedFromId = _arkManager.transactionUnconfirmed(transactionID);
     Serial.println("transactionUnconfirmedFromId: ");
     Serial.println(transactionUnconfirmedFromId);
     Serial.println("\n=====\n");
@@ -50,7 +48,7 @@ Hash transactionID = { "4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86b
 /*  ==================================  */
 
 /*  ==================================  */
-  String transactionsUnconfirmed = _arkManager.transactionsUnconfirmed();
+	const auto transactionsUnconfirmed = _arkManager.transactionsUnconfirmed();
     Serial.println("transactionsUnconfirmed: ");
     Serial.println(transactionsUnconfirmed);
     Serial.println("\n=====\n");
@@ -81,6 +79,16 @@ void check() {
 void setup() {
   Serial.begin(115200);
     reportFreeHeap();
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 

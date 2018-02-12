@@ -54,7 +54,7 @@ public:
         strncpy(username, u, sizeof(username) / sizeof(username[0]));
     }
 
-	void description(char* const buf, size_t size);
+	void description(char* const buf, size_t size) const;
 
 };
 /*  =============  */
@@ -65,7 +65,7 @@ public:
 /*  ================================================  */
 /*  =====  */
 /*  Description  */
-void ARK::Delegate::Delegate::description(char* const buf, size_t size)
+void ARK::Delegate::Delegate::description(char* const buf, size_t size) const
 {
     //TODO:  check len for sufficient size  
     strcpy(buf, "username: ");

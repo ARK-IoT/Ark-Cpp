@@ -41,10 +41,12 @@ namespace Devnet
 	};
 	const auto port = 4002;
 
+    const auto type = NetworkType::DEV;
+
 	/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
 	const char* const randomPeer()
 	{
-		return seeds[random(0, 6)];
+		return seeds[random(0, 5)];
 	};
 
 	ARK::Network model =
@@ -98,6 +100,8 @@ namespace Mainnet
 	};
 
 	const auto port = 4001;
+
+    const auto type = NetworkType::MAIN;
 
 	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
 	const char* const randomPeer()

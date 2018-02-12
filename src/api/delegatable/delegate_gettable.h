@@ -265,7 +265,7 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegate(
     ARK::Utilities::Network::Connector& _netConnector,
     const char* const _parameter)
 {
-    char uri[64] = { '\0' }; //TODO: review sizes
+    char uri[512] = { '\0' }; //TODO: review sizes
     strcpy(uri, ARK::API::Paths::Delegate::get_s);
 
   if (strlen(_parameter) > 20)
@@ -437,7 +437,7 @@ ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::f
     ARK::Utilities::Network::Connector& _netConnector,
     const Publickey& _generatorPublicKey)
 {
-    char uri[64] = { '\0' }; //TODO: review sizes
+    char uri[512] = { '\0' }; //TODO: review sizes
     strcpy(uri, ARK::API::Paths::Delegate::getForgedByAccount_s);
     strcat(uri, "?generatorPublicKey=");
     strcat(uri, _generatorPublicKey.description());
