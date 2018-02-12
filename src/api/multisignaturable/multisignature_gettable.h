@@ -17,8 +17,11 @@ class Gettable
   protected:
 /*  ==========================================================================  */
     /*  /api/multisignatures/pending?publicKey=  */
-    String pending(ARK::Utilities::Network::Connector _netConnector, Publickey _publicKey);
-    String pendingfromJSON(String _jsonStr);
+    String pending(ARK::Utilities::Network::Connector& _netConnector, const Publickey& _publicKey);
+    String pendingfromJSON(const char* const _jsonStr);
+    String pendingfromJSON(const String& _jsonStr) {
+        return pendingfromJSON(_jsonStr.c_str());
+    }
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
@@ -44,15 +47,20 @@ class Gettable
 /*  =========================================  */
 /*  ARK::API::MultiSignatureGettable::pending  */
 /*  /api/multisignatures/pending?publicKey=  */
-String ARK::API::MultiSignature::Gettable::pending(ARK::Utilities::Network::Connector _netConnector, Publickey _publicKey)
+String ARK::API::MultiSignature::Gettable::pending(
+    ARK::Utilities::Network::Connector& _netConnector, 
+    const Publickey& _publicKey
+)
 {
-  String uri = ARK::API::Paths::MultiSignatures::pending_s;
-  uri += "?publicKey=";
-  uri += _publicKey.description();
+    char uri[512] = { '\0' }; //TODO: check size
 
-  String callback = _netConnector.cb(uri);
+    strcpy(uri, ARK::API::Paths::MultiSignatures::pending_s);
+    strcat(uri, "?publicKey=");
+    strcat(uri, _publicKey.description());
 
-  return ARK::API::MultiSignature::Gettable::pendingfromJSON(callback);
+    auto callback = _netConnector.cb(uri);
+
+    return ARK::API::MultiSignature::Gettable::pendingfromJSON(callback);
 };
 
 /*
@@ -61,7 +69,7 @@ String ARK::API::MultiSignature::Gettable::pending(ARK::Utilities::Network::Conn
   "transactions":[]
 }
 */
-String ARK::API::MultiSignature::Gettable::pendingfromJSON(String _jsonStr)
+String ARK::API::MultiSignature::Gettable::pendingfromJSON(const char* const _jsonStr)
 {
   ARK::Utilities::JSONString jString(_jsonStr);
   

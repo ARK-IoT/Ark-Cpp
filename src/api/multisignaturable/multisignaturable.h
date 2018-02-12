@@ -20,7 +20,7 @@ class MultiSignaturable :
   public:
 /*  ==========================================================================  */
     /*  /api/multisignatures/pending?publicKey=  */
-    String multisignaturesPending(Publickey _publicKey)
+    String multisignaturesPending(const Publickey& _publicKey)
     {
       return ARK::API::MultiSignature::Gettable::pending(this->netConnector, _publicKey);
     };

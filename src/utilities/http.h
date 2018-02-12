@@ -36,11 +36,11 @@ namespace Network
 **************************************************/
   class HTTP {
     public: 
-      bool isReachable = false;
+     // bool isReachable = false;
 
       HTTP(){};
 
-     String get(String peer, int port, String request);
+     String get(const String& peer, int port, const String& request);
   };
 /*  ==========================================================================  */
 
@@ -72,35 +72,36 @@ public:
 /**************************************************
 * ARK::Utilities::Network::HTTP 
 **************************************************/
-String ARK::Utilities::Network::HTTP::get(String peer, int port, String request)
+String ARK::Utilities::Network::HTTP::get(const String& peer, int port, const String& request)
 {
 
   HTTPClient http;
 
-  if (this->isReachable == false)
-  {
-    http.setReuse(true);
+ // if (this->isReachable == false)
+//  {
+ //   http.setReuse(true);
     http.setTimeout(1000);
+	Serial.println("Opening HTTP connection to " + peer + ":" + String(port));
     http.begin(peer, port, request);
-
-    this->isReachable = true;
-  }
-  else
-  {
-    http.begin(request);
-  };
+ //   this->isReachable = true;
+ // }
+ // else
+ // {
+ //   http.begin(request);
+ // };
 
   int httpCode = http.GET();
 
   while (!http.connected())
   {
     delay(1000);
-    Serial.println("waiting for HTTP connection");
+    Serial.println("waiting for HTTP connection for " + request);
   };
 
-  this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
+  //this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
 
-  if (this->isReachable)
+  //if (this->isReachable)
+  if (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected())
   {
     String streamStr = String(http.getStreamPtr()->readString());
 

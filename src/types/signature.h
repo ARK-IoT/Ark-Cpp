@@ -18,26 +18,19 @@
 #define SIGNATURE_SIZE 143
 
 struct signature_t {
-  public:
-    char value[SIGNATURE_SIZE / sizeof(char)] = { '\0' };    ;
+private:
+    static const auto SIGNATURE_LEN = SIGNATURE_SIZE / sizeof(char);
+    char value_[SIGNATURE_LEN] = { '\0' };
 
+public:
     signature_t(){};
 
-    signature_t(String _signatureString) {      
-      for (int i = 0; i < SIGNATURE_SIZE; i++) {
-        this->value[i] = _signatureString[i];
-      };
+    signature_t(const char* const _signatureString) {      
+      strncpy(value_, _signatureString, SIGNATURE_LEN);
+      value_[SIGNATURE_LEN - 1] = '\0';
     };
 
-    String description() {
-      String resp;
-      for (int i = 0; i < SIGNATURE_SIZE; i++) {
-        resp += value[i];
-      };
-      return resp;
-    }; 
-
-  
+    const char* description() const { return value_; };      
 };
 
 

@@ -35,25 +35,56 @@ namespace ARK
 /*  ARK::Block  */
 struct Block
 {
+private:
+    static const auto MAX_UINT128_CHARS = 40;
+
 public:
-	String id;
+	char id[MAX_UINT128_CHARS];
 	int version;
-	String timestamp;
-	String height;
-	String previousBlock;
-	String numberOfTransactions;
+	char timestamp[MAX_UINT128_CHARS];
+	char height[64];
+	char previousBlock[MAX_UINT128_CHARS];
+	char numberOfTransactions[64];
 	Balance totalAmount;
 	Balance totalFee;
 	Balance reward;
-	String payloadLength;
+	char payloadLength[64];
 	Hash payloadHash;
 	Publickey generatorPublicKey;
 	Address generatorId;
 	Signature blockSignature;
-	String confirmations;
+	char confirmations[64];
 	Balance totalForged;
 
-	String description();
+    Block(
+        const char* const _id,
+        int v,
+        const char* const t,
+        const char* const h,
+        const char* const pb,
+        const char* const nt,
+        const char* const ta,
+        const char* const tf,
+        const char* const r,
+        const char* const pl,
+        const char* const ph,
+        const char* const gpk,
+        const char* const gid,
+        const char* const bs,
+        const char* const c,
+        const char* const tfg
+    ) : id(), version(v), timestamp(), height(), previousBlock(), numberOfTransactions(), totalAmount(ta), totalFee(tf), reward(r), payloadLength(), payloadHash(ph), generatorPublicKey(gpk), generatorId(gid), blockSignature(bs), confirmations(), totalForged(tfg)
+    { 
+        strncpy(id, _id, sizeof(id) / sizeof(id[0]));
+        strncpy(timestamp, t, sizeof(timestamp) / sizeof(timestamp[0]));
+        strncpy(height, h, sizeof(height) / sizeof(height[0]));
+        strncpy(previousBlock, pb, sizeof(previousBlock) / sizeof(previousBlock[0]));
+        strncpy(numberOfTransactions, nt, sizeof(numberOfTransactions) / sizeof(numberOfTransactions[0]));
+        strncpy(payloadLength, pl, sizeof(payloadLength) / sizeof(payloadLength[0]));
+        strncpy(confirmations, c, sizeof(confirmations) / sizeof(confirmations[0]));
+    }
+
+	void description(char* const buf, size_t size);
 };
 /*  ==========  */
 /*  ================================================  */
@@ -86,57 +117,41 @@ blockEpoch:
 /*  ================================================  */
 /*  ===========  */
 /*  Description  */
-String ARK::Block::Block::description()
+void ARK::Block::Block::description(char* const buf, size_t /*size*/)
 {
-	String resp;
-	resp += "id: ";
-	resp += this->id;
-	resp += "\n";
-	resp += "version: ";
-	resp += this->version;
-	resp += "\n";
-	resp += "timestamp: ";
-	resp += this->timestamp;
-	resp += "\n";
-	resp += "height: ";
-	resp += this->height;
-	resp += "\n";
-	resp += "previousBlock: ";
-	resp += this->previousBlock;
-	resp += "\n";
-	resp += "numberOfTransactions: ";
-	resp += this->numberOfTransactions;
-	resp += "\n";
-	resp += "totalAmount.ark: ";
-	resp += this->totalAmount.ark;
-	resp += "\n";
-	resp += "totalFee.ark: ";
-	resp += this->totalFee.ark;
-	resp += "\n";
-	resp += "reward.ark: ";
-	resp += this->reward.ark;
-	resp += "\n";
-	resp += "payloadLength: ";
-	resp += this->payloadLength;
-	resp += "\n";
-	resp += "payloadHash.description: ";
-	resp += this->payloadHash.description();
-	resp += "\n";
-	resp += "generatorPublicKey.description: ";
-	resp += this->generatorPublicKey.description();
-	resp += "\n";
-	resp += "generatorId.description: ";
-	resp += this->generatorId.description();
-	resp += "\n";
-	resp += "blockSignature.description: ";
-	resp += this->blockSignature.description();
-	resp += "\n";
-	resp += "confirmations: ";
-	resp += this->confirmations;
-	resp += "\n";
-	resp += "totalForged.ark: ";
-	resp += this->totalForged.ark;
-	return resp;
+    //TODO:  check len for sufficient size  
+    strcpy(buf, "id: ");
+    strcat(buf, this->id);
+    strcat(buf, "\nversion: ");
+    sprintf(buf + strlen(buf), "%d", this->version);
+    strcat(buf, "\ntimestamp: ");
+    strcat(buf, this->timestamp);
+    strcat(buf, "\nheight: ");
+	strcat(buf, this->height);
+    strcat(buf, "\npreviousBlock: ");
+    strcat(buf, this->previousBlock);
+    strcat(buf, "\nnumberOfTransactions: ");
+	strcat(buf, this->numberOfTransactions);
+    strcat(buf, "\ntotalAmount.ark: ");
+    strcat(buf, this->totalAmount.ark());
+    strcat(buf, "\ntotalFee.ark: ");
+    strcat(buf, this->totalFee.ark());
+    strcat(buf, "\nreward.ark: ");
+    strcat(buf, this->reward.ark());
+    strcat(buf, "\npayloadLength: ");
+    strcat(buf, this->payloadLength);
+    strcat(buf, "\npayloadHash.description: ");
+    strcat(buf, this->payloadHash.description());
+    strcat(buf, "\ngeneratorPublicKey.description: ");
+    strcat(buf, this->generatorPublicKey.description());
+    strcat(buf, "\ngeneratorId.description: ");
+    strcat(buf, this->generatorId.description());
+    strcat(buf, "\nblockSignature.description: ");
+    strcat(buf, this->blockSignature.description());
+    strcat(buf, "\nconfirmations: ");
+    strcat(buf, this->confirmations);
+    strcat(buf, "\ntotalForged.ark: ");
+    strcat(buf, this->totalForged.ark());
 }
 /*  ==========  */
 /*  ================================================  */

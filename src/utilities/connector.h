@@ -39,22 +39,27 @@ class Connector
 *  ARK::Utilities::Network::HTTP http; 
 *****************************************/
 
-    ARK::Network network;
-    ARK::NetworkType netType;
+    const ARK::Network* network;
+	ARK::NetworkType netType;
 
     String networkPeer;
     int networkPort;
 
     Connector();
-    Connector(ARK::Network network);
-    Connector(ARK::NetworkType networktype);
+    Connector(const ARK::Network& network);
+	Connector(ARK::NetworkType networktype);
 
-    void connect(ARK::Network network);
-    void connectCustom(ARK::Network network, String peer, int port);
+    Connector(const Connector&) = delete;
+    Connector& operator=(const Connector&) = delete;
+    Connector(Connector&&) = default;
+    Connector& operator=(Connector&&) = default;
+
+    void connect(const ARK::Network& network);
+    void connectCustom(const ARK::Network& network, const String& peer, int port);
 
     bool disconnect();
 
-    String cb(String request);
+    String cb(const char* const request);
 /*  ==================================  */
 
 
@@ -62,7 +67,7 @@ class Connector
   private:
   
     String randomPeer();
-    void setNetworkPeer(String peer);
+    void setNetworkPeer(const String& peer);
 /*  ==================================  */
 /*  ==========================================================================  */
 
@@ -98,15 +103,15 @@ public:
 **************************************************/
 ARK::Utilities::Network::Connector::Connector()
 {
-  this->network = ARK::Network();
-  networkPeer = "";
-  netType = ARK::NetworkType();
+	this->network = nullptr;
+	networkPeer = "";
+	netType = ARK::NetworkType::INVALID;
 };
 
 /**************************************************
 * Connects this to the supplied ARK::Network
 **************************************************/
-ARK::Utilities::Network::Connector::Connector(ARK::Network network)
+ARK::Utilities::Network::Connector::Connector(const ARK::Network& network)
 {
   this->connect(network);
 }
@@ -125,29 +130,33 @@ ARK::Utilities::Network::Connector::Connector(ARK::NetworkType networkType)
 * Sets networktype, network, and peer
 *
 **************************************************/
-void ARK::Utilities::Network::Connector::connect(ARK::Network network)
+void ARK::Utilities::Network::Connector::connect(const ARK::Network& network)
 {
-  this->netType = (
-      (network.nethash == ARK::Constants::Networks::Devnet::nethash)
-      && (network.nethash != ARK::Constants::Networks::Mainnet::nethash))
-          ? (ARK::NetworkType::DEV)
-          : (ARK::NetworkType::MAIN);
+	if (strcmp(network.nethash, ARK::Constants::Networks::Devnet::nethash) == 0) {
+		this->netType = ARK::NetworkType::DEV;
+	} else if (strcmp(network.nethash, ARK::Constants::Networks::Mainnet::nethash) == 0) {
+		this->netType = ARK::NetworkType::MAIN;
+	} else if (strcmp(network.nethash, "") != 0) {
+		this->netType = ARK::NetworkType::CUSTOM;
+	} else {
+		this->netType = ARK::NetworkType::INVALID;
+	}
 
-  this->network = network;
-  this->setNetworkPeer(this->randomPeer());
+	this->network = &network;
+	this->setNetworkPeer(this->randomPeer());
 }
 
 /**************************************************
 *
 *
 **************************************************/
-void ARK::Utilities::Network::Connector::connectCustom(ARK::Network network, String peer, int port)
+void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& network, const String& peer, int port)
 {
-  this->netType = ARK::NetworkType::CUSTOM;
-  this->network = network;
+	this->netType = ARK::NetworkType::CUSTOM;
+	this->network = &network;
 
-  this->networkPeer = peer;
-  this->networkPort = port;
+	this->networkPeer = peer;
+	this->networkPort = port;
 }
 
 /**************************************************
@@ -156,12 +165,12 @@ void ARK::Utilities::Network::Connector::connectCustom(ARK::Network network, Str
 **************************************************/
 String ARK::Utilities::Network::Connector::randomPeer()
 {
-  if (this->netType == ARK::NetworkType::DEV)
+  if (this->netType == ARK::NetworkType::DEV) {
     return ARK::Constants::Networks::Devnet::randomPeer();
-
-  if (this->netType == ARK::NetworkType::MAIN)
+  }
+  if (this->netType == ARK::NetworkType::MAIN) {
     return ARK::Constants::Networks::Mainnet::randomPeer();
-
+  }
   return "Error: Nethash does not match ARK::Constants";
 }
 
@@ -169,14 +178,13 @@ String ARK::Utilities::Network::Connector::randomPeer()
 * Checks this->NetworkType
 * Assigns ip & port to this
 **************************************************/
-void ARK::Utilities::Network::Connector::setNetworkPeer(String peer)
+void ARK::Utilities::Network::Connector::setNetworkPeer(const String& peer)
 {
-  if (this->netType == ARK::NetworkType::DEV)
+  if (this->netType == ARK::NetworkType::DEV) {
     this->networkPort = ARK::Constants::Networks::Devnet::port;
-
-  if (this->netType == ARK::NetworkType::MAIN)
+  } else if (this->netType == ARK::NetworkType::MAIN) {
     this->networkPort = ARK::Constants::Networks::Mainnet::port;
-
+  }
   this->networkPeer = peer;
 }
 
@@ -184,10 +192,9 @@ void ARK::Utilities::Network::Connector::setNetworkPeer(String peer)
 * Manages directing the callback from
 *   the devices HTTPClient Library
 **************************************************/
-String ARK::Utilities::Network::Connector::cb(String request)
+String ARK::Utilities::Network::Connector::cb(const char* const request)
 {
-  String resp = this->http.get(this->networkPeer, this->networkPort, request);
-  return resp;
+  return this->http.get(this->networkPeer, this->networkPort, request);
 }
 /*  ==========================================================================  */
 

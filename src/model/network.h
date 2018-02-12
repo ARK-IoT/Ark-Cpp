@@ -3,11 +3,12 @@
 #ifndef network_h
 #define network_h
 
+
 namespace ARK {
 
 /*  ================================================  */
 /*  ARK::NetworkType  */
-  enum NetworkType { DEV, MAIN, CUSTOM };
+  enum NetworkType { INVALID = -1, DEV = 0, MAIN = 1, CUSTOM = 2 };
 /*  ================================================  */
 
 /********************************************************************************
@@ -24,19 +25,33 @@ namespace ARK {
 /*  ================================================  */
   /*  ============  */
   /*  ARK::Network  */
-  struct Network {
-    public:
-      String nethash;
-      String token;
-      String symbol;
-      String explorer;
-      int version;
+struct Network {
+public:
+    char nethash[65];		//TODO: review sizes
+    char token[8];
+    char symbol[4];
+    char explorer[65];
+    int version;
 
-      String description();
+    Network() : nethash(), token(), symbol(), explorer(), version(-1) { }
+    Network(
+        const char* const n, 
+        const char* const t, 
+        const char* const s, 
+        const char* const e, 
+        int v
+    ) : nethash(), token(), symbol(), explorer(), version(v) { 
+        strncpy(nethash, n, sizeof(nethash) / sizeof(nethash[0]));
+        strncpy(token, t, sizeof(token) / sizeof(token[0]));
+        strncpy(symbol, s, sizeof(symbol) / sizeof(symbol[0]));
+        strncpy(explorer, e, sizeof(explorer) / sizeof(explorer[0]));
+    }
 
-      bool operator==(Network*& rhs) const;
-      bool operator!=(Network*& rhs) const;
-  };
+    void description(char* const buf, size_t size) const;
+
+    bool operator==(const Network& rhs) const;
+    bool operator!=(const Network& rhs) const;
+};
   /*  ============  */
   /*  ================================================  */
   /*  ================  */
@@ -61,36 +76,33 @@ namespace ARK {
 /*  ============  */
 /*  ARK::Delegate  */
 /*  Description  */
-String ARK::Network::Network::description() {
-  String resp;
-    resp += "nethash: ";
-      resp += this->nethash; resp += "\n";           
-    resp += "token: ";
-      resp += this->token; resp += "\n";
-    resp += "symbol: ";
-      resp += this->symbol; resp += "\n";
-    resp += "explorer: ";
-      resp += this->explorer; resp += "\n";
-    resp += "version: ";
-      resp += this->version;
-  return resp;
+void ARK::Network::Network::description(char* const buf, size_t /*size*/) const {
+	strcpy(buf, "nethash: ");
+	strcat(buf, this->nethash);
+	strcat(buf, "\ntoken: ");
+	strcat(buf, this->token);
+	strcat(buf, "\nsymbol: ");
+	strcat(buf, this->symbol);
+	strcat(buf, "\nexplorer: ");
+	strcat(buf, this->explorer);
+	strcat(buf, "\nversion: ");
+    const auto len = strlen(buf);
+	sprintf(buf + len, "%d", this->version);
 };
 /*  =====  */
 /*  Operator  */
 /*  ARK::Network == ARK::Network  */
-bool ARK::Network::Network::operator==(Network*& rhs) const {
-  if (this->nethash==rhs->nethash
-      && this->token==rhs->token
-      && this->symbol==rhs->symbol
-      && this->explorer==rhs->explorer
-      && this->version==rhs->version)
-    return true;
-  return false;
+bool ARK::Network::Network::operator==(const Network& rhs) const {
+  return (strcmp(this->nethash, rhs.nethash) == 0
+      && strcmp(this->token, rhs.token) == 0
+      && strcmp(this->symbol, rhs.symbol) == 0
+      && strcmp(this->explorer, rhs.explorer) == 0
+      && this->version == rhs.version);
 };
 /*  =====  */
 /*  Operator  */
 /*  ARK::Network != ARK::Network  */
-bool ARK::Network::Network::operator!=(Network*& rhs) const { return !(this == rhs); };
+bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(*this == rhs); };
 /*  ============  */
 /*  ================================================  */
 

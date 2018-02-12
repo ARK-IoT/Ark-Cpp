@@ -19,14 +19,25 @@ namespace Respondable
   struct Search
   {
   public:
-    String username;
+    char username[64]; //TODO review sizes
     Address address;
     Publickey publicKey;
     Balance vote;
     int producedblocks;
     int missedblocks;
 
-    String description();
+    Search(
+        const char* const u, 
+        const char* const a, 
+        const char* const pk, 
+        const char* const v, 
+        int pb, 
+        int mb
+    ) : username(), address(a), publicKey(pk), vote(v), producedblocks(pb), missedblocks(mb) {
+        strncpy(username, u, sizeof(username) / sizeof(username[0]));
+    }
+
+    void description(char* const buf, size_t size);
   };
 /*  =======================================  */
 /*  ==========================================================================  */
@@ -35,16 +46,21 @@ namespace Respondable
 /*  ==========================================================================  */
 /*  =========================================  */
   /*  ARK::API::Delegate::Respondable::Voters  */
-  struct Voters {
-    public:
+struct Voters {
+public:
+    size_t count;
+    ARK::Voter* const _voters;
 
-      int count;
-      ARK::Voter list[10];// = {{}};
+    Voters(size_t c) : count(c), _voters(new ARK::Voter[c]) { }
+    ~Voters() {
+        delete [] _voters;
+    }
 
-      Voters(int);
+    const Voter& operator[](size_t index) const { return _voters[index]; }
+    Voter& operator[](size_t index) { return _voters[index]; }
 
-      String description();
-  };
+    void description(char* const buf, size_t size);
+};
 /*  =========================================  */
 /*  ==========================================================================  */
 
@@ -52,15 +68,17 @@ namespace Respondable
 /*  ==========================================================================  */
 /*  ==================================================  */
   /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
-  struct ForgedByAccount
-  {
-    public:
-      Balance fees;
-      Balance rewards;
-      Balance forged;
+struct ForgedByAccount
+{
+public:
+    Balance fees;
+    Balance rewards;
+    Balance forged;
 
-      String description();
-  };
+    ForgedByAccount(const char* const f, const char* const r, const char* const fg) : fees(f), rewards(r), forged(fg) { }
+
+    void description(char* const buf, size_t size);
+};
 /*  ==================================================  */
 /*  ==========================================================================  */
 
@@ -71,13 +89,13 @@ namespace Respondable
   struct NextForgers
   {
     public:
-      String currentBlock;
-      String currentSlot;
+      char currentBlock[64];
+      char currentSlot[64];
       Publickey delegates[10];
 
-      NextForgers(String _currentBlock, String _currentSlot, Publickey _delegates[10]);
+      NextForgers(const char* const _currentBlock, const char* const _currentSlot, const Publickey* const _delegates);
 
-      String description();
+      void description(char* const buf, size_t size);
   };
 /*  ==============================================  */
 /*  ==========================================================================  */
@@ -92,56 +110,43 @@ namespace Respondable
 /*  =======================================  */
 /*  ARK::API::Delegate::Respondable::Search  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::Search::description()
+void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t /*size*/)
 {
-	String resp;
-	resp += "username: ";
-	resp += this->username;
-	resp += "\n";
-	resp += "address.description: ";
-	resp += this->address.description();
-	resp += "\n";
-	resp += "publicKey.description: ";
-	resp += this->publicKey.description();
-	resp += "\n";
-	resp += "vote.ark: ";
-	resp += this->vote.ark;
-	resp += "\n";
-	resp += "producedblocks: ";
-	resp += this->producedblocks;
-	resp += "\n";
-	resp += "missedblocks: ";
-	resp += this->missedblocks;
-	return resp;
+    strcpy(buf, "username: ");
+    strcat(buf, this->username);
+    strcat(buf, "\naddress.description: ");
+    strcat(buf, this->address.description());
+    strcat(buf, "\npublicKey.description: ");
+    strcat(buf, this->publicKey.description());
+    strcat(buf, "\nvote.ark: ");
+    strcat(buf, this->vote.ark());
+    strcat(buf, "\nproducedblocks: ");
+    auto len = strlen(buf);
+    sprintf(buf + len, "%d", this->producedblocks);
+    strcat(buf, "\nmissedblocks: ");
+    len = strlen(buf);
+    sprintf(buf + len, "%d", this->missedblocks);
 }
 /*  =======================================  */
 /*  ==========================================================================  */
 
 
 
-
-/*  ==========================================================================  */
-/*  =========================================  */
-  /*  ARK::API::Delegate::Respondable::Voters  */
-/*  Constructor  */
-ARK::API::Delegate::Respondable::Voters::Voters(int _count){
-  this->count = _count;
-}
 /*  =========================================  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::Voters::description() {
-  String resp;
-
+void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
   if (this->count > 0) {
-    for (int i = 0; i < this->count; i++) {
-      resp += "\nvoter ";
-      resp += i + 1;
-      resp += ":\n";
-      resp += this->list[i].description();
-      resp += "\n";
+      buf[0] = '\0';
+    for (int i = 0; i < static_cast<int>(this->count); i++) {
+        strcat(buf, "\nvoter ");
+        auto len = strlen(buf);
+        sprintf(buf + len, "%d", i + 1);
+        strcat(buf, ":\n");
+        len = strlen(buf);
+        (*this)[i].description(buf + len, size - len);
+        strcat(buf, "\n");
     };
   };
-  return resp;
 }
 /*  =========================================  */
 /*  ==========================================================================  */
@@ -153,18 +158,14 @@ String ARK::API::Delegate::Respondable::Voters::description() {
 /*  ==================================================  */
 /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::ForgedByAccount::description()
+void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t /*size*/)
 {
-	String resp;
-	resp += "fees.ark: ";
-	resp += this->fees.ark;
-	resp += "\n";
-	resp += "rewards.ark: ";
-	resp += this->rewards.ark;
-	resp += "\n";
-	resp += "forged.ark: ";
-	resp += this->forged.ark;
-	return resp;
+    strcpy(buf, "fees.ark: ");
+    strcat(buf, this->fees.ark());
+    strcat(buf, "\nrewards.ark: ");
+    strcat(buf, this->rewards.ark());
+    strcat(buf, "\nforged.ark: ");
+    strcat(buf, this->forged.ark());
 }
 /*  ==================================================  */
 /*  ==========================================================================  */
@@ -177,36 +178,36 @@ String ARK::API::Delegate::Respondable::ForgedByAccount::description()
 /*  ARK::API::Delegate::Respondable::NextForgers  */
 /*  Constructor  */
 ARK::API::Delegate::Respondable::NextForgers::NextForgers(
-    String _currentBlock, String _currentSlot,
-    Publickey _delegates[10])
+    const char* const _currentBlock, const char* const _currentSlot,
+    const Publickey* const _delegates) : currentBlock(), currentSlot()
 {
-	this->currentBlock = _currentBlock;
-	this->currentSlot = _currentSlot;
-	for (int i = 0; i < 10; i++)
+    //TODO:  wish i had std::array for _delegates.  pointer decay sucks.
+    strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
+    strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
+	for (auto i = 0; i < 10; ++i)
 	{
 		this->delegates[i] = _delegates[i];
 	};
 }
 /*  ============================================  */
 /*  Description  */
-String ARK::API::Delegate::Respondable::NextForgers::description()
+void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t /*size*/)
 {
-	String resp;
-	resp += "currentBlock: ";
-	resp += this->currentBlock;
-	resp += "\n";
-	resp += "currentSlot: ";
-	resp += this->currentSlot;
-	resp += "\n";
-	for (int i = 0; i < 10; i++)
+    strcpy(buf, "currentBlock: ");
+    strcat(buf, this->currentBlock);
+    strcat(buf, "\ncurrentSlot: ");
+    strcat(buf, this->currentSlot);
+    strcat(buf, "\n");
+
+	for (auto i = 0; i < 10; ++i)
 	{
-		resp += "delegate ";
-		resp += i + 1;
-		resp += ": \n publicKey: ";
-		resp += delegates[i].description();
-		resp += "\n";
+        strcat(buf, "delegate ");
+        const auto len = strlen(buf);
+        sprintf(buf + len, "%d", i + 1);
+        strcat(buf, ": \n publicKey: ");
+        strcat(buf, delegates[i].description());
+        strcat(buf, "\n");
 	};
-	return resp;
 }
 /*  ============================================  */
 /*  ==========================================================================  */

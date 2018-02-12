@@ -18,20 +18,29 @@ class Gettable
   protected:
 /*  ==========================================================================  */
     /*  /api/loader/status  */
-    ARK::API::Loader::Respondable::Status status(ARK::Utilities::Network::Connector _netConnector);
-    ARK::API::Loader::Respondable::Status statusfromJSON(String _jsonStr);
+    ARK::API::Loader::Respondable::Status status(ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Loader::Respondable::Status statusfromJSON(const char* const _jsonStr);
+    ARK::API::Loader::Respondable::Status statusfromJSON(const String& _jsonStr) {
+        return statusfromJSON(_jsonStr.c_str());
+    }
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/loader/status/sync  */
-    ARK::API::Loader::Respondable::Sync sync(ARK::Utilities::Network::Connector _netConnector);
-    ARK::API::Loader::Respondable::Sync syncfromJSON(String _jsonStr);
+    ARK::API::Loader::Respondable::Sync sync(ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Loader::Respondable::Sync syncfromJSON(const char* const _jsonStr);
+    ARK::API::Loader::Respondable::Sync syncfromJSON(const String& _jsonStr) {
+        return syncfromJSON(_jsonStr.c_str());
+    }
 /*  ==========================================================================  */
 
 /*  ==========================================================================  */
     /*  /api/loader/autoconfigure  */
-    ARK::Network autoconfigure(ARK::Utilities::Network::Connector _netConnector);
-    ARK::Network autoconfigurefromJSON(String _jsonStr);
+    ARK::Network autoconfigure(ARK::Utilities::Network::Connector& _netConnector);
+    ARK::Network autoconfigurefromJSON(const char* const _jsonStr);
+    ARK::Network autoconfigurefromJSON(const String& _jsonStr) {
+        return autoconfigurefromJSON(_jsonStr.c_str());
+    }
 /*  ==========================================================================  */
 };
 /*  =====================================  */
@@ -47,11 +56,9 @@ class Gettable
 /*  ================================  */
 /*  ARK::API::Loader::Gettable::status  */
 /*  /api/loader/status  */
-ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(ARK::Utilities::Network::Connector _netConnector)
+ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Loader::status_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Loader::status_s);
 
   return ARK::API::Loader::Gettable::statusfromJSON(callback);
 }
@@ -64,14 +71,15 @@ ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(ARK::Ut
   "blocksCount":  String
 }
 */
-ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::statusfromJSON(String _jsonStr)
+ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::statusfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueFor("loaded"),
-      jString.valueFor("now").toInt(),
-      jString.valueFor("blocksCount")};
+    return ARK::API::Loader::Respondable::Status(
+        jString.valueFor("loaded").c_str(),
+        jString.valueFor("now").toInt(),
+        jString.valueFor("blocksCount").c_str()
+    );
 }
 /*  ================================  */
 /*  ==========================================================================  */
@@ -83,11 +91,9 @@ ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::statusfromJSON
 /*  ==============================  */
 /*  ARK::API::Loader::Gettable::sync  */
 /*  /api/loader/status/sync  */
-ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(ARK::Utilities::Network::Connector _netConnector)
+ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Loader::sync_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Loader::sync_s);
 
   return ARK::API::Loader::Gettable::syncfromJSON(callback);
 }
@@ -101,15 +107,16 @@ ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(ARK::Utilit
   "id": "String"
 }
 */
-ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::syncfromJSON(String _jsonStr)
+ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::syncfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueFor("syncing"),
-      jString.valueFor("blocks").toInt(),
-      jString.valueFor("height"),
-      jString.valueFor("id")};
+    return ARK::API::Loader::Respondable::Sync(
+        jString.valueFor("syncing").c_str(),
+        jString.valueFor("blocks").toInt(),
+        jString.valueFor("height").c_str(),
+        jString.valueFor("id").c_str()
+    );
 }
 /*  ==============================  */
 /*  ==========================================================================  */
@@ -121,11 +128,9 @@ ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::syncfromJSON(Str
 /*  =======================================  */
 /*  ARK::API::Loader::Gettable::autoconfigure  */
 /*  /api/loader/autoconfigure  */
-ARK::Network ARK::API::Loader::Gettable::autoconfigure(ARK::Utilities::Network::Connector _netConnector)
+ARK::Network ARK::API::Loader::Gettable::autoconfigure(ARK::Utilities::Network::Connector& _netConnector)
 {
-  String uri = ARK::API::Paths::Loader::autoconfigure_s;
-
-  String callback = _netConnector.cb(uri);
+  auto callback = _netConnector.cb(ARK::API::Paths::Loader::autoconfigure_s);
 
   return ARK::API::Loader::Gettable::autoconfigurefromJSON(callback);
 }
@@ -142,16 +147,17 @@ ARK::Network ARK::API::Loader::Gettable::autoconfigure(ARK::Utilities::Network::
   }
 }
 */
-ARK::Network ARK::API::Loader::Gettable::autoconfigurefromJSON(String _jsonStr)
+ARK::Network ARK::API::Loader::Gettable::autoconfigurefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+    ARK::Utilities::JSONString jString(_jsonStr);
 
-  return {
-      jString.valueIn("network", "nethash"),
-      jString.valueIn("network", "token"),
-      jString.valueIn("network", "symbol"),
-      jString.valueIn("network", "explorer"),
-      jString.valueIn("network", "version").toInt()};
+    return ARK::Network(
+        jString.valueIn("network", "nethash").c_str(),
+        jString.valueIn("network", "token").c_str(),
+        jString.valueIn("network", "symbol").c_str(),
+        jString.valueIn("network", "explorer").c_str(),
+        jString.valueIn("network", "version").toInt()
+    );
 }
 /*  =======================================  */
 /*  ==========================================================================  */

@@ -14,29 +14,30 @@ const char* password = "yourWiFiPassword";
 void checkAPI() {
 /*  ==================================  */
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager arkManager(devnet);
+  ARK::API::Manager _arkManager(devnet);
 /*  ==================================  */
 
 /*  ==================================  */
-  String loaderStatusDescription = _arkManager.loaderStatus().description();
+    char buf[512] = {};
+    _arkManager.loaderStatus().description(buf, sizeof(buf));
     Serial.println("loaderStatusDescription: ");
-    Serial.println(loaderStatusDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
 
 /*  ==================================  */
-  String loaderSyncDescription = _arkManager.loaderSync().description();
+    _arkManager.loaderSync().description(buf, sizeof(buf));
     Serial.println("loaderSyncDescription: ");
-    Serial.println(loaderSyncDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50);
 /*  ==================================  */
 
 /*  ==================================  */
-  String loaderAutoconfigureDescription = _arkManager.loaderAutoconfigure().description();
+    _arkManager.loaderAutoconfigure().description(buf, sizeof(buf));
     Serial.println("loaderAutoconfigureDescription: ");
-    Serial.println(loaderAutoconfigureDescription);
+    Serial.println(buf);
     Serial.println("\n=====\n");
     delay(50); 
 /*  ==================================  */
@@ -64,6 +65,17 @@ void check() {
 void setup() {
   Serial.begin(115200);
     reportFreeHeap();
+
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 
