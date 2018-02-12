@@ -14,19 +14,16 @@ namespace Utilities
 namespace Network
 {
 
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::Connectable 
 *   Inheritable HTTPConnectable object
 **************************************************/
   class HTTPConnectable;
-/*  ==========================================================================  */
+/*************************************************/
 
 
 
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::HTTP 
 *   Currently using ESP8266 libs
 *
@@ -40,9 +37,9 @@ namespace Network
 
       HTTP(){};
 
-     String get(const String& peer, int port, const String& request);
+     const char* get(const char* peer, int port, const char* request);
   };
-/*  ==========================================================================  */
+/*************************************************/
 
 
 };
@@ -51,8 +48,7 @@ namespace Network
 
 
 
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::Connectable 
 *   Inheritable HTTPConnectable object
 **************************************************/
@@ -62,49 +58,44 @@ public:
 
   ARK::Utilities::Network::HTTP http;
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
 
 
 
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::HTTP 
 **************************************************/
-String ARK::Utilities::Network::HTTP::get(const String& peer, int port, const String& request)
+const char* ARK::Utilities::Network::HTTP::get(const char* peer, int port, const char* request)
 {
 
   HTTPClient http;
+  http.setTimeout(1000);
 
- // if (this->isReachable == false)
-//  {
- //   http.setReuse(true);
-    http.setTimeout(1000);
-	Serial.println("Opening HTTP connection to " + peer + ":" + String(port));
-    http.begin(peer, port, request);
- //   this->isReachable = true;
- // }
- // else
- // {
- //   http.begin(request);
- // };
+    Serial.print("Opening HTTP connection to ");
+    Serial.print(peer);
+    Serial.print(":");
+    Serial.print(port);
+    Serial.println();
+
+  http.begin(peer, port, request);
 
   int httpCode = http.GET();
 
   while (!http.connected())
   {
     delay(1000);
-    Serial.println("waiting for HTTP connection for " + request);
+
+      Serial.print("waiting for HTTP connection for ");
+      Serial.print(request);
+      Serial.println();
   };
 
-  //this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
-
-  //if (this->isReachable)
   if (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected())
   {
-    String streamStr = String(http.getStreamPtr()->readString());
-
+    const char* streamStr = http.getStreamPtr()->readString().c_str();
+    
     http.end();
 
     return streamStr;
@@ -117,7 +108,7 @@ String ARK::Utilities::Network::HTTP::get(const String& peer, int port, const St
   };
 
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
 #endif
