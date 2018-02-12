@@ -37,7 +37,7 @@ public:
 /*  ================================================  */
 /*  =====  */
 /*  Description  */
-void ARK::Voter::Voter::description(char* const buf, size_t size) {
+void ARK::Voter::Voter::description(char* const buf, size_t /*size*/) {
     strcpy(buf, "username: ");
     strcat(buf, this->username);
     strcat(buf, "\naddress.description: ");

@@ -57,7 +57,7 @@ namespace Respondable
 /*  ========================  */
 /*  ARK::API::Peer::Respondable::Version  */
 /*  Description  */
-void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t size) {
+void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t /*size*/) {
     strcpy(buf, "version: ");
     strcat(buf, this->version);
     strcat(buf, "\nbuild: ");

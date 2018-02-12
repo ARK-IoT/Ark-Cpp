@@ -46,7 +46,7 @@ namespace ARK {
 /*  ================================================  */
 /*  =========  */
 /*  Description  */
-void ARK::Peer::Peer::description(char* const buf, size_t size) {
+void ARK::Peer::Peer::description(char* const buf, size_t /*size*/) {
     strcpy(buf, "ip: ");
     strcat(buf, this->ip);
     strcat(buf, "\nport: ");

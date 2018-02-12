@@ -44,7 +44,7 @@ namespace Devnet
     const auto type = NetworkType::DEV;
 
 	/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-	const char* const randomPeer()
+	const char* randomPeer()
 	{
 		return seeds[random(0, 5)];
 	};
@@ -104,7 +104,7 @@ namespace Mainnet
     const auto type = NetworkType::MAIN;
 
 	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
-	const char* const randomPeer()
+	const char* randomPeer()
 	{
 		return seeds[random(0, 45)];
 	};

@@ -65,7 +65,7 @@ public:
 /*  ================================================  */
 /*  =====  */
 /*  Description  */
-void ARK::Delegate::Delegate::description(char* const buf, size_t size) const
+void ARK::Delegate::Delegate::description(char* const buf, size_t /*size*/) const
 {
     //TODO:  check len for sufficient size  
     strcpy(buf, "username: ");

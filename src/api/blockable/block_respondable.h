@@ -78,7 +78,7 @@ public:
 /*  ====================================  */
 /*  ARK::API::Block::Respondable::Status  */
 /*  Description  */
-void ARK::API::Block::Respondable::Status::description(char* const buf, size_t size)
+void ARK::API::Block::Respondable::Status::description(char* const buf, size_t /*size*/)
 {
     strcpy(buf, "epoch: ");
     strcat(buf, this->epoch);
@@ -106,7 +106,7 @@ void ARK::API::Block::Respondable::Status::description(char* const buf, size_t s
 /*  ====================================  */
 /*  ARK::API::Block::Respondable::Height  */
 /*  Description  */
-void ARK::API::Block::Respondable::Height::description(char* const buf, size_t size)
+void ARK::API::Block::Respondable::Height::description(char* const buf, size_t /*size*/)
 {
     strcpy(buf, "height: ");
     strcat(buf, this->height);

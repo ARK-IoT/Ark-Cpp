@@ -38,7 +38,7 @@ namespace Respondable
 /*  =====================================================  */
 /*  ARK::API::Account::Respondable::Balances::description  */
 /*  Description  */
-  void ARK::API::Account::Respondable::Balances::description(char* const buf, size_t size)
+  void ARK::API::Account::Respondable::Balances::description(char* const buf, size_t /*size*/)
   {
       strcpy(buf, "confirmed balance.ark: ");
       strcat(buf, this->confirmed.ark());

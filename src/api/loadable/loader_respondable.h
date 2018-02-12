@@ -73,7 +73,7 @@ namespace Respondable
 /*  ============  */
 /*  ARK::API::Loader::Respondable::Status  */
 /*  Description  */
-void ARK::API::Loader::Respondable::Status::description(char* const buf, size_t size)
+void ARK::API::Loader::Respondable::Status::description(char* const buf, size_t /*size*/)
 {
     //TODO validate size
     strcpy(buf, "loaded: ");
@@ -94,12 +94,11 @@ void ARK::API::Loader::Respondable::Status::description(char* const buf, size_t 
 /*  ============  */
 /*  ARK::Loader::Loader::Sync  */
 /*  Description  */
-void ARK::API::Loader::Respondable::Sync::description(char* const buf, size_t size)
+void ARK::API::Loader::Respondable::Sync::description(char* const buf, size_t /*size*/)
 {
     strcpy(buf, "syncing: ");
     strcat(buf, this->syncing ? "true" : "false");
     strcat(buf, "\nblocks: ");
-    auto len = strlen(buf);
     sprintf(buf, "%d", this->blocks);
     strcat(buf, "\nheight: ");
     strcat(buf, this->height);

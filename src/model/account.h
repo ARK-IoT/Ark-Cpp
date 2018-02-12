@@ -65,7 +65,7 @@ public:
 /*  ================================================  */
 /*  ============  */
 /*  Description  */
-void ARK::Account::Account::description(char* const buf, size_t len)
+void ARK::Account::Account::description(char* const buf, size_t /*len*/)
 {
     //TODO:  check len for sufficient size  
     strcpy(buf, "address: ");

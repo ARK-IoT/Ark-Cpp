@@ -117,7 +117,7 @@ blockEpoch:
 /*  ================================================  */
 /*  ===========  */
 /*  Description  */
-void ARK::Block::Block::description(char* const buf, size_t size)
+void ARK::Block::Block::description(char* const buf, size_t /*size*/)
 {
     //TODO:  check len for sufficient size  
     strcpy(buf, "id: ");
@@ -127,11 +127,11 @@ void ARK::Block::Block::description(char* const buf, size_t size)
     strcat(buf, "\ntimestamp: ");
     strcat(buf, this->timestamp);
     strcat(buf, "\nheight: ");
-    sprintf(buf + strlen(buf), "%d", this->height);
+	strcat(buf, this->height);
     strcat(buf, "\npreviousBlock: ");
     strcat(buf, this->previousBlock);
     strcat(buf, "\nnumberOfTransactions: ");
-    sprintf(buf + strlen(buf), "%d", this->numberOfTransactions);
+	strcat(buf, this->numberOfTransactions);
     strcat(buf, "\ntotalAmount.ark: ");
     strcat(buf, this->totalAmount.ark());
     strcat(buf, "\ntotalFee.ark: ");

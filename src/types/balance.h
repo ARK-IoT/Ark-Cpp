@@ -27,7 +27,7 @@ struct Balance
 private:
     static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
     static const auto ARK_SIZE = 18 * sizeof(int);
-    static const auto DECIMAL_PLACES = 8;
+    static const auto DECIMAL_PLACES = 8u;
 
     char arktoshi_[ARKTOSHI_SIZE];
     char ark_[ARK_SIZE];
@@ -42,7 +42,7 @@ public:
 	{
 		bool isNumeric = true;
 
-		for (auto i = 0; i < strlen(balanceStr); ++i) {
+		for (auto i = 0u; i < strlen(balanceStr); ++i) {
 			if (!isDigit(balanceStr[i])) {
 				isNumeric = false;
 				break;
@@ -62,6 +62,7 @@ public:
 			strcpy(arktoshi_, other.arktoshi_);
 			strcpy(ark_, other.ark_);
 		}
+		return *this;
 	}
 
 	Balance(Balance&& other) : arktoshi_(), ark_() {
@@ -77,11 +78,12 @@ public:
 			other.arktoshi_[0] = '\0';
 			other.ark_[0] = '\0';
 		}
+		return *this;
 	}
 
 
-    const char* const ark() const { return ark_; }
-    const char* const arktoshi() const { return arktoshi_; }
+    const char* ark() const { return ark_; }
+    const char* arktoshi() const { return arktoshi_; }
 
     void setArktoshi(const char* const balanceStr) {
         strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
@@ -93,22 +95,22 @@ public:
     if (length < DECIMAL_PLACES) {
         ark_[0] = '.';
         const auto num_zero_pad = DECIMAL_PLACES - length;
-        for (auto i = 1; i <= num_zero_pad; ++i)
+        for (auto i = 1u; i <= num_zero_pad; ++i)
         {
             ark_[i] = '0';
         }
-        for (auto i = 0; i <= num_zero_pad + 1; ++i) 
+        for (auto i = 0u; i <= num_zero_pad + 1; ++i) 
         {
             ark_[i + num_zero_pad + 1] = balanceStr[i];
         }
     }
     else
     {
-        for (int i = length; i >= 0; --i)
+        for (int i = static_cast<int>(length); i >= 0; --i)
         {
-            if (i < length - DECIMAL_PLACES) { this->ark_[i] = balanceStr[i]; }
-            if (i == length - DECIMAL_PLACES) { this->ark_[i] = '.'; }
-            if (i > length - DECIMAL_PLACES && i <= length) { this->ark_[i] = balanceStr[i - 1]; }
+            if (i < static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = balanceStr[i]; }
+            if (i == static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = '.'; }
+            if (i > static_cast<int>(length - DECIMAL_PLACES) && i <= static_cast<int>(length)) { this->ark_[i] = balanceStr[i - 1]; }
         }
     }
   }

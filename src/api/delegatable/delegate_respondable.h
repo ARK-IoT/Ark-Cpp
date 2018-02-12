@@ -110,7 +110,7 @@ public:
 /*  =======================================  */
 /*  ARK::API::Delegate::Respondable::Search  */
 /*  Description  */
-void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t size)
+void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t /*size*/)
 {
     strcpy(buf, "username: ");
     strcat(buf, this->username);
@@ -137,7 +137,7 @@ void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_
 void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
   if (this->count > 0) {
       buf[0] = '\0';
-    for (int i = 0; i < this->count; i++) {
+    for (int i = 0; i < static_cast<int>(this->count); i++) {
         strcat(buf, "\nvoter ");
         auto len = strlen(buf);
         sprintf(buf + len, "%d", i + 1);
@@ -158,7 +158,7 @@ void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_
 /*  ==================================================  */
 /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
 /*  Description  */
-void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t size)
+void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t /*size*/)
 {
     strcpy(buf, "fees.ark: ");
     strcat(buf, this->fees.ark());
@@ -191,7 +191,7 @@ ARK::API::Delegate::Respondable::NextForgers::NextForgers(
 }
 /*  ============================================  */
 /*  Description  */
-void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t size)
+void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t /*size*/)
 {
     strcpy(buf, "currentBlock: ");
     strcat(buf, this->currentBlock);
