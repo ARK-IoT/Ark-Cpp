@@ -106,6 +106,7 @@ public:
     }
     else
     {
+		// TODO: making i unsigned causes problems.  Potential array out of bounds but no investigation has been done.
         for (int i = static_cast<int>(length); i >= 0; --i)
         {
             if (i < static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = balanceStr[i]; }
