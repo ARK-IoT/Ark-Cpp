@@ -3,9 +3,10 @@
 #ifndef HTTP_H
 #define HTTP_H
 
+#include "platform.h"
 
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
+//#include <ESP8266WiFi.h>
+//#include <ESP8266HTTPClient.h>
 
 namespace ARK
 {
@@ -74,7 +75,7 @@ public:
 **************************************************/
 String ARK::Utilities::Network::HTTP::get(const String& peer, int port, const String& request)
 {
-
+#if 0
   HTTPClient http;
 
  // if (this->isReachable == false)
@@ -115,7 +116,9 @@ String ARK::Utilities::Network::HTTP::get(const String& peer, int port, const St
 
     return "Error: Connection to Peer could not be established";
   };
-
+#else 
+return "";
+#endif
 };
 /*  ==========================================================================  */
 

@@ -3,6 +3,9 @@
 #ifndef peer_h
 #define peer_h
 
+#include <cstring>
+#include <cstdio>
+
 namespace ARK {
 
 /*  ================================================  */

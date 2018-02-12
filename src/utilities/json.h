@@ -3,6 +3,8 @@
 #ifndef JSON_H
 #define JSON_H
 
+#include "platform.h"
+
 namespace ARK
 {
 namespace Utilities
@@ -56,10 +58,14 @@ ARK::Utilities::JSONString::JSONString(const String& _jsonStr)
 **************************************************/
 String ARK::Utilities::JSONString::valueFor(const String& _key)
 {
+#if 0
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
   JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
   return root[_key];
+#else
+return "";
+#endif
 }
 
 /**************************************************
@@ -69,10 +75,14 @@ String ARK::Utilities::JSONString::valueFor(const String& _key)
 **************************************************/
 String ARK::Utilities::JSONString::valueIn(const String& _key, const String& _subkey)
 {
+#if 0
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
   JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
   return root[_key][_subkey];
+#else
+return "";
+#endif
 }
 
 /**************************************************
@@ -82,10 +92,14 @@ String ARK::Utilities::JSONString::valueIn(const String& _key, const String& _su
 **************************************************/
 String ARK::Utilities::JSONString::subvalueFor(const String& _key, int _pos)
 {
+#if 0
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
   JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
   return root[_key][_pos];
+#else
+return "";
+#endif
 }
 
 
@@ -96,11 +110,15 @@ String ARK::Utilities::JSONString::subvalueFor(const String& _key, int _pos)
 **************************************************/
 String ARK::Utilities::JSONString::subvalueIn(const String& _key, const String& _subkey)
 {
+#if 0
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
   JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
   JsonObject &newRoot = root[_key];
   return newRoot[_subkey];
+#else
+return "";
+#endif
 }
 
 /**************************************************
@@ -110,11 +128,15 @@ String ARK::Utilities::JSONString::subvalueIn(const String& _key, const String& 
 **************************************************/
 String ARK::Utilities::JSONString::subarrayValueIn(const String& _key, int _pos, const String& _subkey)
 {
+#if 0
   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
   DynamicJsonBuffer jsonBuffer(capacity);
   JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
   // JsonArray& root = jsonBuffer.parseArray(this->jsonStr);
   return root[_key][_pos][_subkey];
+#else
+return "";
+#endif
 }
 /*  ==========================================================================  */
 

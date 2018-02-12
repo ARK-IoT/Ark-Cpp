@@ -3,6 +3,13 @@
 #ifndef delegate_h
 #define delegate_h
 
+#include "address.h"
+#include "balance.h"
+#include "publickey.h"
+
+#include <cstring>
+#include <cstdio>
+
 /********************************************************************************
 *
 * delegate: 

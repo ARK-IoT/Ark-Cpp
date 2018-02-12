@@ -3,6 +3,9 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
+#include "http.h"
+#include "network.h"
+#include "networks.h"
 
 namespace ARK
 {

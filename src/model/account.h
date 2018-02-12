@@ -3,6 +3,14 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
+#include "address.h"
+#include "balance.h"
+#include "publickey.h"
+#include "signature.h"
+
+#include <cstring>
+#include <cstdio>
+
 /********************************************************************************
 *
 * account: 

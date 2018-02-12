@@ -4,6 +4,8 @@
 #define BALANCE_H
 #pragma once
 
+#include <cstring>
+#include <cctype>
 
 /********************************************************************************
 *
@@ -18,9 +20,6 @@
 *   Currenty Block Supply total ~ 1.3e16 (12984403000000000:arktoshi)/(129844030.00000000:ark)
 *
 ********************************************************************************/
-
-
-
 
 struct Balance
 {
@@ -42,8 +41,9 @@ public:
 	{
 		bool isNumeric = true;
 
-		for (auto i = 0; i < strlen(balanceStr); ++i) {
-			if (!isDigit(balanceStr[i])) {
+		for (auto i = 0u; i < strlen(balanceStr); ++i) {
+			//if (!isDigit(balanceStr[i])) {
+			if (!isdigit(balanceStr[i])) {
 				isNumeric = false;
 				break;
 			}
@@ -77,6 +77,7 @@ public:
 			other.arktoshi_[0] = '\0';
 			other.ark_[0] = '\0';
 		}
+		return *this;
 	}
 
 
@@ -93,11 +94,11 @@ public:
     if (length < DECIMAL_PLACES) {
         ark_[0] = '.';
         const auto num_zero_pad = DECIMAL_PLACES - length;
-        for (auto i = 1; i <= num_zero_pad; ++i)
+        for (auto i = 1u; i <= num_zero_pad; ++i)
         {
             ark_[i] = '0';
         }
-        for (auto i = 0; i <= num_zero_pad + 1; ++i) 
+        for (auto i = 0u; i <= num_zero_pad + 1; ++i) 
         {
             ark_[i + num_zero_pad + 1] = balanceStr[i];
         }
@@ -106,9 +107,9 @@ public:
     {
         for (int i = length; i >= 0; --i)
         {
-            if (i < length - DECIMAL_PLACES) { this->ark_[i] = balanceStr[i]; }
-            if (i == length - DECIMAL_PLACES) { this->ark_[i] = '.'; }
-            if (i > length - DECIMAL_PLACES && i <= length) { this->ark_[i] = balanceStr[i - 1]; }
+            if (i < static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = balanceStr[i]; }
+            if (i == static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = '.'; }
+            if (i > static_cast<int>(length - DECIMAL_PLACES) && i <= static_cast<int>(length)) { this->ark_[i] = balanceStr[i - 1]; }
         }
     }
   }

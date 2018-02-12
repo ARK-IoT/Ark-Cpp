@@ -61,6 +61,7 @@ public:
       long pub;         // base58 will have a prefix 'apub'
       long priv;        // base58Priv will have a prefix 'apriv'
     };
+
     struct network_t {
       const char* messagePrefix;
       bip32_t bip32;

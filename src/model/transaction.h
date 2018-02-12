@@ -3,6 +3,13 @@
 #ifndef transaction_h
 #define transaction_h
 
+#include "balance.h"
+#include "address.h"
+#include "publickey.h"
+
+#include <cstring>
+#include <cstdio>
+
 namespace ARK {
 
 static const auto TRANSACTION_MAX_SIZE = 600;
