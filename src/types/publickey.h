@@ -4,6 +4,8 @@
 #define PUBLICKEY_H
 #pragma once
 
+#include <cstring>
+
 /********************************************************************************
 *
 * publicKey: 
