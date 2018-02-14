@@ -3,6 +3,9 @@
 #ifndef NETWORKS_H
 #define NETWORKS_H
 
+#include "platform.h"
+#include "network.h"
+
 namespace ARK
 {
 namespace Constants

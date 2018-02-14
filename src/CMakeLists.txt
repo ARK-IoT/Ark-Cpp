@@ -41,4 +41,9 @@ add_library(Ark-Cpp STATIC
 	api/signaturable/signature_gettable.cpp
 	api/transactionable/transaction_gettable.cpp
 	api/transactionable/transaction_respondable.cpp
+	constants/networks.cpp
+	model/account.cpp
+	model/delegate.cpp
+	model/network.cpp
+	model/voter.cpp
 )

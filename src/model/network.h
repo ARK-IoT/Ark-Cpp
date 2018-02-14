@@ -3,6 +3,7 @@
 #ifndef network_h
 #define network_h
 
+#include <cstring>
 
 namespace ARK {
 

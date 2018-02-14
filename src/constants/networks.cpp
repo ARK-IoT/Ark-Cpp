@@ -57,12 +57,6 @@ const char* nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd
 
     const NetworkType type = NetworkType::MAIN;
 
-	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
-	inline const char* const randomPeer()
-	{
-		return seeds[random(0, 45)];
-	};
-
 	const ARK::Network model(
 		nethash,
 		"ARK",
@@ -84,7 +78,7 @@ const ARK::Network_ADV::network_t devnet
 	},
 	0x1E, //<-hex dec: 30,
 	0xBB	//<-hex dec: 187
-}
+};
 
 const ARK::Network_ADV::network_t main
 	{

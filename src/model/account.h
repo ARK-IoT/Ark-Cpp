@@ -40,15 +40,15 @@ namespace ARK
 struct Account
 {
 public:
-    Address address;
-    Balance unconfirmedBalance;
-    Balance balance;
-    Publickey publicKey;
-    int unconfirmedSignature;
-    int secondSignature;
-    Publickey secondPublicKey;
-    Signature multisignatures;
-    Signature u_multisignatures;
+    Address address_;
+    Balance unconfirmedBalance_;
+    Balance balance_;
+    Publickey publicKey_;
+    int unconfirmedSignature_;
+    int secondSignature_;
+    Publickey secondPublicKey_;
+    Signature multisignatures_;
+    Signature u_multisignatures_;
     
     Account(
         const char* const a, 
@@ -60,8 +60,28 @@ public:
         const char* const spk,
         const char* const ms,
         const char* const ums
-    ) : address(a), unconfirmedBalance(ub), balance(b), publicKey(pk), unconfirmedSignature(us), secondSignature(ss), secondPublicKey(spk), multisignatures(ms), u_multisignatures(ums)
+    ) : 
+		address_(a), 
+		unconfirmedBalance_(ub), 
+		balance_(b), 
+		publicKey_(pk), 
+		unconfirmedSignature_(us), 
+		secondSignature_(ss), 
+		secondPublicKey_(spk), 
+		multisignatures_(ms), 
+		u_multisignatures_(ums)
     { }
+
+	const Address& address() const noexcept { return address_; }
+	const Balance& unconfirmed_balance() const noexcept { return unconfirmedBalance_; }
+	const Balance& balance() const noexcept { return balance_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	int unconfirmed_signature() const noexcept { return unconfirmedSignature_; }
+	int second_signature() const noexcept { return secondSignature_; }
+	const Publickey& second_public_key() const noexcept { return secondPublicKey_; }
+	const Signature& multi_signatures() const noexcept { return multisignatures_; }
+	const Signature& u_multi_signatures() const noexcept { return u_multisignatures_; }
+	
 
     void description(char* const buf, size_t len);
 };
@@ -69,33 +89,5 @@ public:
 /*  ================================================  */
 
 };
-
-/*  ================================================  */
-/*  ============  */
-/*  Description  */
-void ARK::Account::Account::description(char* const buf, size_t /*len*/)
-{
-    //TODO:  check len for sufficient size  
-    strcpy(buf, "address: ");
-    strcat(buf, address.description());
-    strcat(buf, "\nunconfirmedBalance.ark: ");
-    strcat(buf, this->unconfirmedBalance.ark());
-    strcat(buf, "\nbalance.ark: ");
-    strcat(buf, this->balance.ark());
-    strcat(buf, "\npublicKey.description: ");
-    strcat(buf, this->publicKey.description());
-    strcat(buf, "\nunconfirmedSignature: ");
-    sprintf(buf + strlen(buf), "%d", this->unconfirmedSignature);
-    strcat(buf, "\nsecondSignature: ");
-    sprintf(buf + strlen(buf), "%d", this->secondSignature);
-    strcat(buf, "\nsecondPublicKey.description: ");
-    strcat(buf, this->secondPublicKey.description());
-    strcat(buf, "\nmultisignatures.description: ");
-    strcat(buf, this->multisignatures.description());
-    strcat(buf, "\nu_multisignatures.description: ");
-    strcat(buf, this->u_multisignatures.description());
-}
-/*  ============  */
-/*  ================================================  */
 
 #endif

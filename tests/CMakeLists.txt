@@ -45,13 +45,27 @@ include_directories(${CMAKE_SOURCE_DIR}/../src/utilities)
 include_directories(${CMAKE_SOURCE_DIR}/googletest/googletest/include)
 
 #target_link_libraries(Ark-Cpp-tests Ark-Cpp)
-target_link_libraries(Ark-Cpp-tests gtest gmock_main)
 
-add_executable(Ark-Cpp-tests 
+add_executable(Ark-Cpp-tests
+	model/account.cpp
+#	model/block.cpp
+#	model/currency.cpp
+#	model/delegate.cpp
+#	model/fees.cpp
+#	model/network.cpp
+#	model/peer.cpp
+#	model/signature.cpp
+#	model/transaction.cpp
+#	model/voter.cpp
 	types/address.cpp
-#	types/balance.cpp
-#	types/hash.cpp
-#	types/publickey.cpp
+	types/balance.cpp
+	types/hash.cpp
+	types/publickey.cpp
+)
+
+target_link_libraries(Ark-Cpp-tests 
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtestd.lib 
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtest_maind.lib
 )
 
 add_test(NAME test COMMAND Ark-Cpp-tests)

@@ -3,6 +3,12 @@
 #ifndef voter_h
 #define voter_h
 
+#include "address.h"
+#include "balance.h"
+#include "publickey.h"
+
+#include <cstring>
+
 namespace ARK {
     
 /*  ================================================  */
