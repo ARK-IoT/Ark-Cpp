@@ -86,8 +86,8 @@ add_executable(Ark-Cpp-tests
 )
 
 target_link_libraries(Ark-Cpp-tests 
-	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtestd.lib 
-	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtest_maind.lib
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtestd 
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtest_maind
 )
 
 add_test(NAME test COMMAND Ark-Cpp-tests)
