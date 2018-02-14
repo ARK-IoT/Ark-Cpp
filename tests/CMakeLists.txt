@@ -5,7 +5,7 @@ project(Ark-Cpp-tests)
 include(CTest)
 
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 include_directories(${PROJECT_SOURCE_DIR}/../src/)
 include_directories(${PROJECT_SOURCE_DIR}/../src/api)
