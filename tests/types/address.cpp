@@ -1,5 +1,7 @@
 #include "address.h"
 
-void construct_address() {
+#include "gtest/gtest.h"
+
+TEST(address, construct_address) {
     Address address("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 }
