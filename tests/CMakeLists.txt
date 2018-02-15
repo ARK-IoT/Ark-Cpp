@@ -88,7 +88,7 @@ add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 )
 
-find_library(LIBS NAMES Ark-Cpp-libd gtestd gtest_maind)
+find_library(ARK_LIBS NAMES Ark-Cpp-libd gtestd gtest_maind)
 
 #target_link_libraries(Ark-Cpp-tests 
 #	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/Ark-Cpp-libd.${STATIC_LIB_EXTENSION}
@@ -96,7 +96,7 @@ find_library(LIBS NAMES Ark-Cpp-libd gtestd gtest_maind)
 #	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtest_maind.${STATIC_LIB_EXTENSION}
 #)
 
-target_link_libraries(Ark-Cpp-tests ${LIBS})
+target_link_libraries(Ark-Cpp-tests ${ARK_LIBS})
 
 add_test(NAME test COMMAND Ark-Cpp-tests)
 
