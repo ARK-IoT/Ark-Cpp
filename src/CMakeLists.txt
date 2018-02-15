@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6.2)
 
-project(Ark-Cpp)
+project(Ark-Cpp-lib)
 
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -27,7 +27,7 @@ include_directories(${PROJECT_SOURCE_DIR}/utilities)
  
 #add_library(${PROJECT_NAME} SHARED ${PROJECT1_SRCS})
 
-add_library(Ark-Cpp STATIC 
+add_library(Ark-Cpp-lib STATIC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/accountable/account_respondable.cpp
 	${PROJECT_SOURCE_DIR}/api/blockable/block_gettable.cpp
@@ -44,6 +44,8 @@ add_library(Ark-Cpp STATIC
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/model/account.cpp
+	${PROJECT_SOURCE_DIR}/model/block.cpp
+	${PROJECT_SOURCE_DIR}/model/currency.cpp
 	${PROJECT_SOURCE_DIR}/model/delegate.cpp
 	${PROJECT_SOURCE_DIR}/model/network.cpp
 	${PROJECT_SOURCE_DIR}/model/voter.cpp

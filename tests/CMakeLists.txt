@@ -45,7 +45,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # and gmock_main
 add_subdirectory(
 	#"${CMAKE_BINARY_DIR}/googletest-src"
-	"${PROJECT_SOURCE_DIR}/googletest/"
+	${PROJECT_SOURCE_DIR}/googletest/
 	#"${CMAKE_BINARY_DIR}/googletest-build"
 	#"${CMAKE_SOURCE_DIR}/googletest/googletest/build"
 )
@@ -69,6 +69,8 @@ add_subdirectory(
 
 #target_link_libraries(Ark-Cpp-tests Ark-Cpp)
 
+include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
 add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/model/account.cpp
 	${PROJECT_SOURCE_DIR}/model/block.cpp
@@ -87,9 +89,9 @@ add_executable(Ark-Cpp-tests
 )
 
 target_link_libraries(Ark-Cpp-tests 
-	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Ark-Cpp
-	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtestd
-	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtest_maind
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/Ark-Cpp-libd.${STATIC_LIB_EXTENSION}
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtestd.${STATIC_LIB_EXTENSION}
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtest_maind.${STATIC_LIB_EXTENSION}
 )
 
 add_test(NAME test COMMAND Ark-Cpp-tests)
