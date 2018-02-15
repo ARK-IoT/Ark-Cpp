@@ -47,7 +47,9 @@ add_library(Ark-Cpp-lib STATIC
 	${PROJECT_SOURCE_DIR}/model/block.cpp
 	${PROJECT_SOURCE_DIR}/model/currency.cpp
 	${PROJECT_SOURCE_DIR}/model/delegate.cpp
+	${PROJECT_SOURCE_DIR}/model/fees.cpp
 	${PROJECT_SOURCE_DIR}/model/network.cpp
+	${PROJECT_SOURCE_DIR}/model/peer.cpp
 	${PROJECT_SOURCE_DIR}/model/voter.cpp
 )
 

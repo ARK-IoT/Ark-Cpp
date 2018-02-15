@@ -2,9 +2,6 @@
 
 #include "gtest/gtest.h"
 
-namespace ARK {
-	namespace Model {
-
 TEST( currency, construct_currency) {
     ARK::Model::Currency currency(
         "ARK",
@@ -17,5 +14,3 @@ TEST( currency, construct_currency) {
 	ASSERT_STREQ("Ѧ", currency.symbol());
 }
 
-}
-}

@@ -36,15 +36,15 @@ namespace ARK
 struct Delegate
 {
 public:
-	char username[1024] = { '\0' };
-	Address address;
-	Publickey publicKey;
-	Balance vote;
-	int producedblocks;
-	int missedblocks;
-	int rate;
-	double approval;
-	double productivity;
+	char username_[1024];
+	Address address_;
+	Publickey publicKey_;
+	Balance vote_;
+	int producedblocks_;
+	int missedblocks_;
+	int rate_;
+	double approval_;
+	double productivity_;
 
     Delegate(
         const char* const u, 
@@ -56,10 +56,29 @@ public:
         int r,
         double ap,
         double pr
-    ) : address(a), publicKey(p), vote(v), producedblocks(pb), missedblocks(mb), rate(r), approval(ap), productivity(pr)
+    ) : 
+		username_(), 
+		address_(a), 
+		publicKey_(p), 
+		vote_(v), 
+		producedblocks_(pb), 
+		missedblocks_(mb), 
+		rate_(r), 
+		approval_(ap), 
+		productivity_(pr)
     { 
-        strncpy(username, u, sizeof(username) / sizeof(username[0]));
+        strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
     }
+
+	const char* username() const noexcept { return username_; }
+	const Address& address() const noexcept { return address_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	const Balance& vote() const noexcept { return vote_; }
+	int produced_blocks() const noexcept { return producedblocks_; }
+	int missed_blocks() const noexcept { return missedblocks_; }
+	int rate() const noexcept { return rate_; }
+	double approval() const noexcept { return approval_; }
+	double productivity() const noexcept { return productivity_; }
 
 	void description(char* const buf, size_t size) const;
 

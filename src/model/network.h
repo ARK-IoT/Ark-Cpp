@@ -28,25 +28,31 @@ namespace ARK {
   /*  ARK::Network  */
 struct Network {
 public:
-    char nethash[65];		//TODO: review sizes
-    char token[8];
-    char symbol[4];
-    char explorer[65];
-    int version;
+    char nethash_[65];		//TODO: review sizes
+    char token_[8];
+    char symbol_[4];
+    char explorer_[65];
+    int version_;
 
-    Network() : nethash(), token(), symbol(), explorer(), version(-1) { }
+    Network() : nethash_(), token_(), symbol_(), explorer_(), version_(-1) { }
     Network(
         const char* const n, 
         const char* const t, 
         const char* const s, 
         const char* const e, 
         int v
-    ) : nethash(), token(), symbol(), explorer(), version(v) { 
-        strncpy(nethash, n, sizeof(nethash) / sizeof(nethash[0]));
-        strncpy(token, t, sizeof(token) / sizeof(token[0]));
-        strncpy(symbol, s, sizeof(symbol) / sizeof(symbol[0]));
-        strncpy(explorer, e, sizeof(explorer) / sizeof(explorer[0]));
+    ) : nethash_(), token_(), symbol_(), explorer_(), version_(v) { 
+        strncpy(nethash_, n, sizeof(nethash_) / sizeof(nethash_[0]));
+        strncpy(token_, t, sizeof(token_) / sizeof(token_[0]));
+        strncpy(symbol_, s, sizeof(symbol_) / sizeof(symbol_[0]));
+        strncpy(explorer_, e, sizeof(explorer_) / sizeof(explorer_[0]));
     }
+
+	const char* nethash() const noexcept { return nethash_; }
+	const char* token() const noexcept { return token_; }
+	const char* symbol() const noexcept { return symbol_; }
+	const char* explorer() const noexcept { return explorer_; }
+	int version() const noexcept { return version_; }
 
     void description(char* const buf, size_t size) const;
 
