@@ -48,8 +48,8 @@ include_directories(${CMAKE_SOURCE_DIR}/googletest/googletest/include)
 
 add_executable(Ark-Cpp-tests
 	model/account.cpp
-#	model/block.cpp
-#	model/currency.cpp
+	model/block.cpp
+	model/currency.cpp
 #	model/delegate.cpp
 #	model/fees.cpp
 #	model/network.cpp
@@ -64,6 +64,7 @@ add_executable(Ark-Cpp-tests
 )
 
 target_link_libraries(Ark-Cpp-tests 
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Ark-Cpp.lib
 	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtestd.lib 
 	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/gtest_maind.lib
 )

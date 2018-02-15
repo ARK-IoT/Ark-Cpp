@@ -43,6 +43,8 @@ add_library(Ark-Cpp STATIC
 	api/transactionable/transaction_respondable.cpp
 	constants/networks.cpp
 	model/account.cpp
+	model/block.cpp
+	model/currency.cpp
 	model/delegate.cpp
 	model/network.cpp
 	model/voter.cpp
