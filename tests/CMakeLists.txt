@@ -88,7 +88,7 @@ add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 )
 
-find_library(LIBS Ark-Cpp-libd gtestd gtest_maind)
+find_library(LIBS NAMES Ark-Cpp-libd gtestd gtest_maind)
 
 #target_link_libraries(Ark-Cpp-tests 
 #	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/Ark-Cpp-libd.${STATIC_LIB_EXTENSION}
