@@ -30,76 +30,43 @@ namespace ARK
 *
 ********************************************************************************/
 
-/*  ================================================  */
-/*  ==========  */
-/*  ARK::Block  */
+/*************************************************
+*   ARK::Block 
+*
+**************************************************/
 struct Block
 {
 private:
     static const auto MAX_UINT128_CHARS = 40;
 
 public:
-	char id[MAX_UINT128_CHARS];
+    const char* id;
 	int version;
-	char timestamp[MAX_UINT128_CHARS];
-	char height[64];
-	char previousBlock[MAX_UINT128_CHARS];
-	char numberOfTransactions[64];
+    const char* timestamp;
+	const char* height;
+	const char* previousBlock;
+	const char* numberOfTransactions;
 	Balance totalAmount;
 	Balance totalFee;
 	Balance reward;
-	char payloadLength[64];
+	const char* payloadLength;
 	Hash payloadHash;
 	Publickey generatorPublicKey;
 	Address generatorId;
 	Signature blockSignature;
-	char confirmations[64];
+	const char* confirmations;
 	Balance totalForged;
 
-    Block(
-        const char* const _id,
-        int v,
-        const char* const t,
-        const char* const h,
-        const char* const pb,
-        const char* const nt,
-        const char* const ta,
-        const char* const tf,
-        const char* const r,
-        const char* const pl,
-        const char* const ph,
-        const char* const gpk,
-        const char* const gid,
-        const char* const bs,
-        const char* const c,
-        const char* const tfg
-    ) : id(), version(v), timestamp(), height(), previousBlock(), numberOfTransactions(), totalAmount(ta), totalFee(tf), reward(r), payloadLength(), payloadHash(ph), generatorPublicKey(gpk), generatorId(gid), blockSignature(bs), confirmations(), totalForged(tfg)
-    { 
-        strncpy(id, _id, sizeof(id) / sizeof(id[0]));
-        strncpy(timestamp, t, sizeof(timestamp) / sizeof(timestamp[0]));
-        strncpy(height, h, sizeof(height) / sizeof(height[0]));
-        strncpy(previousBlock, pb, sizeof(previousBlock) / sizeof(previousBlock[0]));
-        strncpy(numberOfTransactions, nt, sizeof(numberOfTransactions) / sizeof(numberOfTransactions[0]));
-        strncpy(payloadLength, pl, sizeof(payloadLength) / sizeof(payloadLength[0]));
-        strncpy(confirmations, c, sizeof(confirmations) / sizeof(confirmations[0]));
-    }
-
-	void description(char* const buf, size_t size);
+	void printTo(HardwareSerial &serial);
 };
-/*  ==========  */
-/*  ================================================  */
+/*************************************************/
 
 };
 
 
-/**********************************
-blockEpoch: 
-2017-03-21T13:00:00.000Z
-***********************************/
 
-
-/*  ================================================  */
-/*  ===========  */
+/*************************************************/
+/*************************************************/
 /*  ARK::Blocks  */
 // struct Blocks
 // {
@@ -111,50 +78,52 @@ blockEpoch:
 // };
 // /*  ===========  */
 // };
-/*  ================================================  */
+/*************************************************/
+/*************************************************/
 
 
-/*  ================================================  */
-/*  ===========  */
-/*  Description  */
-void ARK::Block::Block::description(char* const buf, size_t /*size*/)
+/*************************************************
+*   ARK::Block::printTo(Serial)
+*
+**************************************************/
+void ARK::Block::Block::printTo(HardwareSerial &serial)
 {
-    //TODO:  check len for sufficient size  
-    strcpy(buf, "id: ");
-    strcat(buf, this->id);
-    strcat(buf, "\nversion: ");
-    sprintf(buf + strlen(buf), "%d", this->version);
-    strcat(buf, "\ntimestamp: ");
-    strcat(buf, this->timestamp);
-    strcat(buf, "\nheight: ");
-	strcat(buf, this->height);
-    strcat(buf, "\npreviousBlock: ");
-    strcat(buf, this->previousBlock);
-    strcat(buf, "\nnumberOfTransactions: ");
-	strcat(buf, this->numberOfTransactions);
-    strcat(buf, "\ntotalAmount.ark: ");
-    strcat(buf, this->totalAmount.ark());
-    strcat(buf, "\ntotalFee.ark: ");
-    strcat(buf, this->totalFee.ark());
-    strcat(buf, "\nreward.ark: ");
-    strcat(buf, this->reward.ark());
-    strcat(buf, "\npayloadLength: ");
-    strcat(buf, this->payloadLength);
-    strcat(buf, "\npayloadHash.description: ");
-    strcat(buf, this->payloadHash.description());
-    strcat(buf, "\ngeneratorPublicKey.description: ");
-    strcat(buf, this->generatorPublicKey.description());
-    strcat(buf, "\ngeneratorId.description: ");
-    strcat(buf, this->generatorId.description());
-    strcat(buf, "\nblockSignature.description: ");
-    strcat(buf, this->blockSignature.description());
-    strcat(buf, "\nconfirmations: ");
-    strcat(buf, this->confirmations);
-    strcat(buf, "\ntotalForged.ark: ");
-    strcat(buf, this->totalForged.ark());
+    serial.print("id: ");
+    serial.print(this->id);
+    serial.print("\nversion: ");
+    serial.print(this->version);
+    serial.print("\ntimestamp: ");
+    serial.print(this->timestamp);
+    serial.print("\nheight: ");
+	serial.print(this->height);
+    serial.print("\npreviousBlock: ");
+    serial.print(this->previousBlock);
+    serial.print("\nnumberOfTransactions: ");
+	serial.print(this->numberOfTransactions);
+    serial.print("\ntotalAmount: ");
+    serial.print(this->totalAmount.ark());
+    serial.print("\ntotalFee: ");
+    serial.print(this->totalFee.ark());
+    serial.print("\nreward: ");
+    serial.print(this->reward.ark());
+    serial.print("\npayloadLength: ");
+    serial.print(this->payloadLength);
+    serial.print("\npayloadHash: ");
+    serial.print(this->payloadHash.value);
+    serial.print("\ngeneratorPublicKey: ");
+    serial.print(this->generatorPublicKey.value);
+    serial.print("\ngeneratorId: ");
+    serial.print(this->generatorId.value);
+    serial.print("\nblockSignature: ");
+    serial.print(this->blockSignature.value);
+    serial.print("\nconfirmations: ");
+    serial.print(this->confirmations);
+    serial.print("\ntotalForged: ");
+    serial.print(this->totalForged.ark());
+    serial.println();
+    serial.flush();
 }
-/*  ==========  */
-/*  ================================================  */
+/*************************************************/
 
 
 #endif

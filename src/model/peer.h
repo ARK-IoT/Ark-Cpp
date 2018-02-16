@@ -3,71 +3,60 @@
 #ifndef peer_h
 #define peer_h
 
-namespace ARK {
-
-/*  ================================================  */
-	/*  =========  */
-	/*  ARK::Peer  */
+namespace ARK
+{
+	/*************************************************
+	*   ARK::Peer
+	**************************************************/
 	struct Peer {
 		public:
-			char ip[40];
+			const char* ip;
 			int port;
-			char version[64]; //TODO:  review array sizes
+			const char* version;
 			int errors;
-			char os[64];
-			char height[64];
-			char status[64];
+			const char* os;
+			const char* height;
+			const char* status;
 			int delay;
 
-            Peer(
-                const char* const i,
-                int p,
-                const char* const v,
-                int e,
-                const char* const o,
-                const char* const h,
-                const char* const s,
-                int d
-            ) : ip(), port(p), version(), errors(e), os(), height(), status(), delay(d) {
-                strncpy(ip, i, sizeof(ip) / sizeof(ip[0]));
-                strncpy(version, v, sizeof(version) / sizeof(version[0]));
-                strncpy(os, o, sizeof(os) / sizeof(os[0]));
-                strncpy(height, h, sizeof(height) / sizeof(height[0]));
-                strncpy(status, s, sizeof(status) / sizeof(status[0]));
-            }
-
-			void description(char* const buf, size_t size);
+			void printTo(HardwareSerial &serial);
 	};
-	/*  =========  */
-/*  ================================================  */
+	/*************************************************/
 
 };
 
-/*  ================================================  */
-/*  =========  */
-/*  Description  */
-void ARK::Peer::Peer::description(char* const buf, size_t /*size*/) {
-    strcpy(buf, "ip: ");
-    strcat(buf, this->ip);
-    strcat(buf, "\nport: ");
-    auto len = strlen(buf);
-    sprintf(buf + len, "%d", this->port);
-    strcat(buf, "\nversion: ");
-    strcat(buf, this->version);
-    strcat(buf, "\nerrors: ");
-    len = strlen(buf);
-    sprintf(buf + len, "%d", this->errors);
-    strcat(buf, "\nos: ");
-    strcat(buf, this->os);
-    strcat(buf, "\nheight: ");
-    strcat(buf, this->height);
-    strcat(buf, "\nstatus: ");
-    strcat(buf, this->status);
-    strcat(buf, "\ndelay: ");
-    len = strlen(buf);
-    sprintf(buf + len, "%d", this->delay);
+
+/*************************************************
+*	ARK::Peer
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints Peer Model information to Serial
+*
+**************************************************/
+void ARK::Peer::printTo(HardwareSerial &serial)
+{
+	serial.print("\nip: ");
+	serial.print(this->ip);
+	serial.print("\nport: ");
+	serial.print(this->port);
+	serial.print("\nversion: ");
+	serial.print(this->version);
+	serial.print("\nerrors: ");
+	serial.print(this->errors);
+	serial.print("\nos: ");
+	serial.print(this->os);
+	serial.print("\nheight: ");
+	serial.print(this->height);
+	serial.print("\nstatus: ");
+	serial.print(this->status);
+	serial.print("\ndelay: ");
+	serial.print(this->delay);
+	serial.print("\n");
+	serial.flush();
 }
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
+
 
 #endif

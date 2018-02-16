@@ -4,12 +4,14 @@
 #define network_h
 
 
-namespace ARK {
+namespace ARK
+{
 
-/*  ================================================  */
-/*  ARK::NetworkType  */
+	/*************************************************
+	*   ARK::NetworkType
+	**************************************************/
   enum NetworkType { INVALID = -1, DEV = 0, MAIN = 1, CUSTOM = 2 };
-/*  ================================================  */
+	/*************************************************/
 
 /********************************************************************************
 *
@@ -22,40 +24,33 @@ namespace ARK {
 *
 ********************************************************************************/
 
-/*  ================================================  */
-  /*  ============  */
-  /*  ARK::Network  */
-struct Network {
-public:
-    char nethash[65];		//TODO: review sizes
-    char token[8];
-    char symbol[4];
-    char explorer[65];
-    int version;
 
-    Network() : nethash(), token(), symbol(), explorer(), version(-1) { }
-    Network(
-        const char* const n, 
-        const char* const t, 
-        const char* const s, 
-        const char* const e, 
-        int v
-    ) : nethash(), token(), symbol(), explorer(), version(v) { 
-        strncpy(nethash, n, sizeof(nethash) / sizeof(nethash[0]));
-        strncpy(token, t, sizeof(token) / sizeof(token[0]));
-        strncpy(symbol, s, sizeof(symbol) / sizeof(symbol[0]));
-        strncpy(explorer, e, sizeof(explorer) / sizeof(explorer[0]));
-    }
+	/*************************************************
+	*   ARK::Network
+	**************************************************/
+	struct Network {
+		public:
+			const char* nethash;
+			const char* token;
+			const char* symbol;
+			const char* explorer;
+			int version;
 
-    void description(char* const buf, size_t size) const;
+			bool operator==(const Network& rhs) const;
+			bool operator!=(const Network& rhs) const;
 
-    bool operator==(const Network& rhs) const;
-    bool operator!=(const Network& rhs) const;
-};
-  /*  ============  */
-  /*  ================================================  */
-  /*  ================  */
-  /*  ARK::Network_ADV  */
+			void printTo(HardwareSerial &serial);
+
+	};
+	/*************************************************/
+
+
+	/**************************************************************************************************/
+
+
+	/*************************************************
+	*	ARK::Network_ADV
+	**************************************************/
   namespace Network_ADV {
     struct bip32_t {
       long pub;         // base58 will have a prefix 'apub'
@@ -68,43 +63,70 @@ public:
       long wif;         // Network prefix for wif generation
     };
   };
-/*  ================  */
+	/*************************************************/
 
 };
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::Delegate  */
-/*  Description  */
-void ARK::Network::Network::description(char* const buf, size_t /*size*/) const {
-	strcpy(buf, "nethash: ");
-	strcat(buf, this->nethash);
-	strcat(buf, "\ntoken: ");
-	strcat(buf, this->token);
-	strcat(buf, "\nsymbol: ");
-	strcat(buf, this->symbol);
-	strcat(buf, "\nexplorer: ");
-	strcat(buf, this->explorer);
-	strcat(buf, "\nversion: ");
-    const auto len = strlen(buf);
-	sprintf(buf + len, "%d", this->version);
-};
-/*  =====  */
-/*  Operator  */
-/*  ARK::Network == ARK::Network  */
+
+/*************************************************
+*	ARK::Network
+*
+*   @operator:	ARK::Network::Network::operator==
+*
+*   @description:
+*     Comparison of two Network Models for equality.
+*
+**************************************************/
 bool ARK::Network::Network::operator==(const Network& rhs) const {
-  return (strcmp(this->nethash, rhs.nethash) == 0
-      && strcmp(this->token, rhs.token) == 0
-      && strcmp(this->symbol, rhs.symbol) == 0
-      && strcmp(this->explorer, rhs.explorer) == 0
-      && this->version == rhs.version);
+  return (
+		strcmp(this->nethash, rhs.nethash) == 0
+		&& strcmp(this->token, rhs.token) == 0
+		&& strcmp(this->symbol, rhs.symbol) == 0
+		&& strcmp(this->explorer, rhs.explorer) == 0
+		&& this->version == rhs.version
+	);
 };
-/*  =====  */
-/*  Operator  */
-/*  ARK::Network != ARK::Network  */
+/*************************************************/
+
+
+/*************************************************
+*	ARK::Network
+*
+*   @operator:	ARK::Network::Network::operator!=
+*
+*   @description:
+*     Comparison of two Network Models for inequality.
+*
+**************************************************/
 bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(*this == rhs); };
-/*  ============  */
-/*  ================================================  */
+/*************************************************/
+
+
+/*************************************************
+*	ARK::Network
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints Network Model information to Serial
+*
+**************************************************/
+void ARK::Network::printTo(HardwareSerial &serial)
+{
+	serial.print("\nnethash: ");
+	serial.print(this->nethash);
+	serial.print("\ntoken: ");
+	serial.print(this->token);
+	serial.print("\nsymbol: ");
+	serial.print(this->symbol);
+	serial.print("\nexplorer: ");
+	serial.print(this->explorer);
+	serial.print("\nversion: ");
+  serial.print(this->version);
+  serial.print("\n");
+  serial.flush();
+};
+/*************************************************/
 
 
 #endif

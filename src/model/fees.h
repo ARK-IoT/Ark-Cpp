@@ -6,52 +6,45 @@
 namespace ARK
 {
 
-/*  ================================================  */
-/*  =========  */
-/*  ARK::Fees  */
-/*  /api/blocks/getFees */
+/*************************************************
+* ARK::Fees
+*   /api/blocks/getFees
+**************************************************/
 struct Fees
 {
-    Balance send;
-    Balance vote;
-    Balance delegate;
-    Balance secondsignature;
-    Balance multisignature;
+    const Balance send;
+    const Balance vote;
+    const Balance delegate;
+    const Balance secondsignature;
+    const Balance multisignature;
 
-    Fees(
-        const char* const s,
-        const char* const v,
-        const char* const d,
-        const char* const ss,
-        const char* const ms
-    ) : send(s), vote(v), delegate(d), secondsignature(ss), multisignature(ms) { }
-
-    void description(char* const buf, size_t size);
+    void printTo(HardwareSerial &serial);
 };
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
 
 };
 
-/*  ================================================  */
-/*  =========  */
-/*  ARK::Fees  */
-/*  Description  */
-void ARK::Fees::Fees::description(char* const buf, size_t /*size*/)
+
+/*************************************************
+* ARK::Fees
+*   printTo(Serial)
+**************************************************/
+void ARK::Fees::printTo(HardwareSerial &serial)
 {
-    //TODO:  check len for sufficient size  
-    strcpy(buf, "send.ark: ");
-    strcat(buf, this->send.ark());
-    strcat(buf, "\nvote.ark: ");
-    strcat(buf, this->vote.ark());
-    strcat(buf, "\ndelegate.ark: ");
-    strcat(buf, this->delegate.ark());
-    strcat(buf, "\nsecondsignature.ark: ");
-    strcat(buf, this->secondsignature.ark());
-    strcat(buf, "\nmultisignature.ark: ");
-    strcat(buf, this->multisignature.ark());
+    serial.print("\nsend: ");
+    serial.print(this->send.ark());
+    serial.print("\nvote: ");
+    serial.print(this->vote.ark());
+    serial.print("\ndelegate: ");
+    serial.print(this->delegate.ark());
+    serial.print("\nsecondsignature: ");
+    serial.print(this->secondsignature.ark());
+    serial.print("\nmultisignature: ");
+    serial.print(this->multisignature.ark());
+    serial.print("\n");
+    serial.flush();
 }
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
+
 
 #endif

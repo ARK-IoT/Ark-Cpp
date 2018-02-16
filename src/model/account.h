@@ -26,11 +26,12 @@
 namespace ARK
 {
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::Account  */
+/*************************************************
+*   ARK::Account
+**************************************************/
 struct Account
 {
+
 public:
     Address address;
     Balance unconfirmedBalance;
@@ -41,53 +42,40 @@ public:
     Publickey secondPublicKey;
     Signature multisignatures;
     Signature u_multisignatures;
-    
-    Account(
-        const char* const a, 
-        const char* const ub,
-        const char* const b,
-        const char* const pk,
-        int us,
-        int ss,
-        const char* const spk,
-        const char* const ms,
-        const char* const ums
-    ) : address(a), unconfirmedBalance(ub), balance(b), publicKey(pk), unconfirmedSignature(us), secondSignature(ss), secondPublicKey(spk), multisignatures(ms), u_multisignatures(ums)
-    { }
 
-    void description(char* const buf, size_t len);
+    void printTo(HardwareSerial &serial);
 };
-/*  ============  */
-/*  ================================================  */
+/*************************************************/
+
 
 };
 
-/*  ================================================  */
-/*  ============  */
-/*  Description  */
-void ARK::Account::Account::description(char* const buf, size_t /*len*/)
+/*************************************************
+*   printTo(Serial)
+**************************************************/
+void ARK::Account::Account::printTo(HardwareSerial &serial)
 {
-    //TODO:  check len for sufficient size  
-    strcpy(buf, "address: ");
-    strcat(buf, address.description());
-    strcat(buf, "\nunconfirmedBalance.ark: ");
-    strcat(buf, this->unconfirmedBalance.ark());
-    strcat(buf, "\nbalance.ark: ");
-    strcat(buf, this->balance.ark());
-    strcat(buf, "\npublicKey.description: ");
-    strcat(buf, this->publicKey.description());
-    strcat(buf, "\nunconfirmedSignature: ");
-    sprintf(buf + strlen(buf), "%d", this->unconfirmedSignature);
-    strcat(buf, "\nsecondSignature: ");
-    sprintf(buf + strlen(buf), "%d", this->secondSignature);
-    strcat(buf, "\nsecondPublicKey.description: ");
-    strcat(buf, this->secondPublicKey.description());
-    strcat(buf, "\nmultisignatures.description: ");
-    strcat(buf, this->multisignatures.description());
-    strcat(buf, "\nu_multisignatures.description: ");
-    strcat(buf, this->u_multisignatures.description());
+    serial.print("address.value: ");
+    serial.print(address.value);
+    serial.print("\nunconfirmedBalance.ark: ");
+    serial.print(this->unconfirmedBalance.ark());
+    serial.print("\nbalance.ark: ");
+    serial.print(this->balance.ark());
+    serial.print("\npublicKey.value: ");
+    serial.print(this->publicKey.value);
+    serial.print("\nunconfirmedSignature: ");
+    serial.print(this->unconfirmedSignature);
+    serial.print("\nsecondSignature: ");
+    serial.print(this->secondSignature);
+    serial.print("\nsecondPublicKey.value: ");
+    serial.print(this->secondPublicKey.value);
+    serial.print("\nmultisignatures.value: ");
+    serial.print(this->multisignatures.value);
+    serial.print("\nu_multisignatures.value: ");
+    serial.print(this->u_multisignatures.value);
+    serial.println();
+    serial.flush();
 }
-/*  ============  */
-/*  ================================================  */
+/*************************************************/
 
 #endif

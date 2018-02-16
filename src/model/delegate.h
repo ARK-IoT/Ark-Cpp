@@ -23,72 +23,56 @@
 namespace ARK
 {
 	
-/*  ================================================  */
-/*  =============  */
-/*  ARK::Delegate  */
+/*************************************************
+*   ARK::Delegate
+**************************************************/
 struct Delegate
 {
 public:
-	char username[1024] = { '\0' };
+	const char* username;
 	Address address;
 	Publickey publicKey;
-	Balance vote;
+	const Balance vote;
 	int producedblocks;
 	int missedblocks;
 	int rate;
 	double approval;
 	double productivity;
 
-    Delegate(
-        const char* const u, 
-        const char* const a, 
-        const char* const p, 
-        const char* const v,
-        int pb,
-        int mb,
-        int r,
-        double ap,
-        double pr
-    ) : address(a), publicKey(p), vote(v), producedblocks(pb), missedblocks(mb), rate(r), approval(ap), productivity(pr)
-    { 
-        strncpy(username, u, sizeof(username) / sizeof(username[0]));
-    }
-
-	void description(char* const buf, size_t size) const;
+	void printTo(HardwareSerial &serial);
 
 };
-/*  =============  */
-/*  ================================================  */
+/*************************************************/
 
 }
 
-/*  ================================================  */
-/*  =====  */
-/*  Description  */
-void ARK::Delegate::Delegate::description(char* const buf, size_t /*size*/) const
+/*************************************************
+*   printTo(Serial)
+**************************************************/
+void ARK::Delegate::printTo(HardwareSerial &serial)
 {
-    //TODO:  check len for sufficient size  
-    strcpy(buf, "username: ");
-    strcat(buf, this->username);
-    strcat(buf, "\naddress.description: ");
-    strcat(buf, this->address.description());
-    strcat(buf, "\npublicKey.description: ");
-    strcat(buf, this->publicKey.description());
-    strcat(buf, "\nvote.ark: ");
-    strcat(buf, this->vote.ark());
-    strcat(buf, "\nproducedblocks: ");
-    sprintf(buf + strlen(buf), "%d", this->producedblocks);
-    strcat(buf, "\nmissedblocks: ");
-    sprintf(buf + strlen(buf), "%d", this->missedblocks);
-    strcat(buf, "\nrate: ");
-    sprintf(buf + strlen(buf), "%d", this->rate);
-    strcat(buf, "\napproval: ");
-    sprintf(buf + strlen(buf), "%f", this->approval);
-    strcat(buf, "%\nproductivity: ");
-    sprintf(buf + strlen(buf), "%f", this->productivity);
-    strcat(buf, "%");
+    serial.print("username: ");
+    serial.print(this->username);
+    serial.print("\naddress: ");
+    serial.print(this->address.value);
+    serial.print("\npublicKey: ");
+    serial.print(this->publicKey.value);
+    serial.print("\nvote: ");
+    serial.print(this->vote.ark());
+    serial.print("\nproducedblocks: ");
+    serial.print(this->producedblocks);
+    serial.print("\nmissedblocks: ");
+    serial.print(this->missedblocks);
+    serial.print("\nrate: ");
+    serial.print(this->rate);
+    serial.print("\napproval: ");
+    serial.print(this->approval);
+    serial.print("%\nproductivity: ");
+    serial.print(this->productivity);
+    serial.print("%\n");
+    serial.flush();
 }
-/*  =====  */
-/*  ================================================  */
+/*************************************************/
+
 
 #endif
