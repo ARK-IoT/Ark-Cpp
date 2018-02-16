@@ -7,7 +7,7 @@
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
 ![version](https://img.shields.io/badge/version-v0.4-orange.svg?style=flat)
-![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
+[![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=feature%2Fcmake)](https://travis-ci.org/ciband/Ark-Cpp)
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
 Not production ready.  
