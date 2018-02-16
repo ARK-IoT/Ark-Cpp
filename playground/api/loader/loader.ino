@@ -9,63 +9,79 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * block: 
 ********************************************************************************/
+/*************************************************/
+//  #ifdef DEBUG_ESP_PORT
+//  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+//  #else
+//  #define DEBUG_MSG(...)
+//  #endif
+/*************************************************/
 
 
-void checkAPI() {
-/*  ==================================  */
+void checkAPI()
+{
+  /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager _arkManager(devnet);
-/*  ==================================  */
+  ARK::API::Manager arkManager(devnet);
+  /*************************************************/
 
-/*  ==================================  */
-    char buf[512] = {};
-    _arkManager.loaderStatus().description(buf, sizeof(buf));
-    Serial.println("loaderStatusDescription: ");
-    Serial.println(buf);
+  /*************************************************/
+	auto loaderStatus = arkManager.loaderStatus();
+    Serial.println("loaderStatus: ");
+	loaderStatus.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-    _arkManager.loaderSync().description(buf, sizeof(buf));
-    Serial.println("loaderSyncDescription: ");
-    Serial.println(buf);
-    Serial.println("\n=====\n");
+  /*************************************************/
+	auto loaderSync = arkManager.loaderSync();
+    Serial.println("loaderSync: ");
+	loaderSync.printTo(Serial);
+		Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-    _arkManager.loaderAutoconfigure().description(buf, sizeof(buf));
-    Serial.println("loaderAutoconfigureDescription: ");
-    Serial.println(buf);
+  /*************************************************/
+	auto autoconfigure = arkManager.loaderAutoconfigure();
+    Serial.println("autoconfigure: ");
+  autoconfigure.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50); 
-/*  ==================================  */
+  /*************************************************/
 }
+/*************************************************/
 
 
-/*  ==========================================================================  */
+/*************************************************/
 extern "C" {
 #include "user_interface.h"
 }
-void reportFreeHeap() {
+void reportFreeHeap()
+{
   Serial.print("\n\nsystem_get_free_heap_size: ");
   Serial.print(system_get_free_heap_size());
   Serial.println("\n\n");
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
-void check() {
+/*************************************************/
+void check()
+{
   checkAPI();
     reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
+/*************************************************/
 
-void setup() {
+
+/*************************************************/
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-
+  reportFreeHeap();
+    
+  WiFi.mode(WIFI_STA);
 	WiFi.begin(ssid, password);
 	while (WiFi.status() != WL_CONNECTED)
 	{
@@ -80,3 +96,4 @@ void setup() {
 }
 
 void loop() {}
+/*************************************************/

@@ -9,137 +9,144 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * block: 
 ********************************************************************************/
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
-
-void checkAPI() {
-/*  ==================================  */
+void checkAPI()
+{
+  /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager _arkManager(devnet);
-/*  ==================================  */
+  ARK::API::Manager arkManager(devnet);
+  /*************************************************/
 
-/*  ==================================  */
-    char buf[512] = {};
-    _arkManager.block("4367122150875693402").description(buf, sizeof(buf));
-    Serial.println("blockDescription: ");
-    Serial.println(buf);
+Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+
+  /*************************************************/
+  const int delegatesCount = arkManager.delegatesCount();
+    Serial.println("delegatesCount: ");
+    Serial.println(delegatesCount);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-/* needs stream->string size fix for large callbacks */
-//  String blocks = _arkManager.blocks();
-//    Serial.println(blocks);
-//    Serial.println();
+  /*************************************************/
+  auto delegateSearch = arkManager.delegateSearch("sleepdeficit");
+    Serial.println("delegateSearch: ");
+  delegateSearch.printTo(Serial);
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  auto delegateVoters = arkManager.delegateVoters(darkPubkey);
+    Serial.println("delegateVoters: ");
+  delegateVoters.printTo(Serial);
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  ARK::Delegate delegateByUsername = arkManager.delegate("sleepdeficit");
+    Serial.println("delegateByUsername: ");
+  delegateByUsername.printTo(Serial);
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  ARK::Delegate delegateByPublickey = arkManager.delegate(darkPubkey);
+    Serial.println("delegateByPublickey: ");
+  delegateByPublickey.printTo(Serial);
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  /*************************************************/
+/*    BROKEN: fix for large callbacks    */
+/*  Delegates callback is ~13,564 bytes  */
+//  String delegates = _arkManager.getDelegates();
+//    Serial.println("delegates: ");
+//    Serial.println(delegates);
+//    Serial.println("\n=====\n");
 //    delay(50);
-/*  ==================================  */
+  /*************************************************/
+  /*************************************************/
 
-/*  ==================================  */
-  const auto blockEpoch = _arkManager.blockEpoch();
-    Serial.println("blockEpoch: ");
-    Serial.println(blockEpoch);
+  /*************************************************/
+	Balance delegateFee = arkManager.delegateFee();
+    Serial.println("delegateFee: ");
+    Serial.println(delegateFee.ark());
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-    _arkManager.blockHeight().description(buf, sizeof(buf)); 
-    Serial.println("blockHeightDescription: ");
-    Serial.println(buf);
+  /*************************************************/
+  auto delegateForgedByAccount = arkManager.delegateForgedByAccount(darkPubkey);
+    Serial.println("delegateForgedByAccount: ");
+  delegateForgedByAccount.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  const auto blockNethashDescription = _arkManager.blockNethash().description();
-    Serial.println("blockNethashDescription: ");
-    Serial.println(blockNethashDescription);
+  /*************************************************/
+  auto delegateNextForgers = arkManager.delegateNextForgers();
+    Serial.println("delegateNextForgers: ");
+  delegateNextForgers.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-  const auto blockFeeArk = _arkManager.blockFee().ark();
-    Serial.println("blockFeeArk: ");
-    Serial.println(blockFeeArk);
-    Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-    _arkManager.blockFees().description(buf, sizeof(buf));
-    Serial.println("blockFeesDescription: ");
-    Serial.println(buf);
-    Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-    const auto blockMilestone = _arkManager.blockMilestone();
-    Serial.println("blockMilestone: ");
-    Serial.println(blockMilestone);
-    Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-    const auto blockRewardArk = _arkManager.blockReward().ark();
-    Serial.println("blockRewardArk: ");
-    Serial.println(blockRewardArk);
-    Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-    const auto blockSupplyArk = _arkManager.blockSupply().ark();
-    Serial.println("blockSupplyArk: ");
-    Serial.println(blockSupplyArk);
-    Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-    _arkManager.blockStatus().description(buf, sizeof(buf));
-    Serial.println("blockStatusDescription: ");
-    Serial.println(buf);
-    delay(50);
-/*  ==================================  */  
+  /*************************************************/
 }
+/*************************************************/
 
 
-/*  ==========================================================================  */
+/*************************************************/
 extern "C" {
 #include "user_interface.h"
 }
-void reportFreeHeap() {
+void reportFreeHeap()
+{
   Serial.print("\n\nsystem_get_free_heap_size: ");
   Serial.print(system_get_free_heap_size());
   Serial.println("\n\n");
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
-void check() {
+/*************************************************/
+void check()
+{
   checkAPI();
     reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
+/*************************************************/
 
-void setup() {
+
+/*************************************************/
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
+  reportFreeHeap();
 
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-      delay(500);
-      Serial.print(".");
-    }
-    Serial.println();
-  
-    Serial.print("Connected, IP address: ");
-    Serial.println(WiFi.localIP());
+  WiFi.mode(WIFI_STA);
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 
 void loop() {}
+/*************************************************/

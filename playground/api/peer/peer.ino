@@ -10,25 +10,32 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * block: 
 ********************************************************************************/
+/*************************************************/
+//  #ifdef DEBUG_ESP_PORT
+//  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+//  #else
+//  #define DEBUG_MSG(...)
+//  #endif
+/*************************************************/
 
 
-void checkAPI() {
-/*  ==================================  */
+void checkAPI()
+{
+  /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
-  ARK::API::Manager _arkManager(devnet);
-/*  ==================================  */
+  ARK::API::Manager arkManager(devnet);
+  /*************************************************/
 
-/*  ==================================  */
-	char buf[512] = {};
-	_arkManager.peer("167.114.29.55", 4002).description(buf, sizeof(buf));
+  /*************************************************/
+  auto peer = arkManager.peer("167.114.29.55", 4002);
     Serial.println("peerDescription: ");
-    Serial.println(buf);
+  peer.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-/*  ==================================  */
+  /*************************************************/
+  /*************************************************/
 /*    BROKEN: fix for large callbacks  */
 /*    Peers callback is ~10,000 bytes  */
 //  String peersDescription = _arkManager.peers().description();
@@ -36,51 +43,60 @@ void checkAPI() {
 //    Serial.println(peersDescription);
 //    Serial.println("\n=====\n");
 //    delay(50);
-/*  ==================================  */
-/*  ==================================  */
+  /*************************************************/
+  /*************************************************/
 
-/*  ==================================  */
-	_arkManager.peerVersion().description(buf, sizeof(buf));
+  /*************************************************/
+  auto peerVersion = arkManager.peerVersion();
     Serial.println("peerVersionDescription: ");
-    Serial.println(buf);
+  peerVersion.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 }
 
 
-/*  ==========================================================================  */
+/*************************************************/
 extern "C" {
 #include "user_interface.h"
 }
-void reportFreeHeap() {
+void reportFreeHeap()
+{
   Serial.print("\n\nsystem_get_free_heap_size: ");
   Serial.print(system_get_free_heap_size());
   Serial.println("\n\n");
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/*************************************************/
 void check() {
   checkAPI();
     reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
+/*************************************************/
 
-void setup() {
+
+/*************************************************/
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-	WiFi.begin(ssid, password);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(500);
-		Serial.print(".");
-	}
-	Serial.println();
+  reportFreeHeap();
 
-	Serial.print("Connected, IP address: ");
-	Serial.println(WiFi.localIP());
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
   check();
 }
 
 void loop() {}
+/*************************************************/
