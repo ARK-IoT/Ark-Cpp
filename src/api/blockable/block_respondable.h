@@ -12,109 +12,126 @@ namespace Block
 namespace Respondable
 {
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Status  */
-struct Status
+	/*************************************************
+	*	ARK::API::Block::Respondable::Height 
+	*
+	*   @variables:
+	*			const char* height
+	*			const char* id
+	*
+	*   @methods:	printTo(HardwareSerial &serial)
+	*
+	*   @description:
+	*			Model for Height API Response
+	*
+	**************************************************/
+	struct Height
+	{
+		public:
+			const char* height; 
+			const char* id;
+
+			void printTo(HardwareSerial &serial);
+	};
+	/*************************************************/
+
+
+	/**************************************************************************************************/
+
+
+	/*************************************************
+	*	ARK::API::Block::Respondable::Status 
+	*
+	*		@variables:
+	*			const char* epoch;
+	*			const char* height;
+	*			const Balance fee;
+	*			int milestone;
+	*			Hash nethash;
+	*			const Balance reward;
+	*			const Balance supply;
+	*
+	*   @methods:	printTo(HardwareSerial &serial)
+	*
+	*   @description:
+	*			Model for Block Status API Response
+	*
+	**************************************************/
+	struct Status
+	{
+		public:
+			const char* epoch;
+			const char* height;
+			const Balance fee;
+			int milestone;
+			Hash nethash;
+			const Balance reward;
+			const Balance supply;
+
+			void printTo(HardwareSerial &serial);
+	};
+	/*************************************************/
+
+
+};
+};
+};
+};
+
+
+/*************************************************
+*	ARK::API::Block::Respondable::Height
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Height Response to Serial
+*
+**************************************************/
+void ARK::API::Block::Respondable::Height::printTo(HardwareSerial &serial)
 {
-public:
-    char epoch[64];  //TODO: check sizes
-    char height[64];
-    Balance fee;
-    int milestone;
-    Hash nethash;
-    Balance reward;
-    Balance supply;
-
-    Status(
-        const char* const e, 
-        const char* const h,
-        const char* const f,
-        int m,
-        const char* const nh,
-        const char* const r,
-        const char* const s
-    ) : epoch(), height(), fee(f), milestone(m), nethash(nh), reward(r), supply(s)
-    {
-        strncpy(epoch, e, sizeof(epoch) / sizeof(epoch[0]));
-        strncpy(height, h, sizeof(height) / sizeof(height[0]));
-    }
-
-    void description(char* const buf, size_t size);
-};
-/*  ====================================  */
-/*  ================================================  */
-
-
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Height  */
-/*  Definition  */
-struct Height
-{
-public:
-    char height[64]; // TODO: check sizes 
-    char id[64];
-
-    Height(const char* const h, const char* const _id) : height(), id() { 
-        strncpy(height, h, sizeof(height) / sizeof(height[0]));
-        strncpy(id, _id, sizeof(id) / sizeof(id[0]));
-    }
-
-    void description(char* const buf, size_t size);
-};
-/*  ====================================  */
-/*  ==========================================================================  */
-
-};
-};
-};
-};
-
-
-
-
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Status  */
-/*  Description  */
-void ARK::API::Block::Respondable::Status::description(char* const buf, size_t /*size*/)
-{
-    strcpy(buf, "epoch: ");
-    strcat(buf, this->epoch);
-    strcat(buf, "\nheight: ");
-    strcat(buf, this->height);
-    strcat(buf, "\nfee.ark: ");
-    strcat(buf, this->fee.ark());
-    strcat(buf, "\nmilestone: ");
-    const auto len = strlen(buf);
-    sprintf(buf + len, "%d", this->milestone);
-    strcat(buf, "\nnethash.description: ");
-    strcat(buf, this->nethash.description());
-    strcat(buf, "\nreward.ark: ");
-    strcat(buf, this->reward.ark());
-    strcat(buf, "\nsupply.ark: ");
-    strcat(buf, this->supply.ark());
+	serial.print("\nheight: ");
+	serial.print(this->height);
+	serial.print("\nid: ");
+	serial.print(this->id);
+	serial.print("\n");
+	serial.flush();
 }
-/*  ====================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Height  */
-/*  Description  */
-void ARK::API::Block::Respondable::Height::description(char* const buf, size_t /*size*/)
+/*************************************************
+*	ARK::API::Block::Respondable::Status
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Status Response to Serial
+*
+**************************************************/
+void ARK::API::Block::Respondable::Status::printTo(HardwareSerial &serial)
 {
-    strcpy(buf, "height: ");
-    strcat(buf, this->height);
-    strcat(buf, "\nid: ");
-    strcat(buf, this->id);
+	serial.print("\nepoch: ");
+	serial.print(this->epoch);
+	serial.print("\nheight: ");
+	serial.print(this->height);
+	serial.print("\nfee: ");
+	serial.print(this->fee.ark());
+	serial.print("\nmilestone: ");
+	serial.print(this->milestone);
+	serial.print("\nnethash: ");
+	serial.print(this->nethash.value);
+	serial.print("\nreward: ");
+	serial.print(this->reward.ark());
+	serial.print("\nsupply: ");
+	serial.print(this->supply.ark());
+	serial.print("\n");
+	serial.flush();
 }
-/*  ====================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
 #endif

@@ -10,198 +10,238 @@ namespace API
 namespace Block
 {
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  PROTECTED: ARK::API::Block::Gettable  */
+/*************************************************
+*  PROTECTED: ARK::API::Block::Gettable
+**************************************************/
 class Gettable
 {
-  protected:
-/*  ==========================================================================  */
-    /*  /api/blocks/get?id=_blockID */
+	protected:
+		/*************************************************
+		* ARK::API::Block::Gettable::block
+		*   api/blocks/get?id=_blockID
+		**************************************************/
     ARK::Block block(
-        ARK::Utilities::Network::Connector& _netConnector,
-        const char* const _blockId);
+        ARK::Utilities::Network::Connector& netConnector,
+        const char* const blockId);
 
-    ARK::Block blockfromJSON(const char* const _jsonStr);
-    ARK::Block blockfromJSON(const String& _jsonStr) {
-        return blockfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+    ARK::Block blockfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-  /*    BROKEN: fix for large callbacks   */
-  /*   blocks callback is ~63,712 bytes   */
-  /*  /api/blocks  */
+
+/**************************************************************************************************/
+
+
+    /*************************************************/
+    /*************************************************
+    *   BROKEN: fix for large callbacks
+    *   blocks callback is ~63,712 bytes
+    **************************************************/
+    /*************************************************/
+    /*************************************************
+    *   /api/blocks
+    **************************************************/
   // String blocks(ARK::Utilities::Network::Connector _netConnector) {
-  // String blocksfromJSON(String _jsonStr) {
-/*  ==========================================================================  */
+  // String blocksfromJSON(String jsonStr) {
+    /*************************************************/
+    /*************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getEpoch  */
-    String epoch(ARK::Utilities::Network::Connector& _netConnector);
-    String epochfromJSON(const char* const _jsonStr);
-    String epochfromJSON(const String& _jsonStr) {
-        return epochfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getHeight  */
-    ARK::API::Block::Respondable::Height height(ARK::Utilities::Network::Connector& _netConnector);
-    ARK::API::Block::Respondable::Height heightfromJSON(const char* const _jsonStr);
-    ARK::API::Block::Respondable::Height heightfromJSON(const String& _jsonStr) {
-        return heightfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+/**************************************************************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getNethash  */
-    Hash nethash(ARK::Utilities::Network::Connector& _netConnector);
-    Hash nethashfromJSON(const char* const _jsonStr);
-    Hash nethashfromJSON(const String& _jsonStr) {
-        return nethashfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getFee  */
-    Balance fee(ARK::Utilities::Network::Connector& _netConnector);
-    Balance feefromJSON(const char* const _jsonStr);
-    Balance feefromJSON(const String& _jsonStr) {
-        return feefromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+		/*************************************************
+		* ARK::API::Block::Gettable::epoch
+		*   /api/blocks/getEpoch
+		**************************************************/
+    const char* epoch(ARK::Utilities::Network::Connector& netConnector);
+    const char* epochfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getFees  */
-    ARK::Fees fees(ARK::Utilities::Network::Connector& _netConnector);
-    ARK::Fees feesfromJSON(const char* const _jsonStr);
-    ARK::Fees feesfromJSON(const String& _jsonStr) {
-        return feesfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getMilestone  */
-    String milestone(ARK::Utilities::Network::Connector& _netConnector);
-    String milestonefromJSON(const char* const _jsonStr);
-    String milestonefromJSON(const String& _jsonStr) {
-        return milestonefromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+/**************************************************************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getReward  */
-    Balance reward(ARK::Utilities::Network::Connector& _netConnector);
-    Balance rewardfromJSON(const char* const _jsonStr);
-    Balance rewardfromJSON(const String& _jsonStr) {
-        return rewardfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getSupply  */
-    Balance supply(ARK::Utilities::Network::Connector& _netConnector);
-    Balance supplyfromJSON(const char* const _jsonStr);
-    Balance supplyfromJSON(const String& _jsonStr) {
-        return supplyfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+		/*************************************************
+		* ARK::API::Block::Gettable::height 
+		*   /api/blocks/getHeight
+		**************************************************/
+    ARK::API::Block::Respondable::Height height(ARK::Utilities::Network::Connector& netConnector);
+    ARK::API::Block::Respondable::Height heightfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/blocks/getStatus  */
-    ARK::API::Block::Respondable::Status status(ARK::Utilities::Network::Connector& _netConnector);
-    ARK::API::Block::Respondable::Status statusfromJSON(const char* const _jsonStr);
-    ARK::API::Block::Respondable::Status statusfromJSON(const String& _jsonStr) {
-        return statusfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Block::Gettable::nethash
+		*   /api/blocks/getNethash 
+		**************************************************/
+    Hash nethash(ARK::Utilities::Network::Connector& netConnector);
+    Hash nethashfromJSON(const char* const jsonStr);
+    /*************************************************/
+
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Block::Gettable::fee 
+		*   /api/blocks/getFee
+		**************************************************/
+    Balance fee(ARK::Utilities::Network::Connector& netConnector);
+    Balance feefromJSON(const char* const jsonStr);
+    /*************************************************/
+
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Block::Gettable::fees
+		*   /api/blocks/getFees 
+		**************************************************/
+    ARK::Fees fees(ARK::Utilities::Network::Connector& netConnector);
+    ARK::Fees feesfromJSON(const char* const jsonStr);
+    /*************************************************/
+
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Block::Gettable::milestone
+		*   /api/blocks/getMilestone
+		**************************************************/
+    const char* milestone(ARK::Utilities::Network::Connector& netConnector);
+    const char* milestonefromJSON(const char* const jsonStr);
+    /*************************************************/
+
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Block::Gettable::reward
+		*   /api/blocks/getReward
+		**************************************************/
+    Balance reward(ARK::Utilities::Network::Connector& netConnector);
+    Balance rewardfromJSON(const char* const jsonStr);
+    /*************************************************/
+
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Block::Gettable::supply
+		*   /api/blocks/getSupply
+		**************************************************/
+    Balance supply(ARK::Utilities::Network::Connector& netConnector);
+    Balance supplyfromJSON(const char* const jsonStr);
+    /*************************************************/
+
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		 *  ARK::API::Block::Gettable::status 
+		 *    api/blocks/getStatus
+		**************************************************/
+    ARK::API::Block::Respondable::Status status(ARK::Utilities::Network::Connector& netConnector);
+    ARK::API::Block::Respondable::Status statusfromJSON(const char* const jsonStr);
+    /*************************************************/
+    
 };
-/*  ====================================  */
-/*  ==========================================================================  */
+/*************************************************/
+
 };
 };
 };
 
 
-
-
-/*  ==========================================================================  */
-/*  ==============================  */
-/*  ARK::API::Block::Gettable::block  */
-/*  /api/blocks/get?id=_blockID */
+/*************************************************
+* ARK::API::Block::Gettable::block
+*   api/blocks/get?id=_blockID
+**************************************************/
 ARK::Block ARK::API::Block::Gettable::block(
-    ARK::Utilities::Network::Connector& _netConnector,
-    const char* const _blockId)
+    ARK::Utilities::Network::Connector& netConnector,
+    const char* const blockId)
 {
-    char uri[256] = { '\0' }; // TODO:  check size
+	char uri[256] = { '\0' }; // TODO:  check size
 
-    strcpy(uri, ARK::API::Paths::Block::get_s);
-    strcat(uri, "?id=");
-    strcat(uri, _blockId);
+	strcpy(uri, ARK::API::Paths::Block::get_s);
+	strcat(uri, "?id=");
+	strcat(uri, blockId);
 
-    auto callback = _netConnector.cb(uri);
-    return ARK::API::Block::Gettable::blockfromJSON(callback);
+	auto callback = netConnector.cb(uri);
+	return ARK::API::Block::Gettable::blockfromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "block":{
-    "id": "String",
-    "version":  int,
-    "timestamp":  String,
-    "height": String,
-    "previousBlock":  "Striing",
-    "numberOfTransactions": String,
-    "totalAmount":  Balance,
-    "totalFee": Balance,
-    "reward": Balance,
-    "payloadLength":  String,
-    "payloadHash":  "Hash",
-    "generatorPublicKey": "Publickey",
-    "generatorId":  "Address",
-    "blockSignature": "Signature",
-    "confirmations":  String,
-    "totalForged":" Balance"
-  }
-}
-*/
-ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const _jsonStr)
+/*************************************************
+*
+* {
+*   "success":true,
+*   "block":
+*   {
+*     "id": "const char*",
+*     "version":  int,
+*     "timestamp":  const char*,
+*     "height": const char*,
+*     "previousBlock":  "const char*",
+*     "numberOfTransactions": const char*,
+*     "totalAmount":  Balance,
+*     "totalFee": Balance,
+*     "reward": Balance,
+*     "payloadLength":  const char*,
+*     "payloadHash":  "Hash",
+*     "generatorPublicKey": "Publickey",
+*     "generatorId":  "Address",
+*     "blockSignature": "Signature",
+*     "confirmations":  const char*,
+*     "totalForged":" Balance"
+*   }
+* }
+*
+**************************************************/
+ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
-
-    return ARK::Block(
-        jString.valueIn("block", "id").c_str(),
-        static_cast<int>(jString.valueIn("block", "version").toInt()),
-        jString.valueIn("block", "timestamp").c_str(),
-        jString.valueIn("block", "height").c_str(),
-        jString.valueIn("block", "previousBlock").c_str(),
-        jString.valueIn("block", "numberOfTransactions").c_str(),
-        jString.valueIn("block", "totalAmount").c_str(),
-        jString.valueIn("block", "totalFee").c_str(),
-        jString.valueIn("block", "reward").c_str(),
-        jString.valueIn("block", "payloadLength").c_str(),
-        jString.valueIn("block", "payloadHash").c_str(),
-        jString.valueIn("block", "generatorPublicKey").c_str(),
-        jString.valueIn("block", "generatorId").c_str(),
-        jString.valueIn("block", "blockSignature").c_str(),
-        jString.valueIn("block", "confirmations").c_str(),
-        jString.valueIn("block", "totalForged").c_str()
-    );
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+  return {
+      parser.valueIn("block", "id"),
+      atoi(parser.valueIn("block", "version")),
+      parser.valueIn("block", "timestamp"),
+      parser.valueIn("block", "height"),
+      parser.valueIn("block", "previousBlock"),
+      parser.valueIn("block", "numberOfTransactions"),
+      Balance(parser.valueIn("block", "totalAmount")),
+      Balance(parser.valueIn("block", "totalFee")),
+      Balance(parser.valueIn("block", "reward")),
+      parser.valueIn("block", "payloadLength"),
+      Hash(parser.valueIn("block", "payloadHash")),
+      Publickey(parser.valueIn("block", "generatorPublicKey")),
+      Address(parser.valueIn("block", "generatorId")),
+      Signature(parser.valueIn("block", "blockSignature")),
+      parser.valueIn("block", "confirmations"),
+      Balance(parser.valueIn("block", "totalForged"))
+  };
 }
-/*  ==============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
-/*    BROKEN: fix for large callbacks   */
-/*   blocks callback is ~63,712 bytes   */
-/*  ===============================  */
-/*  ARK::API::Block::Gettable::blocks  */
-// /*  /api/blocks */
+/*************************************************/
+/*************************************************
+*   BROKEN: fix for large callbacks
+*   blocks callback is ~63,712 bytes
+**************************************************/
+/*************************************************/
+/*************************************************
+* ARK::API::Block::Gettable::blocks
+*   /api/blocks
+**************************************************/
 // String blocks(ARK::Utilities::Network::Connector _netConnector) {
 //   String uri = ARK::API::Paths::Block::blocks_s;
 //   String callback = _netConnector.cb(uri);
@@ -254,8 +294,12 @@ ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const _jsonStr)
 //   "count":2313747
 // }
 // */
-// String blocksfromJSON(String _jsonStr) {
-//   ARK::Utilities::JSONString jString(_jsonStr);
+/*************************************************
+*
+*
+**************************************************/
+// String blocksfromJSON(String jsonStr) {
+//   ARK::Utilities::JSONString jString(jsonStr);
 //   // ARK::Block block = {
 //   //   jString.valueFor("id").toInt(),
 //   //   jString.valueFor("version").toFloat(),
@@ -276,293 +320,294 @@ ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const _jsonStr)
 //   // };
 //   return "";//block.description();
 // };
-/*  ===============================  */
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==============================  */
-/*  ARK::API::Block::Gettable::epoch  */
-/*  /api/blocks/getEpoch  */
-String ARK::API::Block::Gettable::epoch(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::epoch
+*   /api/blocks/getEpoch
+*
+*   blockEpoch example:
+*     2017-03-21T13:00:00.000Z
+*
+**************************************************/
+const char* ARK::API::Block::Gettable::epoch(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getEpoch_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getEpoch_s);
   return ARK::API::Block::Gettable::epochfromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+* {
+*   "success":true,
+*   "epoch":  "String"
+* }
+**************************************************/
+const char* ARK::API::Block::Gettable::epochfromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "epoch":  "String"
-}
-*/
-String ARK::API::Block::Gettable::epochfromJSON(const char* const _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return jString.valueFor("epoch");
+  ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+  return parser.valueFor("epoch");
 };
-/*  ==============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ===============================  */
-/*  ARK::API::Block::Gettable::height  */
-/*  /api/blocks/getHeight  */
-ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::height(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::height 
+*   /api/blocks/getHeight
+**************************************************/
+ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::height(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getHeight_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getHeight_s);
   return ARK::API::Block::Gettable::heightfromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+* {
+*   "success":true,
+*   "height": String,
+*   "id": "String"
+* }
+*
+**************************************************/
+ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::heightfromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "height": String,
-  "id": "String"
-}
-*/
-ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::heightfromJSON(const char* const _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return ARK::API::Block::Respondable::Height(jString.valueFor("height").c_str(), jString.valueFor("id").c_str());
+  ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+  return {
+    parser.valueFor("height"), 
+    parser.valueFor("id")
+  };
 };
-/*  ===============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ================================  */
-/*  ARK::API::Block::Gettable::nethash  */
-/*  /api/blocks/getNethash  */
-Hash ARK::API::Block::Gettable::nethash(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::nethash
+*   /api/blocks/getNethash 
+**************************************************/
+Hash ARK::API::Block::Gettable::nethash(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getNethash_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getNethash_s);
   return ARK::API::Block::Gettable::nethashfromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+* {
+*   "success":true,
+*   "nethash":  "Hash"
+* }
+*
+**************************************************/
+Hash ARK::API::Block::Gettable::nethashfromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "nethash":  "Hash"
-}
-*/
-Hash ARK::API::Block::Gettable::nethashfromJSON(const char* const _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return Hash(jString.valueFor("nethash").c_str());
+  ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+  return Hash(parser.valueFor("nethash"));
 };
-/*  ================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
-
-
-/*  ==========================================================================  */
-/*  ============================  */
-/*  ARK::API::Block::Gettable::fee  */
-/*  /api/blocks/getFee  */
-Balance ARK::API::Block::Gettable::fee(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::fee 
+*   /api/blocks/getFee
+**************************************************/
+Balance ARK::API::Block::Gettable::fee(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getFee_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getFee_s);
   return ARK::API::Block::Gettable::feefromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "fee":  Balance
-}
-*/
-Balance ARK::API::Block::Gettable::feefromJSON(const char* const _jsonStr)
+/*************************************************
+*
+* {
+*   "success":true,
+*   "fee":  Balance
+* }
+*
+**************************************************/
+Balance ARK::API::Block::Gettable::feefromJSON(const char* const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return Balance(jString.valueFor("fee").c_str());
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+  Balance balance = Balance(parser.valueFor("fee"));
+  return balance;
 };
-/*  ============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  =============================  */
-/*  ARK::API::Block::Gettable::fees  */
-/*  /api/blocks/getFees  */
-ARK::Fees ARK::API::Block::Gettable::fees(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::fees
+*   /api/blocks/getFees 
+**************************************************/
+ARK::Fees ARK::API::Block::Gettable::fees(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getFees_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getFees_s);
   return ARK::API::Block::Gettable::feesfromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "fees":{
-    "send": Balance,
-    "vote": Balance,
-    "secondsignature": Balance,
-    "delegate": Balance,
-    "multisignature": Balance
-  }
-}
-*/
-ARK::Fees ARK::API::Block::Gettable::feesfromJSON(const char* const _jsonStr)
+/*************************************************
+*
+* {
+*   "success":true,
+*   "fees":
+*   {
+*     "send": Balance,
+*     "vote": Balance,
+*     "secondsignature": Balance,
+*     "delegate": Balance,
+*     "multisignature": Balance
+*   }
+* }
+*
+**************************************************/
+ARK::Fees ARK::API::Block::Gettable::feesfromJSON(const char* const jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
-
-    return Fees(
-        jString.valueIn("fees", "send").c_str(),
-        jString.valueIn("fees", "vote").c_str(),
-        jString.valueIn("fees", "secondsignature").c_str(),
-        jString.valueIn("fees", "delegate").c_str(),
-        jString.valueIn("fees", "multisignature").c_str()
-    );
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+  return {
+    Balance(parser.valueIn("fees", "send")),
+    Balance(parser.valueIn("fees", "vote")),
+    Balance(parser.valueIn("fees", "secondsignature")),
+    Balance(parser.valueIn("fees", "delegate")),
+    Balance(parser.valueIn("fees", "multisignature"))
+  };
 };
-/*  =============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==================================  */
-/*  ARK::API::Block::Gettable::milestone  */
-/*  /api/blocks/getMilestone  */
-String ARK::API::Block::Gettable::milestone(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::milestone
+*   /api/blocks/getMilestone
+**************************************************/
+const char* ARK::API::Block::Gettable::milestone(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getMilestone_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getMilestone_s);
   return ARK::API::Block::Gettable::milestonefromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+* {
+*   "success":true,
+*   "milestone": String
+* }
+*
+**************************************************/
+const char* ARK::API::Block::Gettable::milestonefromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "milestone": String
-}
-*/
-String ARK::API::Block::Gettable::milestonefromJSON(const char* const _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return jString.valueFor("milestone");
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+  return parser.valueFor("milestone");
 };
-/*  ==================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ===============================  */
-/*  ARK::API::Block::Gettable::reward  */
-/*  /api/blocks/getReward  */
-Balance ARK::API::Block::Gettable::reward(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::reward
+*   /api/blocks/getReward
+**************************************************/
+Balance ARK::API::Block::Gettable::reward(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getReward_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getReward_s);
   return ARK::API::Block::Gettable::rewardfromJSON(callback);
 };
 
-/*
-{ "success":true,
-  "reward": Balance
-}
-*/
-Balance ARK::API::Block::Gettable::rewardfromJSON(const char* const _jsonStr)
+/*************************************************
+*
+* { 
+*   "success":true,
+*   "reward": Balance
+* }
+*
+**************************************************/
+Balance ARK::API::Block::Gettable::rewardfromJSON(const char* const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return Balance(jString.valueFor("reward").c_str());
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+  return Balance(parser.valueFor("reward"));
 };
-/*  ===============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ===============================  */
-/*  ARK::API::Block::Gettable::supply  */
-/*  /api/blocks/getSupply  */
-Balance ARK::API::Block::Gettable::supply(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+* ARK::API::Block::Gettable::supply
+*   /api/blocks/getSupply
+**************************************************/
+Balance ARK::API::Block::Gettable::supply(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getSupply_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getSupply_s);
   return ARK::API::Block::Gettable::supplyfromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+* {
+*   "success":true,
+*   "supply": Balance
+* }
+*
+**************************************************/
+Balance ARK::API::Block::Gettable::supplyfromJSON(const char* jsonStr)
 {
-  "success":true,
-  "supply": Balance
-}
-*/
-Balance ARK::API::Block::Gettable::supplyfromJSON(const char* _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return Balance(jString.valueFor("supply").c_str());
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+  return Balance(parser.valueFor("supply"));
 };
-/*  ===============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ===============================  */
-/*  ARK::API::Block::Gettable::status  */
-/*  /api/blocks/getStatus  */
-ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(ARK::Utilities::Network::Connector& _netConnector)
+/*************************************************
+ *  ARK::API::Block::Gettable::status 
+ *    api/blocks/getStatus
+**************************************************/
+ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(ARK::Utilities::Network::Connector& netConnector)
 {
-  auto callback = _netConnector.cb(ARK::API::Paths::Block::getStatus_s);
-
+  auto callback = netConnector.cb(ARK::API::Paths::Block::getStatus_s);
   return ARK::API::Block::Gettable::statusfromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "epoch":  "String",
-  "height": String,
-  "fee":  Balance,
-  "milestone":  String,
-  "nethash":" Hash",
-  "reward":_reward,
-  "supply":_supply
-}
-*/
-ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::statusfromJSON(const char* const _jsonStr)
+/*************************************************
+* 
+* {
+*   "success":true,
+*   "epoch":  "String",
+*   "height": String,
+*   "fee":  Balance,
+*   "milestone":  String,
+*   "nethash":" Hash",
+*   "reward":_reward,
+*   "supply":_supply
+* }
+*
+**************************************************/
+ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::statusfromJSON(const char* const jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
-  
-    return ARK::API::Block::Respondable::Status(
-        jString.valueFor("epoch").c_str(),
-        jString.valueFor("height").c_str(),
-        jString.valueFor("fee").c_str(),
-        jString.valueFor("milestone").toInt(),
-        jString.valueFor("nethash").c_str(),
-        jString.valueFor("reward").c_str(),
-        jString.valueFor("supply").c_str()
-    );
+  ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
+
+  return {
+      parser.valueFor("epoch"),
+      parser.valueFor("height"),
+      Balance(parser.valueFor("fee")),
+      atoi(parser.valueFor("milestone")),
+      Hash(parser.valueFor("nethash")),
+      Balance(parser.valueFor("reward")),
+      Balance(parser.valueFor("supply"))
+  };
 };
-/*  ===============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
 #endif

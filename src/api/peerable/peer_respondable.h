@@ -12,27 +12,33 @@ namespace Peer
 namespace Respondable
 {
 
-/*  ==========================================================================  */
-/*  ========================  */
-/*  ARK::API::Peer::Respondable::Version  */
-  struct Version {
-    public:
-        char version[64];  //TODO: review sizes
-        char build[64];
-
-        Version(const char* const v, const char* const b) : version(), build() {
-            strncpy(version, v, sizeof(version) / sizeof(version[0]));
-            strncpy(build, b, sizeof(build) / sizeof(build[0]));
-        }
-
-        void description(char* const buf, size_t size);
+/*************************************************
+*	ARK::API::Peer::Respondable::Version
+*
+*   @variables:
+*			bool loaded;
+*			int now;
+*			char blocksCount[64];
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*			Model for Loader Status API Response
+*
+**************************************************/
+struct Version
+{
+	public:
+		const char* version;
+		const char* build;
+    
+		void printTo(HardwareSerial &serial);
   };
-/*  ========================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==================================  */
+/*************************************************/
+/*************************************************/
 /*  ARK::API::Peer::Respondable::Peers  */
 //   struct Peers {
 //     public:
@@ -41,8 +47,8 @@ namespace Respondable
 //       // PeersResponse(int);
 //       String description();
 //   };
-/*  ==================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 
 
 };
@@ -51,26 +57,30 @@ namespace Respondable
 };
 
 
-
-
-/*  ==========================================================================  */
-/*  ========================  */
-/*  ARK::API::Peer::Respondable::Version  */
-/*  Description  */
-void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t /*size*/) {
-    strcpy(buf, "version: ");
-    strcat(buf, this->version);
-    strcat(buf, "\nbuild: ");
-    strcat(buf, this->build);
-    strcat(buf, "\n");
+/*************************************************
+*	ARK::API::Peer::Respondable::Version
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Peer Version Response to Serial
+*
+**************************************************/
+void ARK::API::Peer::Respondable::Version::printTo(HardwareSerial &serial)
+{
+  serial.print("\nversion: ");
+  serial.print(this->version);
+  serial.print("\nbuild: ");
+  serial.print(this->build);
+  serial.print("\n");
+	serial.flush();
 }
-/*  ========================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
 
-/*  ==========================================================================  */
-/*  ==================================  */
+/*************************************************/
+/*************************************************/
 /*  ARK::API::Peer::Respondable::Peers  */
 /*  Description  */
 // String ARK::API::Peer::Respondable::Peers::description() {

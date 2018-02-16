@@ -13,204 +13,290 @@ namespace Respondable
 {
 
 
-/*  ==========================================================================  */
-/*  =======================================  */
-/*  ARK::API::Delegate::Respondable::Search  */
-  struct Search
-  {
+/*************************************************
+*	ARK::API::Delegate::Respondable::Search
+*
+*		@variables:
+*			const char* username;
+*			Address address;
+*			Publickey publicKey;
+*			const Balance vote;
+*			int producedblocks;
+*			int missedblocks;
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*			Model for Delegate Search API Response
+*
+**************************************************/
+struct Search
+{
   public:
-    char username[64]; //TODO review sizes
+    const char* username;
     Address address;
     Publickey publicKey;
-    Balance vote;
+    const Balance vote;
     int producedblocks;
     int missedblocks;
 
-    Search(
-        const char* const u, 
-        const char* const a, 
-        const char* const pk, 
-        const char* const v, 
-        int pb, 
-        int mb
-    ) : username(), address(a), publicKey(pk), vote(v), producedblocks(pb), missedblocks(mb) {
-        strncpy(username, u, sizeof(username) / sizeof(username[0]));
-    }
-
-    void description(char* const buf, size_t size);
-  };
-/*  =======================================  */
-/*  ==========================================================================  */
+    void printTo(HardwareSerial &serial);
+};
+/*************************************************/
 
 
-/*  ==========================================================================  */
-/*  =========================================  */
-  /*  ARK::API::Delegate::Respondable::Voters  */
-struct Voters {
-public:
+/**************************************************************************************************/
+
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::Voters
+*
+*		@variables:
+*			size_t count;
+*			ARK::Voter* const _voters;
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*		@deconstuctor:	~Voters() { delete [] _voters; };
+*		@operators: 
+*			Voter& operator[](size_t index)
+*			Voter& operator[](size_t index)
+*
+*   @description:
+*			Model for Delegate Voters API Response
+*
+**************************************************/
+struct Voters
+{
+	public:
     size_t count;
     ARK::Voter* const _voters;
 
     Voters(size_t c) : count(c), _voters(new ARK::Voter[c]) { }
+
     ~Voters() {
-        delete [] _voters;
+			delete [] _voters;
     }
 
     const Voter& operator[](size_t index) const { return _voters[index]; }
     Voter& operator[](size_t index) { return _voters[index]; }
 
-    void description(char* const buf, size_t size);
+    void printTo(HardwareSerial &serial);
 };
-/*  =========================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==================================================  */
-  /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
+/**************************************************************************************************/
+
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::ForgedByAccount
+*
+*		@variables:
+*			const Balance fees;
+*			const Balance rewards;
+*			const Balance forged;
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*			Model for Delegate Forging Totals API Response
+*
+**************************************************/
 struct ForgedByAccount
 {
-public:
-    Balance fees;
-    Balance rewards;
-    Balance forged;
+	public:
+    const Balance fees;
+    const Balance rewards;
+    const Balance forged;
 
-    ForgedByAccount(const char* const f, const char* const r, const char* const fg) : fees(f), rewards(r), forged(fg) { }
-
-    void description(char* const buf, size_t size);
+    void printTo(HardwareSerial &serial);
 };
-/*  ==================================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==============================================  */
-  /*  ARK::API::Delegate::Respondable::NextForgers  */
-  struct NextForgers
-  {
-    public:
-      char currentBlock[64];
-      char currentSlot[64];
-      Publickey delegates[10];
-
-      NextForgers(const char* const _currentBlock, const char* const _currentSlot, const Publickey* const _delegates);
-
-      void description(char* const buf, size_t size);
-  };
-/*  ==============================================  */
-/*  ==========================================================================  */
-
-};
-};
-};
-};
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  =======================================  */
-/*  ARK::API::Delegate::Respondable::Search  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t /*size*/)
+/*************************************************
+*	ARK::API::Delegate::Respondable::NextForgers
+*
+*		@variables:
+*			char currentBlock[64];
+*			char currentSlot[64];
+*			Publickey* const delegateKeys = new Publickey[10];
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*			Model for Next 10 Forging Delegate Publickeys API Response
+*
+**************************************************/
+struct NextForgers
 {
-    strcpy(buf, "username: ");
-    strcat(buf, this->username);
-    strcat(buf, "\naddress.description: ");
-    strcat(buf, this->address.description());
-    strcat(buf, "\npublicKey.description: ");
-    strcat(buf, this->publicKey.description());
-    strcat(buf, "\nvote.ark: ");
-    strcat(buf, this->vote.ark());
-    strcat(buf, "\nproducedblocks: ");
-    auto len = strlen(buf);
-    sprintf(buf + len, "%d", this->producedblocks);
-    strcat(buf, "\nmissedblocks: ");
-    len = strlen(buf);
-    sprintf(buf + len, "%d", this->missedblocks);
+	public:
+		char currentBlock[64];
+		char currentSlot[64];
+		Publickey* const delegateKeys = new Publickey[10];
+
+		NextForgers(
+				const char* const _currentBlock,
+				const char* const _currentSlot,
+				const Publickey* const _delegates);
+
+		void printTo(HardwareSerial &serial);
+};
+/*************************************************/
+
+};
+};
+};
+};
+
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::Search 
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Delegate Search Response to Serial
+*
+**************************************************/
+void ARK::API::Delegate::Respondable::Search::printTo(HardwareSerial &serial)
+{
+    serial.print("\nusername: ");
+    serial.print(this->username);
+    serial.print("\naddress: ");
+    serial.print(this->address.value);
+    serial.print("\npublicKey: ");
+    serial.print(this->publicKey.value);
+    serial.print("\nvote: ");
+    serial.print(this->vote.ark());
+    serial.print("\nproducedblocks: ");
+    serial.print(this->producedblocks);
+    serial.print("\nmissedblocks: ");
+    serial.print(this->missedblocks);
+    serial.print("\n");
+    serial.flush();
 }
-/*  =======================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
-/*  =========================================  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::Voters 
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Delegate Voters Response to Serial
+*
+**************************************************/
+void ARK::API::Delegate::Respondable::Voters::printTo(HardwareSerial &serial)
+{
   if (this->count > 0) {
-      buf[0] = '\0';
+      serial.print("\n\0");
     for (int i = 0; i < static_cast<int>(this->count); i++) {
-        strcat(buf, "\nvoter ");
-        auto len = strlen(buf);
-        sprintf(buf + len, "%d", i + 1);
-        strcat(buf, ":\n");
-        len = strlen(buf);
-        (*this)[i].description(buf + len, size - len);
-        strcat(buf, "\n");
+        serial.print("\nvoter ");
+        serial.print(i + 1);
+        serial.print(":\n");
+        (*this)[i].printTo(serial);
+        serial.print("\n");
     };
   };
+  serial.flush();
 }
-/*  =========================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==================================================  */
-/*  ARK::API::Delegate::Respondable::ForgedByAccount  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t /*size*/)
+/*************************************************
+*	ARK::API::Delegate::Respondable::ForgedByAccount 
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Delegate Forging Totals to Serial
+*
+**************************************************/
+void ARK::API::Delegate::Respondable::ForgedByAccount::printTo(HardwareSerial &serial)
 {
-    strcpy(buf, "fees.ark: ");
-    strcat(buf, this->fees.ark());
-    strcat(buf, "\nrewards.ark: ");
-    strcat(buf, this->rewards.ark());
-    strcat(buf, "\nforged.ark: ");
-    strcat(buf, this->forged.ark());
+    serial.print("\nfees: ");
+    serial.print(this->fees.ark());
+    serial.print("\nrewards: ");
+    serial.print(this->rewards.ark());
+    serial.print("\nforged: ");
+    serial.print(this->forged.ark());
+    serial.print("\n");
+    serial.flush();
 }
-/*  ==================================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ============================================  */
-/*  ARK::API::Delegate::Respondable::NextForgers  */
-/*  Constructor  */
+/*************************************************
+*	ARK::API::Delegate::Respondable::NextForgers 
+*
+*   @constructor:
+*			NextForgers(
+*				const char* const _currentBlock,
+*				const char* const _currentSlot,
+*				const Publickey* const _delegates
+*			)
+*
+*   @description:
+*     Constructs API Delegate NextForgers Response
+*
+**************************************************/
 ARK::API::Delegate::Respondable::NextForgers::NextForgers(
-    const char* const _currentBlock, const char* const _currentSlot,
-    const Publickey* const _delegates) : currentBlock(), currentSlot()
+		const char* const _currentBlock,
+		const char* const _currentSlot,
+		const Publickey* const _delegates) :
+				currentBlock(), currentSlot()
 {
-    //TODO:  wish i had std::array for _delegates.  pointer decay sucks.
-    strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
-    strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
+	strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
+	strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
 	for (auto i = 0; i < 10; ++i)
 	{
-		this->delegates[i] = _delegates[i];
+		this->delegateKeys[i] = _delegates[i];
 	};
 }
-/*  ============================================  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t /*size*/)
-{
-    strcpy(buf, "currentBlock: ");
-    strcat(buf, this->currentBlock);
-    strcat(buf, "\ncurrentSlot: ");
-    strcat(buf, this->currentSlot);
-    strcat(buf, "\n");
 
-	for (auto i = 0; i < 10; ++i)
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::NextForgers 
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints Next 10 Forging Delegate Publickeys to Serial
+*
+**************************************************/
+void ARK::API::Delegate::Respondable::NextForgers::printTo(HardwareSerial &serial)
+{
+	serial.print("\ncurrentBlock: ");
+	serial.print(this->currentBlock);
+	serial.print("\ncurrentSlot: ");
+	serial.print(this->currentSlot);
+	serial.print("\n");
+
+	for (int i = 0; i < 9; i++)
 	{
-        strcat(buf, "delegate ");
-        const auto len = strlen(buf);
-        sprintf(buf + len, "%d", i + 1);
-        strcat(buf, ": \n publicKey: ");
-        strcat(buf, delegates[i].description());
-        strcat(buf, "\n");
+		serial.print("delegate ");
+		serial.print(i + 1);
+		serial.print(": \n publicKey: ");
+		serial.print(delegateKeys[i].value);
+		serial.print("\n");
 	};
+	serial.flush();
 }
-/*  ============================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
 #endif

@@ -1,64 +1,93 @@
 
 
-// #ifndef TRANSACTION_RESPONDABLE_H
-// #define TRANSACTION_RESPONDABLE_H
+#ifndef TRANSACTION_RESPONDABLE_H
+#define TRANSACTION_RESPONDABLE_H
 
-// namespace ARK
-// {
-// namespace API
-// {
-// namespace Transaction
-// {
-// namespace Respondable
-// {
+namespace ARK
+{
+namespace API
+{
+namespace Transaction
+{
+namespace Respondable
+{
 
-// /*  ==========================================================================  */
-// /*  ===============================================  */
-// /*  ARK::API::Transaction::Respondable::Unconfirmed  */
-// struct Unconfirmed {
-//   public:
+  /*************************************************
+  *	ARK::API::Transaction::Respondable::Unconfirmed
+  *
+  *   @variables:
+  *			bool loaded;
+  *			int now;
+  *			char blocksCount[64];
+  *
+  *   @methods:	printTo(HardwareSerial &serial)
+  *
+  *   @description:
+  *			Model for Loader Status API Response
+  *
+  **************************************************/
+  struct Unconfirmed
+  {
+    private:
+      int count;
 
-//     int count = 0;
-//     ARK::Transaction list[10];
+    public:
+		  ARK::Transaction* transactions = new ARK::Transaction[5];
 
-//     Unconfirmed(int);
+      Unconfirmed(
+          const ARK::Transaction* const tx,
+          int c)
+      {
+        this->count = c;
+        this->transactions = new ARK::Transaction[this->count];
+        for (int i = 0; i < count; ++i)
+        {
+          this->transactions[i] = tx[i];
+        };
+      };
 
-//     String description();
-// };
-// /*  ===============================================  */
-// /*  ==========================================================================  */
+      ~Unconfirmed() {
+        delete [] transactions;
+      };
 
-// };
-// };
-// };
-// };
+      void printTo(HardwareSerial &serial);
+  };
+  /*************************************************/
 
-
-
-
-// /*  ==========================================================================  */
-// /*  ===============================================  */
-// /*  ARK::API::Transaction::Respondable::Unconfirmed  */
-// ARK::API::Transaction::Respondable::Unconfirmed::Unconfirmed(int count) {
-//   this->count = count;
-// };
-// /*  ===============================================  */
-// String ARK::API::Transaction::Respondable::Unconfirmed::description() {
-//   String resp;
-//   if (this->count > 0) {
-//     for (int i = 0; i < this->count; i++) {
-//       resp += "\ntransaction ";
-//       resp += i + 1;
-//       resp += ":\n";
-//       resp += this->list[i].description();
-//       resp += "\n";
-//     };
-//   } else { resp += "There are currently no Unconfirmed Transactions"; };
-//   return resp;
-// };
-// /*  ===============================================  */
-// /*  ==========================================================================  */
+};
+};
+};
+};
 
 
+/*************************************************
+*	ARK::API::Transaction::Respondable::Unconfirmed 
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints API Transaction Unconfirmed Response to Serial
+*
+**************************************************/
+void ARK::API::Transaction::Respondable::Unconfirmed::printTo(HardwareSerial &serial)
+{
+  if (this->count == 0)
+  {
+    serial.print("There are currently no Unconfirmed Transactions");
+  }
+  else
+  {
+    for (int i = 0; i < this->count; i++) {
+      serial.print("\ntransaction ");
+      serial.print(i + 1);
+      serial.print(":\n");
+      this->transactions[i].printTo(serial);
+      serial.print("\n");
+      serial.flush();
+    };
+  };
+};
+/*************************************************/
 
-// #endif
+
+#endif

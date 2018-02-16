@@ -10,111 +10,119 @@ namespace API
 namespace Peer
 {
 
-/*  ==========================================================================  */
-/*  ===================================  */
-/*  PROTECTED: ARK::API::Peer::Gettable  */
+/*************************************************
+*  PROTECTED: ARK::API::Peer::Gettable
+**************************************************/
 class Gettable
 {
   protected:
-/*  ==========================================================================  */
-    /*  /api/delegates/fee  */
+		/*************************************************
+		* ARK::API::Peer::Gettable::peer
+		*   /api/peers/get?ip=167.114.29.55&port=4002
+		**************************************************/
     ARK::Peer peer(
-        ARK::Utilities::Network::Connector& _netConnector,
-        const char* const _ip,
-        int _port);
+        ARK::Utilities::Network::Connector& netConnector,
+        const char* const ip,
+        int port);
 
-    ARK::Peer peerfromJSON(const char* const _jsonStr);
-    ARK::Peer peerfromJSON(const String& _jsonStr) {
-        return peerfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+    ARK::Peer peerfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
-  /*    BROKEN: fix for large callbacks  */
-  /*    Peers callback is ~11,000 bytes  */
+
+/**************************************************************************************************/
+
+
+    /*************************************************/
+    /*************************************************/
+  	/*    BROKEN: fix for large callbacks  */
+  	/*    Peers callback is ~11,000 bytes  */
     // ARK::API::PeerGettablePeersResponse peersfromJSON(String _jsonStr);
     // ARK::API::PeerGettablePeersResponse peers(ARK::Utilities::Network::Connector _netConnector);
-/*  ==========================================================================  */
-/*  ==========================================================================  */
-
-/*  ==========================================================================  */
-    /*  /api/peers/version  */
-    ARK::API::Peer::Respondable::Version version(ARK::Utilities::Network::Connector& _netConnector);
-    ARK::API::Peer::Respondable::Version versionfromJSON(const char* const _jsonStr);
-    ARK::API::Peer::Respondable::Version versionfromJSON(const String& _jsonStr) {
-        return versionfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
-};
-/*  ===================================  */
-/*  ==========================================================================  */
-};
-};
-};
+    /*************************************************/
+    /*************************************************/
 
 
+/**************************************************************************************************/
 
-/*  ==========================================================================  */
-/*  ============================  */
-/*  ARK::API::Peer::Gettable::peer  */
-/*  /api/delegates/fee  */
+
+		/*************************************************
+		* ARK::API::Peer::Gettable::version
+		*   /api/peers/version
+		**************************************************/
+    ARK::API::Peer::Respondable::Version version(ARK::Utilities::Network::Connector& netConnector);
+    
+    ARK::API::Peer::Respondable::Version versionfromJSON(const char* const jsonStr);
+    /*************************************************/
+
+};
+/*************************************************/
+
+};
+};
+};
+
+
+
+/*************************************************
+* ARK::API::Peer::Gettable::peer
+*   /api/peers/get?ip=167.114.29.55&port=4002
+**************************************************/
 ARK::Peer ARK::API::Peer::Gettable::peer(
-    ARK::Utilities::Network::Connector& _netConnector,
-    const char* const _ip,
-    int _port)
+    ARK::Utilities::Network::Connector& netConnector,
+    const char* const ip,
+    int port)
 {
-    char uri[64] = { '\0' };  //TODO: review sizes
-    strcpy(uri, ARK::API::Paths::Peer::get_s);
-    strcat(uri, "?ip=");
-    strcat(uri, _ip);
-    strcat(uri, "&port=");
-    const auto len = strlen(uri);
-    sprintf(uri + len, "%d", _port);
+	char uri[64] = { '\0' };  //TODO: review sizes
+	strcpy(uri, ARK::API::Paths::Peer::get_s);
+	strcat(uri, "?ip=");
+	strcat(uri, ip);
+	strcat(uri, "&port=");
+	const auto len = strlen(uri);
+	sprintf(uri + len, "%d", port);
 
-    auto callback = _netConnector.cb(uri);
-
-    return ARK::API::Peer::Gettable::peerfromJSON(callback);
+	auto callback = netConnector.cb(uri);
+	return ARK::API::Peer::Gettable::peerfromJSON(callback);
 }
-
-/*
-{ 
-  "success":true,
-  "peer":{
-    "ip": "String",
-    "port": int,
-    "version":  "String",
-    "errors": int,
-    "os": "String",
-    "height": String,
-    "status": "String",
-    "delay":  int
-  }
-}
-*/
-ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(const char* const _jsonStr)
+/*************************************************
+*
+*	{ 
+*		"success":true,
+*		"peer":
+*		{
+*			"ip": "String",
+*			"port": int,
+*			"version":  "String",
+*			"errors": int,
+*			"os": "String",
+*			"height": String,
+*			"status": "String",
+*			"delay":  int
+*		}
+*	}
+*
+**************************************************/
+ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(const char* const jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
-
-    return ARK::Peer(
-        jString.valueIn("peer", "ip").c_str(),
-        jString.valueIn("peer", "port").toInt(),
-        jString.valueIn("peer", "version").c_str(),
-        jString.valueIn("peer", "errors").toInt(),
-        jString.valueIn("peer", "os").c_str(),
-        jString.valueIn("peer", "height").c_str(),
-        jString.valueIn("peer", "status").c_str(),
-        jString.valueIn("peer", "delay").toInt()
-    );
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return {
+		parser.valueIn("peer", "ip"),
+		atoi(parser.valueIn("peer", "port")),
+		parser.valueIn("peer", "version"),
+		atoi(parser.valueIn("peer", "errors")),
+		parser.valueIn("peer", "os"),
+		parser.valueIn("peer", "height"),
+		parser.valueIn("peer", "status"),
+		atoi(parser.valueIn("peer", "delay"))
+	};
 }
-/*  ============================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 /*    BROKEN: fix for large callbacks  */
 /*    Peers callback is ~11,000 bytes  */
 /*  =============================  */
@@ -173,43 +181,42 @@ ARK::Peer ARK::API::Peer::Gettable::peerfromJSON(const char* const _jsonStr)
 //   // };
 //   return peersResponse;
 // }
-/*  =============================  */
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ===============================  */
-/*  ARK::API::PeerGettable::version  */
-/*  /api/peers/version  */
+/*************************************************
+* ARK::API::PeerGettable::version
+*   /api/peers/version
+**************************************************/
 ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::version(
-    ARK::Utilities::Network::Connector& _netConnector
+    ARK::Utilities::Network::Connector& netConnector
 )
 {
-    auto callback = _netConnector.cb(ARK::API::Paths::Peer::version_s);
-
-    return ARK::API::Peer::Gettable::versionfromJSON(callback);
+	auto callback = netConnector.cb(ARK::API::Paths::Peer::version_s);
+	return ARK::API::Peer::Gettable::versionfromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"version":  "String",
+*		"build":  "String"
+*	}
+*
+**************************************************/
+ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::versionfromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "version":  "String",
-  "build":  "String"
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return {
+		parser.valueFor("version"),
+		parser.valueFor("build")
+	};
 }
-*/
-ARK::API::Peer::Respondable::Version ARK::API::Peer::Gettable::versionfromJSON(const char* const _jsonStr)
-{
-    ARK::Utilities::JSONString jString(_jsonStr);
+/*************************************************/
 
-    return ARK::API::Peer::Respondable::Version(
-        jString.valueFor("version").c_str(),
-        jString.valueFor("build").c_str()
-    );
-}
-/*  ===============================  */
-/*  ==========================================================================  */
 
 #endif
