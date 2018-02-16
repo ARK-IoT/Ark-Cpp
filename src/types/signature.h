@@ -4,7 +4,6 @@
 #define SIGNATURE_H
 #pragma once
 
-
 /********************************************************************************
 *
 * signature: 
@@ -14,25 +13,21 @@
 *
 ********************************************************************************/
 
-
 #define SIGNATURE_SIZE 143
 
-struct signature_t {
-private:
-    static const auto SIGNATURE_LEN = SIGNATURE_SIZE / sizeof(char);
-    char value_[SIGNATURE_LEN] = { '\0' };
+struct signature_t
+{
 
-public:
-    signature_t(){};
+	public:
+    const char* value;
 
-    signature_t(const char* const _signatureString) {      
-      strncpy(value_, _signatureString, SIGNATURE_LEN);
-      value_[SIGNATURE_LEN - 1] = '\0';
+    signature_t() : value() { };
+
+    signature_t(const char* const signatureString) : value() {  
+			this->value = signatureString;
     };
 
-    const char* description() const { return value_; };      
 };
-
 
 typedef signature_t Signature;
 

@@ -13,37 +13,43 @@
 *
 ********************************************************************************/
 
-    struct publickey_t {
-    private:
-        static const auto PUBLICKEY_SIZE = 67;
 
-        char value_[PUBLICKEY_SIZE];
+/*************************************************
+*
+*
+**************************************************/
+struct publickey_t {
 
-    public:
-        publickey_t() : value_() { };
+	private:
 
-        publickey_t(const char* const _base64String) : value_() {      
-          strncpy(value_, _base64String, sizeof(value_) / sizeof(value_[0]));
-        };
+		static const auto PUBLICKEY_SIZE = 67;
 
-        publickey_t(const publickey_t& other) : value_() {
-            strcpy(value_, other.value_);
-        }
-        publickey_t& operator=(const publickey_t& other) {
-            if (this != &other) {
-                strcpy(value_, other.value_);
-            }
-            return *this;
-        }
+	public:
+		char value[PUBLICKEY_SIZE];
 
-        const char* description() const { return value_; };      
-    };
+		publickey_t() : value() { };
 
-    typedef publickey_t Publickey;
+		publickey_t(const char* const base64String) : value() {  
+			strcpy(value, base64String);
+		};
 
+		publickey_t(const publickey_t& other) : value() {
+			strcpy(value, other.value);
+		}
 
-//   };
-// };
+		publickey_t& operator=(const publickey_t& other) {
+			if (this != &other) {
+				strcpy(value, other.value);
+			}
+			return *this;
+		}
+
+};
+/*************************************************/
+
+/*************************************************/
+typedef publickey_t Publickey;
+/*************************************************/
 
 
 #endif

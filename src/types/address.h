@@ -4,7 +4,7 @@
 #define ADDRESS_H
 #pragma once
 
-/********************************************************************************
+/*******************************************************************************
 *
 * address: 
 *   "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA"
@@ -15,23 +15,32 @@
 
 #define ADDRESS_SIZE 35
 
+/*************************************************
+*   address_t
+**************************************************/
 struct address_t
 {
-private:
-	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
-	char value_[ADDRESS_LENGTH];
+	private:
+		static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
 
-public:
-    address_t() : value_() { };
+	public:
+		char value[ADDRESS_LENGTH];
 
-	address_t(const char* const addressString) : value_()
-	{
-        strncpy(value_, addressString, ADDRESS_LENGTH);
-	}
+		address_t() : value() { };
 
-	const char* description() const { return value_; }
+		address_t(const char* const addressString) : value()
+		{
+			strcpy(value, addressString);
+		}
+
 };
+/*************************************************/
 
+
+/*************************************************
+*   Address
+**************************************************/
 typedef address_t Address;
+
 
 #endif

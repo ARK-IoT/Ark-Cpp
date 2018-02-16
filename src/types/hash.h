@@ -13,26 +13,21 @@
 *
 ********************************************************************************/
 
+#define HASH_SIZE 65
+
 struct Hash
 {
-private:
-  static const auto HASH_SIZE = 65;
+  public:
+    const char* value;
+  
+    Hash() : value() { }
 
-  char value_[HASH_SIZE];
+    Hash(const char* const hashStr) : value()
+    {
+      this->value = hashStr;
+    }
 
-public:
-  Hash() : value_() { }
-
-  /*  =====  */
-
-  Hash(const char* const hashStr) : value_()
-  {
-    strncpy(value_, hashStr, sizeof(value_) / sizeof(value_[0]));
-  }
-
-  /*  =====  */
-
-  const char* description() const { return value_; }
 };
+
 
 #endif
