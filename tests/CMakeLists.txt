@@ -79,24 +79,20 @@ add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/model/fees.cpp
 	${PROJECT_SOURCE_DIR}/model/network.cpp
 	${PROJECT_SOURCE_DIR}/model/peer.cpp
-#	${PROJECT_SOURCE_DIR}/model/signature.cpp
-#	${PROJECT_SOURCE_DIR}/model/transaction.cpp
-#	${PROJECT_SOURCE_DIR}/model/voter.cpp
+	${PROJECT_SOURCE_DIR}/model/transaction.cpp
+	${PROJECT_SOURCE_DIR}/model/voter.cpp
 	${PROJECT_SOURCE_DIR}/types/address.cpp
 	${PROJECT_SOURCE_DIR}/types/balance.cpp
 	${PROJECT_SOURCE_DIR}/types/hash.cpp
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
+	${PROJECT_SOURCE_DIR}/types/signature.cpp
 )
 
-find_library(ARK_LIBS NAMES Ark-Cpp-libd gtestd gtest_maind)
-
-#target_link_libraries(Ark-Cpp-tests 
-#	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/Ark-Cpp-libd.${STATIC_LIB_EXTENSION}
-#	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtestd.${STATIC_LIB_EXTENSION}
-#	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtest_maind.${STATIC_LIB_EXTENSION}
-#)
-
-target_link_libraries(Ark-Cpp-tests ${ARK_LIBS})
+target_link_libraries(Ark-Cpp-tests 
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/Ark-Cpp-libd.${STATIC_LIB_EXTENSION}
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtestd.${STATIC_LIB_EXTENSION}
+	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/gtest_maind.${STATIC_LIB_EXTENSION}
+)
 
 add_test(NAME test COMMAND Ark-Cpp-tests)
 

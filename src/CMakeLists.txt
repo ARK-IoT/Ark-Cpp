@@ -50,6 +50,7 @@ add_library(Ark-Cpp-lib STATIC
 	${PROJECT_SOURCE_DIR}/model/fees.cpp
 	${PROJECT_SOURCE_DIR}/model/network.cpp
 	${PROJECT_SOURCE_DIR}/model/peer.cpp
+	${PROJECT_SOURCE_DIR}/model/transaction.cpp
 	${PROJECT_SOURCE_DIR}/model/voter.cpp
 )
 

@@ -14,25 +14,31 @@ namespace ARK {
 /*  ================================================  */
   /*  ==========  */
   /*  ARK::Voter  */
-struct Voter {
-public:
-    char username[64];
-    Address address;
-    Publickey publicKey;
-    Balance balance;
+class Voter {
+private:
+    char username_[64];
+    Address address_;
+    Publickey publicKey_;
+    Balance balance_;
 
-    Voter() : username() { }
+public:
+    Voter() : username_() { }
 
     Voter(
         const char* const u, 
         const char* const a, 
         const char* const pk,
         const char* const b
-    ) : username(), address(a), publicKey(pk), balance(b) {
-        strncpy(username, u, sizeof(username) / sizeof(username[0]));
+    ) : username_(), address_(a), publicKey_(pk), balance_(b) {
+        strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
     }
 
-    void description(char* const buf, size_t size);
+	const char* username() const noexcept { return username_; }
+	const Address& address() const noexcept { return address_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	const Balance& balance() const noexcept { return balance_; }
+
+	void description(char* const buf, size_t size);
 };
 /*  ==========  */
 /*  ================================================  */

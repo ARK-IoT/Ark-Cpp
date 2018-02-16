@@ -4,6 +4,7 @@
 #define SIGNATURE_H
 #pragma once
 
+#include <cstring>
 
 /********************************************************************************
 *
@@ -15,26 +16,20 @@
 ********************************************************************************/
 
 
-#define SIGNATURE_SIZE 143
-
-struct signature_t {
+class Signature {
 private:
-    static const auto SIGNATURE_LEN = SIGNATURE_SIZE / sizeof(char);
-    char value_[SIGNATURE_LEN] = { '\0' };
+    static const auto SIGNATURE_SIZE = 143;
+    char value_[SIGNATURE_SIZE];
 
 public:
-    signature_t(){};
+	Signature(){};
 
-    signature_t(const char* const _signatureString) {      
-      strncpy(value_, _signatureString, SIGNATURE_LEN);
-      value_[SIGNATURE_LEN - 1] = '\0';
+	Signature(const char* const _signatureString) : value_() {
+      strncpy(value_, _signatureString, sizeof(value_) / sizeof(value_[0]));
     };
 
-    const char* description() const { return value_; };      
+    const char* description() const noexcept { return value_; };      
 };
-
-
-typedef signature_t Signature;
 
 const  Signature SIGNATURE_EMPTY();
 
