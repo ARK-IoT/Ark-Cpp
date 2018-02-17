@@ -37,13 +37,13 @@ ARK::Utilities::Network::Connector::Connector(ARK::NetworkType networkType)
 **************************************************/
 void ARK::Utilities::Network::Connector::connect(const ARK::Network& network)
 {
-    if (strcmp(network.nethash, ARK::Constants::Networks::Devnet::nethash) == 0) {
+    if (strcmp(network.nethash(), ARK::Constants::Networks::Devnet::nethash) == 0) {
         this->netType = ARK::NetworkType::DEV;
     }
-    else if (strcmp(network.nethash, ARK::Constants::Networks::Mainnet::nethash) == 0) {
+    else if (strcmp(network.nethash(), ARK::Constants::Networks::Mainnet::nethash) == 0) {
         this->netType = ARK::NetworkType::MAIN;
     }
-    else if (strcmp(network.nethash, "") != 0) {
+    else if (strcmp(network.nethash(), "") != 0) {
         this->netType = ARK::NetworkType::CUSTOM;
     }
     else {

@@ -3,6 +3,16 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
+#include "accountable.h"
+#include "blockable.h"
+#include "delegatable.h"
+#include "loadable.h"
+#include "multisignaturable.h"
+#include "peerable.h"
+#include "signaturable.h"
+#include "transactionable.h"
+#include "connector.h"
+
 namespace ARK
 {
 namespace API

@@ -42,6 +42,7 @@ add_library(Ark-Cpp-lib STATIC
 	${PROJECT_SOURCE_DIR}/api/signaturable/signature_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
+	${PROJECT_SOURCE_DIR}/api/manager.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/model/account.cpp
 	${PROJECT_SOURCE_DIR}/model/block.cpp
@@ -52,6 +53,9 @@ add_library(Ark-Cpp-lib STATIC
 	${PROJECT_SOURCE_DIR}/model/peer.cpp
 	${PROJECT_SOURCE_DIR}/model/transaction.cpp
 	${PROJECT_SOURCE_DIR}/model/voter.cpp
+	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
+	${PROJECT_SOURCE_DIR}/utilities/http.cpp
+	${PROJECT_SOURCE_DIR}/utilities/json.cpp
 )
 
 
