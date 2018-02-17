@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.6.2)
 
 project(Ark-Cpp-lib)
 
+hunter_add_package(nlohmann_json)
+
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
@@ -25,7 +27,11 @@ include_directories(${PROJECT_SOURCE_DIR}/model)
 include_directories(${PROJECT_SOURCE_DIR}/types)
 include_directories(${PROJECT_SOURCE_DIR}/utilities)
  
+
+
 #add_library(${PROJECT_NAME} SHARED ${PROJECT1_SRCS})
+
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_library(Ark-Cpp-lib STATIC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
@@ -58,6 +64,7 @@ add_library(Ark-Cpp-lib STATIC
 	${PROJECT_SOURCE_DIR}/utilities/json.cpp
 )
 
+target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 
 #message(STATUS "Setting MSVC flags")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHc /std:c++latest -D_CRT_SECURE_NO_WARNINGS")
