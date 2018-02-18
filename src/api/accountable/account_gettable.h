@@ -248,19 +248,18 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 **************************************************/
 ARK::Delegate ARK::API::Account::Gettable::delegatesfromJSON(const char *const jsonStr)
 {
-    ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
-
-    return {
-        parser.subarrayValueIn("delegates", 0, "username"),
-        Address(parser.subarrayValueIn("delegates", 0, "address")),
-        Publickey(parser.subarrayValueIn("delegates", 0, "publicKey")),
-        Balance(parser.subarrayValueIn("delegates", 0, "vote")),
-        atoi(parser.subarrayValueIn("delegates", 0, "producedblocks")),
-        atoi(parser.subarrayValueIn("delegates", 0, "missedblocks")),
-        atoi(parser.subarrayValueIn("delegates", 0, "rate")),
-        atof(parser.subarrayValueIn("delegates", 0, "approval")),
-        atof(parser.subarrayValueIn("delegates", 0, "productivity"))
-    };
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return {
+			parser.subarrayValueIn("delegates", 0, "username"),
+			parser.subarrayValueIn("delegates", 0, "address"),
+			parser.subarrayValueIn("delegates", 0, "publicKey"),
+			parser.subarrayValueIn("delegates", 0, "vote"),
+			atoi(parser.subarrayValueIn("delegates", 0, "producedblocks")),
+			atoi(parser.subarrayValueIn("delegates", 0, "missedblocks")),
+			atoi(parser.subarrayValueIn("delegates", 0, "rate")),
+			atof(parser.subarrayValueIn("delegates", 0, "approval")),
+			atof(parser.subarrayValueIn("delegates", 0, "productivity"))
+	};
 };
 /*************************************************/
 
@@ -313,15 +312,15 @@ ARK::Account ARK::API::Account::Gettable::accountfromJSON(const char *const json
 {
 	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
 	return {
-		Address(parser.subvalueIn("account", "address")),
-		Balance(parser.subvalueIn("account", "unconfirmedBalance")),
-		Balance(parser.subvalueIn("account", "balance")),
-		Publickey(parser.subvalueIn("account", "publicKey")),
+		parser.subvalueIn("account", "address"),
+		parser.subvalueIn("account", "unconfirmedBalance"),
+		parser.subvalueIn("account", "balance"),
+		parser.subvalueIn("account", "publicKey"),
 		atoi(parser.subvalueIn("account", "unconfirmedSignature")),
 		atoi(parser.subvalueIn("account", "secondSignature")),
-		Publickey(parser.subvalueIn("account", "secondPublicKey")),
-		Signature(parser.subvalueIn("account", "multisignatures")),
-		Signature(parser.subvalueIn("account", "u_multisignatures"))
+		parser.subvalueIn("account", "secondPublicKey"),
+		parser.subvalueIn("account", "multisignatures"),
+		parser.subvalueIn("account", "u_multisignatures")
 	};
 };
 /*************************************************/

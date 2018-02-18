@@ -21,6 +21,7 @@ class Gettable
 		*   /api/loader/status
 		**************************************************/
     ARK::API::Loader::Respondable::Status status(ARK::Utilities::Network::Connector& netConnector);
+
     ARK::API::Loader::Respondable::Status statusfromJSON(const char* const jsonStr);
     /*************************************************/
 
@@ -33,8 +34,8 @@ class Gettable
 		*   /api/loader/status/sync
 		**************************************************/
     ARK::API::Loader::Respondable::Sync sync(ARK::Utilities::Network::Connector& netConnector);
-    ARK::API::Loader::Respondable::Sync syncfromJSON(const char* const jsonStr);
 
+    ARK::API::Loader::Respondable::Sync syncfromJSON(const char* const jsonStr);
     /*************************************************/
 
 
@@ -46,8 +47,8 @@ class Gettable
 		*   /api/loader/autoconfigure
 		**************************************************/
     ARK::Network autoconfigure(ARK::Utilities::Network::Connector& netConnector);
-    ARK::Network autoconfigurefromJSON(const char* const jsonStr);
 
+    ARK::Network autoconfigurefromJSON(const char* const jsonStr);
     /*************************************************/
 };
 /*************************************************/

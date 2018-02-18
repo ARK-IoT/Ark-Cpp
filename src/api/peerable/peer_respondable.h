@@ -12,13 +12,35 @@ namespace Peer
 namespace Respondable
 {
 
+
+/*************************************************
+*	ARK::API::Peer::Respondable::version_t
+*
+*   @variables:
+*			char version{32]
+*			char build[32]
+*
+*   @description:
+*			Model for Loader Status API Response
+*
+**************************************************/
+struct version_t
+{
+	public:
+		char version[32];
+		char build[32];
+    
+		void printTo(HardwareSerial &serial);
+  };
+/*************************************************/
+
+
 /*************************************************
 *	ARK::API::Peer::Respondable::Version
 *
-*   @variables:
-*			bool loaded;
-*			int now;
-*			char blocksCount[64];
+*   @inherits:
+*			char version{32]
+*			char build[32]
 *
 *   @methods:	printTo(HardwareSerial &serial)
 *
@@ -26,14 +48,20 @@ namespace Respondable
 *			Model for Loader Status API Response
 *
 **************************************************/
-struct Version
+struct Version :
+		public version_t
 {
-	public:
-		const char* version;
-		const char* build;
-    
-		void printTo(HardwareSerial &serial);
+  Version(
+    const char* const newVersion,
+    const char* const newBuild
+  )
+  {
+  	strncpy(version, newVersion, sizeof(version) / sizeof(version[0]));
+  	strncpy(build, newBuild, sizeof(build) / sizeof(build[0]));
   };
+
+	void printTo(HardwareSerial &serial);
+};
 /*************************************************/
 
 
@@ -69,9 +97,9 @@ struct Version
 void ARK::API::Peer::Respondable::Version::printTo(HardwareSerial &serial)
 {
   serial.print("\nversion: ");
-  serial.print(this->version);
+  	serial.print(this->version);
   serial.print("\nbuild: ");
-  serial.print(this->build);
+  	serial.print(this->build);
   serial.print("\n");
 	serial.flush();
 }

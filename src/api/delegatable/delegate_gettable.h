@@ -200,9 +200,9 @@ ARK::API::Delegate::Respondable::Search ARK::API::Delegate::Gettable::searchfrom
 
 	return {
 		parser.subarrayValueIn("delegates", 0, "username"),
-		Address(parser.subarrayValueIn("delegates", 0, "address")),
-		Publickey(parser.subarrayValueIn("delegates", 0, "publicKey")),
-		Balance(parser.subarrayValueIn("delegates", 0, "vote")),
+		parser.subarrayValueIn("delegates", 0, "address"),
+		parser.subarrayValueIn("delegates", 0, "publicKey"),
+		parser.subarrayValueIn("delegates", 0, "vote"),
 		atoi(parser.subarrayValueIn("delegates", 0, "producedblocks")),
 		atoi(parser.subarrayValueIn("delegates", 0, "missedblocks"))
 	};
@@ -253,19 +253,11 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::voters(
 **************************************************/
 ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::votersfromJSON(const char* const jsonStr)
 {
-
-	Serial.print("jsonStr: ");
-	Serial.println(jsonStr);
-
 	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
 
-
 	int voterCount = ARK::API::Helpers::substringCount(jsonStr, "username");
-	Serial.print("voterCount: ");
-	Serial.println(voterCount);
 
 	ARK::API::Delegate::Respondable::Voters voters(voterCount);
-
 
 	for (int i = 0; i < voterCount; ++i)
 	{
@@ -304,8 +296,7 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegate(
   {
 		strcat(uri, "?username=");
   };
-
-  	strcat(uri, parameter);
+	strcat(uri, parameter);
 
   auto callback = netConnector.cb(uri);
   return ARK::API::Delegate::Gettable::delegatefromJSON(callback);
@@ -335,9 +326,9 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegatefromJSON(const char* jsonStr
 
   return {
 		parser.subvalueIn("delegate", "username"),
-		Address(parser.subvalueIn("delegate", "address")),
-		Publickey(parser.subvalueIn("delegate", "publicKey")),
-		Balance(parser.subvalueIn("delegate", "vote")),
+		parser.subvalueIn("delegate", "address"),
+		parser.subvalueIn("delegate", "publicKey"),
+		parser.subvalueIn("delegate", "vote"),
 		atoi(parser.subvalueIn("delegate", "producedblocks")),
 		atoi(parser.subvalueIn("delegate", "missedblocks")),
 		atoi(parser.subvalueIn("delegate", "rate")),
@@ -502,9 +493,9 @@ ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::f
 	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
 
 	return {
-		Balance(parser.valueFor("fees")),
-		Balance(parser.valueFor("rewards")),
-		Balance(parser.valueFor("forged"))
+		parser.valueFor("fees"),
+		parser.valueFor("rewards"),
+		parser.valueFor("forged")
 	};
 }
 /*************************************************/

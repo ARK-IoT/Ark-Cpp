@@ -13,7 +13,7 @@ namespace Respondable
 {
 
 	/*************************************************
-	*	ARK::API::Block::Respondable::Height 
+	*	ARK::API::Block::Respondable::height_t 
 	*
 	*   @variables:
 	*			const char* height
@@ -25,11 +25,37 @@ namespace Respondable
 	*			Model for Height API Response
 	*
 	**************************************************/
-	struct Height
+	struct height_t
 	{
 		public:
-			const char* height; 
-			const char* id;
+			char height[64];
+			char id[64];
+	};
+	/*************************************************/
+
+	/*************************************************
+	*	ARK::API::Block::Respondable::Height 
+	*
+	*   @inherits:
+	*			const char* height
+	*			const char* id
+	*
+	*   @methods:	printTo(HardwareSerial &serial)
+	*
+	*   @description:
+	*			Model for Height API Response
+	*
+	**************************************************/
+	struct Height : public height_t
+	{
+    Height(
+			const char* const newHeight,
+			const char* const newID
+		)
+		{ 
+        strncpy(height, newHeight, sizeof(height) / sizeof(height[0]));
+        strncpy(id, newID, sizeof(id) / sizeof(id[0]));
+    }
 
 			void printTo(HardwareSerial &serial);
 	};
@@ -40,9 +66,39 @@ namespace Respondable
 
 
 	/*************************************************
-	*	ARK::API::Block::Respondable::Status 
+	*	ARK::API::Block::Respondable::status_t 
 	*
 	*		@variables:
+	*			const char* epoch;
+	*			const char* height;
+	*			const Balance fee;
+	*			int milestone;
+	*			Hash nethash;
+	*			const Balance reward;
+	*			const Balance supply;
+	*
+	*   @description:
+	*			Model for Block Status API Response
+	*
+	**************************************************/
+	struct status_t
+	{
+		public:
+    	char epoch[64];  //TODO: check sizes
+    	char height[64];
+			Balance fee;
+			int milestone;
+			Hash nethash;
+			Balance reward;
+			Balance supply;
+	};
+	/*************************************************/
+
+
+	/*************************************************
+	*	ARK::API::Block::Respondable::Status 
+	*
+	*		@inherits:
 	*			const char* epoch;
 	*			const char* height;
 	*			const Balance fee;
@@ -54,19 +110,30 @@ namespace Respondable
 	*   @methods:	printTo(HardwareSerial &serial)
 	*
 	*   @description:
-	*			Model for Block Status API Response
+	*			Constructor Model for Block Status API Response
 	*
 	**************************************************/
-	struct Status
+	struct Status : public status_t
 	{
-		public:
-			const char* epoch;
-			const char* height;
-			const Balance fee;
-			int milestone;
-			Hash nethash;
-			const Balance reward;
-			const Balance supply;
+
+    Status(
+        const char* const newEpoch, 
+        const char* const newHeight,
+        const char* const newFee,
+        int newMilestone,
+        const char* const newNethash,
+        const char* const newReward,
+        const char* const newSupply
+    )
+    {
+			strncpy(epoch, newEpoch, sizeof(epoch) / sizeof(epoch[0]));
+			strncpy(height, newHeight, sizeof(height) / sizeof(height[0]));
+			fee = Balance(newFee);
+			milestone = newMilestone;
+			nethash = Hash(newNethash);
+			reward = Balance(newReward);
+			supply = Balance(newSupply);
+    }
 
 			void printTo(HardwareSerial &serial);
 	};

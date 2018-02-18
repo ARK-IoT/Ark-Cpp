@@ -14,9 +14,36 @@ namespace Respondable
 
 
 /*************************************************
-*	ARK::API::Delegate::Respondable::Search
+*	ARK::API::Delegate::Respondable::search_t
 *
 *		@variables:
+*			char username[20];
+*			Address address;
+*			Publickey publicKey;
+*			Balance vote;
+*			int producedblocks;
+*			int missedblocks;
+*
+*   @description:
+*			Model for Delegate Search API Response
+*
+**************************************************/
+struct search_t
+{
+	public:
+    char username[20];
+    Address address;
+    Publickey publicKey;
+    Balance vote;
+    int producedblocks;
+    int missedblocks;
+};
+/*************************************************/
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::Search
+*
+*		@inherits:
 *			const char* username;
 *			Address address;
 *			Publickey publicKey;
@@ -30,17 +57,27 @@ namespace Respondable
 *			Model for Delegate Search API Response
 *
 **************************************************/
-struct Search
+struct Search :
+		public search_t
 {
-  public:
-    const char* username;
-    Address address;
-    Publickey publicKey;
-    const Balance vote;
-    int producedblocks;
-    int missedblocks;
+	Search(
+			const char* const newUsername,
+			const char* const newAddress,
+			const char* const newPublickey,
+			const char* const newVote,
+			int newProducedBlocks,
+			int newMissedBlocks
+	)
+	{
+		strncpy(username, newUsername, sizeof(username) / sizeof(username[0]));
+		address = Address(newAddress);
+		publicKey = Publickey(newPublickey);
+		vote = Balance(newVote);
+		producedblocks = newProducedBlocks;
+		missedblocks = newMissedBlocks;
+	}
 
-    void printTo(HardwareSerial &serial);
+	void printTo(HardwareSerial &serial);
 };
 /*************************************************/
 
@@ -89,12 +126,34 @@ struct Voters
 
 
 /*************************************************
-*	ARK::API::Delegate::Respondable::ForgedByAccount
+*	ARK::API::Delegate::Respondable::forged_by_account_t
 *
 *		@variables:
 *			const Balance fees;
 *			const Balance rewards;
 *			const Balance forged;
+*
+*   @description:
+*			Model for Delegate Forging Totals API Response
+*
+**************************************************/
+struct forged_by_account_t
+{
+	public:
+    Balance fees;
+    Balance rewards;
+    Balance forged;
+};
+/*************************************************/
+
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::ForgedByAccount
+*
+*		@inherits:
+*			Balance fees;
+*			Balance rewards;
+*			Balance forged;
 *
 *   @methods:	printTo(HardwareSerial &serial)
 *
@@ -102,14 +161,21 @@ struct Voters
 *			Model for Delegate Forging Totals API Response
 *
 **************************************************/
-struct ForgedByAccount
+struct ForgedByAccount :
+		public forged_by_account_t
 {
-	public:
-    const Balance fees;
-    const Balance rewards;
-    const Balance forged;
+	ForgedByAccount(
+		const char* const newFees,
+		const char* const newRewards,
+		const char* const newForged
+	)
+	{
+		this->fees = Balance(newFees);
+		this->rewards = Balance(newRewards);
+		this->forged = Balance(newForged);
+	};
 
-    void printTo(HardwareSerial &serial);
+	void printTo(HardwareSerial &serial);
 };
 /*************************************************/
 
@@ -118,9 +184,31 @@ struct ForgedByAccount
 
 
 /*************************************************
-*	ARK::API::Delegate::Respondable::NextForgers
+*	ARK::API::Delegate::Respondable::next_forgers_t
 *
 *		@variables:
+*			char currentBlock[64];
+*			char currentSlot[64];
+*			Publickey* const delegateKeys = new Publickey[10];
+*
+*   @description:
+*			Model for Next 10 Forging Delegate Publickeys API Response
+*
+**************************************************/
+struct next_forgers_t
+{
+	public:
+		char currentBlock[64];
+		char currentSlot[64];
+		Publickey* const delegateKeys = new Publickey[10];
+};
+/*************************************************/
+
+
+/*************************************************
+*	ARK::API::Delegate::Respondable::NextForgers
+*
+*		@inherits:
 *			char currentBlock[64];
 *			char currentSlot[64];
 *			Publickey* const delegateKeys = new Publickey[10];
@@ -131,19 +219,15 @@ struct ForgedByAccount
 *			Model for Next 10 Forging Delegate Publickeys API Response
 *
 **************************************************/
-struct NextForgers
+struct NextForgers :
+		public next_forgers_t
 {
-	public:
-		char currentBlock[64];
-		char currentSlot[64];
-		Publickey* const delegateKeys = new Publickey[10];
+	NextForgers(
+			const char* const _currentBlock,
+			const char* const _currentSlot,
+			const Publickey* const _delegates);
 
-		NextForgers(
-				const char* const _currentBlock,
-				const char* const _currentSlot,
-				const Publickey* const _delegates);
-
-		void printTo(HardwareSerial &serial);
+	void printTo(HardwareSerial &serial);
 };
 /*************************************************/
 
@@ -164,20 +248,20 @@ struct NextForgers
 **************************************************/
 void ARK::API::Delegate::Respondable::Search::printTo(HardwareSerial &serial)
 {
-    serial.print("\nusername: ");
+	serial.print("\nusername: ");
     serial.print(this->username);
-    serial.print("\naddress: ");
+	serial.print("\naddress: ");
     serial.print(this->address.value);
-    serial.print("\npublicKey: ");
+	serial.print("\npublicKey: ");
     serial.print(this->publicKey.value);
-    serial.print("\nvote: ");
+	serial.print("\nvote: ");
     serial.print(this->vote.ark());
-    serial.print("\nproducedblocks: ");
+	serial.print("\nproducedblocks: ");
     serial.print(this->producedblocks);
-    serial.print("\nmissedblocks: ");
+	serial.print("\nmissedblocks: ");
     serial.print(this->missedblocks);
-    serial.print("\n");
-    serial.flush();
+	serial.print("\n");
+	serial.flush();
 }
 /*************************************************/
 
@@ -225,14 +309,14 @@ void ARK::API::Delegate::Respondable::Voters::printTo(HardwareSerial &serial)
 **************************************************/
 void ARK::API::Delegate::Respondable::ForgedByAccount::printTo(HardwareSerial &serial)
 {
-    serial.print("\nfees: ");
+	serial.print("\nfees: ");
     serial.print(this->fees.ark());
-    serial.print("\nrewards: ");
+	serial.print("\nrewards: ");
     serial.print(this->rewards.ark());
-    serial.print("\nforged: ");
+	serial.print("\nforged: ");
     serial.print(this->forged.ark());
-    serial.print("\n");
-    serial.flush();
+	serial.print("\n");
+	serial.flush();
 }
 /*************************************************/
 
@@ -254,11 +338,12 @@ void ARK::API::Delegate::Respondable::ForgedByAccount::printTo(HardwareSerial &s
 *     Constructs API Delegate NextForgers Response
 *
 **************************************************/
-ARK::API::Delegate::Respondable::NextForgers::NextForgers(
+ARK::API::Delegate::Respondable::NextForgers::NextForgers
+(
 		const char* const _currentBlock,
 		const char* const _currentSlot,
-		const Publickey* const _delegates) :
-				currentBlock(), currentSlot()
+		const Publickey* const _delegates
+)
 {
 	strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
 	strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
@@ -281,17 +366,17 @@ ARK::API::Delegate::Respondable::NextForgers::NextForgers(
 void ARK::API::Delegate::Respondable::NextForgers::printTo(HardwareSerial &serial)
 {
 	serial.print("\ncurrentBlock: ");
-	serial.print(this->currentBlock);
+		serial.print(this->currentBlock);
 	serial.print("\ncurrentSlot: ");
-	serial.print(this->currentSlot);
+		serial.print(this->currentSlot);
 	serial.print("\n");
 
 	for (int i = 0; i < 9; i++)
 	{
 		serial.print("delegate ");
-		serial.print(i + 1);
+			serial.print(i + 1);
 		serial.print(": \n publicKey: ");
-		serial.print(delegateKeys[i].value);
+			serial.print(delegateKeys[i].value);
 		serial.print("\n");
 	};
 	serial.flush();

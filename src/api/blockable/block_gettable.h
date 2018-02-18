@@ -208,22 +208,22 @@ ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const jsonStr)
 {
   ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
   return {
-      parser.valueIn("block", "id"),
-      atoi(parser.valueIn("block", "version")),
-      parser.valueIn("block", "timestamp"),
-      parser.valueIn("block", "height"),
-      parser.valueIn("block", "previousBlock"),
-      parser.valueIn("block", "numberOfTransactions"),
-      Balance(parser.valueIn("block", "totalAmount")),
-      Balance(parser.valueIn("block", "totalFee")),
-      Balance(parser.valueIn("block", "reward")),
-      parser.valueIn("block", "payloadLength"),
-      Hash(parser.valueIn("block", "payloadHash")),
-      Publickey(parser.valueIn("block", "generatorPublicKey")),
-      Address(parser.valueIn("block", "generatorId")),
-      Signature(parser.valueIn("block", "blockSignature")),
-      parser.valueIn("block", "confirmations"),
-      Balance(parser.valueIn("block", "totalForged"))
+    parser.valueIn("block", "id"),
+    atoi(parser.valueIn("block", "version")),
+    parser.valueIn("block", "timestamp"),
+    parser.valueIn("block", "height"),
+    parser.valueIn("block", "previousBlock"),
+    parser.valueIn("block", "numberOfTransactions"),
+    parser.valueIn("block", "totalAmount"),
+    parser.valueIn("block", "totalFee"),
+    parser.valueIn("block", "reward"),
+    parser.valueIn("block", "payloadLength"),
+    parser.valueIn("block", "payloadHash"),
+    parser.valueIn("block", "generatorPublicKey"),
+    parser.valueIn("block", "generatorId"),
+    parser.valueIn("block", "blockSignature"),
+    parser.valueIn("block", "confirmations"),
+    parser.valueIn("block", "totalForged")
   };
 }
 /*************************************************/
@@ -435,8 +435,7 @@ Balance ARK::API::Block::Gettable::fee(ARK::Utilities::Network::Connector& netCo
 Balance ARK::API::Block::Gettable::feefromJSON(const char* const jsonStr)
 {
   ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
-  Balance balance = Balance(parser.valueFor("fee"));
-  return balance;
+  return Balance(parser.valueFor("fee"));
 };
 /*************************************************/
 
@@ -600,11 +599,11 @@ ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::statusfromJSON(c
   return {
       parser.valueFor("epoch"),
       parser.valueFor("height"),
-      Balance(parser.valueFor("fee")),
+      parser.valueFor("fee"),
       atoi(parser.valueFor("milestone")),
-      Hash(parser.valueFor("nethash")),
-      Balance(parser.valueFor("reward")),
-      Balance(parser.valueFor("supply"))
+      parser.valueFor("nethash"),
+      parser.valueFor("reward"),
+      parser.valueFor("supply")
   };
 };
 /*************************************************/
