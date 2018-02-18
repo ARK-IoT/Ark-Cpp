@@ -14,6 +14,7 @@ if (MSVC)
 	set(STATIC_LIB_EXTENSION lib)
 elseif (UNIX)
 	set(STATIC_LIB_EXTENSION a)
+	set (CMAKE_CXX_FLAGS -std=c++11)
 endif()
 
  
