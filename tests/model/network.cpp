@@ -1,6 +1,6 @@
 ﻿#include "network.h"
 
-#include "gtest\gtest.h"
+#include "gtest/gtest.h"
 
 TEST(Network, construct_network) {
     ARK::Network network(

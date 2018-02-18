@@ -20,9 +20,7 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR})
 
 if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-	set(STATIC_LIB_EXTENSION lib)
 elseif (UNIX)
-	set(STATIC_LIB_EXTENSION a)
 	set (CMAKE_CXX_FLAGS -std=c++11)
 endif()
 
