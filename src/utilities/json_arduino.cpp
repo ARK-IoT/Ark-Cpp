@@ -1,9 +1,6 @@
 #include "json.h"
 
-#include "nlohmann/json.hpp"
-using json = nlohmann::json;
-
-#include <string>
+#include "ArduinoJson.h"
 
 namespace ARK
 {
@@ -12,14 +9,17 @@ namespace Utilities
 
 namespace {
 
-struct JSON : public JSONInterface
+struct JSONInterface : public JSONInterface
 {
 
 private:
-	json _json;
+	static const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
+
+	String jsonStr;
 
 public:
-	JSON(const std::string& jsonStr) : _json(jsonStr) {
+	JSONInterface(const String& _jsonStr) {
+		this->jsonStr = _jsonStr;
 	}
 
 	/**************************************************
@@ -27,15 +27,19 @@ public:
 	*
 	* { "key1": value1, "key2": value2 }
 	**************************************************/
-	String valueFor(const String& key) override {
-		return _json[key];
+	String valueFor(const String& _key) override {
+		DynamicJsonBuffer jsonBuffer(capacity);
+		JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
+		return root[_key];
 	}
 
 	/**************************************************
 	* valueIn(key, subkey)
 	**************************************************/
-	String valueIn(const String& key, const String& subkey) override {
-		return _json[key][subkey];
+	String valueIn(const String& _key, const String& _subkey) override {
+		DynamicJsonBuffer jsonBuffer(capacity);
+		JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
+		return root[_key][_subkey];
 	}
 
 	/**************************************************
@@ -43,30 +47,37 @@ public:
 	*
 	* { "key": { subValue1, subvalue2 } }
 	**************************************************/
-	String subvalueFor(const String& key, int pos) override {
-		return _json[key][pos];
+	String subvalueFor(const String& _key, int _pos) override {
+		DynamicJsonBuffer jsonBuffer(capacity);
+		JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
+		return root[_key][_pos];
 	}
 
 	/**************************************************
 	* subvalueIn(key, subkey)
 	**************************************************/
-	String subvalueIn(const String& key, const String& subkey) override {
-		const json new_root(_json[key]);
-		return new_root[subkey];
+	String subvalueIn(const String& _key, const String& _subkey) override {
+		DynamicJsonBuffer jsonBuffer(capacity);
+		JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
+		JsonObject &newRoot = root[_key];
+		return newRoot[_subkey];
 	}
 	
 	/**************************************************
 	* subarrayValueIn(key, position, subkey)
 	**************************************************/
-	String subarrayValueIn(const String& key, int pos, const String& subkey) override {
-		return _json[key][pos][subkey];
+	String subarrayValueIn(const String& _key, int _pos, const String& _subkey) override {
+		DynamicJsonBuffer jsonBuffer(capacity);
+		JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
+		// JsonArray& root = jsonBuffer.parseArray(this->jsonStr);
+		return root[_key][_pos][_subkey];
 	}
 };
 
 }
 
 std::unique_ptr<JSONInterface> make_json_string(const String& json_str) {
-	return std::unique_ptr<JSONInterface>(new JSON(json_str));
+	return std::make_unique(new JSONInterface(json_str));
 }
 
 /*  ==========================================================================  */

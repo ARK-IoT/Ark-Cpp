@@ -32,9 +32,9 @@ String ARK::API::MultiSignature::Gettable::pending(
 */
 String ARK::API::MultiSignature::Gettable::pendingfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
   
-  return jString.valueFor("transactions");
+  return jString->valueFor("transactions");
 };
 /*  =========================================  */
 /*  ==========================================================================  */
@@ -57,8 +57,8 @@ String ARK::API::MultiSignature::Gettable::pendingfromJSON(const char* const _js
 
   /*  Only on Mainnet?  */
   // String ARK::API::MultiSignature::Gettable::accountsfromJSON(String _jsonStr) {
-  //   ARK::Utilities::JSONString jString(_jsonStr);
-  //   return jString.valueFor("??");
+  //   auto jString = ARK::Utilities::make_json_string(_jsonStr);
+  //   return jString->valueFor("??");
   // };
   /*  ==========================================  */
 /*  ==========================================================================  */

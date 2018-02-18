@@ -23,12 +23,12 @@ ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(ARK::Ut
 */
 ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::statusfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::API::Loader::Respondable::Status(
-        jString.valueFor("loaded").c_str(),
-        convert_to_int(jString.valueFor("now")),
-        jString.valueFor("blocksCount").c_str()
+        jString->valueFor("loaded").c_str(),
+        convert_to_int(jString->valueFor("now")),
+        jString->valueFor("blocksCount").c_str()
     );
 }
 /*  ================================  */
@@ -59,13 +59,13 @@ ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(ARK::Utilit
 */
 ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::syncfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::API::Loader::Respondable::Sync(
-        jString.valueFor("syncing").c_str(),
-        convert_to_int(jString.valueFor("blocks")),
-        jString.valueFor("height").c_str(),
-        jString.valueFor("id").c_str()
+        jString->valueFor("syncing").c_str(),
+        convert_to_int(jString->valueFor("blocks")),
+        jString->valueFor("height").c_str(),
+        jString->valueFor("id").c_str()
     );
 }
 /*  ==============================  */
@@ -99,14 +99,14 @@ ARK::Network ARK::API::Loader::Gettable::autoconfigure(ARK::Utilities::Network::
 */
 ARK::Network ARK::API::Loader::Gettable::autoconfigurefromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::Network(
-        jString.valueIn("network", "nethash").c_str(),
-        jString.valueIn("network", "token").c_str(),
-        jString.valueIn("network", "symbol").c_str(),
-        jString.valueIn("network", "explorer").c_str(),
-        convert_to_int(jString.valueIn("network", "version"))
+        jString->valueIn("network", "nethash").c_str(),
+        jString->valueIn("network", "token").c_str(),
+        jString->valueIn("network", "symbol").c_str(),
+        jString->valueIn("network", "explorer").c_str(),
+        convert_to_int(jString->valueIn("network", "version"))
     );
 }
 /*  =======================================  */

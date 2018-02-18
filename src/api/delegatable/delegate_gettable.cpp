@@ -22,9 +22,9 @@ int ARK::API::Delegate::Gettable::count(ARK::Utilities::Network::Connector& _net
 */
 int ARK::API::Delegate::Gettable::countfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return convert_to_int(jString.valueFor("count"));
+  return convert_to_int(jString->valueFor("count"));
 };
 /*  ===================================  */
 /*  ==========================================================================  */
@@ -67,15 +67,15 @@ ARK::API::Delegate::Respondable::Search ARK::API::Delegate::Gettable::search(
 */
 ARK::API::Delegate::Respondable::Search ARK::API::Delegate::Gettable::searchfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::API::Delegate::Respondable::Search(
-        jString.subarrayValueIn("delegates", 0, "username").c_str(),
-        jString.subarrayValueIn("delegates", 0, "address").c_str(),
-        jString.subarrayValueIn("delegates", 0, "publicKey").c_str(),
-        jString.subarrayValueIn("delegates", 0, "vote").c_str(),
-        convert_to_int(jString.subarrayValueIn("delegates", 0, "producedblocks")),
-        convert_to_int(jString.subarrayValueIn("delegates", 0, "missedblocks"))
+        jString->subarrayValueIn("delegates", 0, "username").c_str(),
+        jString->subarrayValueIn("delegates", 0, "address").c_str(),
+        jString->subarrayValueIn("delegates", 0, "publicKey").c_str(),
+        jString->subarrayValueIn("delegates", 0, "vote").c_str(),
+        convert_to_int(jString->subarrayValueIn("delegates", 0, "producedblocks")),
+        convert_to_int(jString->subarrayValueIn("delegates", 0, "missedblocks"))
     );
 };
 /*  ====================================  */
@@ -120,7 +120,7 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::voters(
 */
 ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::votersfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     const auto voterCount = ARK::API::Helpers::substringCount(_jsonStr, "username");
 
@@ -129,10 +129,10 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::votersfrom
     for (auto i = 0; i < voterCount; ++i)
     {
         voters[i] = ARK::Voter(
-            jString.subarrayValueIn("accounts", i, "username").c_str(),
-            jString.subarrayValueIn("accounts", i, "address").c_str(),
-            jString.subarrayValueIn("accounts", i, "publicKey").c_str(),
-            jString.subarrayValueIn("accounts", i, "balance").c_str()
+            jString->subarrayValueIn("accounts", i, "username").c_str(),
+            jString->subarrayValueIn("accounts", i, "address").c_str(),
+            jString->subarrayValueIn("accounts", i, "publicKey").c_str(),
+            jString->subarrayValueIn("accounts", i, "balance").c_str()
         );
     };
 
@@ -192,18 +192,18 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegate(
 */
 ARK::Delegate ARK::API::Delegate::Gettable::delegatefromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::Delegate(
-        jString.subvalueIn("delegate", "username").c_str(),
-        jString.subvalueIn("delegate", "address").c_str(),
-        jString.subvalueIn("delegate", "publicKey").c_str(),
-        jString.subvalueIn("delegate", "vote").c_str(),
-        convert_to_int(jString.subvalueIn("delegate", "producedblocks")),
-        convert_to_int(jString.subvalueIn("delegate", "missedblocks")),
-        convert_to_int(jString.subvalueIn("delegate", "rate")),
-        convert_to_float(jString.subvalueIn("delegate", "approval")),
-        convert_to_float(jString.subvalueIn("delegate", "productivity"))
+        jString->subvalueIn("delegate", "username").c_str(),
+        jString->subvalueIn("delegate", "address").c_str(),
+        jString->subvalueIn("delegate", "publicKey").c_str(),
+        jString->subvalueIn("delegate", "vote").c_str(),
+        convert_to_int(jString->subvalueIn("delegate", "producedblocks")),
+        convert_to_int(jString->subvalueIn("delegate", "missedblocks")),
+        convert_to_int(jString->subvalueIn("delegate", "rate")),
+        convert_to_float(jString->subvalueIn("delegate", "approval")),
+        convert_to_float(jString->subvalueIn("delegate", "productivity"))
     );
 }
 /*  ======================================  */
@@ -256,21 +256,21 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegatefromJSON(const char* const _
 //   // Serial.println("_jsonStr");
 //   // Serial.println(_jsonStr);
 //   // Serial.println();
-//   ARK::Utilities::JSONString jString(_jsonStr);
+//   auto jString = ARK::Utilities::make_json_string(_jsonStr);
 //   int top51Count = 51;
 //   // ARK::Delegate delegate[5];
 //   ARK::DelegatesResponse delegatesResponse(5);
 //   for (int i = 0; i < 5; i++) {
 //     ARK::Delegate delegate = {
-//       jString.subarrayValueIn("delegates", i, "username"),
-//       jString.subarrayValueIn("delegates", i, "address"),
-//       jString.subarrayValueIn("delegates", i, "publicKey"),
-//       jString.subarrayValueIn("delegates", i, "vote"),
-//       jString.subarrayValueIn("delegates", i, "producedblocks").toInt(),
-//       jString.subarrayValueIn("delegates", i, "missedblocks").toInt(),
-//       jString.subarrayValueIn("delegates", i, "rate").toInt(),
-//       jString.subarrayValueIn("delegates", i, "approval").toFloat(),
-//       jString.subarrayValueIn("delegates", i, "productivity").toFloat()
+//       jString->subarrayValueIn("delegates", i, "username"),
+//       jString->subarrayValueIn("delegates", i, "address"),
+//       jString->subarrayValueIn("delegates", i, "publicKey"),
+//       jString->subarrayValueIn("delegates", i, "vote"),
+//       jString->subarrayValueIn("delegates", i, "producedblocks").toInt(),
+//       jString->subarrayValueIn("delegates", i, "missedblocks").toInt(),
+//       jString->subarrayValueIn("delegates", i, "rate").toInt(),
+//       jString->subarrayValueIn("delegates", i, "approval").toFloat(),
+//       jString->subarrayValueIn("delegates", i, "productivity").toFloat()
 //     };
 //     delegatesResponse.list[i] = delegate;
 //   };
@@ -280,7 +280,7 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegatefromJSON(const char* const _
 //       resp += delegatesResponse.list[i].description();
 //   };
 //   resp += "totalCount:\n";
-//     resp += jString.valueFor("totalCount");
+//     resp += jString->valueFor("totalCount");
 //   return resp;
 // };
 /*  =====================================  */
@@ -309,9 +309,9 @@ Balance ARK::API::Delegate::Gettable::fee(ARK::Utilities::Network::Connector& _n
 */
 Balance ARK::API::Delegate::Gettable::feefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Balance(jString.valueFor("fee").c_str());
+  return Balance(jString->valueFor("fee").c_str());
 };
 /*  =================================  */
 /*  ==========================================================================  */
@@ -347,12 +347,12 @@ ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::f
 */
 ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::forgedByAccountfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::API::Delegate::Respondable::ForgedByAccount(
-        jString.valueFor("fees").c_str(),
-        jString.valueFor("rewards").c_str(),
-        jString.valueFor("forged").c_str()
+        jString->valueFor("fees").c_str(),
+        jString->valueFor("rewards").c_str(),
+        jString->valueFor("forged").c_str()
     );
 }
 /*  =============================================  */
@@ -394,18 +394,18 @@ ARK::API::Delegate::Respondable::NextForgers ARK::API::Delegate::Gettable::nextF
 ARK::API::Delegate::Respondable::NextForgers ARK::API::Delegate::Gettable::nextForgersfromJSON(
     const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     Publickey delegates[10];
 
     for (int i = 0; i < 10; i++)
     {
-        delegates[i] = Publickey(jString.subvalueFor("delegates", i).c_str());
+        delegates[i] = Publickey(jString->subvalueFor("delegates", i).c_str());
     };
 
     return ARK::API::Delegate::Respondable::NextForgers(
-        jString.valueFor("currentBlock").c_str(),
-        jString.valueFor("currentSlot").c_str(),
+        jString->valueFor("currentBlock").c_str(),
+        jString->valueFor("currentSlot").c_str(),
         delegates
     );
 }

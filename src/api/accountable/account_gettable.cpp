@@ -29,9 +29,9 @@ ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balance(
 */
 ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balancefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return ARK::API::Account::Respondable::Balances(Balance(jString.valueFor("balance").c_str()), Balance(jString.valueFor("unconfirmedBalance").c_str()));
+  return ARK::API::Account::Respondable::Balances(Balance(jString->valueFor("balance").c_str()), Balance(jString->valueFor("unconfirmedBalance").c_str()));
 };
 /*  ==================================  */
 /*  ==========================================================================  */
@@ -64,9 +64,9 @@ Publickey ARK::API::Account::Gettable::publickey(
 */
 Publickey ARK::API::Account::Gettable::publickeyfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Publickey(jString.valueFor("publicKey").c_str());
+  return Publickey(jString->valueFor("publicKey").c_str());
 };
 /*  ====================================  */
 /*  ==========================================================================  */
@@ -101,9 +101,9 @@ Balance ARK::API::Account::Gettable::delegatesFee(
 */
 Balance ARK::API::Account::Gettable::delegatesFeefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Balance(jString.valueFor("fee").c_str());
+  return Balance(jString->valueFor("fee").c_str());
 };
 /*  =========================================  */
 /*  ==========================================================================  */
@@ -147,18 +147,18 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 */
 ARK::Delegate ARK::API::Account::Gettable::delegatesfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return Delegate(
-        jString.subarrayValueIn("delegates", 0, "username").c_str(),
-        jString.subarrayValueIn("delegates", 0, "address").c_str(),
-        jString.subarrayValueIn("delegates", 0, "publicKey").c_str(),
-        jString.subarrayValueIn("delegates", 0, "vote").c_str(),
-        convert_to_int(jString.subarrayValueIn("delegates", 0, "producedblocks")),
-        convert_to_int(jString.subarrayValueIn("delegates", 0, "missedblocks")),
-        convert_to_int(jString.subarrayValueIn("delegates", 0, "rate")),
-        convert_to_float(jString.subarrayValueIn("delegates", 0, "approval")),
-        convert_to_float(jString.subarrayValueIn("delegates", 0, "productivity"))
+        jString->subarrayValueIn("delegates", 0, "username").c_str(),
+        jString->subarrayValueIn("delegates", 0, "address").c_str(),
+        jString->subarrayValueIn("delegates", 0, "publicKey").c_str(),
+        jString->subarrayValueIn("delegates", 0, "vote").c_str(),
+        convert_to_int(jString->subarrayValueIn("delegates", 0, "producedblocks")),
+        convert_to_int(jString->subarrayValueIn("delegates", 0, "missedblocks")),
+        convert_to_int(jString->subarrayValueIn("delegates", 0, "rate")),
+        convert_to_float(jString->subarrayValueIn("delegates", 0, "approval")),
+        convert_to_float(jString->subarrayValueIn("delegates", 0, "productivity"))
     );
 };
 /*  ======================================  */
@@ -203,18 +203,18 @@ ARK::Account ARK::API::Account::Gettable::account(
 */
 ARK::Account ARK::API::Account::Gettable::accountfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::Account(
-        jString.subvalueIn("account", "address").c_str(),
-        jString.subvalueIn("account", "unconfirmedBalance").c_str(),
-        jString.subvalueIn("account", "balance").c_str(),
-        jString.subvalueIn("account", "publicKey").c_str(),
-        convert_to_int(jString.subvalueIn("account", "unconfirmedSignature")),
-        convert_to_int(jString.subvalueIn("account", "secondSignature")),
-        jString.subvalueIn("account", "secondPublicKey").c_str(),
-        jString.subvalueIn("account", "multisignatures").c_str(),
-        jString.subvalueIn("account", "u_multisignatures").c_str()
+        jString->subvalueIn("account", "address").c_str(),
+        jString->subvalueIn("account", "unconfirmedBalance").c_str(),
+        jString->subvalueIn("account", "balance").c_str(),
+        jString->subvalueIn("account", "publicKey").c_str(),
+        convert_to_int(jString->subvalueIn("account", "unconfirmedSignature")),
+        convert_to_int(jString->subvalueIn("account", "secondSignature")),
+        jString->subvalueIn("account", "secondPublicKey").c_str(),
+        jString->subvalueIn("account", "multisignatures").c_str(),
+        jString->subvalueIn("account", "u_multisignatures").c_str()
     );
 };
 /*  ====================================  */

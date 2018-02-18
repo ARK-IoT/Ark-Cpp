@@ -45,30 +45,30 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 }
 */
 ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char* const jsonStr) {
-    ARK::Utilities::JSONString jString(jsonStr); 
+    auto jString = ARK::Utilities::make_json_string(jsonStr); 
 
     /*char temp[34];
-    jString.valueIn("transaction", "senderId").toCharArray(temp, 34);
+    jString->valueIn("transaction", "senderId").toCharArray(temp, 34);
 
     char temp2[34];
-    jString.valueIn("transaction", "recipientId").toCharArray(temp, 34);*/
+    jString->valueIn("transaction", "recipientId").toCharArray(temp, 34);*/
 
     return ARK::Transaction(
-        jString.valueIn("transaction", "id").c_str(),
-        jString.valueIn("transaction", "blockid").c_str(),
-        jString.valueIn("transaction", "height").c_str(),
-        convert_to_int(jString.valueIn("transaction", "type")),
-        jString.valueIn("transaction", "timestamp").c_str(),
-        jString.valueIn("transaction", "amount").c_str(),
-        jString.valueIn("transaction", "fee").c_str(),
-        jString.valueIn("transaction", "vendorField").c_str(),
-        jString.valueIn("transaction", "senderId").c_str(),
+        jString->valueIn("transaction", "id").c_str(),
+        jString->valueIn("transaction", "blockid").c_str(),
+        jString->valueIn("transaction", "height").c_str(),
+        convert_to_int(jString->valueIn("transaction", "type")),
+        jString->valueIn("transaction", "timestamp").c_str(),
+        jString->valueIn("transaction", "amount").c_str(),
+        jString->valueIn("transaction", "fee").c_str(),
+        jString->valueIn("transaction", "vendorField").c_str(),
+        jString->valueIn("transaction", "senderId").c_str(),
        // temp,
-        jString.valueIn("transaction", "recipientId").c_str(),
+        jString->valueIn("transaction", "recipientId").c_str(),
         //temp2,
-        jString.valueIn("transaction", "senderPublicKey").c_str(),
-        jString.valueIn("transaction", "signature").c_str(),
-        jString.valueIn("transaction", "confirmations").c_str()
+        jString->valueIn("transaction", "senderPublicKey").c_str(),
+        jString->valueIn("transaction", "signature").c_str(),
+        jString->valueIn("transaction", "confirmations").c_str()
     );
 }
 /*  ============================================  */
@@ -128,43 +128,43 @@ ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char
 // }
 // */
 // String ARK::API::Transaction::Gettable::transactionsfromJSON(String jsonStr) {
-//   ARK::Utilities::JSONString jString(jsonStr); 
+//   auto jString = ARK::Utilities::make_json_string(jsonStr); 
 //   // ARK::Transaction transactions[50];
 //   String resp;
 //   for (int i = 0; i < 50; i++) {
-//     String transactionSubstring = jString.subvalueFor("transactions", i);
-//     ARK::Utilities::JSONString transactionJString(transactionSubstring); 
+//     String transactionSubstring = jString->subvalueFor("transactions", i);
+//     ARK::Utilities::JSONInterface transactionJString(transactionSubstring); 
 //     ARK::Transaction transaction = {
-//       transactionJString.valueFor("id"),
-//       transactionJString.valueFor("blockid"),
-//       transactionJString.valueFor("height"),
-//       transactionJString.valueFor("type").toInt(),
-//       transactionJString.valueFor("timestamp"),
-//       transactionJString.valueFor("amount"),
-//       transactionJString.valueFor("fee"),
-//       transactionJString.valueFor("vendorField"),
-//       transactionJString.valueFor("senderId"),
-//       transactionJString.valueFor("recipientId"),
-//       transactionJString.valueFor("senderPublicKey"),
-//       transactionJString.valueFor("signature"),
-//       transactionJString.valueFor("confirmations")
+//       transactionjString->valueFor("id"),
+//       transactionjString->valueFor("blockid"),
+//       transactionjString->valueFor("height"),
+//       transactionjString->valueFor("type").toInt(),
+//       transactionjString->valueFor("timestamp"),
+//       transactionjString->valueFor("amount"),
+//       transactionjString->valueFor("fee"),
+//       transactionjString->valueFor("vendorField"),
+//       transactionjString->valueFor("senderId"),
+//       transactionjString->valueFor("recipientId"),
+//       transactionjString->valueFor("senderPublicKey"),
+//       transactionjString->valueFor("signature"),
+//       transactionjString->valueFor("confirmations")
 //     };
-//     // String transactionSubstring = jString.subvalueFor(transaction, i);
-//     // ARK::Utilities::JSONString transactionJString(transactionSubstring); 
+//     // String transactionSubstring = jString->subvalueFor(transaction, i);
+//     // ARK::Utilities::JSONInterface transactionJString(transactionSubstring); 
 //     // ARK::Transaction transaction = {
-//     //   jString.subarrayValueIn("transactions", i, "id"),
-//     //   jString.subarrayValueIn("transactions", i, "blockid"),
-//     //   jString.subarrayValueIn("transactions", i, "height"),
-//     //   jString.subarrayValueIn("transactions", i, "type").toInt(),
-//     //   jString.subarrayValueIn("transactions", i, "timestamp"),
-//     //   jString.subarrayValueIn("transactions", i, "amount"),
-//     //   jString.subarrayValueIn("transactions", i, "fee"),
-//     //   jString.subarrayValueIn("transactions", i, "vendorField"),
-//     //   jString.subarrayValueIn("transactions", i, "senderId"),
-//     //   jString.subarrayValueIn("transactions", i, "recipientId"),
-//     //   jString.subarrayValueIn("transactions", i, "senderPublicKey"),
-//     //   jString.subarrayValueIn("transactions", i, "signature"),
-//     //   jString.subarrayValueIn("transactions", i, "confirmations")
+//     //   jString->subarrayValueIn("transactions", i, "id"),
+//     //   jString->subarrayValueIn("transactions", i, "blockid"),
+//     //   jString->subarrayValueIn("transactions", i, "height"),
+//     //   jString->subarrayValueIn("transactions", i, "type").toInt(),
+//     //   jString->subarrayValueIn("transactions", i, "timestamp"),
+//     //   jString->subarrayValueIn("transactions", i, "amount"),
+//     //   jString->subarrayValueIn("transactions", i, "fee"),
+//     //   jString->subarrayValueIn("transactions", i, "vendorField"),
+//     //   jString->subarrayValueIn("transactions", i, "senderId"),
+//     //   jString->subarrayValueIn("transactions", i, "recipientId"),
+//     //   jString->subarrayValueIn("transactions", i, "senderPublicKey"),
+//     //   jString->subarrayValueIn("transactions", i, "signature"),
+//     //   jString->subarrayValueIn("transactions", i, "confirmations")
 //     // };
 //     // transactions[i] = transaction;
 //     resp += "transaction ";
@@ -232,25 +232,25 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmed(
 }
 */
 String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const char* const jsonStr) {
-  ARK::Utilities::JSONString jString(jsonStr); 
+  auto jString = ARK::Utilities::make_json_string(jsonStr); 
   String resp;
   if (strstr(jsonStr, "Transaction not found") != nullptr) {
     resp += "There are currently No unconfirmed transactions by that transactionID";
   } else {
     ARK::Transaction transaction(
-      jString.valueIn("transaction", "id").c_str(),
-      jString.valueIn("transaction", "blockid").c_str(),
-      jString.valueIn("transaction", "height").c_str(),
-      convert_to_int(jString.valueIn("transaction", "type")),
-      jString.valueIn("transaction", "timestamp").c_str(),
-      jString.valueIn("transaction", "amount").c_str(),
-      jString.valueIn("transaction", "fee").c_str(),
-      jString.valueIn("transaction", "vendorField").c_str(),
-      jString.valueIn("transaction", "senderId").c_str(),
-      jString.valueIn("transaction", "recipientId").c_str(),
-      jString.valueIn("transaction", "senderPublicKey").c_str(),
-      jString.valueIn("transaction", "signature").c_str(),
-      jString.valueIn("transaction", "confirmations").c_str()
+      jString->valueIn("transaction", "id").c_str(),
+      jString->valueIn("transaction", "blockid").c_str(),
+      jString->valueIn("transaction", "height").c_str(),
+      convert_to_int(jString->valueIn("transaction", "type")),
+      jString->valueIn("transaction", "timestamp").c_str(),
+      jString->valueIn("transaction", "amount").c_str(),
+      jString->valueIn("transaction", "fee").c_str(),
+      jString->valueIn("transaction", "vendorField").c_str(),
+      jString->valueIn("transaction", "senderId").c_str(),
+      jString->valueIn("transaction", "recipientId").c_str(),
+      jString->valueIn("transaction", "senderPublicKey").c_str(),
+      jString->valueIn("transaction", "signature").c_str(),
+      jString->valueIn("transaction", "confirmations").c_str()
     );
     char buf[128] = {};
     transaction.description(buf, sizeof(buf) / sizeof(buf[0]));
@@ -283,7 +283,7 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmed(
 }
 */
 String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const char* const jsonStr) {
-  ARK::Utilities::JSONString jString(jsonStr); 
+  auto jString = ARK::Utilities::make_json_string(jsonStr); 
 
   int txCount = ARK::API::Helpers::substringCount(jsonStr, "id");
 
@@ -293,19 +293,19 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const ch
     for (int i = 0; i <= txCount; i++) {
 
       ARK::Transaction transaction(
-        jString.subarrayValueIn("transaction", i, "id").c_str(),
-        jString.subarrayValueIn("transaction", i,  "blockid").c_str(),
-        jString.subarrayValueIn("transaction", i,  "height").c_str(),
-        convert_to_int(jString.subarrayValueIn("transaction", i,  "type")),
-        jString.subarrayValueIn("transaction", i,  "timestamp").c_str(),
-        jString.subarrayValueIn("transaction", i,  "amount").c_str(),
-        jString.subarrayValueIn("transaction", i,  "fee").c_str(),
-        jString.subarrayValueIn("transaction", i,  "vendorField").c_str(),
-        jString.subarrayValueIn("transaction", i,  "senderId").c_str(),
-        jString.subarrayValueIn("transaction", i,  "recipientId").c_str(),
-        jString.subarrayValueIn("transaction", i,  "senderPublicKey").c_str(),
-        jString.subarrayValueIn("transaction", i,  "signature").c_str(),
-        jString.subarrayValueIn("transaction", i,  "confirmations").c_str()
+        jString->subarrayValueIn("transaction", i, "id").c_str(),
+        jString->subarrayValueIn("transaction", i,  "blockid").c_str(),
+        jString->subarrayValueIn("transaction", i,  "height").c_str(),
+        convert_to_int(jString->subarrayValueIn("transaction", i,  "type")),
+        jString->subarrayValueIn("transaction", i,  "timestamp").c_str(),
+        jString->subarrayValueIn("transaction", i,  "amount").c_str(),
+        jString->subarrayValueIn("transaction", i,  "fee").c_str(),
+        jString->subarrayValueIn("transaction", i,  "vendorField").c_str(),
+        jString->subarrayValueIn("transaction", i,  "senderId").c_str(),
+        jString->subarrayValueIn("transaction", i,  "recipientId").c_str(),
+        jString->subarrayValueIn("transaction", i,  "senderPublicKey").c_str(),
+        jString->subarrayValueIn("transaction", i,  "signature").c_str(),
+        jString->subarrayValueIn("transaction", i,  "confirmations").c_str()
       );
 
       resp += "\ntransaction ";

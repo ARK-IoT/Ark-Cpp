@@ -45,25 +45,25 @@ ARK::Block ARK::API::Block::Gettable::block(
 */
 ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return ARK::Block(
-        jString.valueIn("block", "id").c_str(),
-        convert_to_int(jString.valueIn("block", "version")),
-        jString.valueIn("block", "timestamp").c_str(),
-        jString.valueIn("block", "height").c_str(),
-        jString.valueIn("block", "previousBlock").c_str(),
-        jString.valueIn("block", "numberOfTransactions").c_str(),
-        jString.valueIn("block", "totalAmount").c_str(),
-        jString.valueIn("block", "totalFee").c_str(),
-        jString.valueIn("block", "reward").c_str(),
-        jString.valueIn("block", "payloadLength").c_str(),
-        jString.valueIn("block", "payloadHash").c_str(),
-        jString.valueIn("block", "generatorPublicKey").c_str(),
-        jString.valueIn("block", "generatorId").c_str(),
-        jString.valueIn("block", "blockSignature").c_str(),
-        jString.valueIn("block", "confirmations").c_str(),
-        jString.valueIn("block", "totalForged").c_str()
+        jString->valueIn("block", "id").c_str(),
+        convert_to_int(jString->valueIn("block", "version")),
+        jString->valueIn("block", "timestamp").c_str(),
+        jString->valueIn("block", "height").c_str(),
+        jString->valueIn("block", "previousBlock").c_str(),
+        jString->valueIn("block", "numberOfTransactions").c_str(),
+        jString->valueIn("block", "totalAmount").c_str(),
+        jString->valueIn("block", "totalFee").c_str(),
+        jString->valueIn("block", "reward").c_str(),
+        jString->valueIn("block", "payloadLength").c_str(),
+        jString->valueIn("block", "payloadHash").c_str(),
+        jString->valueIn("block", "generatorPublicKey").c_str(),
+        jString->valueIn("block", "generatorId").c_str(),
+        jString->valueIn("block", "blockSignature").c_str(),
+        jString->valueIn("block", "confirmations").c_str(),
+        jString->valueIn("block", "totalForged").c_str()
     );
 }
 /*  ==============================  */
@@ -132,24 +132,24 @@ ARK::Block ARK::API::Block::Gettable::blockfromJSON(const char* const _jsonStr)
 // }
 // */
 // String blocksfromJSON(String _jsonStr) {
-//   ARK::Utilities::JSONString jString(_jsonStr);
+//   auto jString = ARK::Utilities::make_json_string(_jsonStr);
 //   // ARK::Block block = {
-//   //   jString.valueFor("id").toInt(),
-//   //   jString.valueFor("version").toFloat(),
-//   //   jString.valueFor("timestamp").toInt(),
-//   //   jString.valueFor("height").toInt(),
-//   //   jString.valueFor("previousBlock").toInt(),
-//   //   jString.valueFor("numberOfTransactions").toInt(),
-//   //   jString.valueFor("totalAmount").toFloat(),
-//   //   jString.valueFor("totalFee").toFloat(),
-//   //   jString.valueFor("reward").toInt(),
-//   //   jString.valueFor("payloadLength").toInt(),
-//   //   jString.valueFor("payloadHash"),
-//   //   jString.valueFor("generatorPublicKey"),
-//   //   jString.valueFor("generatorId"),
-//   //   jString.valueFor("blockSignature"),
-//   //   jString.valueFor("confirmations").toInt(),
-//   //   jString.valueFor("totalForged").toInt()
+//   //   jString->valueFor("id").toInt(),
+//   //   jString->valueFor("version").toFloat(),
+//   //   jString->valueFor("timestamp").toInt(),
+//   //   jString->valueFor("height").toInt(),
+//   //   jString->valueFor("previousBlock").toInt(),
+//   //   jString->valueFor("numberOfTransactions").toInt(),
+//   //   jString->valueFor("totalAmount").toFloat(),
+//   //   jString->valueFor("totalFee").toFloat(),
+//   //   jString->valueFor("reward").toInt(),
+//   //   jString->valueFor("payloadLength").toInt(),
+//   //   jString->valueFor("payloadHash"),
+//   //   jString->valueFor("generatorPublicKey"),
+//   //   jString->valueFor("generatorId"),
+//   //   jString->valueFor("blockSignature"),
+//   //   jString->valueFor("confirmations").toInt(),
+//   //   jString->valueFor("totalForged").toInt()
 //   // };
 //   return "";//block.description();
 // };
@@ -179,9 +179,9 @@ String ARK::API::Block::Gettable::epoch(ARK::Utilities::Network::Connector& _net
 */
 String ARK::API::Block::Gettable::epochfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return jString.valueFor("epoch");
+  return jString->valueFor("epoch");
 };
 /*  ==============================  */
 /*  ==========================================================================  */
@@ -209,9 +209,9 @@ ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::height(ARK::Util
 */
 ARK::API::Block::Respondable::Height ARK::API::Block::Gettable::heightfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return ARK::API::Block::Respondable::Height(jString.valueFor("height").c_str(), jString.valueFor("id").c_str());
+  return ARK::API::Block::Respondable::Height(jString->valueFor("height").c_str(), jString->valueFor("id").c_str());
 };
 /*  ===============================  */
 /*  ==========================================================================  */
@@ -238,9 +238,9 @@ Hash ARK::API::Block::Gettable::nethash(ARK::Utilities::Network::Connector& _net
 */
 Hash ARK::API::Block::Gettable::nethashfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Hash(jString.valueFor("nethash").c_str());
+  return Hash(jString->valueFor("nethash").c_str());
 };
 /*  ================================  */
 /*  ==========================================================================  */
@@ -266,9 +266,9 @@ Balance ARK::API::Block::Gettable::fee(ARK::Utilities::Network::Connector& _netC
 */
 Balance ARK::API::Block::Gettable::feefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Balance(jString.valueFor("fee").c_str());
+  return Balance(jString->valueFor("fee").c_str());
 };
 /*  ============================  */
 /*  ==========================================================================  */
@@ -300,14 +300,14 @@ ARK::Fees ARK::API::Block::Gettable::fees(ARK::Utilities::Network::Connector& _n
 */
 ARK::Fees ARK::API::Block::Gettable::feesfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
     return Fees(
-        jString.valueIn("fees", "send").c_str(),
-        jString.valueIn("fees", "vote").c_str(),
-        jString.valueIn("fees", "secondsignature").c_str(),
-        jString.valueIn("fees", "delegate").c_str(),
-        jString.valueIn("fees", "multisignature").c_str()
+        jString->valueIn("fees", "send").c_str(),
+        jString->valueIn("fees", "vote").c_str(),
+        jString->valueIn("fees", "secondsignature").c_str(),
+        jString->valueIn("fees", "delegate").c_str(),
+        jString->valueIn("fees", "multisignature").c_str()
     );
 };
 /*  =============================  */
@@ -335,9 +335,9 @@ String ARK::API::Block::Gettable::milestone(ARK::Utilities::Network::Connector& 
 */
 String ARK::API::Block::Gettable::milestonefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return jString.valueFor("milestone");
+  return jString->valueFor("milestone");
 };
 /*  ==================================  */
 /*  ==========================================================================  */
@@ -363,9 +363,9 @@ Balance ARK::API::Block::Gettable::reward(ARK::Utilities::Network::Connector& _n
 */
 Balance ARK::API::Block::Gettable::rewardfromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Balance(jString.valueFor("reward").c_str());
+  return Balance(jString->valueFor("reward").c_str());
 };
 /*  ===============================  */
 /*  ==========================================================================  */
@@ -392,9 +392,9 @@ Balance ARK::API::Block::Gettable::supply(ARK::Utilities::Network::Connector& _n
 */
 Balance ARK::API::Block::Gettable::supplyfromJSON(const char* _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Balance(jString.valueFor("supply").c_str());
+  return Balance(jString->valueFor("supply").c_str());
 };
 /*  ===============================  */
 /*  ==========================================================================  */
@@ -426,16 +426,16 @@ ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(ARK::Util
 */
 ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::statusfromJSON(const char* const _jsonStr)
 {
-    ARK::Utilities::JSONString jString(_jsonStr);
+    auto jString = ARK::Utilities::make_json_string(_jsonStr);
   
     return ARK::API::Block::Respondable::Status(
-        jString.valueFor("epoch").c_str(),
-        jString.valueFor("height").c_str(),
-        jString.valueFor("fee").c_str(),
-        convert_to_int(jString.valueFor("milestone")),
-        jString.valueFor("nethash").c_str(),
-        jString.valueFor("reward").c_str(),
-        jString.valueFor("supply").c_str()
+        jString->valueFor("epoch").c_str(),
+        jString->valueFor("height").c_str(),
+        jString->valueFor("fee").c_str(),
+        convert_to_int(jString->valueFor("milestone")),
+        jString->valueFor("nethash").c_str(),
+        jString->valueFor("reward").c_str(),
+        jString->valueFor("supply").c_str()
     );
 };
 /*  ===============================  */

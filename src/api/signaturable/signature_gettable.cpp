@@ -21,9 +21,9 @@ Balance ARK::API::Signature::Gettable::fee(ARK::Utilities::Network::Connector& _
 */
 Balance ARK::API::Signature::Gettable::feefromJSON(const char* const _jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
+  auto jString = ARK::Utilities::make_json_string(_jsonStr);
 
-  return Balance(jString.valueFor("fee").c_str());
+  return Balance(jString->valueFor("fee").c_str());
 }
 /*  ================================  */
 /*  ==========================================================================  */
