@@ -18,8 +18,7 @@ const char* password = "yourWiFiPassword";
 /*************************************************/
 
 
-void checkAPI()
-{
+void checkAPI() {
   /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);

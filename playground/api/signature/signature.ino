@@ -35,9 +35,9 @@ Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9
 
 
   /*************************************************/
-  auto pendingMultisignaturesPending = _arkManager.multisignaturesPending(darkPubkey);
-    Serial.println("pendingMultisignaturesPending: ");
-    Serial.println(pendingMultisignaturesPending);
+  auto multisignaturesPending = _arkManager.multisignaturesPending(darkPubkey);
+    Serial.println("multisignaturesPending: ");
+    Serial.println(multisignaturesPending);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -45,16 +45,17 @@ Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9
 
   /*************************************************/
   /*************************************************/
-/*  Only on Mainnet?  */
-//  String multisignaturesAccounts = _arkManager.multisignaturesAccounts(darkHash);
-//    Serial.println("multisignaturesAccounts: ");
-//    Serial.println(multisignaturesAccounts);
-//    Serial.println("\n=====\n");
-//    delay(50);
+  /*  Only on Mainnet?  */
+  //  String multisignaturesAccounts = _arkManager.multisignaturesAccounts(darkHash);
+  //    Serial.println("multisignaturesAccounts: ");
+  //    Serial.println(multisignaturesAccounts);
+  //    Serial.println("\n=====\n");
+  //    delay(50);
   /*************************************************/
   /*************************************************/
 
 }
+/*************************************************/
 
 
 /*************************************************/

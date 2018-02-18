@@ -17,14 +17,14 @@ const char* password = "yourWiFiPassword";
 // #endif
 /*************************************************/
 
-void checkAPI()
-{
+
+void checkAPI() {
   /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
-Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+  Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 
   /*************************************************/
   const int delegatesCount = arkManager.delegatesCount();

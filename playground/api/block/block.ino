@@ -17,88 +17,101 @@ const char* password = "yourWiFiPassword";
 // #endif
 /*************************************************/
 
-void checkAPI()
-{
+
+void checkAPI() {
   /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
-Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
-
   /*************************************************/
-  const int delegatesCount = arkManager.delegatesCount();
-    Serial.println("delegatesCount: ");
-    Serial.println(delegatesCount);
+  ARK::Block block = arkManager.block("4367122150875693402");
+    Serial.println("block: ");
+  block.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
 
-  /*************************************************/
-  auto delegateSearch = arkManager.delegateSearch("sleepdeficit");
-    Serial.println("delegateSearch: ");
-  delegateSearch.printTo(Serial);
-    Serial.println("\n=====\n");
-    delay(50);
-  /*************************************************/
-
-  /*************************************************/
-  auto delegateVoters = arkManager.delegateVoters(darkPubkey);
-    Serial.println("delegateVoters: ");
-  delegateVoters.printTo(Serial);
-    Serial.println("\n=====\n");
-    delay(50);
-  /*************************************************/
-
-  /*************************************************/
-  ARK::Delegate delegateByUsername = arkManager.delegate("sleepdeficit");
-    Serial.println("delegateByUsername: ");
-  delegateByUsername.printTo(Serial);
-    Serial.println("\n=====\n");
-    delay(50);
-  /*************************************************/
-
-  /*************************************************/
-  ARK::Delegate delegateByPublickey = arkManager.delegate(darkPubkey);
-    Serial.println("delegateByPublickey: ");
-  delegateByPublickey.printTo(Serial);
-    Serial.println("\n=====\n");
-    delay(50);
-  /*************************************************/
 
   /*************************************************/
   /*************************************************/
-/*    BROKEN: fix for large callbacks    */
-/*  Delegates callback is ~13,564 bytes  */
-//  String delegates = _arkManager.getDelegates();
-//    Serial.println("delegates: ");
-//    Serial.println(delegates);
-//    Serial.println("\n=====\n");
+/* needs stream->string size fix for large callbacks */
+//  String blocks = arkManager.blocks();
+//    Serial.println(blocks);
+//    Serial.println();
 //    delay(50);
   /*************************************************/
   /*************************************************/
 
+
   /*************************************************/
-	Balance delegateFee = arkManager.delegateFee();
-    Serial.println("delegateFee: ");
-    Serial.println(delegateFee.ark());
+  auto blockEpoch = arkManager.blockEpoch();
+    Serial.println("blockEpoch: ");
+    Serial.println(blockEpoch);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
 
   /*************************************************/
-  auto delegateForgedByAccount = arkManager.delegateForgedByAccount(darkPubkey);
-    Serial.println("delegateForgedByAccount: ");
-  delegateForgedByAccount.printTo(Serial);
+  auto blockHeight =  arkManager.blockHeight();
+    Serial.println("blockHeight: ");
+  blockHeight.printTo(Serial); 
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
 
   /*************************************************/
-  auto delegateNextForgers = arkManager.delegateNextForgers();
-    Serial.println("delegateNextForgers: ");
-  delegateNextForgers.printTo(Serial);
+  Hash blockNethash = arkManager.blockNethash();
+    Serial.println("blockNethash: ");
+    Serial.println(blockNethash.value);
     Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  Balance blockFee = arkManager.blockFee();
+    Serial.println("blockFee: ");
+    Serial.println(blockFee.ark());
+    Serial.println("\n=====\n");
+    delay(100);
+  /*************************************************/
+
+  /*************************************************/
+  ARK::Fees blockFees = arkManager.blockFees();
+    Serial.println("blockFees: ");
+  blockFees.printTo(Serial);
+    Serial.println("\n=====\n");
+    delay(100);
+  /*************************************************/
+
+  /*************************************************/
+  auto blockMilestone = arkManager.blockMilestone();
+    Serial.println("blockMilestone: ");
+    Serial.println(blockMilestone);
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  Balance blockReward = arkManager.blockReward();
+    Serial.println("blockReward: ");
+    Serial.println(blockReward.ark());
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  Balance blockSupply = arkManager.blockSupply();
+    Serial.println("blockSupply: ");
+    Serial.println(blockSupply.ark());
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  auto blockStatus = arkManager.blockStatus();
+    Serial.println("blockStatus: ");
+  blockStatus.printTo(Serial);
     delay(50);
   /*************************************************/
 }

@@ -16,8 +16,8 @@ const char* password = "yourWiFiPassword";
 // #endif
 /*************************************************/
 
-void checkAPI()
-{
+
+void checkAPI() {
   /*************************************************/
   ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
   /*************************************************/
@@ -57,12 +57,13 @@ void checkAPI()
   /*************************************************/
 
   /*************************************************/
-  ARK::Account account = arkManager.account(darkAddress);
+  auto account = arkManager.account(darkAddress);
     Serial.println("account: ");
   account.printTo(Serial);
     Serial.println("\n=====\n");
   /*************************************************/
 }
+/*************************************************/
 
 
 /*************************************************/
