@@ -26,12 +26,18 @@ struct address_t
 	public:
 		char value[ADDRESS_LENGTH];
 
-		address_t() : value() { };
+		address_t() : value() {};
 
 		address_t(const char* const addressString) : value()
 		{
-			strcpy(value, addressString);
-		}
+			if (strlen(addressString) < ADDRESS_LENGTH - 1) {
+
+        value[0] = '\0';
+      }
+      else {
+        strncpy(value, addressString, sizeof(value) / sizeof(value[0]));
+      };
+		};
 
 };
 /*************************************************/

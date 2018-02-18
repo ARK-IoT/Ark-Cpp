@@ -17,15 +17,23 @@
 
 struct Hash
 {
+  private:
+    static const auto HASH_LENGTH = HASH_SIZE / sizeof(char);
+
   public:
-    const char* value;
-  
+    char value[HASH_LENGTH];
+
     Hash() : value() { }
 
     Hash(const char* const hashStr) : value()
     {
-      this->value = hashStr;
-    }
+      if (strlen(hashStr) < HASH_LENGTH - 1) {
+        value[0] = '\0';
+      }
+      else {
+        strncpy(value, hashStr, sizeof(value) / sizeof(value[0]));
+      };
+    };
 
 };
 
