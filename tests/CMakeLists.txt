@@ -52,9 +52,8 @@ add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/types/signature.cpp
 )
 
-target_link_libraries(Ark-Cpp-tests 
-	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/debug/Ark-Cpp-libd.${STATIC_LIB_EXTENSION}
-)
+find_library(Ark-Cpp-tests NAMES Ark-Cpp-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+target_link_libraries(Ark-Cpp-tests Ark-Cpp-lib)
 
 target_link_libraries(Ark-Cpp-tests GTest::main) # GTest::gtest will be linked automatically
 target_link_libraries(Ark-Cpp-tests GTest::gtest)
