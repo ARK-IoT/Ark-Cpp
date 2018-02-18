@@ -27,9 +27,9 @@ namespace ARK
 {
 
 /*************************************************
-*   ARK::Account
+*   ARK::account_t
 **************************************************/
-struct Account
+struct account_t
 {
 
 public:
@@ -42,6 +42,41 @@ public:
     Publickey secondPublicKey;
     Signature multisignatures;
     Signature u_multisignatures;
+
+};
+/*************************************************/
+
+
+/*************************************************
+*   ARK::Account
+**************************************************/
+struct Account :
+		public account_t
+{
+
+	Account(
+		const char* const newAddress,
+		const char* const newUnconfirmedBalance,
+		const char* const newBalance,
+		const char* const newPublickey,
+		int newUnconfirmedSignature,
+		int newSecondSignature,
+		const char* const newSecondPublickey,
+		const char* const newMultisignatures,
+		const char* const newU_Multisignatures
+	)
+	{
+		address = Address(newAddress);
+		unconfirmedBalance = Balance(newUnconfirmedBalance);
+		balance = Balance(newBalance);
+		publicKey = Publickey(newPublickey);
+		unconfirmedSignature = newUnconfirmedSignature;
+		secondSignature = newSecondSignature;
+		secondPublicKey = Publickey(newSecondPublickey);
+		multisignatures = Signature(newMultisignatures);
+		u_multisignatures = Signature(newU_Multisignatures);
+	}
+
 
     void printTo(HardwareSerial &serial);
 };

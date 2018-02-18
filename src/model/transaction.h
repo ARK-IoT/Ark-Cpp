@@ -8,27 +8,70 @@ namespace ARK
 
 static const auto TRANSACTION_MAX_SIZE = 600;
     
-	/*************************************************
-	*   ARK::Transaction
+
+		/*************************************************
+	*   ARK::transaction_t
 	**************************************************/
-  struct Transaction
+  struct transaction_t
 	{
     public:
-    	const char* id;
-      const char* blockid;
-      const char* height;
+      Hash id;
+      char blockid[32];
+      char height[32];
       int type;
-      const char* timestamp;
+      char timestamp[32];
       Balance amount;
       Balance fee;
-      const char* vendorField;
+      char vendorField[64];
       Address senderId;
       Address recipientId;
       Publickey senderPublicKey;
-      const char* signature;
-      const char* confirmations;
+      Signature signature;
+      char confirmations[64];
+  };
+  /*************************************************/
 
-      void printTo(HardwareSerial &serial);
+
+	/*************************************************
+	*   ARK::Transaction
+	**************************************************/
+  struct Transaction :
+			public transaction_t
+	{
+		Transaction(){};
+
+		Transaction(
+				const char* const newID,
+				const char* const newBlockID,
+				const char* const newHeight,
+				int newType,
+				const char* const newTimestamp,
+				const char* const newAmount,
+				const char* const newFee,
+				const char* const newVendorField,
+				const char* const newSenderID,
+				const char* const newRecipientID,
+				const char* const newSenderPublickey,
+				const char* const newSignature,
+				const char* const newConfirmations
+		)
+		{
+			id = Hash(newID);
+			strncpy(blockid, newBlockID, sizeof(blockid) / sizeof(blockid[0]));
+			strncpy(height, newHeight, sizeof(height) / sizeof(height[0]));
+			type = newType;
+			strncpy(timestamp, newTimestamp, sizeof(timestamp) / sizeof(timestamp[0]));
+			amount = Balance(newAmount);
+			fee = Balance(newFee);
+			strncpy(vendorField, newVendorField, sizeof(vendorField) / sizeof(vendorField[0]));
+			senderId = Address(newSenderID);
+			recipientId = Address(newRecipientID);
+			senderPublicKey = Publickey(newSenderPublickey);
+			signature = Signature(newSignature);
+			strncpy(confirmations, newConfirmations, sizeof(confirmations) / sizeof(confirmations[0]));
+		}
+
+		void printTo(HardwareSerial &serial);
   };
   /*************************************************/
 
@@ -48,33 +91,33 @@ static const auto TRANSACTION_MAX_SIZE = 600;
 void ARK::Transaction::Transaction::printTo(HardwareSerial &serial)
 {
 	serial.print("\nid: ");
-	serial.print(this->id);
+		serial.print(this->id.value);
 	serial.print("\nblockid: ");
-	serial.print(this->blockid);
+		serial.print(this->blockid);
 	serial.print("\nheight: ");
-	serial.print(this->height);
+		serial.print(this->height);
 	serial.print("\ntype: ");
-	serial.print(this->type);
+		serial.print(this->type);
 	serial.print("\ntimestamp: ");
-	serial.print(this->timestamp);
+		serial.print(this->timestamp);
 	serial.print("\namount: ");
-	serial.print(this->amount.ark());
+		serial.print(this->amount.ark());
 	serial.print("\nfee: ");
-	serial.print(this->fee.ark());
+		serial.print(this->fee.ark());
 	serial.print("\nvendorField: ");
-	serial.print(this->vendorField);
+		serial.print(this->vendorField);
 	serial.print("\nsenderId: ");
-	serial.print(this->senderId.value);
+		serial.print(this->senderId.value);
 	serial.print("\nrecipientId: ");
-	serial.print(this->recipientId.value);
+		serial.print(this->recipientId.value);
 	serial.print("\nsenderPublicKey: ");
-	serial.print(this->senderPublicKey.value);
+		serial.print(this->senderPublicKey.value);
 	serial.print("\nsignature: ");
-	serial.print(this->signature);
+		serial.print(this->signature.value);
 	// serial.print("\nasset: ");
 	// serial.print(this->asset);
 	serial.print("\nconfirmations: ");
-	serial.print(this->confirmations);
+		serial.print(this->confirmations);
 	serial.print("\n");
 	serial.flush();
 }

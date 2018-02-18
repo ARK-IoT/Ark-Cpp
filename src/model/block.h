@@ -30,56 +30,91 @@ namespace ARK
 *
 ********************************************************************************/
 
-/*************************************************
-*   ARK::Block 
-*
-**************************************************/
-struct Block
-{
-private:
-    static const auto MAX_UINT128_CHARS = 40;
 
-public:
-    const char* id;
-	int version;
-    const char* timestamp;
-	const char* height;
-	const char* previousBlock;
-	const char* numberOfTransactions;
-	Balance totalAmount;
-	Balance totalFee;
-	Balance reward;
-	const char* payloadLength;
-	Hash payloadHash;
-	Publickey generatorPublicKey;
-	Address generatorId;
-	Signature blockSignature;
-	const char* confirmations;
-	Balance totalForged;
+	#define MAX_UINT128_CHARS 40
 
-	void printTo(HardwareSerial &serial);
+
+	/*************************************************
+	*   ARK::block_t 
+	*
+	**************************************************/
+	struct block_t
+	{
+		public:
+			char id[MAX_UINT128_CHARS];
+			int version;
+			char timestamp[MAX_UINT128_CHARS];
+			char height[64];
+			char previousBlock[MAX_UINT128_CHARS];
+			char numberOfTransactions[64];
+			Balance totalAmount;
+			Balance totalFee;
+			Balance reward;
+			char payloadLength[64];
+			Hash payloadHash;
+			Publickey generatorPublicKey;
+			Address generatorId;
+			Signature blockSignature;
+			char confirmations[64];
+			Balance totalForged;
+	};
+	/*************************************************/
+
+
+
+	/*************************************************
+	*   ARK::Block 
+	*
+	**************************************************/
+	struct Block :
+			public block_t
+	{
+		public:
+
+			Block(
+					const char* const newID,
+					int newVersion,
+					const char* const newTimestamp,
+					const char* const newHeight,
+					const char* const newPreviousBlock,
+					const char* const newNumberOfTransactions,
+					const char* const newTotalAmount,
+					const char* const newTotalFee,
+					const char* const newReward,
+					const char* const newPayloadLength,
+					const char* const newPayloadHash,
+					const char* const newGeneratorPublickey,
+					const char* const newGeneratorID,
+					const char* const newBlockSignature,
+					const char* const newConfirmations,
+					const char* const newTotalForged
+			)
+			{
+				strncpy(id, newID, sizeof(id) / sizeof(id[0]));
+					version = newVersion;
+				strncpy(timestamp, newTimestamp, sizeof(timestamp) / sizeof(timestamp[0]));
+				strncpy(height, newHeight, sizeof(height) / sizeof(height[0]));
+				strncpy(previousBlock, newPreviousBlock, sizeof(previousBlock) / sizeof(previousBlock[0]));
+				strncpy(numberOfTransactions, newNumberOfTransactions, sizeof(numberOfTransactions) / sizeof(numberOfTransactions[0]));
+					totalAmount = Balance(newTotalAmount);
+					totalFee = Balance(newTotalFee);
+					reward = Balance(newReward);
+				strncpy(payloadLength, newPayloadLength, sizeof(payloadLength) / sizeof(payloadLength[0]));
+					payloadHash = Hash(newPayloadHash);
+					generatorPublicKey = Publickey(newGeneratorPublickey);
+					generatorId = Address(newGeneratorID);
+					blockSignature = Signature(newBlockSignature);
+				strncpy(confirmations, newConfirmations, sizeof(confirmations) / sizeof(confirmations[0]));
+					totalForged = Balance(newTotalForged);
+			};
+
+			void printTo(HardwareSerial &serial);
+	};
+	/*************************************************/
+
+
 };
-/*************************************************/
 
-};
-
-
-
-/*************************************************/
-/*************************************************/
-/*  ARK::Blocks  */
-// struct Blocks
-// {
-// public:
-// 	Block blocks[] = {};
-// 	int count;
-// 	Blocks()
-// 	{	this->count = 0; };
-// };
-// /*  ===========  */
-// };
-/*************************************************/
-/*************************************************/
 
 
 /*************************************************
@@ -88,40 +123,40 @@ public:
 **************************************************/
 void ARK::Block::Block::printTo(HardwareSerial &serial)
 {
-    serial.print("id: ");
-    serial.print(this->id);
-    serial.print("\nversion: ");
-    serial.print(this->version);
-    serial.print("\ntimestamp: ");
-    serial.print(this->timestamp);
-    serial.print("\nheight: ");
-	serial.print(this->height);
-    serial.print("\npreviousBlock: ");
-    serial.print(this->previousBlock);
-    serial.print("\nnumberOfTransactions: ");
-	serial.print(this->numberOfTransactions);
-    serial.print("\ntotalAmount: ");
-    serial.print(this->totalAmount.ark());
-    serial.print("\ntotalFee: ");
-    serial.print(this->totalFee.ark());
-    serial.print("\nreward: ");
-    serial.print(this->reward.ark());
-    serial.print("\npayloadLength: ");
-    serial.print(this->payloadLength);
-    serial.print("\npayloadHash: ");
-    serial.print(this->payloadHash.value);
-    serial.print("\ngeneratorPublicKey: ");
-    serial.print(this->generatorPublicKey.value);
-    serial.print("\ngeneratorId: ");
-    serial.print(this->generatorId.value);
-    serial.print("\nblockSignature: ");
-    serial.print(this->blockSignature.value);
-    serial.print("\nconfirmations: ");
-    serial.print(this->confirmations);
-    serial.print("\ntotalForged: ");
-    serial.print(this->totalForged.ark());
-    serial.println();
-    serial.flush();
+	serial.print("id: ");
+		serial.print(this->id);
+	serial.print("\nversion: ");
+		serial.print(this->version);
+	serial.print("\ntimestamp: ");
+		serial.print(this->timestamp);
+	serial.print("\nheight: ");
+		serial.print(this->height);
+	serial.print("\npreviousBlock: ");
+		serial.print(this->previousBlock);
+	serial.print("\nnumberOfTransactions: ");
+		serial.print(this->numberOfTransactions);
+	serial.print("\ntotalAmount: ");
+		serial.print(this->totalAmount.ark());
+	serial.print("\ntotalFee: ");
+		serial.print(this->totalFee.ark());
+	serial.print("\nreward: ");
+		serial.print(this->reward.ark());
+	serial.print("\npayloadLength: ");
+		serial.print(this->payloadLength);
+	serial.print("\npayloadHash: ");
+		serial.print(this->payloadHash.value);
+	serial.print("\ngeneratorPublicKey: ");
+		serial.print(this->generatorPublicKey.value);
+	serial.print("\ngeneratorId: ");
+		serial.print(this->generatorId.value);
+	serial.print("\nblockSignature: ");
+		serial.print(this->blockSignature.value);
+	serial.print("\nconfirmations: ");
+		serial.print(this->confirmations);
+	serial.print("\ntotalForged: ");
+		serial.print(this->totalForged.ark());
+	serial.println();
+	serial.flush();
 }
 /*************************************************/
 

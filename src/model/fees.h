@@ -12,11 +12,11 @@ namespace ARK
 **************************************************/
 struct Fees
 {
-    const Balance send;
-    const Balance vote;
-    const Balance delegate;
-    const Balance secondsignature;
-    const Balance multisignature;
+    Balance send;
+    Balance vote;
+    Balance delegate;
+    Balance secondsignature;
+    Balance multisignature;
 
     void printTo(HardwareSerial &serial);
 };
@@ -31,18 +31,18 @@ struct Fees
 **************************************************/
 void ARK::Fees::printTo(HardwareSerial &serial)
 {
-    serial.print("\nsend: ");
+	serial.print("\nsend: ");
     serial.print(this->send.ark());
-    serial.print("\nvote: ");
+	serial.print("\nvote: ");
     serial.print(this->vote.ark());
-    serial.print("\ndelegate: ");
+	serial.print("\ndelegate: ");
     serial.print(this->delegate.ark());
-    serial.print("\nsecondsignature: ");
+	serial.print("\nsecondsignature: ");
     serial.print(this->secondsignature.ark());
-    serial.print("\nmultisignature: ");
+	serial.print("\nmultisignature: ");
     serial.print(this->multisignature.ark());
-    serial.print("\n");
-    serial.flush();
+	serial.print("\n");
+	serial.flush();
 }
 /*************************************************/
 
