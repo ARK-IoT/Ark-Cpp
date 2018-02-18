@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.6.2)
 
+set (HUNTER_ROOT .)
+
+include("HunterGate.cmake")
+
+HunterGate(
+	URL "https://github.com/ruslo/hunter/archive/v0.20.9.tar.gz"
+	SHA1 "8f7cf6d719d05c49224a4ebeba90c6bb90b90f4a"
+)
+
 project(Ark-Cpp)
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)

@@ -51,6 +51,13 @@ inline float convert_to_float(const std::string& s) {
 	return std::stof(s);
 }
 
+template <typename IntType>
+inline int random(IntType min, IntType max) {
+	std::default_random_engine generator;
+	std::uniform_int_distribution<IntType> distribution(min, max);
+	return distribution(generator);
+}
+
 namespace ARK
 {
 namespace API
@@ -70,13 +77,6 @@ inline int substringCount(const std::string &str, const std::string &sub)
     ++count;
   }
   return count;
-}
-
-template <typename IntType>
-inline int random(IntType min, IntType max) {
-	std::default_random_engine generator;
-	std::uniform_int_distribution<IntType> distribution(min, max);
-	return distribution(generator);
 }
 
 }
