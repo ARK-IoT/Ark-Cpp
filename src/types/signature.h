@@ -32,7 +32,7 @@ struct signature_t
 		{
 
 			(signatureString == NULL) ?
-					(void)( value_[0] = '\0' ) :
+					(void)( value_[0] = { '\0' } ) :
 					(void)( strncpy( this->value_, signatureString, sizeof(value_) / sizeof(value_[0]) ) );
 		};
 
