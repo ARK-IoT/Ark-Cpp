@@ -63,7 +63,7 @@ void checkAPI() {
   /*************************************************/
   Hash blockNethash = arkManager.blockNethash();
     Serial.println("blockNethash: ");
-    Serial.println(blockNethash.value);
+    Serial.println(blockNethash.getValue());
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
