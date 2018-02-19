@@ -6,15 +6,15 @@
 ```arduino
 struct Account {
   public:
-    String username;
-    String address;
-    String publicKey;
-    String vote;
-    long int producedblocks;
-    long int missedblocks;
-    long int rate;
-    double approval;
-    double productivity;
+    Address address;
+    Balance unconfirmedBalance;
+    Balance balance;
+    Publickey publicKey;
+    int unconfirmedSignature;
+    int secondSignature;
+    Publickey secondPublicKey;
+    Signature multisignatures;
+    Signature u_multisignatures;
 };
 ```
 
@@ -24,22 +24,22 @@ struct Account {
 ```arduino
 struct Block {
   public:
-    long int id;
-    double version;
-    long int timestamp;
-    long int heigh;
-    long int previousBlock;
-    long int numberOfTransactions;
-    long double totalAmount;
-    long double totalFee;
-    long int reward;
-    long intpayloadLength;
-    String payloadHash;
-    String generatorPublicKey;
-    String generatorId;
-    String blockSignature;
-    long int confirmations;
-    long int totalForged;
+    char id[MAX_UINT128_CHARS];
+    int version;
+    char timestamp[MAX_UINT128_CHARS];
+    char height[64];
+    char previousBlock[MAX_UINT128_CHARS];
+    char numberOfTransactions[64];
+    Balance totalAmount;
+    Balance totalFee;
+    Balance reward;
+    char payloadLength[64];
+    Hash payloadHash;
+    Publickey generatorPublicKey;
+    Address generatorId;
+    Signature blockSignature;
+    char confirmations[64];
+    Balance totalForged;
 };
 ```
 
@@ -47,14 +47,12 @@ struct Block {
 ## currencies.h
 `ARK::Model::Currency`
 ```arduino
-typedef struct Currency {
+struct Currency {
   public:
-    String ticker;
-    String name;
-    String symbol;
-    Currency(String _ticker, String _name, String _symbol);
-    String asString()
-} currency_t;
+    char ticker[5];
+    char name[20];
+    char symbol[4];
+};
 ```
 `ARK::Model::Currencies::Cryptocurrencies`
 ```arduino
@@ -74,26 +72,15 @@ typedef struct Currency {
 ```arduino
 struct Delegate {
   public:
-    String username;
-    String address;
-    String publicKey;
-    String vote;
-    long int producedblocks;
-    long int missedblocks;
-    long int rate;
-    double approval;
-    double productivity;
-};
-```
-
-
-## error.h
-`ARK::Model::Error`
-```arduino
-struct Error {
-  public:
-    bool success;
-    String error;
+		char username[20];
+		Address address;
+		Publickey publicKey;
+		Balance vote;
+		int producedblocks;
+		int missedblocks;
+		int rate;
+		double approval;
+		double productivity;
 };
 ```
 
@@ -103,11 +90,11 @@ struct Error {
 ```arduino
 struct Network {
   public:
-    String nethash;
-    String token;
-    String symbol;
-    String explorer;
-    long double version;
+    char nethash[64];
+    char token[5];
+    char symbol[2];
+    char explorer[40];
+    int version;
 };
 ```
 
@@ -117,14 +104,14 @@ struct Network {
 ```arduino
 struct Peer {
   public:
-    String ip;
+    char ip[40];
     int port;
-    String version;
+    char version[32];
     int errors;
-    String os;
-    String height;
-    String status;
-    double delay;
+    char os[32];
+    char height[32];
+    char status[32];
+    int delay;
 };
 ```
 
@@ -135,18 +122,19 @@ struct Peer {
 struct asset_t {};
 struct Transaction {
   public:
-    String id;
-    long int blockid;
+    Hash id;
+    char blockid[32];
+    char height[32];
     int type;
-    long int timestamp;
-    long double amount;
-    long double fee;
-    String senderId;
-    String recipientId;
-    String senderPublicKey;
-    String signature;
-    asset_t asset;
-    long int confirmations;
+    char timestamp[32];
+    Balance amount;
+    Balance fee;
+    char vendorField[64];
+    Address senderId;
+    Address recipientId;
+    Publickey senderPublicKey;
+    Signature signature;
+    char confirmations[64];
 };
 ```
 
@@ -156,19 +144,19 @@ struct Transaction {
 ```arduino
 struct TransportPeerHeader {
   public:
-    long int id;
-    long int height;
-    long double version;
-    long double totalAmount;
-    long double totalFee;
-    long double reward;
-    String payloadHash;
+    char id[32];
+    char height[32];
+    int version;
+    Balance totalAmount;
+    Balance totalFee;
+    Balance reward;
+    Hash payloadHash;
     int payloadLength;
-    long int timestamp;
-    long int numberOfTransactions;
-    long int previousBlock;
-    String generatorPublicKey;
-    String blockSignature;
+    char timestamp[32];
+    int numberOfTransactions;
+    char previousBlock[32];
+    Publickey generatorPublicKey;
+    Signature blockSignature;
 }; 
 ```
 
@@ -178,9 +166,9 @@ struct TransportPeerHeader {
 ```arduino
 struct Voter {
   public:
-    String username;
-    String address;
-    String publicKey;
-    long double balance;
+    char username[20];
+    Address address;
+    Publickey publicKey;
+    Balance balance;
 };
 ```
