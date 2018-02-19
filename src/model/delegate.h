@@ -74,9 +74,7 @@ struct Delegate :
 			productivity = newProductivity;
 		};
 
-
 	void printTo(HardwareSerial &serial);
-
 };
 /*************************************************/
 
@@ -91,9 +89,9 @@ void ARK::Delegate::printTo(HardwareSerial &serial)
 	serial.print("username: ");
     serial.print(this->username);
 	serial.print("\naddress: ");
-    serial.print(this->address.value);
+    serial.print(this->address.getValue());
 	serial.print("\npublicKey: ");
-		serial.print(this->publicKey.value);
+		serial.print(this->publicKey.getValue());
 	serial.print("\nvote: ");
     serial.print(this->vote.ark());
 	serial.print("\nproducedblocks: ");

@@ -9,7 +9,7 @@ namespace ARK
 static const auto TRANSACTION_MAX_SIZE = 600;
     
 
-		/*************************************************
+	/*************************************************
 	*   ARK::transaction_t
 	**************************************************/
   struct transaction_t
@@ -31,6 +31,7 @@ static const auto TRANSACTION_MAX_SIZE = 600;
   };
   /*************************************************/
 
+/**************************************************************************************************/
 
 	/*************************************************
 	*   ARK::Transaction
@@ -91,7 +92,7 @@ static const auto TRANSACTION_MAX_SIZE = 600;
 void ARK::Transaction::Transaction::printTo(HardwareSerial &serial)
 {
 	serial.print("\nid: ");
-		serial.print(this->id.value);
+		serial.print(this->id.getValue());
 	serial.print("\nblockid: ");
 		serial.print(this->blockid);
 	serial.print("\nheight: ");
@@ -107,13 +108,13 @@ void ARK::Transaction::Transaction::printTo(HardwareSerial &serial)
 	serial.print("\nvendorField: ");
 		serial.print(this->vendorField);
 	serial.print("\nsenderId: ");
-		serial.print(this->senderId.value);
+		serial.print(this->senderId.getValue());
 	serial.print("\nrecipientId: ");
-		serial.print(this->recipientId.value);
+		serial.print(this->recipientId.getValue());
 	serial.print("\nsenderPublicKey: ");
-		serial.print(this->senderPublicKey.value);
+		serial.print(this->senderPublicKey.getValue());
 	serial.print("\nsignature: ");
-		serial.print(this->signature.value);
+		serial.print(this->signature.getValue());
 	// serial.print("\nasset: ");
 	// serial.print(this->asset);
 	serial.print("\nconfirmations: ");

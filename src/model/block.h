@@ -144,13 +144,13 @@ void ARK::Block::Block::printTo(HardwareSerial &serial)
 	serial.print("\npayloadLength: ");
 		serial.print(this->payloadLength);
 	serial.print("\npayloadHash: ");
-		serial.print(this->payloadHash.value);
+		serial.print(this->payloadHash.getValue());
 	serial.print("\ngeneratorPublicKey: ");
-		serial.print(this->generatorPublicKey.value);
+		serial.print(this->generatorPublicKey.getValue());
 	serial.print("\ngeneratorId: ");
-		serial.print(this->generatorId.value);
+		serial.print(this->generatorId.getValue());
 	serial.print("\nblockSignature: ");
-		serial.print(this->blockSignature.value);
+		serial.print(this->blockSignature.getValue());
 	serial.print("\nconfirmations: ");
 		serial.print(this->confirmations);
 	serial.print("\ntotalForged: ");

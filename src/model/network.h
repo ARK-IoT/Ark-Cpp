@@ -26,21 +26,54 @@ namespace ARK
 
 
 	/*************************************************
+	*   ARK::network_t
+	**************************************************/
+	struct network_t {
+		public:
+			char nethash[65];
+			char token[5];
+			char symbol[2];
+			char explorer[40];
+			int version;
+	};
+	/*************************************************/
+
+
+	/*************************************************
 	*   ARK::Network
 	**************************************************/
-	struct Network {
+	struct Network :
+			public network_t
+	{
 		public:
-			const char* nethash;
-			const char* token;
-			const char* symbol;
-			const char* explorer;
-			int version;
+
+			Network()
+			{
+				strncpy(nethash, "", sizeof(nethash) / sizeof(nethash[0]));
+				strncpy(token, "", sizeof(token) / sizeof(token[0]));
+				strncpy(symbol, "", sizeof(symbol) / sizeof(symbol[0]));
+				strncpy(explorer, "", sizeof(explorer) / sizeof(explorer[0]));
+				version = 0;
+			};
+
+			Network(
+				const char* const newNethash,
+				const char* const newToken,
+				const char* const newSymbol,
+				const char* const newExplorer,
+				int newVersion
+			) {
+				strncpy(nethash, newNethash, sizeof(nethash) / sizeof(nethash[0]));
+				strncpy(token, newToken, sizeof(token) / sizeof(token[0]));
+				strncpy(symbol, newSymbol, sizeof(symbol) / sizeof(symbol[0]));
+				strncpy(explorer, newExplorer, sizeof(explorer) / sizeof(explorer[0]));
+				version = newVersion;
+			};
 
 			bool operator==(const Network& rhs) const;
 			bool operator!=(const Network& rhs) const;
 
 			void printTo(HardwareSerial &serial);
-
 	};
 	/*************************************************/
 
