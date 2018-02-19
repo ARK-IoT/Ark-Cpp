@@ -190,7 +190,7 @@ void ARK::API::Block::Respondable::Status::printTo(HardwareSerial &serial)
 	serial.print("\nmilestone: ");
 	serial.print(this->milestone);
 	serial.print("\nnethash: ");
-	serial.print(this->nethash.value);
+	serial.print(this->nethash.getValue());
 	serial.print("\nreward: ");
 	serial.print(this->reward.ark());
 	serial.print("\nsupply: ");

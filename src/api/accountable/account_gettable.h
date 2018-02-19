@@ -105,7 +105,7 @@ ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balance(
 	char uri[256] = {'\0'}; // TODO: check size
 	strcpy(uri, ARK::API::Paths::Account::getBalance_s);
 	strcat(uri, "?address=");
-	strcat(uri, arkAddress.value);
+	strcat(uri, arkAddress.getValue());
 
 	auto callback = netManager.cb(uri);
 
@@ -146,7 +146,7 @@ Publickey ARK::API::Account::Gettable::publickey(
 
 	strcpy(uri, ARK::API::Paths::Account::getPublickey_s);
 	strcat(uri, "?address=");
-	strcat(uri, arkAddress.value);
+	strcat(uri, arkAddress.getValue());
 
 	auto callback = netManager.cb(uri);
 	return ARK::API::Account::Gettable::publickeyfromJSON(callback);
@@ -183,7 +183,7 @@ Balance ARK::API::Account::Gettable::delegatesFee(
 
 	strcpy(uri, ARK::API::Paths::Account::delegatesFee_s);
 	strcat(uri, "?address=");
-	strcat(uri, arkAddress.value);
+	strcat(uri, arkAddress.getValue());
 
 	auto callback = netManager.cb(uri);
 
@@ -220,7 +220,7 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 
 	strcpy(uri, ARK::API::Paths::Account::delegates_s);
 	strcat(uri, "?address=");
-	strcat(uri, arkAddress.value);
+	strcat(uri, arkAddress.getValue());
 
 	auto callback = netManager.cb(uri);
 	return ARK::API::Account::Gettable::delegatesfromJSON(callback);
@@ -279,7 +279,7 @@ ARK::Account ARK::API::Account::Gettable::account(
 
 	strcpy(uri, ARK::API::Paths::Account::accounts_s);
 	strcat(uri, "?address=");
-	strcat(uri, arkAddress.value);
+	strcat(uri, arkAddress.getValue());
 
 	auto callback = netManager.cb(uri);
 	return ARK::API::Account::Gettable::accountfromJSON(callback);
@@ -312,15 +312,15 @@ ARK::Account ARK::API::Account::Gettable::accountfromJSON(const char *const json
 {
 	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
 	return {
-		parser.subvalueIn("account", "address"),
-		parser.subvalueIn("account", "unconfirmedBalance"),
-		parser.subvalueIn("account", "balance"),
-		parser.subvalueIn("account", "publicKey"),
-		atoi(parser.subvalueIn("account", "unconfirmedSignature")),
-		atoi(parser.subvalueIn("account", "secondSignature")),
-		parser.subvalueIn("account", "secondPublicKey"),
-		parser.subvalueIn("account", "multisignatures"),
-		parser.subvalueIn("account", "u_multisignatures")
+		parser.valueIn("account", "address"),
+		parser.valueIn("account", "unconfirmedBalance"),
+		parser.valueIn("account", "balance"),
+		parser.valueIn("account", "publicKey"),
+		atoi(parser.valueIn("account", "unconfirmedSignature")),
+		atoi(parser.valueIn("account", "secondSignature")),
+		parser.valueIn("account", "secondPublicKey"),
+		parser.valueIn("account", "multisignatures"),
+		parser.valueIn("account", "u_multisignatures")
 	};
 };
 /*************************************************/

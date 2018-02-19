@@ -251,9 +251,9 @@ void ARK::API::Delegate::Respondable::Search::printTo(HardwareSerial &serial)
 	serial.print("\nusername: ");
     serial.print(this->username);
 	serial.print("\naddress: ");
-    serial.print(this->address.value);
+    serial.print(this->address.getValue());
 	serial.print("\npublicKey: ");
-    serial.print(this->publicKey.value);
+    serial.print(this->publicKey.getValue());
 	serial.print("\nvote: ");
     serial.print(this->vote.ark());
 	serial.print("\nproducedblocks: ");
@@ -376,7 +376,7 @@ void ARK::API::Delegate::Respondable::NextForgers::printTo(HardwareSerial &seria
 		serial.print("delegate ");
 			serial.print(i + 1);
 		serial.print(": \n publicKey: ");
-			serial.print(delegateKeys[i].value);
+			serial.print(delegateKeys[i].getValue());
 		serial.print("\n");
 	};
 	serial.flush();

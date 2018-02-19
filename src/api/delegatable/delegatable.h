@@ -136,7 +136,7 @@ class Delegatable :
 		*		@parameters:
 		*			const Publickey& publicKey
 		*
-		*   @outs:	ARK::API::Delegate::Gettable::delegate(this->netConnector, publicKey.value)
+		*   @outs:	ARK::API::Delegate::Gettable::delegate(this->netConnector, publicKey.getValue())
 		*
 		*   @description:
 		*			Returns Delegate by username
@@ -145,7 +145,7 @@ class Delegatable :
 		**************************************************/
 		ARK::Delegate delegate(const Publickey& publicKey)
 		{
-			return ARK::API::Delegate::Gettable::delegate(this->netConnector, publicKey.value);
+			return ARK::API::Delegate::Gettable::delegate(this->netConnector, publicKey.getValue());
 		};
     /*************************************************/
 

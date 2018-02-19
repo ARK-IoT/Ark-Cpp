@@ -224,7 +224,7 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::voters(
 	char uri[256] = { '\0' }; //TODO review size
     strcpy(uri, ARK::API::Paths::Delegate::voters_s);
     strcat(uri, "?publicKey=");
-    strcat(uri, publicKey.value);
+    strcat(uri, publicKey.getValue());
 
 	auto callback = netConnector.cb(uri);
   return ARK::API::Delegate::Gettable::votersfromJSON(callback);
@@ -263,9 +263,9 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::votersfrom
 	{
 		voters[i] = {
 			parser.subarrayValueIn("accounts", i, "username"),
-			Address(parser.subarrayValueIn("accounts", i, "address")),
-			Publickey(parser.subarrayValueIn("accounts", i, "publicKey")),
-			Balance(parser.subarrayValueIn("accounts", i, "balance"))
+			parser.subarrayValueIn("accounts", i, "address"),
+			parser.subarrayValueIn("accounts", i, "publicKey"),
+			parser.subarrayValueIn("accounts", i, "balance")
 		};
 	};
 	return voters;
@@ -325,15 +325,15 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegatefromJSON(const char* jsonStr
 	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
 
   return {
-		parser.subvalueIn("delegate", "username"),
-		parser.subvalueIn("delegate", "address"),
-		parser.subvalueIn("delegate", "publicKey"),
-		parser.subvalueIn("delegate", "vote"),
-		atoi(parser.subvalueIn("delegate", "producedblocks")),
-		atoi(parser.subvalueIn("delegate", "missedblocks")),
-		atoi(parser.subvalueIn("delegate", "rate")),
-		atof(parser.subvalueIn("delegate", "approval")),
-		atof(parser.subvalueIn("delegate", "productivity"))
+		parser.valueIn("delegate", "username"),
+		parser.valueIn("delegate", "address"),
+		parser.valueIn("delegate", "publicKey"),
+		parser.valueIn("delegate", "vote"),
+		atoi(parser.valueIn("delegate", "producedblocks")),
+		atoi(parser.valueIn("delegate", "missedblocks")),
+		atoi(parser.valueIn("delegate", "rate")),
+		atof(parser.valueIn("delegate", "approval")),
+		atof(parser.valueIn("delegate", "productivity"))
 	};
 }
 /*************************************************/
@@ -473,7 +473,7 @@ ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::f
 	char uri[512] = { '\0' }; //TODO: review sizes
     strcpy(uri, ARK::API::Paths::Delegate::getForgedByAccount_s);
     strcat(uri, "?generatorPublicKey=");
-    strcat(uri, generatorPublicKey.value);
+    strcat(uri, generatorPublicKey.getValue());
 
 	auto callback = netConnector.cb(uri);
 	return ARK::API::Delegate::Gettable::forgedByAccountfromJSON(callback);

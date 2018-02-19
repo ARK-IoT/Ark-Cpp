@@ -61,7 +61,7 @@ const char* ARK::API::MultiSignature::Gettable::pending(
 
 	strcpy(uri, ARK::API::Paths::MultiSignatures::pending_s);
 	strcat(uri, "?publicKey=");
-	strcat(uri, publicKey.value);
+	strcat(uri, publicKey.getValue());
 
 	auto callback = netConnector.cb(uri);
 	return ARK::API::MultiSignature::Gettable::pendingfromJSON(callback);

@@ -87,7 +87,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 
     strcpy(uri, ARK::API::Paths::Transaction::getSingle_s);
     strcat(uri, "?id=");
-    strcat(uri, id.value);
+    strcat(uri, id.getValue());
 
     auto callback = netConnector.cb(uri);
     return ARK::API::Transaction::Gettable::transactionfromJSON(callback);
@@ -263,7 +263,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 
 	strcpy(uri, ARK::API::Paths::Transaction::getSingleUnconfirmed_s);
 	strcat(uri, "?id=");
-	strcat(uri, id.value);
+	strcat(uri, id.getValue());
 
 	auto callback = netConnector.cb(uri);
 	return ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(callback);
