@@ -22,32 +22,29 @@ struct signature_t
 	private:
 
 		static const auto SIGNATURE_LENGTH = SIGNATURE_SIZE / sizeof(char);
-    char value_[SIGNATURE_LENGTH];
+		char value_[SIGNATURE_LENGTH];
 
 	public:
 
-    signature_t() : value_() {};
+		signature_t() : value_() {};
 
-    signature_t(const char* const signatureString)
-    {
-      if ( signatureString == NULL )
-      {        
-        value_[0] = { '\0' };
-      }
-      else
-      {
-        strncpy( value_, signatureString, sizeof(value_) / sizeof(value_[0]) );
-      }
-    };
+		signature_t(const char* const signatureString)
+		{
 
-    signature_t& operator=(const signature_t& other) {
+			(signatureString == NULL) ?
+					(void)( value_[0] = '\0' ) :
+					(void)( strncpy( this->value_, signatureString, sizeof(value_) / sizeof(value_[0]) ) );
+		};
+
+		signature_t& operator=(const signature_t& other)
+		{
 			if (this != &other) {
 				strcpy(value_, other.value_);
 			}
 			return *this;
 		};
 
-    const char* getValue() const { return value_; };
+		const char* getValue() const { return value_; };
 
 };
 
