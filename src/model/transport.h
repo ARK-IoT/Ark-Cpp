@@ -11,17 +11,17 @@ namespace ARK
   struct TransportPeerHeader
   {
     public:
-      String id;
-      String height;
+      char id[32];
+      char height[32];
       int version;
       Balance totalAmount;
       Balance totalFee;
       Balance reward;
       Hash payloadHash;
       int payloadLength;
-      String timestamp;
+      char timestamp[32];
       int numberOfTransactions;
-      String previousBlock;
+      char previousBlock[32];
       Publickey generatorPublicKey;
       Signature blockSignature;
   }; 
