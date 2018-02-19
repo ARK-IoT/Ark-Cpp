@@ -21,7 +21,7 @@ namespace Network
   class HTTPConnectable;
 /*************************************************/
 
-
+/**************************************************************************************************/
 
 /*************************************************
 * ARK::Utilities::Network::HTTP 
@@ -44,8 +44,6 @@ namespace Network
 };
 };
 
-
-
 /*************************************************
 * ARK::Utilities::Network::Connectable 
 *   Inheritable HTTPConnectable object
@@ -53,29 +51,25 @@ namespace Network
 class ARK::Utilities::Network::HTTPConnectable
 {
 public:
-
   ARK::Utilities::Network::HTTP http;
 };
 /*************************************************/
 
-
-
-
+/**************************************************************************************************/
 
 /*************************************************
 * ARK::Utilities::Network::HTTP 
+*
 **************************************************/
 const char* ARK::Utilities::Network::HTTP::get(const char* peer, int port, const char* request)
 {
-
   HTTPClient http;
   http.setTimeout(2000);
-
     Serial.print("Opening HTTP connection to ");
     Serial.print(peer);
     Serial.print(":");
     Serial.print(port);
-    Serial.println("\n");
+    Serial.print("\n");
 
   http.begin(peer, port, request);
 
@@ -84,10 +78,9 @@ const char* ARK::Utilities::Network::HTTP::get(const char* peer, int port, const
   while (!http.connected())
   {
     delay(1000);
-
-      Serial.print("waiting for HTTP connection for ");
+      Serial.print("waiting for HTTP connection to: ");
       Serial.print(request);
-      Serial.println();
+      Serial.print("\n");
   };
 
   if (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected())
@@ -99,20 +92,14 @@ const char* ARK::Utilities::Network::HTTP::get(const char* peer, int port, const
 
     while(http.connected() && (len > 0 || len == -1))
     {
-      size_t size = stream->available();
-
-      if(size)
+      if(stream->available())
       {
         const char* temp = stream->readString().c_str();
+
         for (int i = 0; i <= len; i++)
         {
-          if (i != len)
-          {
-            payload[i] = temp[i];
-          } else {
-            payload[i] = '\0';
-          }
-        }
+          payload[i] = (i != len) ? (temp[i]) : ('\0');
+        };
       }
       delay(1);
     }
@@ -120,11 +107,8 @@ const char* ARK::Utilities::Network::HTTP::get(const char* peer, int port, const
   }
   else
   {
-
-    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-    
+    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str()); 
     http.end();
-
     return "Error: Connection to Peer could not be established";
   };
 
