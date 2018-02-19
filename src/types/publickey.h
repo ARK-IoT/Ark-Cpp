@@ -13,7 +13,7 @@
 *
 ********************************************************************************/
 
-
+typedef char PUBLIC_KEY_VALUE[66];
 /*************************************************
 *
 *
@@ -23,39 +23,52 @@ struct publickey_t {
 	private:
 
 		static const auto PUBLICKEY_SIZE = 67;
+		char value_[PUBLICKEY_SIZE];
 
 	public:
-		char value[PUBLICKEY_SIZE];
 
-		publickey_t() : value() {};
+		publickey_t() : value_() {};
 
-		publickey_t(const char* const base64String) : value()
+		publickey_t(const char* const base64String) : value_()
 		{  
 			if (strlen(base64String) < PUBLICKEY_SIZE - 1) {
-				value[0] = '\0';
+				value_[0] = '\0';
 			}
 			else {
-				strncpy(value, base64String, sizeof(value) / sizeof(value[0]));
+				strncpy(value_, base64String, sizeof(value_) / sizeof(value_[0]));
 			}
 		};
 
-		publickey_t(const publickey_t& other) : value() {
-			strcpy(value, other.value);
+		publickey_t(const publickey_t& other) : value_() {
+			strcpy(value_, other.value_);
 		};
 
 		publickey_t& operator=(const publickey_t& other) {
 			if (this != &other) {
-				strcpy(value, other.value);
+				strcpy(value_, other.value_);
 			}
 			return *this;
 		};
 
+    const char* getValue() const { return value_; };
+
 };
 /*************************************************/
+
+
+
 
 /*************************************************/
 typedef publickey_t Publickey;
 /*************************************************/
 
+// #define Publickey2(x) (publickey_t(x).getValue())
+
+// typedef Publickey2(x) Publickey3;
+
+// union Publickey2 {
+// 	Publickey publickey;
+// 	PUBLIC_KEY_VALUE value;
+// };
 
 #endif

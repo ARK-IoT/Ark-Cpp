@@ -13,6 +13,10 @@
 *
 ********************************************************************************/
 
+
+
+
+
 #define ADDRESS_SIZE 35
 
 /*************************************************
@@ -21,23 +25,26 @@
 struct address_t
 {
 	private:
+
 		static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
+		char value_[ADDRESS_LENGTH];
 
 	public:
-		char value[ADDRESS_LENGTH];
 
-		address_t() : value() {};
+		address_t() : value_() {};
 
-		address_t(const char* const addressString) : value()
+		address_t(const char* const addressString) : value_()
 		{
 			if (strlen(addressString) < ADDRESS_LENGTH - 1) {
 
-        value[0] = '\0';
+        value_[0] = '\0';
       }
       else {
-        strncpy(value, addressString, sizeof(value) / sizeof(value[0]));
+        strncpy(value_, addressString, sizeof(value_) / sizeof(value_[0]));
       };
 		};
+
+	const char* getValue() const { return value_; };
 
 };
 /*************************************************/
