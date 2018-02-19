@@ -25,7 +25,6 @@ class Connectable;
 class Connector
     : virtual HTTPConnectable
 {
-
   public:
   
 /****************************************
@@ -36,9 +35,9 @@ class Connector
 *****************************************/
 
     const ARK::Network* network;
-	ARK::NetworkType netType;
+	  ARK::NetworkType netType;
 
-    const char* networkPeer;
+    char networkPeer[16];
     int networkPort;
 
     Connector();
@@ -69,9 +68,6 @@ class Connector
 };
 
 
-
-
-
 /*************************************************
 * ARK::Utilities::Network::Connectable
 *   Inheritable Connector object
@@ -85,8 +81,6 @@ public:
 /*************************************************/
 
 
-
-
 /*************************************************
 * ARK::Utilities::Network::Connector
 *   Default empty constructor
@@ -96,8 +90,7 @@ public:
 ARK::Utilities::Network::Connector::Connector()
 {
 	this->network = nullptr;
-	// networkPeer = "";
-	netType = ARK::NetworkType::INVALID;
+	this->netType = ARK::NetworkType::INVALID;
 };
 /*************************************************/
 
@@ -143,8 +136,7 @@ void ARK::Utilities::Network::Connector::connect(const ARK::Network& network)
 		this->netType = ARK::NetworkType::CUSTOM;
 	} else {
 		this->netType = ARK::NetworkType::INVALID;
-	}
-
+	};
 	this->network = &network;
 	this->setNetworkPeer(this->randomPeer());
 }
@@ -159,8 +151,7 @@ void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& netwo
 {
 	this->netType = ARK::NetworkType::CUSTOM;
 	this->network = &network;
-
-	this->networkPeer = peer;
+  strncpy(this->networkPeer, peer, sizeof(this->networkPeer) / sizeof(this->networkPeer[0]));
 	this->networkPort = port;
 }
 /*************************************************/
@@ -198,7 +189,7 @@ void ARK::Utilities::Network::Connector::setNetworkPeer(const char* peer)
   } else if (this->netType == ARK::NetworkType::MAIN) {
     this->networkPort = ARK::Constants::Networks::Mainnet::port;
   }
-  this->networkPeer = peer;
+  strncpy(networkPeer, peer, sizeof(networkPeer) / sizeof(networkPeer[0]));
 }
 /*************************************************/
 
