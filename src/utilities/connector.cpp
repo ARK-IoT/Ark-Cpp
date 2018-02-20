@@ -103,7 +103,7 @@ void ARK::Utilities::Network::Connector::setNetworkPeer(const String& peer)
 **************************************************/
 String ARK::Utilities::Network::Connector::cb(const char* const request)
 {
-    return this->http.get(this->networkPeer, this->networkPort, request);
+    return this->http->get(this->networkPeer, this->networkPort, request);
 }
 /*  ==========================================================================  */
 

@@ -53,11 +53,17 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/model/transaction.cpp
 	${PROJECT_SOURCE_DIR}/model/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
+)
+
+set(PLATFORM_SRC 
+	${PROJECT_SOURCE_DIR}/utilities/json.cpp
 	${PROJECT_SOURCE_DIR}/utilities/http.cpp
 )
 
-set(PLATFORM_SRC ${PROJECT_SOURCE_DIR}/utilities/json.cpp)
-#set(PLATFORM_SRC ${PROJECT_SOURCE_DIR}/utilities/json_arduino.cpp)
+#set(PLATFORM_SRC 
+#	${PROJECT_SOURCE_DIR}/utilities/json_arduino.cpp
+#	${PROJECT_SOURCE_DIR}/utilities/http_arduino.cpp
+#)
 
 add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 

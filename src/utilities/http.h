@@ -5,8 +5,8 @@
 
 #include "platform.h"
 
-//#include <ESP8266WiFi.h>
-//#include <ESP8266HTTPClient.h>
+#include <memory>
+#include <string>
 
 namespace ARK
 {
@@ -35,20 +35,21 @@ namespace Network
 *   entry point for integrating the HTTPClient
 *   library for different boards/chipsets
 **************************************************/
-  class HTTP {
-    public: 
-     // bool isReachable = false;
+class HTTPInterface {
+protected: 
+    HTTPInterface() = default;
 
-      HTTP(){};
-
-     String get(const String& peer, int port, const String& request);
-  };
+public:
+    virtual String get(const String& peer, int port, const String& request) = 0;
+};
 /*  ==========================================================================  */
 
+// HTTP object factory
+std::unique_ptr<HTTPInterface> make_http();
 
-};
-};
-};
+}
+}
+}
 
 
 
@@ -60,8 +61,9 @@ namespace Network
 class ARK::Utilities::Network::HTTPConnectable
 {
 public:
+	std::unique_ptr<ARK::Utilities::Network::HTTPInterface> http;
 
-  ARK::Utilities::Network::HTTP http;
+	HTTPConnectable() : http(make_http()) { }
 };
 /*  ==========================================================================  */
 
