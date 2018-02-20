@@ -19,7 +19,7 @@ private:
 	json _json;
 
 public:
-	JSON(const std::string& jsonStr) : _json(jsonStr) {
+	JSON(const std::string& jsonStr) : _json(json::parse(jsonStr)) {
 	}
 
 	/**************************************************
@@ -28,14 +28,14 @@ public:
 	* { "key1": value1, "key2": value2 }
 	**************************************************/
 	String valueFor(const String& key) override {
-		return _json[key];
+		return get_value(_json[key]);
 	}
 
 	/**************************************************
 	* valueIn(key, subkey)
 	**************************************************/
 	String valueIn(const String& key, const String& subkey) override {
-		return _json[key][subkey];
+		return get_value(_json[key][subkey]);
 	}
 
 	/**************************************************
@@ -44,7 +44,7 @@ public:
 	* { "key": { subValue1, subvalue2 } }
 	**************************************************/
 	String subvalueFor(const String& key, int pos) override {
-		return _json[key][pos];
+		return get_value(_json[key][pos]);
 	}
 
 	/**************************************************
@@ -52,14 +52,24 @@ public:
 	**************************************************/
 	String subvalueIn(const String& key, const String& subkey) override {
 		const json new_root(_json[key]);
-		return new_root[subkey];
+		return get_value(new_root[subkey]);
 	}
 	
 	/**************************************************
 	* subarrayValueIn(key, position, subkey)
 	**************************************************/
 	String subarrayValueIn(const String& key, int pos, const String& subkey) override {
-		return _json[key][pos][subkey];
+		return get_value(_json[key][pos][subkey]);
+	}
+
+private:
+	std::string get_value(const json& j) const {
+		if (j.is_string()) {
+			return j.get<std::string>();
+		}
+		std::ostringstream ss;
+		ss << j;
+		return ss.str();
 	}
 };
 
