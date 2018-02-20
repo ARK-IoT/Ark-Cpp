@@ -58,5 +58,12 @@ target_link_libraries(Ark-Cpp-tests Ark-Cpp-lib)
 target_link_libraries(Ark-Cpp-tests GTest::main) # GTest::gtest will be linked automatically
 target_link_libraries(Ark-Cpp-tests GTest::gtest)
 
+set(COVERAGE OFF CACHE BOOL "Coverage")
+...
+if (COVERAGE)
+    target_compile_options(tests PRIVATE --coverage)
+    target_link_libraries(tests PRIVATE --coverage)
+endif()
+
 add_test(NAME test COMMAND Ark-Cpp-tests)
 
