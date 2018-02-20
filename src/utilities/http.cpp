@@ -28,6 +28,7 @@ public:
 		Poco::Net::HTTPResponse response;
 
 		session.sendRequest(request);
+		std::cout << "HTTPRequest sent" << std::endl;
 		auto& rs = session.receiveResponse(response);
 		std::cout << "HTTPResponse: " << response.getStatus() << " " << response.getReason() << std::endl;
 		if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
