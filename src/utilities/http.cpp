@@ -7,6 +7,7 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
 
 namespace ARK {
 namespace Utilities {
