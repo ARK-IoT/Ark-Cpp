@@ -18,5 +18,5 @@ script:
   - cmake .
   - cmake --build .
   # run Gtest
-  - ../bin/Ark-Cpp-tests
+  - ./bin/Ark-Cpp-tests
   
