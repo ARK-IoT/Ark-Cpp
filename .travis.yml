@@ -2,14 +2,16 @@ dist: trusty
 sudo: false
 language: cpp
 
+compiler: clang
+
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-    packages:
-      - g++-7 
+    #packages:
+    #  - g++-7 
 
 script:
-  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
+  #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
   - cmake --build .
   
