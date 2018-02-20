@@ -2,10 +2,6 @@ dist: trusty
 sudo: false
 language: cpp
 
-script:
-  - cmake .
-  - cmake --build .
-
 addons:
   apt:
     sources:
