@@ -48,7 +48,7 @@ public:
 	const char* height() const noexcept { return height_; }
 	const Balance& fee() const noexcept { return fee_; }
 	int milestone() const noexcept { return milestone_; }
-	const Hash& nethash() const noexcept { return netnash_; }
+	const Hash& nethash() const noexcept { return nethash_; }
 	const Balance& reward() const noexcept { return reward_; }
 	const Balance& supply() const noexcept { return supply_; }
 

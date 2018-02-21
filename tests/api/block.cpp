@@ -38,58 +38,46 @@ TEST(block, test_block) {
 	ASSERT_STREQ("", height.id());
 	ASSERT_STREQ("", height.height());
 
-	/*  ==================================  */
-	const auto blockNethashDescription = _arkManager.blockNethash().description();
-	Serial.println("blockNethashDescription: ");
-	Serial.println(blockNethashDescription);
-	Serial.println("\n=====\n");
-	delay(50);
-	/*  ==================================  */
+	ASSERT_STREQ("", _arkManager.blockNethash().description());
+
+	const auto block_fee = _arkManager.blockFee();
+	ASSERT_STREQ("", block_fee.ark());
+	ASSERT_STREQ("", block_fee.arktoshi());
+
+	const auto fees = _arkManager.blockFees();
+	ASSERT_STREQ("", fees.send().arktoshi());
+	ASSERT_STREQ("", fees.vote().arktoshi());
+	ASSERT_STREQ("", fees.delegate().arktoshi());
+	ASSERT_STREQ("", fees.second_signature().arktoshi());
+	ASSERT_STREQ("", fees.multi_signature().arktoshi());
+
+	ASSERT_STREQ("", _arkManager.blockMilestone());
+
+	const auto block_reward = _arkManager.blockReward();
+	ASSERT_STREQ("", block_reward.ark());
+	ASSERT_STREQ("", block_reward.arktoshi());
+
+
 
 	/*  ==================================  */
-	const auto blockFeeArk = _arkManager.blockFee().ark();
-	Serial.println("blockFeeArk: ");
-	Serial.println(blockFeeArk);
-	Serial.println("\n=====\n");
-	delay(50);
-	/*  ==================================  */
+	const auto block_supply = _arkManager.blockSupply();
+	ASSERT_STREQ("", block_supply.ark());
+	ASSERT_STREQ("", block_supply.arktoshi());
 
-	/*  ==================================  */
-	_arkManager.blockFees().description(buf, sizeof(buf));
-	Serial.println("blockFeesDescription: ");
-	Serial.println(buf);
-	Serial.println("\n=====\n");
-	delay(50);
-	/*  ==================================  */
-
-	/*  ==================================  */
-	const auto blockMilestone = _arkManager.blockMilestone();
-	Serial.println("blockMilestone: ");
-	Serial.println(blockMilestone);
-	Serial.println("\n=====\n");
-	delay(50);
-	/*  ==================================  */
-
-	/*  ==================================  */
-	const auto blockRewardArk = _arkManager.blockReward().ark();
-	Serial.println("blockRewardArk: ");
-	Serial.println(blockRewardArk);
-	Serial.println("\n=====\n");
-	delay(50);
-	/*  ==================================  */
-
-	/*  ==================================  */
-	const auto blockSupplyArk = _arkManager.blockSupply().ark();
-	Serial.println("blockSupplyArk: ");
-	Serial.println(blockSupplyArk);
-	Serial.println("\n=====\n");
-	delay(50);
-	/*  ==================================  */
-
-	/*  ==================================  */
-	_arkManager.blockStatus().description(buf, sizeof(buf));
-	Serial.println("blockStatusDescription: ");
-	Serial.println(buf);
-	delay(50);
-
+	
+	const auto block_status = _arkManager.blockStatus();
+	ASSERT_STREQ("", 
+	ASSERT_STREQ("", epoch() const noexcept { return epoch_; }
+	ASSERT_STREQ("", height() const noexcept { return height_; }
+	const auto& fee = block_status.fee();
+	ASSERT_STREQ("", fee.ark());
+	ASSERT_STREQ("", fee.arktoshi());
+	ASSERT_EQ(0, block_status.milestone());
+	ASSERT_STREQ("", block_status.nethash().description());
+	const auto& reward = block_status.reward();
+	ASSERT_STREQ("", reward.ark());
+	ASSERT_STREQ("", reward.arktoshi());
+	const auto& supply = block_status.supply();
+	ASSERT_STREQ("", supply.ark());
+	ASSERT_STREQ("", supply.arktoshi());
 }

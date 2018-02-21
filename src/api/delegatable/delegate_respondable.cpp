@@ -11,19 +11,17 @@
 void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t size)
 {
     strcpy(buf, "username: ");
-    strcat(buf, this->username);
+    strcat(buf, this->username_);
     strcat(buf, "\naddress.description: ");
-    strcat(buf, this->address.description());
+    strcat(buf, this->address_.description());
     strcat(buf, "\npublicKey.description: ");
-    strcat(buf, this->publicKey.description());
+    strcat(buf, this->publicKey_.description());
     strcat(buf, "\nvote.ark: ");
-    strcat(buf, this->vote.ark());
+    strcat(buf, this->vote_.ark());
     strcat(buf, "\nproducedblocks: ");
-    auto len = strlen(buf);
-    sprintf(buf + len, "%d", this->producedblocks);
+    sprintf(buf + strlen(buf), "%d", this->producedblocks_);
     strcat(buf, "\nmissedblocks: ");
-    len = strlen(buf);
-    sprintf(buf + len, "%d", this->missedblocks);
+    sprintf(buf + strlen(buf), "%d", this->missedblocks_);
 }
 /*  =======================================  */
 /*  ==========================================================================  */
@@ -33,18 +31,17 @@ void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_
 /*  =========================================  */
 /*  Description  */
 void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
-  if (this->count > 0) {
-      buf[0] = '\0';
-    for (auto i = 0u; i < this->count; ++i) {
-        strcat(buf, "\nvoter ");
-        auto len = strlen(buf);
-        sprintf(buf + len, "%d", i + 1);
-        strcat(buf, ":\n");
-        len = strlen(buf);
-        (*this)[i].description(buf + len, size - len);
-        strcat(buf, "\n");
-    };
-  };
+	if (this->count_ > 0) {
+		buf[0] = '\0';
+		for (auto i = 0u; i < this->count_; ++i) {
+			strcat(buf, "\nvoter ");
+			sprintf(buf + strlen(buf), "%d", i + 1);
+			strcat(buf, ":\n");
+			const auto len = strlen(buf);
+			(*this)[i].description(buf + len, size - len);
+			strcat(buf, "\n");
+		}
+	}
 }
 /*  =========================================  */
 /*  ==========================================================================  */
@@ -58,12 +55,12 @@ void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_
 /*  Description  */
 void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t size)
 {
-    strcpy(buf, "fees.ark: ");
-    strcat(buf, this->fees.ark());
-    strcat(buf, "\nrewards.ark: ");
-    strcat(buf, this->rewards.ark());
-    strcat(buf, "\nforged.ark: ");
-    strcat(buf, this->forged.ark());
+	strcpy(buf, "fees.ark: ");
+	strcat(buf, this->fees_.ark());
+	strcat(buf, "\nrewards.ark: ");
+	strcat(buf, this->rewards_.ark());
+	strcat(buf, "\nforged.ark: ");
+	strcat(buf, this->forged_.ark());
 }
 /*  ==================================================  */
 /*  ==========================================================================  */
@@ -76,36 +73,35 @@ void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const b
 /*  ARK::API::Delegate::Respondable::NextForgers  */
 /*  Constructor  */
 ARK::API::Delegate::Respondable::NextForgers::NextForgers(
-    const char* const _currentBlock, const char* const _currentSlot,
-    const Publickey* const _delegates) : currentBlock(), currentSlot()
+    const char* const currentBlock, const char* const currentSlot,
+    const Publickey* const delegates) : currentBlock_(), currentSlot_()
 {
     //TODO:  wish i had std::array for _delegates.  pointer decay sucks.
-    strncpy(this->currentBlock, _currentBlock, sizeof(this->currentBlock));
-    strncpy(this->currentSlot, _currentSlot, sizeof(this->currentSlot));
+    strncpy(this->currentBlock_, currentBlock, sizeof(this->currentBlock_));
+    strncpy(this->currentSlot_, currentSlot, sizeof(this->currentSlot_));
 	for (auto i = 0; i < 10; ++i)
 	{
-		this->delegates[i] = _delegates[i];
+		this->delegates_[i] = delegates[i];
 	};
 }
 /*  ============================================  */
 /*  Description  */
 void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t size)
 {
-    strcpy(buf, "currentBlock: ");
-    strcat(buf, this->currentBlock);
-    strcat(buf, "\ncurrentSlot: ");
-    strcat(buf, this->currentSlot);
-    strcat(buf, "\n");
+	strcpy(buf, "currentBlock: ");
+	strcat(buf, this->currentBlock_);
+	strcat(buf, "\ncurrentSlot: ");
+	strcat(buf, this->currentSlot_);
+	strcat(buf, "\n");
 
 	for (auto i = 0; i < 10; ++i)
 	{
-        strcat(buf, "delegate ");
-        const auto len = strlen(buf);
-        sprintf(buf + len, "%d", i + 1);
-        strcat(buf, ": \n publicKey: ");
-        strcat(buf, delegates[i].description());
-        strcat(buf, "\n");
-	};
+		strcat(buf, "delegate ");
+		sprintf(buf + strlen(buf), "%d", i + 1);
+		strcat(buf, ": \n publicKey: ");
+		strcat(buf, delegates_[i].description());
+		strcat(buf, "\n");
+	}
 }
 /*  ============================================  */
 /*  ==========================================================================  */

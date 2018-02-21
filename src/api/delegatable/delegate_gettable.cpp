@@ -158,7 +158,7 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegate(
     char uri[512] = { '\0' }; //TODO: review sizes
     strcpy(uri, ARK::API::Paths::Delegate::get_s);
 
-  if (strlen(_parameter) > 20)
+  if (strlen(_parameter) > 20)  //TODO:  refactor this to take a string or a PublicKey object to overload function
   {
       strcat(uri, "?publicKey=");
   }

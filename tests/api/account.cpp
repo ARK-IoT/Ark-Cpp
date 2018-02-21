@@ -9,8 +9,10 @@ ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
 Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 
 const auto account_balance = arkManager.accountBalance(darkAddress);
-ASSERT_STREQ("", account_balance.ark());
-ASSERT_STREQ("", account_balance.arktoshi());
+ASSERT_STREQ("", account_balance.confirmed().ark());
+ASSERT_STREQ("", account_balance.confirmed().arktoshi());
+ASSERT_STREQ("", account_balance.unconfirmed().ark());
+ASSERT_STREQ("", account_balance.unconfirmed().arktoshi());
 
 ASSERT_STREQ("", arkManager.accountPublickey(darkAddress).description());
 
