@@ -38,8 +38,8 @@ public:
 			Poco::StreamCopier::copyStream(rs, ofs);
 			return ofs.str();
 		}
-		} catch (const std::exception& ex) {
-			std::cout << "Exception in http::get: " << ex.what() << std::endl;
+		} catch (const Poco::Exception& ex) {
+			std::cout << "Exception in http::get: " << ex.displayText() << std::endl;
 			throw;
 		}
 		throw std::runtime_error("Error: Connection to Peer could not be established");
