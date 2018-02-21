@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.6.2)
 project(Ark-Cpp-lib)
 
 hunter_add_package(nlohmann_json)
-hunter_add_package(OpenSSL)
 hunter_add_package(PocoCpp)
 
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
@@ -25,7 +24,6 @@ include_directories(${PROJECT_SOURCE_DIR}/types)
 include_directories(${PROJECT_SOURCE_DIR}/utilities)
  
  find_package(nlohmann_json CONFIG REQUIRED)
- find_package(OpenSSL REQUIRED)
  find_package(Poco REQUIRED Net CONFIG)
 
 set(COMMON_SRC 
@@ -70,6 +68,5 @@ set(PLATFORM_SRC
 add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
-target_link_libraries(Ark-Cpp-lib PUBLIC OpenSSL::SSL OpenSSL::Crypto)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
 
