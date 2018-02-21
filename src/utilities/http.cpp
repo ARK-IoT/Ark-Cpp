@@ -7,6 +7,7 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
 
 namespace ARK {
 namespace Utilities {
@@ -19,20 +20,27 @@ public:
 	HTTP() = default;
 
 	std::string get(const std::string& peer, int port, const std::string& request_str) override {
-		std::cout << "Opening HTTP connection to " << peer << ":" << port;
+		std::cout << "Opening HTTP connection to " << peer << ":" << port << "with request" << std::endl << '\t' << request_str << std::endl;
 		Poco::Net::HTTPClientSession session(peer, port);
+		std::cout << "HTTPClientSession done" << std::endl;
 		Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, request_str, Poco::Net::HTTPMessage::HTTP_1_1);
+		std::cout << "HTTPRequest done" << std::endl;
 		Poco::Net::HTTPResponse response;
-
+		try {
 		session.sendRequest(request);
+		std::cout << "HTTPRequest sent" << std::endl;
 		auto& rs = session.receiveResponse(response);
-		std::cout << response.getStatus() << " " << response.getReason() << std::endl;
+		std::cout << "HTTPResponse: " << response.getStatus() << " " << response.getReason() << std::endl;
 		if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
 		{
 			
 			std::ostringstream ofs;
 			Poco::StreamCopier::copyStream(rs, ofs);
 			return ofs.str();
+		}
+		} catch (const std::exception& ex) {
+			std::cout << "Exception in http::get: " << ex.what() << std::endl;
+			throw;
 		}
 		throw std::runtime_error("Error: Connection to Peer could not be established");
 	}

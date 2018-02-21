@@ -2,18 +2,27 @@ dist: trusty
 sudo: false
 language: cpp
 
-script:
-  - cmake .
-  - cmake --build .
+compiler: 
+ # - gcc
+  - clang
 
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-    packages:
-      - g++-6 
+    #packages:
+    #  - g++-7 
+
+before_install:
+  - pip install --user cpp-coveralls
 
 script:
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .
+  #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
+  - cmake .
   - cmake --build .
+  # run Gtest
+  - ./bin/Ark-Cpp-tests
+  
+after_success:
+  - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
   
