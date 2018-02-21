@@ -6,36 +6,40 @@ TEST(account, test_account) {
 
 ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
 
-char buf[512] = {};
 Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 
-arkManager.accountBalance(darkAddress).description(buf, sizeof(buf));
-//Serial.println("balanceDescription: ");
-//Serial.println(buf);
-//Serial.println("\n=====\n");
-//delay(50);
+const auto account_balance = arkManager.accountBalance(darkAddress);
+ASSERT_STREQ("", account_balance.ark());
+ASSERT_STREQ("", account_balance.arktoshi());
 
-auto publicKeyDescription = arkManager.accountPublickey(darkAddress).description();
-//Serial.println("publicKeyDescription: ");
-//Serial.println(publicKeyDescription);
-//Serial.println("\n=====\n");
-//delay(50);
+ASSERT_STREQ("", arkManager.accountPublickey(darkAddress).description());
 
-auto delegatesFeeArk = arkManager.accountDelegatesFee(darkAddress).ark();
-//Serial.println("delegatesFeeArk: ");
-//Serial.println(delegatesFeeArk);
-//Serial.println("\n=====\n");
-//delay(50);
+const auto delegates_fee = arkManager.accountDelegatesFee(darkAddress);
+ASSERT_STREQ("", delegates_fee.ark());
+ASSERT_STREQ("", delegates_fee.arktoshi());
 
-arkManager.accountDelegates(darkAddress).description(buf, sizeof(buf));
-//Serial.println("delegatesDescription: ");
-//Serial.println(buf);
-//Serial.println("\n=====\n");
-//delay(50);
+const auto delegate = arkManager.accountDelegates(darkAddress);
 
-arkManager.account(darkAddress).description(buf, sizeof(buf));
-//Serial.println("accountDescription: ");
-//Serial.println(buf);
+ASSERT_STREQ("", delegate.username());
+ASSERT_STREQ("", delegate.address().description());
+ASSERT_STREQ("", delegate.public_key().description());
+ASSERT_STREQ("", delegate.vote().arktoshi());
+ASSERT_EQ(0, delegate.produced_blocks());
+ASSERT_EQ(0, delegate.missed_blocks());
+ASSERT_EQ(0, delegate.rate());
+ASSERT_EQ(0, delegate.approval());
+ASSERT_EQ(0, delegate.productivity());
 
+
+const auto account = arkManager.account(darkAddress);
+ASSERT_STREQ("", account.address().description());
+ASSERT_STREQ("", account.unconfirmed_balance().arktoshi());
+ASSERT_STREQ("", account.balance().arktoshi());
+ASSERT_STREQ("", account.public_key().description());
+ASSERT_EQ(0, account.unconfirmed_signature());
+ASSERT_EQ(0, account.second_signature());
+ASSERT_STREQ("", account.second_public_key().description());
+ASSERT_STREQ("", account.multi_signatures().description());
+ASSERT_STREQ("", account.u_multi_signatures().description());
 
 }

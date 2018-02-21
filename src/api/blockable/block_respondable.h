@@ -18,17 +18,18 @@ namespace Respondable
 /*  ==========================================================================  */
 /*  ====================================  */
 /*  ARK::API::Block::Respondable::Status  */
-struct Status
+class Status
 {
-public:
-    char epoch[64];  //TODO: check sizes
-    char height[64];
-    Balance fee;
-    int milestone;
-    Hash nethash;
-    Balance reward;
-    Balance supply;
+private:
+    char epoch_[64];  //TODO: check sizes
+    char height_[64];
+    Balance fee_;
+    int milestone_;
+    Hash nethash_;
+    Balance reward_;
+    Balance supply_;
 
+public:
     Status(
         const char* const e, 
         const char* const h,
@@ -37,11 +38,19 @@ public:
         const char* const nh,
         const char* const r,
         const char* const s
-    ) : epoch(), height(), fee(f), milestone(m), nethash(nh), reward(r), supply(s)
+    ) : epoch_(), height_(), fee_(f), milestone_(m), nethash_(nh), reward_(r), supply_(s)
     {
-        strncpy(epoch, e, sizeof(epoch) / sizeof(epoch[0]));
-        strncpy(height, h, sizeof(height) / sizeof(height[0]));
+        strncpy(epoch_, e, sizeof(epoch_) / sizeof(epoch_[0]));
+        strncpy(height_, h, sizeof(height_) / sizeof(height_[0]));
     }
+
+	const char* epoch() const noexcept { return epoch_; }
+	const char* height() const noexcept { return height_; }
+	const Balance& fee() const noexcept { return fee_; }
+	int milestone() const noexcept { return milestone_; }
+	const Hash& nethash() const noexcept { return netnash_; }
+	const Balance& reward() const noexcept { return reward_; }
+	const Balance& supply() const noexcept { return supply_; }
 
     void description(char* const buf, size_t size);
 };
@@ -53,26 +62,27 @@ public:
 /*  ====================================  */
 /*  ARK::API::Block::Respondable::Height  */
 /*  Definition  */
-struct Height
-{
-public:
-    char height[64]; // TODO: check sizes 
-    char id[64];
+class Height {
+private:
+    char height_[64]; // TODO: check sizes 
+    char id_[64];
 
-    Height(const char* const h, const char* const _id) : height(), id() { 
-        strncpy(height, h, sizeof(height) / sizeof(height[0]));
-        strncpy(id, _id, sizeof(id) / sizeof(id[0]));
+public:
+    Height(const char* const h, const char* const i) : height_(), id_() { 
+        strncpy(height_, h, sizeof(height_) / sizeof(height_[0]));
+        strncpy(id_, i, sizeof(id_) / sizeof(id_[0]));
     }
+
+	const char* height() const noexcept { return height_; }
+	const char* id() const noexcept { return id_; }
 
     void description(char* const buf, size_t size);
 };
-/*  ====================================  */
-/*  ==========================================================================  */
 
-};
-};
-};
-};
+}
+}
+}
+}
 
 
 #endif
