@@ -32,9 +32,9 @@ include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/api/account.cpp
-#	${PROJECT_SOURCE_DIR}/api/block.cpp
-#	${PROJECT_SOURCE_DIR}/api/delegate.cpp
-#	${PROJECT_SOURCE_DIR}/api/loader.cpp
+	${PROJECT_SOURCE_DIR}/api/block.cpp
+	${PROJECT_SOURCE_DIR}/api/delegate.cpp
+	${PROJECT_SOURCE_DIR}/api/loader.cpp
 #	${PROJECT_SOURCE_DIR}/api/peer.cpp
 #	${PROJECT_SOURCE_DIR}/api/signature.cpp
 #	${PROJECT_SOURCE_DIR}/api/transaction.cpp

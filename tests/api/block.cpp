@@ -1,6 +1,6 @@
-#include "api.h"
-
 #include "gtest/gtest.h"
+
+#include "api.h"
 
 TEST(block, test_block) {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
@@ -32,7 +32,7 @@ TEST(block, test_block) {
 	//    delay(50);
 	/*  ==================================  */
 
-	ASSERT_STREQ("", _arkManager.blockEpoch());
+	ASSERT_STREQ("", _arkManager.blockEpoch().c_str());
 
 	const auto height = _arkManager.blockHeight();
 	ASSERT_STREQ("", height.id());
@@ -51,7 +51,7 @@ TEST(block, test_block) {
 	ASSERT_STREQ("", fees.second_signature().arktoshi());
 	ASSERT_STREQ("", fees.multi_signature().arktoshi());
 
-	ASSERT_STREQ("", _arkManager.blockMilestone());
+	ASSERT_STREQ("", _arkManager.blockMilestone().c_str());
 
 	const auto block_reward = _arkManager.blockReward();
 	ASSERT_STREQ("", block_reward.ark());
@@ -66,9 +66,8 @@ TEST(block, test_block) {
 
 	
 	const auto block_status = _arkManager.blockStatus();
-	ASSERT_STREQ("", 
-	ASSERT_STREQ("", epoch() const noexcept { return epoch_; }
-	ASSERT_STREQ("", height() const noexcept { return height_; }
+	ASSERT_STREQ("", block_status.epoch());
+	ASSERT_STREQ("", block_status.height());
 	const auto& fee = block_status.fee();
 	ASSERT_STREQ("", fee.ark());
 	ASSERT_STREQ("", fee.arktoshi());

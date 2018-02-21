@@ -6,14 +6,10 @@
 #include "balance.h"
 #include "hash.h"
 
-namespace ARK
-{
-namespace API
-{
-namespace Block
-{
-namespace Respondable
-{
+namespace ARK {
+namespace API {
+namespace Block {
+namespace Respondable {
 
 /*  ==========================================================================  */
 /*  ====================================  */
