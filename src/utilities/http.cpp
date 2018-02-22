@@ -21,7 +21,9 @@ public:
 
 	std::string get(const std::string& peer, int port, const std::string& request_str) override {
 		std::cout << "Opening HTTP connection to " << peer << ":" << port << "with request" << std::endl << '\t' << request_str << std::endl;
-		Poco::Net::HTTPClientSession session(peer, port);
+		std::ostringstream ss;
+		ss << peer << ":" << port;
+		Poco::Net::HTTPClientSession session(Poco::Net::SocketAddress(ss.str()));
 		std::cout << "HTTPClientSession done" << std::endl;
 		Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, request_str, Poco::Net::HTTPMessage::HTTP_1_1);
 		std::cout << "HTTPRequest done" << std::endl;
@@ -38,8 +40,8 @@ public:
 			Poco::StreamCopier::copyStream(rs, ofs);
 			return ofs.str();
 		}
-		} catch (const std::exception& ex) {
-			std::cout << "Exception in http::get: " << ex.what() << std::endl;
+		} catch (const Poco::Exception& ex) {
+			std::cout << "Exception in http::get: " << ex.displayText() << std::endl;
 			throw;
 		}
 		throw std::runtime_error("Error: Connection to Peer could not be established");
