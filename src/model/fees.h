@@ -6,10 +6,10 @@
 namespace ARK
 {
 
-/*  ================================================  */
-/*  =========  */
-/*  ARK::Fees  */
-/*  /api/blocks/getFees */
+/*************************************************
+* ARK::Fees
+*   /api/blocks/getFees
+**************************************************/
 struct Fees
 {
     Balance send;
@@ -18,37 +18,33 @@ struct Fees
     Balance secondsignature;
     Balance multisignature;
 
-    String description();
+    void printTo(HardwareSerial &serial);
 };
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
 
 };
 
-/*  ================================================  */
-/*  =========  */
-/*  ARK::Fees  */
-/*  Description  */
-String ARK::Fees::Fees::description()
+
+/*************************************************
+* ARK::Fees
+*   printTo(Serial)
+**************************************************/
+void ARK::Fees::printTo(HardwareSerial &serial)
 {
-    String resp;
-    resp += "send.ark: ";
-    resp += this->send.ark;
-    resp += "\n";
-    resp += "vote.ark: ";
-    resp += this->vote.ark;
-    resp += "\n";
-    resp += "delegate.ark: ";
-    resp += this->delegate.ark;
-    resp += "\n";
-    resp += "secondsignature.ark: ";
-    resp += this->secondsignature.ark;
-    resp += "\n";
-    resp += "multisignature.ark: ";
-    resp += this->multisignature.ark;
-    return resp;
+	serial.print("\nsend: ");
+    serial.print(this->send.ark());
+	serial.print("\nvote: ");
+    serial.print(this->vote.ark());
+	serial.print("\ndelegate: ");
+    serial.print(this->delegate.ark());
+	serial.print("\nsecondsignature: ");
+    serial.print(this->secondsignature.ark());
+	serial.print("\nmultisignature: ");
+    serial.print(this->multisignature.ark());
+	serial.print("\n");
+	serial.flush();
 }
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
+
 
 #endif

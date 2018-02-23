@@ -11,8 +11,8 @@
     ARK::API::Delegatable  
     ARK::API::Loadable  
     ARK::API::MultiSignaturable  
-    ARK::API:: Peerable  
-    ARK::API:: Signaturable  
+    ARK::API::Peerable  
+    ARK::API::Signaturable  
     ARK::API::Transactionable  
 
 2) Gettable

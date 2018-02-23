@@ -4,7 +4,7 @@
 #define ADDRESS_H
 #pragma once
 
-/********************************************************************************
+/*******************************************************************************
 *
 * address: 
 *   "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA"
@@ -13,48 +13,47 @@
 *
 ********************************************************************************/
 
-#define ADDRESS_LENGTH 34
 
+
+
+
+#define ADDRESS_SIZE 35
+
+/*************************************************
+*   address_t
+**************************************************/
 struct address_t
 {
+	private:
 
-public:
-  char value[ADDRESS_LENGTH / sizeof(char)] = {'\0'};
+		static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
+		char value_[ADDRESS_LENGTH];
 
-  address_t()
-  {
-    // for (int i = 0; i < ADDRESS_LENGTH; i++) {
-    this->value[0] = 0;
-    // };
-  };
+	public:
 
-  address_t(String _addressString)
-  {
-    for (int i = 0; i < ADDRESS_LENGTH; i++)
-    {
-      this->value[i] = _addressString[i];
-    };
-  };
+		address_t() : value_() {};
 
-  address_t(const char *addressString)
-  {
-    for (int i = 0; i < ADDRESS_LENGTH; i++)
-    {
-      this->value[i] = addressString[i];
-    };
-  };
+		address_t(const char* const addressString) : value_()
+		{
+			if (strlen(addressString) < ADDRESS_LENGTH - 1) {
 
-  String description()
-  {
-    String resp;
-    for (int i = 0; i < ADDRESS_LENGTH; i++)
-    {
-      resp += value[i];
-    };
-    return resp;
-  };
+        value_[0] = '\0';
+      }
+      else {
+        strncpy(value_, addressString, sizeof(value_) / sizeof(value_[0]));
+      };
+		};
+
+	const char* getValue() const { return value_; };
+
 };
+/*************************************************/
 
+
+/*************************************************
+*   Address
+**************************************************/
 typedef address_t Address;
+
 
 #endif

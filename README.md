@@ -2,11 +2,11 @@
   <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
-# Ark for Machines v0.4  
+# Ark for Machines v0.5.7  
 
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
-![version](https://img.shields.io/badge/version-v0.4-orange.svg?style=flat)
+![version](https://img.shields.io/badge/version-v0.5.7-orange.svg?style=flat)
 ![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
@@ -101,5 +101,5 @@ or
   - [ ] Documentation 
   - [ ] Tests 
   - [ ] Handle Large Callbacks 
-  - [ ] Remove 'String' objects in favor of 'const char*'
+  - [X] Remove 'String' objects in favor of 'const char*'
 

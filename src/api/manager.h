@@ -8,9 +8,9 @@ namespace ARK
 namespace API
 {
 
-/*  ==========================================================================  */
-/*  =================  */
-/*  ARK::API::Manager  */
+/*************************************************
+*  ARK::API::Manager
+**************************************************/
 class Manager :
     public ARK::API::Accountable,
     public ARK::API::Blockable,
@@ -26,15 +26,14 @@ class Manager :
   public:
 
     Manager();
-    Manager(ARK::Network network);
+    Manager(const ARK::Network& network);
 
   private:
 
-    void connect(ARK::Network network);
+    void connect(const ARK::Network& network);
 
 };
-/*  =================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 };
 };
@@ -42,29 +41,34 @@ class Manager :
 
 
 
-/*  ==========================================================================  */
-/*  =================  */
-/*  ARK::API::Manager  */
-/*  Constructor */
+/*************************************************
+*  ARK::API::Manager
+**************************************************/
 ARK::API::Manager::Manager()
 {
-  ARK::Network network;
-  this->connect(network);
+  this->connect(ARK::Network());
 };
-/*  =================  */
-/*  Constructor */
-ARK::API::Manager::Manager(ARK::Network network)
+/*************************************************/
+
+
+/*************************************************
+*  ARK::API::Manager
+**************************************************/
+ARK::API::Manager::Manager(const ARK::Network& network)
 {
   this->connect(network);
 };
-/*  =================  */
-/*  Method */
-void ARK::API::Manager::connect(ARK::Network network)
+/*************************************************/
+
+
+/*************************************************
+*  ARK::API::Manager::connect
+**************************************************/
+void ARK::API::Manager::connect(const ARK::Network& network)
 {
   this->netConnector = ARK::Utilities::Network::Connector(network);
 };
-/*  =================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
 #endif

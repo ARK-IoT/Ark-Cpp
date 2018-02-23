@@ -31,23 +31,25 @@ namespace Devnet
 			==============
 	*/
 
-	String nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
-	String seeds[6]
+	const auto nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
+	const char* const seeds[6] =
 	{
 		"167.114.29.32", "167.114.29.33",
 		"167.114.29.34", "167.114.29.35",
 		"167.114.29.36",
 		"130.211.155.75"
 	};
-	int port = 4002;
+	const auto port = 4002;
+
+    const auto type = NetworkType::DEV;
 
 	/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-	String randomPeer()
+	const char* randomPeer()
 	{
-		return seeds[random(0, 6)];
+		return seeds[random(0, 5)];
 	};
 
-	ARK::Network model
+	ARK::Network model =
 	{
 		nethash,
 		"DARK",
@@ -80,8 +82,8 @@ namespace Mainnet
 		==============
 	*/
 
-	String nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988";
-	String seeds[46]
+	const auto nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988";
+	const char* const seeds[46] =
 	{
 		"5.39.9.240", "5.39.9.241", "5.39.9.242", "5.39.9.243",
 		"5.39.9.244", "5.39.9.250", "5.39.9.251", "5.39.9.252",
@@ -97,21 +99,23 @@ namespace Mainnet
 		"193.70.72.88", "193.70.72.89", "193.70.72.90"
 	};
 
-	int port = 4001;
+	const auto port = 4001;
+
+    const auto type = NetworkType::MAIN;
 
 	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
-	String randomPeer()
+	const char* randomPeer()
 	{
 		return seeds[random(0, 45)];
 	};
 
-	ARK::Network model
+	ARK::Network model = 
 	{
 		nethash,
 		"ARK",
 		"Ѧ",
 		"https://explorer.ark.io/",
-		23};
+		23
 	};
 
 };
@@ -154,11 +158,11 @@ namespace Network_ADV
 		{0x0488b21e,
 		 0x0488ade4},
 		0x00,
-		0x80};
+		0x80
 	};
-
 };
 
 };
-
+}
+}
 #endif

@@ -14,19 +14,16 @@ namespace Utilities
 namespace Network
 {
 
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::Connectable 
 *   Inheritable HTTPConnectable object
 **************************************************/
   class HTTPConnectable;
-/*  ==========================================================================  */
+/*************************************************/
 
+/**************************************************************************************************/
 
-
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::HTTP 
 *   Currently using ESP8266 libs
 *
@@ -36,87 +33,87 @@ namespace Network
 **************************************************/
   class HTTP {
     public: 
-      bool isReachable = false;
-
       HTTP(){};
 
-     String get(String peer, int port, String request);
+     const char* get(const char* peer, int port, const char* request);
   };
-/*  ==========================================================================  */
+/*************************************************/
 
 
 };
 };
 };
 
-
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::Connectable 
 *   Inheritable HTTPConnectable object
 **************************************************/
 class ARK::Utilities::Network::HTTPConnectable
 {
 public:
-
   ARK::Utilities::Network::HTTP http;
 };
-/*  ==========================================================================  */
+/*************************************************/
 
+/**************************************************************************************************/
 
-
-
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::HTTP 
+*
 **************************************************/
-String ARK::Utilities::Network::HTTP::get(String peer, int port, String request)
+const char* ARK::Utilities::Network::HTTP::get(const char* peer, int port, const char* request)
 {
-
   HTTPClient http;
+  http.setTimeout(2000);
+    Serial.print("Opening HTTP connection to ");
+    Serial.print(peer);
+    Serial.print(":");
+    Serial.print(port);
+    Serial.print("\n");
 
-  if (this->isReachable == false)
-  {
-    http.setReuse(true);
-    http.setTimeout(1000);
-    http.begin(peer, port, request);
-
-    this->isReachable = true;
-  }
-  else
-  {
-    http.begin(request);
-  };
+  http.begin(peer, port, request);
 
   int httpCode = http.GET();
 
   while (!http.connected())
   {
     delay(1000);
-    Serial.println("waiting for HTTP connection");
+      Serial.print("waiting for HTTP connection to: ");
+      Serial.print(request);
+      Serial.print("\n");
   };
 
-  this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
-
-  if (this->isReachable)
+  if (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected())
   {
-    String streamStr = String(http.getStreamPtr()->readString());
+    int len = http.getSize();
+    char* payload = new char[len + 1];
 
-    http.end();
+    WiFiClient * stream = http.getStreamPtr();
 
-    return streamStr;
+    while(http.connected() && (len > 0 || len == -1))
+    {
+      if(stream->available())
+      {
+        const char* temp = stream->readString().c_str();
+
+        for (int i = 0; i <= len; i++)
+        {
+          payload[i] = (i != len) ? (temp[i]) : ('\0');
+        };
+      }
+      delay(1);
+    }
+    return payload;
   }
   else
   {
+    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str()); 
     http.end();
-
     return "Error: Connection to Peer could not be established";
   };
 
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
 #endif

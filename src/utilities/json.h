@@ -8,161 +8,203 @@ namespace ARK
 namespace Utilities
 {
 
-/*  ==========================================================================  */
 /**************************************************
-* ARK::Utilities::JSONString 
+* ARK::Utilities::JSONParser
 *
 * The purpose of this class is to serve as an
 *   entry point for integrating and simplifying
 *   integration of a JSON library
 **************************************************/
-  struct JSONString
-  {
-
-    private:
-      String jsonStr;
-
-    public:
-      JSONString(String _jsonStr);
-      String valueFor(String _key);
-      String valueIn(String _key, String _subkey);
-      String subvalueFor(String _key, int _pos);
-      String subvalueIn(String _key, String _subkey);
-      String subarrayValueIn(String _key, int _pos, String _subkey);
-  };
-/*  ==========================================================================  */
-
-
-};
-};
-
-
-
-
-
-/*  ==========================================================================  */
-/**************************************************
-* Initialize from a JSON String
-**************************************************/
-ARK::Utilities::JSONString::JSONString(String _jsonStr)
+struct JSONParser
 {
-  this->jsonStr = _jsonStr;
+	#define PARSER_SIZE 2048
+
+	private:
+
+		int size_;
+		const char *value_ = new char[PARSER_SIZE];
+
+	public:
+
+		/*************************************************
+		*		ARK::Utilities::JSONParser
+		*		Constructor
+		**************************************************/
+		JSONParser( const char* const value, int size );
+		/*************************************************/
+
+		/*************************************************
+		*		ARK::Utilities::JSONParser
+		*		Deconstructor
+		**************************************************/
+		~JSONParser();
+		/*************************************************/
+
+/**************************************************************************************************/
+
+		/*************************************************
+		*			{ "key": "keyValue" }
+		**************************************************/
+		const char* valueFor( const char* key );
+		/*************************************************/
+
+		/*************************************************
+		*		{ "key": { "subkey": "subkeyValue" } }
+		**************************************************/
+		const char* valueIn( const char* key, const char* subkey );
+		/*************************************************/
+
+		/*************************************************
+		*		{ "key": [ "subkeyValue" ] }
+		**************************************************/
+		const char* subvalueFor( const char* key, int pos );
+		/*************************************************/
+
+		/*************************************************
+		*		{ "key": [ { "subkey": "subkeyValue" } ] }
+		**************************************************/
+		const char* subarrayValueIn( const char* key, int pos, const char* subkey );
+		/*************************************************/
+
+};
+/*************************************************/
+  
+
+};
 };
 
-/**************************************************
-* valueFor(key)
-*
-* { "key1": value1, "key2": value2 } 
-**************************************************/
-String ARK::Utilities::JSONString::valueFor(String _key)
-{
-  const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-  DynamicJsonBuffer jsonBuffer(capacity);
-  JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
-  return root[_key];
-}
 
-/**************************************************
-* valueIn(key, subkey)
+/*************************************************
+*		ARK::Utilities::JSONParser
+*		Constructor
 *
+*   @constructor:	JSONParser(const char* const value, int size)
+*   @parameters:
+*			const char* const value
+*			int size
+*
+*   @description:
+*			Constructs JSONParser with Value and Size.
 * 
 **************************************************/
-String ARK::Utilities::JSONString::valueIn(String _key, String _subkey)
-{
-  const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-  DynamicJsonBuffer jsonBuffer(capacity);
-  JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
-  return root[_key][_subkey];
-}
+ARK::Utilities::JSONParser::JSONParser(
+		const char* const value,
+		int size
+) {
+	this->size_ =  size;
+	this->value_ = value;
+};
+/*************************************************/
 
-/**************************************************
-* subvalueFor(key, position)
+/*************************************************
+*		ARK::Utilities::JSONParser
+*		Deconstructor
 *
-* { "key": { subValue1, subvalue2 } } 
+*   @description:
+*			Deconstructs JSONParser/Deletes `value_` array.
+* 
 **************************************************/
-String ARK::Utilities::JSONString::subvalueFor(String _key, int _pos)
+ARK::Utilities::JSONParser::~JSONParser()
 {
-  const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-  DynamicJsonBuffer jsonBuffer(capacity);
-  JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
-  return root[_key][_pos];
-}
+	delete [] value_;
+};
+/*************************************************/
 
+/**************************************************************************************************/
 
-/**************************************************
-* subvalueIn(key, subkey)
+/*************************************************
+*		ARK::Utilities::JSONParser::valueFor
 *
-*  
-**************************************************/
-String ARK::Utilities::JSONString::subvalueIn(String _key, String _subkey)
-{
-  const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-  DynamicJsonBuffer jsonBuffer(capacity);
-  JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
-  JsonObject &newRoot = root[_key];
-  return newRoot[_subkey];
-}
-
-/**************************************************
-* subarrayValueIn(key, position, subkey)
+*   @parameters:
+*			const char* key
 *
-*  
+*   @description:
+*			{ "key": "keyValue" }
+* 
 **************************************************/
-String ARK::Utilities::JSONString::subarrayValueIn(String _key, int _pos, String _subkey)
-{
-  const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-  DynamicJsonBuffer jsonBuffer(capacity);
-  JsonObject &root = jsonBuffer.parseObject(this->jsonStr);
-  // JsonArray& root = jsonBuffer.parseArray(this->jsonStr);
-  return root[_key][_pos][_subkey];
+const char* ARK::Utilities::JSONParser::valueFor(
+	const char* key
+) {
+	const size_t capacity = this->size_;
+	DynamicJsonBuffer jsonBuffer(capacity);
+	JsonObject &root = jsonBuffer.parseObject(this->value_);
+	jsonBuffer.clear();
+	return root[key];
 }
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/*************************************************
+*		ARK::Utilities::JSONParser::valueIn
+*
+*   @parameters:
+*			const char* key
+*			const char* subkey
+*
+*   @description:
+*			{ "key": { "subkey": "subkeyValue" } }
+* 
+**************************************************/
+const char* ARK::Utilities::JSONParser::valueIn(
+		const char* key,
+		const char* subkey
+) {
+	const size_t capacity = this->size_;
+	DynamicJsonBuffer jsonBuffer(capacity);
+	JsonObject &root = jsonBuffer.parseObject(this->value_);
+	jsonBuffer.clear();
+	return root[key][subkey];
+}
+/*************************************************/
 
 
+/*************************************************
+*		ARK::Utilities::JSONParser::subvalueFor
+*
+*   @parameters:
+*			const char* key
+*			int pos
+*
+*   @description:
+*			{ "key": [ "subkeyValue" ] }
+* 
+**************************************************/
+const char* ARK::Utilities::JSONParser::subvalueFor(
+		const char* key,
+		int pos
+) {
+	const size_t capacity = this->size_;
+	DynamicJsonBuffer jsonBuffer(capacity);
+	JsonObject &root = jsonBuffer.parseObject(this->value_);
+	jsonBuffer.clear();
+	return root[key][pos];
+}
+/*************************************************/
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
-// /**************************************************
-// * ARK::Utilities::JSONChar 
-// *
-// * The purpose of this class is to serve as an
-// *   entry point for integrating and simplifying
-// *   integration of a JSON library
-// **************************************************/
-// struct JSONChar
-// {
-//   private:
-//     char *jsonChars;
-//   public:
-//     JSONChar(const char *_jsonChars);
-//     const char *subvalueIn(const char *_key, const char *_subkey);
-//     const char *subarrayValueIn(const char *_key, int _pos, const char *_subkey);
-// };
-// ARK::Utilities::JSONChar::JSONChar(const char *_jsonChars)
-// {
-//   strcpy(this->jsonChars, _jsonChars);
-// };
-// const char *ARK::Utilities::JSONChar::subvalueIn(const char *key, const char *subkey)
-// {
-//   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-//   DynamicJsonBuffer jsonBuffer(capacity);
-//   JsonObject &root = jsonBuffer.parseObject(this->jsonChars);
-//   jsonBuffer.clear();
-//   JsonObject &newRoot = root[key];
-//   return newRoot[subkey];
-// }
-// const char *ARK::Utilities::JSONChar::subarrayValueIn(const char *_key, int _pos, const char *_subkey)
-// {
-//   const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
-//   DynamicJsonBuffer jsonBuffer(capacity);
-//   jsonBuffer.clear();
-//   JsonObject &root = jsonBuffer.parseObject(this->jsonChars);
-//   // JsonArray& root = jsonBuffer.parseArray(this->jsonChars);
-//   return root[_key][_pos][_subkey];
-// }
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+
+/*************************************************
+*		ARK::Utilities::JSONParser::subarrayValueIn
+*
+*   @parameters:
+*			const char* key
+*			int pos
+*
+*   @description:
+*			{ "key": [ { "subkey": "subkeyValue" } ] }
+* 
+**************************************************/
+const char* ARK::Utilities::JSONParser::subarrayValueIn(
+		const char* key,
+		int pos,
+		const char* subkey
+) {
+	const size_t capacity = this->size_;
+	DynamicJsonBuffer jsonBuffer(capacity);
+	JsonObject &root = jsonBuffer.parseObject(this->value_);
+	jsonBuffer.clear();
+	return root[key][pos][subkey];
+}
+/*************************************************/
+
 
 #endif

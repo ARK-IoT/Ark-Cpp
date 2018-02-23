@@ -9,73 +9,84 @@ namespace API
 {
 namespace MultiSignature
 {
-/*  ==========================================================================  */
-/*  =============================================  */
-/*  PROTECTED: ARK::API::MultiSignature::Gettable  */
+
+/*************************************************
+*  PROTECTED: ARK::API::MultiSignature::Gettable
+**************************************************/
 class Gettable
 {
   protected:
-/*  ==========================================================================  */
-    /*  /api/multisignatures/pending?publicKey=  */
-    String pending(ARK::Utilities::Network::Connector _netConnector, Publickey _publicKey);
-    String pendingfromJSON(String _jsonStr);
-/*  ==========================================================================  */
+		/*************************************************
+		* ARK::API::MultiSignatureGettable::pending
+		*   /api/multisignatures/pending?publicKey=
+		**************************************************/
+    const char* pending(ARK::Utilities::Network::Connector& netConnector, const Publickey& publicKey);
+    
+		const char* pendingfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+    /*************************************************/
+    /*************************************************/
     /*  Only on Mainnet?  */
     // /*  /api/multisignatures/accounts?publicKey=  */
     // String accounts(ARK::Utilities::Network::Connector _netConnector, String _publicKey);
     // /*  ???  */
     // String accountsfromJSON(String _jsonStr);
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+    /*************************************************/
+    /*************************************************/
+
+
 };
-/*  =============================================  */
-/*  ==========================================================================  */
+/*************************************************/
+
 };
 };
 };
 
 
-
-
-/*  ==========================================================================  */
-/*  =========================================  */
-/*  ARK::API::MultiSignatureGettable::pending  */
-/*  /api/multisignatures/pending?publicKey=  */
-String ARK::API::MultiSignature::Gettable::pending(ARK::Utilities::Network::Connector _netConnector, Publickey _publicKey)
+/*************************************************
+* ARK::API::MultiSignatureGettable::pending
+*   /api/multisignatures/pending?publicKey=
+**************************************************/
+const char* ARK::API::MultiSignature::Gettable::pending(
+    ARK::Utilities::Network::Connector& netConnector, 
+    const Publickey& publicKey
+)
 {
-  String uri = ARK::API::Paths::MultiSignatures::pending_s;
-  uri += "?publicKey=";
-  uri += _publicKey.description();
+	char uri[512] = { '\0' }; //TODO: check size
 
-  String callback = _netConnector.cb(uri);
+	strcpy(uri, ARK::API::Paths::MultiSignatures::pending_s);
+	strcat(uri, "?publicKey=");
+	strcat(uri, publicKey.getValue());
 
-  return ARK::API::MultiSignature::Gettable::pendingfromJSON(callback);
+	auto callback = netConnector.cb(uri);
+	return ARK::API::MultiSignature::Gettable::pendingfromJSON(callback);
 };
-
-/*
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"transactions":[]
+*	}
+*
+**************************************************/
+const char* ARK::API::MultiSignature::Gettable::pendingfromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "transactions":[]
-}
-*/
-String ARK::API::MultiSignature::Gettable::pendingfromJSON(String _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
-  
-  return jString.valueFor("transactions");
+  ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+  return parser.valueFor("transactions");
 };
-/*  =========================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
-  /*  ==========================================  */
+/*************************************************/
+/*************************************************/
   /*  ARK::API::MultiSignature::Gettable::accounts  */
   // /*  /api/multisignatures/accounts?publicKey=  */
   // String ARK::API::MultiSignatureGettable::accounts(ARK::Utilities::Network::Connector _netConnector, String _publicKey) {
@@ -92,7 +103,7 @@ String ARK::API::MultiSignature::Gettable::pendingfromJSON(String _jsonStr)
   //   return jString.valueFor("??");
   // };
   /*  ==========================================  */
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 
 #endif

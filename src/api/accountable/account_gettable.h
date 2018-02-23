@@ -10,259 +10,320 @@ namespace API
 namespace Account
 {
 
-/*  ==========================================================================  */
-/*  ======================================  */
-/*  PROTECTED: ARK::API::Account::Gettable  */
+/*************************************************
+*  PROTECTED: ARK::API::Account::Gettable
+**************************************************/
+
 class Gettable
 {
   protected:
-/*  ==========================================================================  */
+		/*************************************************
+		*	ARK::API::Account::Gettable::balance
+		*		/api/accounts/getBalance?address=arkAddress
+		**************************************************/
     ARK::API::Account::Respondable::Balances balance(
-        ARK::Utilities::Network::Connector netManager,
-        Address arkAddress);
+        ARK::Utilities::Network::Connector &netManager,
+        const Address &arkAddress);
 
-    ARK::API::Account::Respondable::Balances balancefromJSON(String _jsonStr);
-/*  ==========================================================================  */
+    ARK::API::Account::Respondable::Balances balancefromJSON(const char *const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		*	ARK::API::Account::Gettable::publickey
+		*		/api/accounts/getPublickey?address=arkAddress
+		**************************************************/
     Publickey publickey(
-        ARK::Utilities::Network::Connector netManager,
-        Address arkAddress);
+        ARK::Utilities::Network::Connector &netManager,
+        const Address &arkAddress);
 
-    Publickey publickeyfromJSON(String _jsonStr);
-/*  ==========================================================================  */
+    Publickey publickeyfromJSON(const char *const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		*	ARK::API::Account::Gettable::delegatesFee
+		*		/api/accounts/delegates/fee?address=arkAddress
+		**************************************************/
     Balance delegatesFee(
-        ARK::Utilities::Network::Connector netManager,
-        Address arkAddress);
+        ARK::Utilities::Network::Connector &netManager,
+        const Address &arkAddress);
 
-    Balance delegatesFeefromJSON(String _jsonStr);
-/*  ==========================================================================  */
+    Balance delegatesFeefromJSON(const char *const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		*	ARK::API::Account::Gettable::delegates
+		*		/api/accounts/delegates?address=arkAddress
+		**************************************************/
     ARK::Delegate delegates(
-        ARK::Utilities::Network::Connector netManager,
-        Address arkAddress);
+        ARK::Utilities::Network::Connector &netManager,
+        const Address &arkAddress);
 
-    ARK::Delegate delegatesfromJSON(String _jsonStr);
-/*  ==========================================================================  */
+    ARK::Delegate delegatesfromJSON(const char *const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		*	ARK::API::Account::Gettable::account
+		*		/api/accounts?address=arkAddress 
+		**************************************************/
     ARK::Account account(
-        ARK::Utilities::Network::Connector netManager,
-        Address arkAddress);
+        ARK::Utilities::Network::Connector &netManager,
+        const Address &arkAddress);
 
-    ARK::Account accountfromJSON(String _jsonStr);
-/*  ==========================================================================  */
+    ARK::Account accountfromJSON(const char *const jsonStr);
+    /*************************************************/
 };
-/*  ======================================  */
-/*  ==========================================================================  */
-};
+/*************************************************/
 };
 };
+};
 
 
-
-
-/*  ==========================================================================  */
-/*  ==================================  */
-/*  ARK::API::Account::Gettable::balance  */
-/*  /api/accounts/getBalance?address=arkAddress */
+/*************************************************
+*	ARK::API::Account::Gettable::balance
+*		/api/accounts/getBalance?address=arkAddress
+**************************************************/
 ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balance(
-    ARK::Utilities::Network::Connector netManager,
-    Address arkAddress)
+    ARK::Utilities::Network::Connector &netManager,
+    const Address &arkAddress)
 {
-  String uri = ARK::API::Paths::Account::getBalance_s;
-  uri += "?address=" + arkAddress.description();
-  
-  String callback = netManager.cb(uri);
+	char uri[256] = {'\0'}; // TODO: check size
+	strcpy(uri, ARK::API::Paths::Account::getBalance_s);
+	strcat(uri, "?address=");
+	strcat(uri, arkAddress.getValue());
 
-  return ARK::API::Account::Gettable::balancefromJSON(callback);
+	auto callback = netManager.cb(uri);
+
+	return ARK::API::Account::Gettable::balancefromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "balance":  "Balance",
-  "unconfirmedBalance": "Balance"
-}
-*/
-ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balancefromJSON(String _jsonStr)
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"balance":  "Balance",
+*		"unconfirmedBalance": "Balance"
+*	}
+*
+**************************************************/
+ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balancefromJSON(const char *const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return {jString.valueFor("balance"), jString.valueFor("unconfirmedBalance")};
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return {
+		Balance(parser.valueFor("balance")),
+		Balance(parser.valueFor("unconfirmedBalance"))
+	};
 };
-/*  ==================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Account::Gettable::publickey  */
-/*  /api/accounts/getPublickey?address=arkAddress */
+/*************************************************
+*	ARK::API::Account::Gettable::publickey
+*		/api/accounts/getPublickey?address=arkAddress
+**************************************************/
 Publickey ARK::API::Account::Gettable::publickey(
-    ARK::Utilities::Network::Connector netManager,
-    Address arkAddress)
+    ARK::Utilities::Network::Connector &netManager,
+    const Address &arkAddress)
 {
-  String uri = ARK::API::Paths::Account::getPublickey_s;
-  uri += "?address=" + arkAddress.description();
-  String callback = netManager.cb(uri);
-  return ARK::API::Account::Gettable::publickeyfromJSON(callback);
-};
+	char uri[256] = {'\0'}; // TODO:  check size
 
-/*
-{ "success":true,
-  "publicKey":  "Publickey"
-}
-*/
-Publickey ARK::API::Account::Gettable::publickeyfromJSON(String _jsonStr)
+	strcpy(uri, ARK::API::Paths::Account::getPublickey_s);
+	strcat(uri, "?address=");
+	strcat(uri, arkAddress.getValue());
+
+	auto callback = netManager.cb(uri);
+	return ARK::API::Account::Gettable::publickeyfromJSON(callback);
+};
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"publicKey":  "Publickey"
+*	}
+*
+**************************************************/
+Publickey ARK::API::Account::Gettable::publickeyfromJSON(const char *const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return {Publickey(jString.valueFor("publicKey"))};
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return Publickey(parser.valueFor("publicKey"));
 };
-/*  ====================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  =========================================  */
-/*  ARK::API::Account::Gettable::delegatesFee  */
-/*  /api/accounts/delegates/fee?address=arkAddress  */
+/*************************************************
+*	ARK::API::Account::Gettable::delegatesFee
+*		/api/accounts/delegates/fee?address=arkAddress
+**************************************************/
 Balance ARK::API::Account::Gettable::delegatesFee(
-    ARK::Utilities::Network::Connector netManager,
-    Address arkAddress)
+    ARK::Utilities::Network::Connector &netManager,
+    const Address &arkAddress)
 {
 
-  String uri = ARK::API::Paths::Account::delegatesFee_s;
-  uri += "?address=" + arkAddress.description();
+	char uri[256] = {'\0'}; // TODO:  check size
 
-  String callback = netManager.cb(uri);
+	strcpy(uri, ARK::API::Paths::Account::delegatesFee_s);
+	strcat(uri, "?address=");
+	strcat(uri, arkAddress.getValue());
 
-  return ARK::API::Account::Gettable::delegatesFeefromJSON(callback);
+	auto callback = netManager.cb(uri);
+
+	return ARK::API::Account::Gettable::delegatesFeefromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "fee":2500000000
-}
-*/
-Balance ARK::API::Account::Gettable::delegatesFeefromJSON(String _jsonStr)
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"fee":2500000000
+*	}
+*
+**************************************************/
+Balance ARK::API::Account::Gettable::delegatesFeefromJSON(const char *const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return {jString.valueFor("fee")};
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return Balance(parser.valueFor("fee"));
 };
-/*  =========================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ======================================  */
-/*  ARK::API::Account::Gettable::delegates  */
-/*  /api/accounts/delegates?address=arkAddress  */
+/*************************************************
+*	ARK::API::Account::Gettable::delegates
+*		/api/accounts/delegates?address=arkAddress
+**************************************************/
 ARK::Delegate ARK::API::Account::Gettable::delegates(
-    ARK::Utilities::Network::Connector netManager,
-    Address arkAddress)
+    ARK::Utilities::Network::Connector &netManager,
+    const Address &arkAddress)
 {
-  String uri = ARK::API::Paths::Account::delegates_s;
-  uri += "?address=" + arkAddress.description();
+	char uri[256] = {'\0'}; // TODO:  check size
 
-  String callback = netManager.cb(uri);
+	strcpy(uri, ARK::API::Paths::Account::delegates_s);
+	strcat(uri, "?address=");
+	strcat(uri, arkAddress.getValue());
 
-  return ARK::API::Account::Gettable::delegatesfromJSON(callback);
+	auto callback = netManager.cb(uri);
+	return ARK::API::Account::Gettable::delegatesfromJSON(callback);
 };
-
-/*
-{ "success":true,
-  "delegates":[{
-    "username": "sleepdeficit",
-    "address":  "Address",
-    "publicKey":  "Publickey",
-    "vote": "Balance",
-    "producedblocks": String,
-    "missedblocks": String,
-    "rate": int,
-    "approval": double,
-    "productivity": double
-  }]
-}
-*/
-ARK::Delegate ARK::API::Account::Gettable::delegatesfromJSON(String _jsonStr)
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"delegates":
+*		[
+*			{
+*				"username": "sleepdeficit",
+*				"address":  "Address",
+*				"publicKey":  "Publickey",
+*				"vote": "Balance",
+*				"producedblocks": const char*,
+*				"missedblocks": String,
+*				"rate": int,
+*				"approval": double,
+*				"productivity": double
+*			}
+*		]
+*	}
+*
+**************************************************/
+ARK::Delegate ARK::API::Account::Gettable::delegatesfromJSON(const char *const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return {
-      jString.subarrayValueIn("delegates", 0, "username"),
-      jString.subarrayValueIn("delegates", 0, "address"),
-      jString.subarrayValueIn("delegates", 0, "publicKey"),
-      jString.subarrayValueIn("delegates", 0, "vote"),
-      jString.subarrayValueIn("delegates", 0, "producedblocks").toInt(),
-      jString.subarrayValueIn("delegates", 0, "missedblocks").toInt(),
-      jString.subarrayValueIn("delegates", 0, "rate").toInt(),
-      jString.subarrayValueIn("delegates", 0, "approval").toFloat(),
-      jString.subarrayValueIn("delegates", 0, "productivity").toFloat()};
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return {
+			parser.subarrayValueIn("delegates", 0, "username"),
+			parser.subarrayValueIn("delegates", 0, "address"),
+			parser.subarrayValueIn("delegates", 0, "publicKey"),
+			parser.subarrayValueIn("delegates", 0, "vote"),
+			atoi(parser.subarrayValueIn("delegates", 0, "producedblocks")),
+			atoi(parser.subarrayValueIn("delegates", 0, "missedblocks")),
+			atoi(parser.subarrayValueIn("delegates", 0, "rate")),
+			atof(parser.subarrayValueIn("delegates", 0, "approval")),
+			atof(parser.subarrayValueIn("delegates", 0, "productivity"))
+	};
 };
-/*  ======================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Account::Gettable::account  */
-/*  /api/accounts?address=arkAddress  */
+/*************************************************
+*	ARK::API::Account::Gettable::account
+*		/api/accounts?address=arkAddress 
+**************************************************/
 ARK::Account ARK::API::Account::Gettable::account(
-    ARK::Utilities::Network::Connector netManager,
-    Address arkAddress)
+    ARK::Utilities::Network::Connector &netManager,
+    const Address &arkAddress)
 {
-  String uri = ARK::API::Paths::Account::accounts_s;
-  uri += "?address=" + arkAddress.description();
+	char uri[81 + 1] = {'\0'}; // TODO:  check size
 
-  String callback = netManager.cb(uri);
+	strcpy(uri, ARK::API::Paths::Account::accounts_s);
+	strcat(uri, "?address=");
+	strcat(uri, arkAddress.getValue());
 
-  return ARK::API::Account::Gettable::accountfromJSON(callback);
+	auto callback = netManager.cb(uri);
+	return ARK::API::Account::Gettable::accountfromJSON(callback);
 };
 
 /*
-{ "success":true,
-  "account":{
-    "address":  "Address",
-    "unconfirmedBalance": "Balance",
-    "balance":  "Balance",
-    "publicKey":  "Publickey",
-    "unconfirmedSignature": int,
-    "secondSignature":  int,
-    "secondPublicKey":  "Publickey",
-    "multisignatures":[],
-    "u_multisignatures":[]
-  }
+
 }
 */
-ARK::Account ARK::API::Account::Gettable::accountfromJSON(String _jsonStr)
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"account":
+*		{
+*			"address":  "Address",
+*			"unconfirmedBalance": "Balance",
+*			"balance":  "Balance",
+*			"publicKey":  "Publickey",
+*			"unconfirmedSignature": int,
+*			"secondSignature":  int,
+*			"secondPublicKey":  "Publickey",
+*			"multisignatures":[],
+*			"u_multisignatures":[]
+*		}
+*	}
+*
+**************************************************/
+ARK::Account ARK::API::Account::Gettable::accountfromJSON(const char *const jsonStr)
 {
-  ARK::Utilities::JSONString jString(_jsonStr);
-
-  return {
-      jString.subvalueIn("account", "address"),
-      jString.subvalueIn("account", "unconfirmedBalance"),
-      jString.subvalueIn("account", "balance"),
-      jString.subvalueIn("account", "publicKey"),
-      jString.subvalueIn("account", "unconfirmedSignature").toInt(),
-      jString.subvalueIn("account", "secondSignature").toInt(),
-      jString.subvalueIn("account", "secondPublicKey"),
-      jString.subvalueIn("account", "multisignatures"),
-      jString.subvalueIn("account", "u_multisignatures")};
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+	return {
+		parser.valueIn("account", "address"),
+		parser.valueIn("account", "unconfirmedBalance"),
+		parser.valueIn("account", "balance"),
+		parser.valueIn("account", "publicKey"),
+		atoi(parser.valueIn("account", "unconfirmedSignature")),
+		atoi(parser.valueIn("account", "secondSignature")),
+		parser.valueIn("account", "secondPublicKey"),
+		parser.valueIn("account", "multisignatures"),
+		parser.valueIn("account", "u_multisignatures")
+	};
 };
-/*  ====================================  */
-/*  ==========================================================================  */
+/*************************************************/
+
 
 #endif

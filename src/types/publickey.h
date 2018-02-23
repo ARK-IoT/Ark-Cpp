@@ -13,39 +13,62 @@
 *
 ********************************************************************************/
 
+typedef char PUBLIC_KEY_VALUE[66];
+/*************************************************
+*
+*
+**************************************************/
+struct publickey_t {
 
-    #define PUBLICKEY_SIZE 66
+	private:
 
-    struct publickey_t {
-      public:
-        char value[PUBLICKEY_SIZE / sizeof(char)] = { '\0' };    ;
+		static const auto PUBLICKEY_SIZE = 67;
+		char value_[PUBLICKEY_SIZE];
 
-        publickey_t(){
-          for (int i = 0; i < PUBLICKEY_SIZE; i++) {
-            this->value[i] = 0;
-          };
-        };
+	public:
 
-        publickey_t(String _base64String) {      
-          for (int i = 0; i < PUBLICKEY_SIZE; i++) {
-            this->value[i] = _base64String[i];
-          };
-        };
+		publickey_t() : value_() {};
 
-        String description() {
-          String resp;
-          for (int i = 0; i < PUBLICKEY_SIZE; i++) {
-            resp += value[i];
-          };
-          return resp;
-        };      
-    };
+		publickey_t(const char* const base64String) : value_()
+		{  
+			if (strlen(base64String) < PUBLICKEY_SIZE - 1) {
+				value_[0] = '\0';
+			}
+			else {
+				strncpy(value_, base64String, sizeof(value_) / sizeof(value_[0]));
+			}
+		};
 
-    typedef publickey_t Publickey;
+		publickey_t(const publickey_t& other) : value_() {
+			strcpy(value_, other.value_);
+		};
+
+		publickey_t& operator=(const publickey_t& other) {
+			if (this != &other) {
+				strcpy(value_, other.value_);
+			}
+			return *this;
+		};
+
+    const char* getValue() const { return value_; };
+
+};
+/*************************************************/
 
 
-//   };
+
+
+/*************************************************/
+typedef publickey_t Publickey;
+/*************************************************/
+
+// #define Publickey2(x) (publickey_t(x).getValue())
+
+// typedef Publickey2(x) Publickey3;
+
+// union Publickey2 {
+// 	Publickey publickey;
+// 	PUBLIC_KEY_VALUE value;
 // };
-
 
 #endif

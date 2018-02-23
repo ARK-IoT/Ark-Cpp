@@ -22,67 +22,92 @@
 
 namespace ARK
 {
-	
-/*  ================================================  */
-/*  =============  */
-/*  ARK::Delegate  */
-struct Delegate
+
+
+/*************************************************
+*   ARK::delegate_t
+**************************************************/
+struct delegate_t
 {
-public:
-	String username;
-	Address address;
-	Publickey publicKey;
-	Balance vote;
-	int producedblocks;
-	int missedblocks;
-	int rate;
-	double approval;
-	double productivity;
-
-	String description();
-
+	public:
+		char username[20];
+		Address address;
+		Publickey publicKey;
+		Balance vote;
+		int producedblocks;
+		int missedblocks;
+		int rate;
+		double approval;
+		double productivity;
 };
-/*  =============  */
-/*  ================================================  */
+/*************************************************/
 
-}
 
-/*  ================================================  */
-/*  =====  */
-/*  Description  */
-String ARK::Delegate::Delegate::description()
+/*************************************************
+*   ARK::Delegate
+**************************************************/
+struct Delegate :
+		public delegate_t
 {
-	String resp;
-	resp += "username: ";
-	resp += this->username;
-	resp += "\n";
-	resp += "address.description: ";
-	resp += this->address.description();
-	resp += "\n";
-	resp += "publicKey.description: ";
-	resp += this->publicKey.description();
-	resp += "\n";
-	resp += "vote.ark: ";
-	resp += this->vote.ark;
-	resp += "\n";
-	resp += "producedblocks: ";
-	resp += this->producedblocks;
-	resp += "\n";
-	resp += "missedblocks: ";
-	resp += this->missedblocks;
-	resp += "\n";
-	resp += "rate: ";
-	resp += this->rate;
-	resp += "\n";
-	resp += "approval: ";
-	resp += this->approval;
-	resp += "%\n";
-	resp += "productivity: ";
-	resp += this->productivity;
-	resp += "%";
-	return resp;
+		public:
+		
+		Delegate(
+			const char* const newUsername,
+			const char* const newAddress,
+			const char* const newPublicKey,
+			const char* const newVote,
+			int newProducedblocks,
+			int newMissedblocks,
+			int newRate,
+			double newApproval,
+			double newProductivity
+		)
+		{
+			strncpy(username, newUsername, sizeof(username) / sizeof(username[0]));
+			address = Address(newAddress);
+			publicKey = Publickey(newPublicKey);
+			vote = Balance(newVote);
+			producedblocks = newProducedblocks;
+			missedblocks =  newMissedblocks;
+			rate = newRate;
+			approval = newApproval;
+			productivity = newProductivity;
+		};
+
+	void printTo(HardwareSerial &serial);
+};
+/*************************************************/
+
 }
-/*  =====  */
-/*  ================================================  */
+
+
+/*************************************************
+*   printTo(Serial)
+**************************************************/
+void ARK::Delegate::printTo(HardwareSerial &serial)
+{
+	serial.print("username: ");
+    serial.print(this->username);
+	serial.print("\naddress: ");
+    serial.print(this->address.getValue());
+	serial.print("\npublicKey: ");
+		serial.print(this->publicKey.getValue());
+	serial.print("\nvote: ");
+    serial.print(this->vote.ark());
+	serial.print("\nproducedblocks: ");
+    serial.print(this->producedblocks);
+	serial.print("\nmissedblocks: ");
+    serial.print(this->missedblocks);
+	serial.print("\nrate: ");
+    serial.print(this->rate);
+	serial.print("\napproval: ");
+    serial.print(this->approval);
+	serial.print("%\nproductivity: ");
+    serial.print(this->productivity);
+		serial.print("%\n");
+	serial.flush();
+}
+/*************************************************/
+
 
 #endif

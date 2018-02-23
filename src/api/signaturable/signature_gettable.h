@@ -9,20 +9,23 @@ namespace API
 {
 namespace Signature
 {
-/*  ==========================================================================  */
-/*  ========================================  */
-/*  PROTECTED: ARK::API::Signature::Gettable  */
+
+/*************************************************
+*  PROTECTED: ARK::API::Signature::Gettable
+**************************************************/
 class Gettable
 {
   protected:
-/*  ==========================================================================  */
-    /*  /api/signatures/fee  */
-    Balance fee(ARK::Utilities::Network::Connector _netConnector);
-    Balance feefromJSON(String _jsonStr);
-/*  ==========================================================================  */
+		/*************************************************
+		* ARK::API::SignatureGettable::fee
+		*   /api/signatures/fee
+		**************************************************/
+    Balance fee(ARK::Utilities::Network::Connector& netConnector);
+    Balance feefromJSON(const char* const jsonStr);
+    /*************************************************/
+
 };
-/*  ========================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 };
 };
@@ -30,32 +33,30 @@ class Gettable
 
 
 
-/*  ==========================================================================  */
-/*  ================================  */
-/*  ARK::API::SignatureGettable::fee  */
-/*  /api/signatures/fee  */
-Balance ARK::API::Signature::Gettable::fee(ARK::Utilities::Network::Connector _netConnector)
+/*************************************************
+* ARK::API::SignatureGettable::fee
+*   /api/signatures/fee
+**************************************************/
+Balance ARK::API::Signature::Gettable::fee(ARK::Utilities::Network::Connector& netConnector)
 {
-  String uri = ARK::API::Paths::Signatures::fee_s;
-
-  String callback = _netConnector.cb(uri);
-
-  return ARK::API::Signature::Gettable::feefromJSON(callback);
+	auto callback = netConnector.cb(ARK::API::Paths::Signatures::fee_s);
+	return ARK::API::Signature::Gettable::feefromJSON(callback);
 }
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"fee":  Balance
+*	}
+*
+**************************************************/
 
-/*
+Balance ARK::API::Signature::Gettable::feefromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "fee":  Balance
+  ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
+  return Balance(parser.valueFor("fee"));
 }
-*/
-Balance ARK::API::Signature::Gettable::feefromJSON(String _jsonStr)
-{
-  ARK::Utilities::JSONString jString(_jsonStr);
+/*************************************************/
 
-  return jString.valueFor("fee");
-}
-/*  ================================  */
-/*  ==========================================================================  */
 
 #endif

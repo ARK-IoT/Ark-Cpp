@@ -3,53 +3,92 @@
 #ifndef peer_h
 #define peer_h
 
-namespace ARK {
+namespace ARK
+{
 
-/*  ================================================  */
-	/*  =========  */
-	/*  ARK::Peer  */
-	struct Peer {
+	/*************************************************
+	*   ARK::peer_t
+	**************************************************/
+	struct peer_t
+	{
 		public:
-			String ip;
+			char ip[40];
 			int port;
-			String version;
+			char version[32];
 			int errors;
-			String os;
-			String height;
-			String status;
+			char os[32];
+			char height[32];
+			char status[32];
 			int delay;
-
-			String description();
 	};
-	/*  =========  */
-/*  ================================================  */
+	/*************************************************/
+
+
+	/*************************************************
+	*   ARK::Peer
+	**************************************************/
+	struct Peer :
+			public peer_t
+	{
+		Peer(
+				const char* const newIP,
+				int newPort,
+				const char* const newVersion,
+				int newErrors,
+				const char* const newOS,
+				const char* const newHeight,
+				const char* const newStatus,
+				int newDelay
+		)
+		{
+			strncpy( ip, newIP, sizeof(ip) / sizeof(ip[0]) );
+			port = newPort;
+			strncpy( version, newVersion, sizeof(version) / sizeof(version[0]) );
+			errors = newErrors;
+			strncpy( os, newOS, sizeof(os) / sizeof(os[0]) );
+			strncpy( height, newHeight, sizeof(height) / sizeof(height[0]) );
+			strncpy( status, newStatus, sizeof(status) / sizeof(status[0]) );
+			delay = newDelay;
+		};
+
+		void printTo(HardwareSerial &serial);
+	};
+	/*************************************************/
 
 };
 
-/*  ================================================  */
-/*  =========  */
-/*  Description  */
-String ARK::Peer::Peer::description() {
-	String resp;
-		resp += "ip: ";
-				resp += this->ip; resp += "\n";
-		resp += "port: ";
-				resp += this->port; resp += "\n";
-		resp += "version: ";
-				resp += this->version; resp += "\n";
-		resp += "_errors: ";
-				resp += this->errors; resp += "\n";
-		resp += "os: ";
-				resp += this->os; resp += "\n";
-		resp += "height: ";
-				resp += this->height; resp += "\n";
-		resp += "status: ";
-				resp += this->status; resp += "\n";
-		resp += "delay: ";
-				resp += this->delay;
-	return resp;
+
+/*************************************************
+*	ARK::Peer
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints Peer Model information to Serial
+*
+**************************************************/
+void ARK::Peer::printTo(HardwareSerial &serial)
+{
+	serial.print("\nip: ");
+		serial.print(this->ip);
+	serial.print("\nport: ");
+		serial.print(this->port);
+	serial.print("\nversion: ");
+		serial.print(this->version);
+	serial.print("\nerrors: ");
+		serial.print(this->errors);
+	serial.print("\nos: ");
+		serial.print(this->os);
+	serial.print("\nheight: ");
+		serial.print(this->height);
+	serial.print("\nstatus: ");
+		serial.print(this->status);
+	serial.print("\ndelay: ");
+		serial.print(this->delay);
+	serial.print("\n");
+	serial.flush();
 }
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
+
 
 #endif

@@ -1,5 +1,5 @@
 #include <ark.h>
-#include <yourWiFiLibrary.h>
+//#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -9,125 +9,157 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * block: 
 ********************************************************************************/
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
 
 void checkAPI() {
-/*  ==================================  */
+  /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockDescription = _arkManager.block("4367122150875693402").description();
-    Serial.println("blockDescription: ");
-    Serial.println(blockDescription);
+  /*************************************************/
+  ARK::Block block = arkManager.block("4367122150875693402");
+    Serial.println("block: ");
+  block.printTo(Serial);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
+
+  /*************************************************/
+  /*************************************************/
 /* needs stream->string size fix for large callbacks */
-//  String blocks = _arkManager.blocks();
+//  String blocks = arkManager.blocks();
 //    Serial.println(blocks);
 //    Serial.println();
 //    delay(50);
-/*  ==================================  */
+  /*************************************************/
+  /*************************************************/
 
-/*  ==================================  */
-  String blockEpoch = _arkManager.blockEpoch();
+
+  /*************************************************/
+  auto blockEpoch = arkManager.blockEpoch();
     Serial.println("blockEpoch: ");
     Serial.println(blockEpoch);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockHeightDescription = _arkManager.blockHeight().description();
-    Serial.println("blockHeightDescription: ");
-    Serial.println(blockHeightDescription);
+  /*************************************************/
+  auto blockHeight =  arkManager.blockHeight();
+    Serial.println("blockHeight: ");
+  blockHeight.printTo(Serial); 
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockNethashDescription = _arkManager.blockNethash().description();
-    Serial.println("blockNethashDescription: ");
-    Serial.println(blockNethashDescription);
+  /*************************************************/
+  Hash blockNethash = arkManager.blockNethash();
+    Serial.println("blockNethash: ");
+    Serial.println(blockNethash.getValue());
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockFeeArk = _arkManager.blockFee().ark;
-    Serial.println("blockFeeArk: ");
-    Serial.println(blockFeeArk);
+  /*************************************************/
+  Balance blockFee = arkManager.blockFee();
+    Serial.println("blockFee: ");
+    Serial.println(blockFee.ark());
     Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
+    delay(100);
+  /*************************************************/
 
-/*  ==================================  */
-  String blockFeesDescription = _arkManager.blockFees().description();
-    Serial.println("blockFeesDescription: ");
-    Serial.println(blockFeesDescription);
+  /*************************************************/
+  ARK::Fees blockFees = arkManager.blockFees();
+    Serial.println("blockFees: ");
+  blockFees.printTo(Serial);
     Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
+    delay(100);
+  /*************************************************/
 
-/*  ==================================  */
-  String blockMilestone = _arkManager.blockMilestone();
+  /*************************************************/
+  auto blockMilestone = arkManager.blockMilestone();
     Serial.println("blockMilestone: ");
     Serial.println(blockMilestone);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockRewardArk = _arkManager.blockReward().ark;
-    Serial.println("blockRewardArk: ");
-    Serial.println(blockRewardArk);
+  /*************************************************/
+  Balance blockReward = arkManager.blockReward();
+    Serial.println("blockReward: ");
+    Serial.println(blockReward.ark());
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockSupplyArk = _arkManager.blockSupply().ark;
-    Serial.println("blockSupplyArk: ");
-    Serial.println(blockSupplyArk);
+  /*************************************************/
+  Balance blockSupply = arkManager.blockSupply();
+    Serial.println("blockSupply: ");
+    Serial.println(blockSupply.ark());
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String blockStatusDescription = _arkManager.blockStatus().description();
-    Serial.println("blockStatusDescription: ");
-    Serial.println(blockStatusDescription);
+  /*************************************************/
+  auto blockStatus = arkManager.blockStatus();
+    Serial.println("blockStatus: ");
+  blockStatus.printTo(Serial);
     delay(50);
-/*  ==================================  */  
+  /*************************************************/
 }
+/*************************************************/
 
 
-/*  ==========================================================================  */
+/*************************************************/
 extern "C" {
 #include "user_interface.h"
 }
-void reportFreeHeap() {
+void reportFreeHeap()
+{
   Serial.print("\n\nsystem_get_free_heap_size: ");
   Serial.print(system_get_free_heap_size());
   Serial.println("\n\n");
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
-void check() {
+/*************************************************/
+void check()
+{
   checkAPI();
     reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
+/*************************************************/
 
-void setup() {
+
+/*************************************************/
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
+  reportFreeHeap();
+
+  WiFi.mode(WIFI_STA);
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 
 void loop() {}
+/*************************************************/

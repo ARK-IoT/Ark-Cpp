@@ -10,119 +10,138 @@ namespace API
 namespace Transaction
 {
 
-/*  ==========================================================================  */
-/*  ==========================================  */
-/*  PROTECTED: ARK::API::Transaction::Gettable  */
+/*************************************************
+*  PROTECTED: ARK::API::Transaction::Gettable
+**************************************************/
 class Gettable
 {
   protected:
-/*  ==========================================================================  */
-    /*  /api/transactions/get?id=  */
-    ARK::Transaction transaction(ARK::Utilities::Network::Connector netConnector, Hash id);
-    ARK::Transaction transactionfromJSON(String jsonStr);
-/*  ==========================================================================  */
+		/*************************************************
+		* ARK::API::Transaction::Gettable::transaction
+		*   /api/transactions/get?id=
+		**************************************************/
+    ARK::Transaction transaction(ARK::Utilities::Network::Connector& netConnector, const Hash& id);
+    
+		ARK::Transaction transactionfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-/*    BROKEN: fix for large callbacks  */
-/*    Peers callback is ~28,000 bytes  */
+
+/**************************************************************************************************/
+
+
+    /*************************************************/
+    /*************************************************/
+		/*    BROKEN: fix for large callbacks  */
+		/*    Peers callback is ~28,000 bytes  */
     /*  /api/transactions  */
     // String transactions(ARK::Utilities::Network::Connector netConnector);
     // String transactionsfromJSON(String jsonStr);
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+    /*************************************************/
+    /*************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/transactions/unconfirmed/get?id=  */
-    String transactionUnconfirmed(
-        ARK::Utilities::Network::Connector netConnector,
-        Hash id);
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Transaction::Gettable::transactionUnconfirmed
+		*   /api/transactions/unconfirmed/get?id=
+		**************************************************/
+    ARK::API::Transaction::Respondable::Unconfirmed transactionUnconfirmed(
+        ARK::Utilities::Network::Connector& netConnector,
+        const Hash& id);
         
-    String transactionUnconfirmedfromJSON(String jsonStr);
-/*  ==========================================================================  */
+    ARK::API::Transaction::Respondable::Unconfirmed transactionUnconfirmedfromJSON(const char* const jsonStr);
+    /*************************************************/
 
-/*  ==========================================================================  */
-    /*  /api/transactions/unconfirmed  */
-    String transactionsUnconfirmed(ARK::Utilities::Network::Connector netConnector);
-    String transactionsUnconfirmedfromJSON(String jsonStr);
-/*  ==========================================================================  */
+
+/**************************************************************************************************/
+
+
+		/*************************************************
+		* ARK::API::Transaction::Gettable::transactionsUnconfirmed
+		*   /api/transactions/unconfirmed
+		**************************************************/
+    ARK::API::Transaction::Respondable::Unconfirmed transactionsUnconfirmed(ARK::Utilities::Network::Connector& netConnector);
+    
+		ARK::API::Transaction::Respondable::Unconfirmed transactionsUnconfirmedfromJSON(const char* const jsonStr);
+    /*************************************************/
 
 };
-/*  ==========================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 };
 };
 };
 
 
+/*************************************************
+* ARK::API::Transaction::Gettable::transaction
+*   /api/transactions/get?id=
+**************************************************/
+ARK::Transaction ARK::API::Transaction::Gettable::transaction(
+    ARK::Utilities::Network::Connector& netConnector, 
+    const Hash& id
+) {
+    char uri[512] = { '\0' }; //TODO review sizes
 
+    strcpy(uri, ARK::API::Paths::Transaction::getSingle_s);
+    strcat(uri, "?id=");
+    strcat(uri, id.getValue());
 
-/*  ==========================================================================  */
-/*  ============================================  */
-/*  ARK::API::Transaction::Gettable::transaction  */
-/*  /api/transactions/get?id=  */
-ARK::Transaction ARK::API::Transaction::Gettable::transaction(ARK::Utilities::Network::Connector netConnector, Hash id) {
-  String uri = ARK::API::Paths::Transaction::getSingle_s;
-    uri += "?id=";
-    uri += id.description();
-  String callback = netConnector.cb(uri);
-  return ARK::API::Transaction::Gettable::transactionfromJSON(callback);
+    auto callback = netConnector.cb(uri);
+    return ARK::API::Transaction::Gettable::transactionfromJSON(callback);
 }
-
-/*
-{ "success":true,
-  "transaction":{
-    "id":"_txID",
-    "blockid":"_blockID",
-    "height":_height,
-    "type":_type,
-    "timestamp":_timestamp,
-    "amount":_amount,
-    "fee":_fee,
-    "vendorField":"_vendorField",
-    "senderId":"_senderID",
-    "recipientId":"_recipientID",
-    "senderPublicKey":"_senderPubkey",
-    "signature":"_txSig",
-    "confirmations":_confirmations
-  }
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"transaction":
+*		{
+*			"id":"_txID",
+*			"blockid":"_blockID",
+*			"height":_height,
+*			"type":_type,
+*			"timestamp":_timestamp,
+*			"amount":_amount,
+*			"fee":_fee,
+*			"vendorField":"_vendorField",
+*			"senderId":"_senderID",
+*			"recipientId":"_recipientID",
+*			"senderPublicKey":"_senderPubkey",
+*			"signature":"_txSig",
+*			"confirmations":_confirmations
+*		}
+*	}
+*
+**************************************************/
+ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char* const jsonStr)
+{
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+	return {
+		parser.valueIn("transaction", "id"),
+		parser.valueIn("transaction", "blockid"),
+		parser.valueIn("transaction", "height"),
+		atoi(parser.valueIn("transaction", "type")),
+		parser.valueIn("transaction", "timestamp"),
+		parser.valueIn("transaction", "amount"),
+		parser.valueIn("transaction", "fee"),
+		parser.valueIn("transaction", "vendorField"),
+		parser.valueIn("transaction", "senderId"),
+		parser.valueIn("transaction", "recipientId"),
+		parser.valueIn("transaction", "senderPublicKey"),
+		parser.valueIn("transaction", "signature"),
+		parser.valueIn("transaction", "confirmations")
+	};
 }
-*/
-ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(String jsonStr) {
-  ARK::Utilities::JSONString jString(jsonStr); 
-
-  char temp[34];
-  jString.valueIn("transaction", "senderId").toCharArray(temp, 34);
-
-  char temp2[34];
-  jString.valueIn("transaction", "recipientId").toCharArray(temp, 34);
-
-  return {
-    jString.valueIn("transaction", "id"),
-    jString.valueIn("transaction", "blockid"),
-    jString.valueIn("transaction", "height"),
-    jString.valueIn("transaction", "type").toInt(),
-    jString.valueIn("transaction", "timestamp"),
-    jString.valueIn("transaction", "amount"),
-    jString.valueIn("transaction", "fee"),
-    jString.valueIn("transaction", "vendorField"),
-    // jString.valueIn("transaction", "senderId"),
-    temp,
-    // jString.valueIn("transaction", "recipientId"),
-    temp2,
-    jString.valueIn("transaction", "senderPublicKey"),
-    jString.valueIn("transaction", "signature"),
-    jString.valueIn("transaction", "confirmations")
-  };
-}
-/*  ============================================  */
-/*  ==========================================================================  */
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 /*    BROKEN: fix for large callbacks  */
 /*    Peers callback is ~28,908 bytes  */
 /*  ===========================================  */
@@ -225,141 +244,139 @@ ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(String jso
 //   resp += "\n";
 //   return resp;
 // }
-/*  ===========================================  */
-/*  ==========================================================================  */
-/*  ==========================================================================  */
+/*************************************************/
+/*************************************************/
 
 
+/**************************************************************************************************/
 
 
-/*  ==========================================================================  */
-/*  =====================================================  */
-/*  ARK::API::Transaction::Gettable::transactionUnconfirmed  */
-/*  /api/transactions/unconfirmed/get?id=  */
-String ARK::API::Transaction::Gettable::transactionUnconfirmed(ARK::Utilities::Network::Connector netConnector, Hash id) {
-  String uri = ARK::API::Paths::Transaction::getSingleUnconfirmed_s;
-    uri += "?id=";
-    uri += id.description();
-  String callback = netConnector.cb(uri);
-  return ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(callback);
+/*************************************************
+* ARK::API::Transaction::Gettable::transactionUnconfirmed
+*   /api/transactions/unconfirmed/get?id=
+**************************************************/
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionUnconfirmed(
+    ARK::Utilities::Network::Connector& netConnector, 
+    const Hash& id
+) {
+	char uri[256] = { '\0' }; //TODO review sizes
+
+	strcpy(uri, ARK::API::Paths::Transaction::getSingleUnconfirmed_s);
+	strcat(uri, "?id=");
+	strcat(uri, id.getValue());
+
+	auto callback = netConnector.cb(uri);
+	return ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(callback);
 }
-
-/*
-{ 
-  "success":true,
-  "transaction":{
-    "id":"_txID",
-    "blockid":"_blockID",
-    "height":_height,
-    "type":_type,
-    "timestamp":_timestamp,
-    "amount":_amount,
-    "fee":_fee,
-    "vendorField":_vendorField,
-    "senderId":"_senderId",
-    "recipientId":"_recipientId",
-    "senderPublicKey":_senderPubkey,
-    "signature":"_txSig",
-    "confirmations":_confirmations
-  }
-}
-||
+/*************************************************
+*
+*	{ 
+*		"success":true,
+*		"transaction":
+*		{
+*			"id":"_txID",
+*			"blockid":"_blockID",
+*			"height":_height,
+*			"type":_type,
+*			"timestamp":_timestamp,
+*			"amount":_amount,
+*			"fee":_fee,
+*			"vendorField":_vendorField,
+*			"senderId":"_senderId",
+*			"recipientId":"_recipientId",
+*			"senderPublicKey":_senderPubkey,
+*			"signature":"_txSig",
+*			"confirmations":_confirmations
+*		}
+*	}
+*		| or |
+*	{
+*		"success":false,
+*		"error":"Transaction not found"
+*	}
+*
+**************************************************/
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const char* const jsonStr)
 {
-  "success":false,
-  "error":"Transaction not found"
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+  
+	int txCount = ARK::API::Helpers::substringCount(jsonStr, "id");
+
+	ARK::Transaction* transactions = new ARK::Transaction[txCount];
+	
+	for (int i = 0; i < txCount; i++)
+	{
+		transactions[i] = {
+			parser.valueIn("transaction", "id"),
+			parser.valueIn("transaction", "blockid"),
+			parser.valueIn("transaction", "height"),
+			atoi(parser.valueIn("transaction", "type")),
+			parser.valueIn("transaction", "timestamp"),
+			parser.valueIn("transaction", "amount"),
+			parser.valueIn("transaction", "fee"),
+			parser.valueIn("transaction", "vendorField"),
+			parser.valueIn("transaction", "senderId"),
+			parser.valueIn("transaction", "recipientId"),
+			parser.valueIn("transaction", "senderPublicKey"),
+			parser.valueIn("transaction", "signature"),
+			parser.valueIn("transaction", "confirmations")
+		};
+	}
+	return { transactions, txCount };
 }
-*/
-String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(String jsonStr) {
-  ARK::Utilities::JSONString jString(jsonStr); 
-  String resp;
-  if (jsonStr.indexOf("Transaction not found")) {
-    resp += "There are currently No unconfirmed transactions by that transactionID";
-  } else {
-    ARK::Transaction transaction = {
-      jString.valueIn("transaction", "id"),
-      jString.valueIn("transaction", "blockid"),
-      jString.valueIn("transaction", "height"),
-      jString.valueIn("transaction", "type").toInt(),
-      jString.valueIn("transaction", "timestamp"),
-      jString.valueIn("transaction", "amount"),
-      jString.valueIn("transaction", "fee"),
-      jString.valueIn("transaction", "vendorField"),
-      jString.valueIn("transaction", "senderId"),
-      jString.valueIn("transaction", "recipientId"),
-      jString.valueIn("transaction", "senderPublicKey"),
-      jString.valueIn("transaction", "signature"),
-      jString.valueIn("transaction", "confirmations")
-    };
-    resp += transaction.description();
-  };
-  return resp;
+/*************************************************/
+
+
+/**************************************************************************************************/
+
+
+/*************************************************
+* ARK::API::Transaction::Gettable::transactionsUnconfirmed
+*   /api/transactions/unconfirmed
+**************************************************/
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionsUnconfirmed(
+    ARK::Utilities::Network::Connector& netConnector
+) {
+	auto callback = netConnector.cb(ARK::API::Paths::Transaction::unconfirmed_s);
+	return ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(callback);
 }
-/*  =====================================================  */
-/*  ==========================================================================  */
-
-
-
-
-/*  ==========================================================================  */
-/*  ======================================================  */
-/*  ARK::API::Transaction::Gettable::transactionsUnconfirmed  */
-/*  /api/transactions/unconfirmed  */
-String ARK::API::Transaction::Gettable::transactionsUnconfirmed(ARK::Utilities::Network::Connector netConnector) {
-  String uri = ARK::API::Paths::Transaction::unconfirmed_s;
-
-  String callback = netConnector.cb(uri);
-
-  return ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(callback);
-}
-
-/*
+/*************************************************
+*
+*	{
+*		"success":true,
+*		"transactions":[]
+*	}
+*
+**************************************************/
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const char* const jsonStr)
 {
-  "success":true,
-  "transactions":[]
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+  
+	int txCount = ARK::API::Helpers::substringCount(jsonStr, "id");
+
+	ARK::Transaction* transactions = new ARK::Transaction[txCount];
+	
+	for (int i = 0; i < txCount; i++)
+	{
+		transactions[i] = {
+			parser.valueIn("transaction", "id"),
+			parser.valueIn("transaction", "blockid"),
+			parser.valueIn("transaction", "height"),
+			atoi(parser.valueIn("transaction", "type")),
+			parser.valueIn("transaction", "timestamp"),
+			parser.valueIn("transaction", "amount"),
+			parser.valueIn("transaction", "fee"),
+			parser.valueIn("transaction", "vendorField"),
+			parser.valueIn("transaction", "senderId"),
+			parser.valueIn("transaction", "recipientId"),
+			parser.valueIn("transaction", "senderPublicKey"),
+			parser.valueIn("transaction", "signature"),
+			parser.valueIn("transaction", "confirmations")
+		};
+	};
+	return { transactions, txCount };
 }
-*/
-String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(String jsonStr) {
-  ARK::Utilities::JSONString jString(jsonStr); 
-
-  int txCount = ARK::API::Helpers::substringCount(jsonStr, "id");
-
-  String resp;
-  if (txCount > 0) {
-
-    for (int i = 0; i <= txCount; i++) {
-
-      ARK::Transaction transaction = {
-        jString.subarrayValueIn("transaction", i, "id"),
-        jString.subarrayValueIn("transaction", i,  "blockid"),
-        jString.subarrayValueIn("transaction", i,  "height"),
-        jString.subarrayValueIn("transaction", i,  "type").toInt(),
-        jString.subarrayValueIn("transaction", i,  "timestamp"),
-        jString.subarrayValueIn("transaction", i,  "amount"),
-        jString.subarrayValueIn("transaction", i,  "fee"),
-        jString.subarrayValueIn("transaction", i,  "vendorField"),
-        jString.subarrayValueIn("transaction", i,  "senderId"),
-        jString.subarrayValueIn("transaction", i,  "recipientId"),
-        jString.subarrayValueIn("transaction", i,  "senderPublicKey"),
-        jString.subarrayValueIn("transaction", i,  "signature"),
-        jString.subarrayValueIn("transaction", i,  "confirmations")
-      };
-
-      resp += "\ntransaction ";
-      resp += i + 1;
-      resp += ":\n";
-      resp += transaction.description();
-      resp += "\n";
-    };
-
-  } else {
-    resp += "There are currently No Unconfirmed Transactions";
-  };
-  return resp;
-}
-/*  ======================================================  */
-/*  ==========================================================================  */
-
-
+/*************************************************/
 
 
 #endif

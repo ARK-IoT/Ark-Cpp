@@ -3,12 +3,15 @@
 #ifndef network_h
 #define network_h
 
-namespace ARK {
 
-/*  ================================================  */
-/*  ARK::NetworkType  */
-  enum NetworkType { DEV, MAIN, CUSTOM };
-/*  ================================================  */
+namespace ARK
+{
+
+	/*************************************************
+	*   ARK::NetworkType
+	**************************************************/
+  enum NetworkType { INVALID = -1, DEV = 0, MAIN = 1, CUSTOM = 2 };
+	/*************************************************/
 
 /********************************************************************************
 *
@@ -21,26 +24,66 @@ namespace ARK {
 *
 ********************************************************************************/
 
-/*  ================================================  */
-  /*  ============  */
-  /*  ARK::Network  */
-  struct Network {
-    public:
-      String nethash;
-      String token;
-      String symbol;
-      String explorer;
-      int version;
 
-      String description();
+	/*************************************************
+	*   ARK::network_t
+	**************************************************/
+	struct network_t {
+		public:
+			char nethash[65];
+			char token[5];
+			char symbol[2];
+			char explorer[40];
+			int version;
+	};
+	/*************************************************/
 
-      bool operator==(Network*& rhs) const;
-      bool operator!=(Network*& rhs) const;
-  };
-  /*  ============  */
-  /*  ================================================  */
-  /*  ================  */
-  /*  ARK::Network_ADV  */
+
+	/*************************************************
+	*   ARK::Network
+	**************************************************/
+	struct Network :
+			public network_t
+	{
+		public:
+
+			Network()
+			{
+				strncpy(nethash, "", sizeof(nethash) / sizeof(nethash[0]));
+				strncpy(token, "", sizeof(token) / sizeof(token[0]));
+				strncpy(symbol, "", sizeof(symbol) / sizeof(symbol[0]));
+				strncpy(explorer, "", sizeof(explorer) / sizeof(explorer[0]));
+				version = 0;
+			};
+
+			Network(
+				const char* const newNethash,
+				const char* const newToken,
+				const char* const newSymbol,
+				const char* const newExplorer,
+				int newVersion
+			) {
+				strncpy(nethash, newNethash, sizeof(nethash) / sizeof(nethash[0]));
+				strncpy(token, newToken, sizeof(token) / sizeof(token[0]));
+				strncpy(symbol, newSymbol, sizeof(symbol) / sizeof(symbol[0]));
+				strncpy(explorer, newExplorer, sizeof(explorer) / sizeof(explorer[0]));
+				version = newVersion;
+			};
+
+			bool operator==(const Network& rhs) const;
+			bool operator!=(const Network& rhs) const;
+
+			void printTo(HardwareSerial &serial);
+	};
+	/*************************************************/
+
+
+	/**************************************************************************************************/
+
+
+	/*************************************************
+	*	ARK::Network_ADV
+	**************************************************/
   namespace Network_ADV {
     struct bip32_t {
       long pub;         // base58 will have a prefix 'apub'
@@ -53,46 +96,70 @@ namespace ARK {
       long wif;         // Network prefix for wif generation
     };
   };
-/*  ================  */
+	/*************************************************/
 
 };
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::Delegate  */
-/*  Description  */
-String ARK::Network::Network::description() {
-  String resp;
-    resp += "nethash: ";
-      resp += this->nethash; resp += "\n";           
-    resp += "token: ";
-      resp += this->token; resp += "\n";
-    resp += "symbol: ";
-      resp += this->symbol; resp += "\n";
-    resp += "explorer: ";
-      resp += this->explorer; resp += "\n";
-    resp += "version: ";
-      resp += this->version;
-  return resp;
+
+/*************************************************
+*	ARK::Network
+*
+*   @operator:	ARK::Network::Network::operator==
+*
+*   @description:
+*     Comparison of two Network Models for equality.
+*
+**************************************************/
+bool ARK::Network::Network::operator==(const Network& rhs) const {
+  return (
+		strcmp(this->nethash, rhs.nethash) == 0
+		&& strcmp(this->token, rhs.token) == 0
+		&& strcmp(this->symbol, rhs.symbol) == 0
+		&& strcmp(this->explorer, rhs.explorer) == 0
+		&& this->version == rhs.version
+	);
 };
-/*  =====  */
-/*  Operator  */
-/*  ARK::Network == ARK::Network  */
-bool ARK::Network::Network::operator==(Network*& rhs) const {
-  if (this->nethash==rhs->nethash
-      && this->token==rhs->token
-      && this->symbol==rhs->symbol
-      && this->explorer==rhs->explorer
-      && this->version==rhs->version)
-    return true;
-  return false;
+/*************************************************/
+
+
+/*************************************************
+*	ARK::Network
+*
+*   @operator:	ARK::Network::Network::operator!=
+*
+*   @description:
+*     Comparison of two Network Models for inequality.
+*
+**************************************************/
+bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(*this == rhs); };
+/*************************************************/
+
+
+/*************************************************
+*	ARK::Network
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @description:
+*     Prints Network Model information to Serial
+*
+**************************************************/
+void ARK::Network::printTo(HardwareSerial &serial)
+{
+	serial.print("\nnethash: ");
+	serial.print(this->nethash);
+	serial.print("\ntoken: ");
+	serial.print(this->token);
+	serial.print("\nsymbol: ");
+	serial.print(this->symbol);
+	serial.print("\nexplorer: ");
+	serial.print(this->explorer);
+	serial.print("\nversion: ");
+  serial.print(this->version);
+  serial.print("\n");
+  serial.flush();
 };
-/*  =====  */
-/*  Operator  */
-/*  ARK::Network != ARK::Network  */
-bool ARK::Network::Network::operator!=(Network*& rhs) const { return !(this == rhs); };
-/*  ============  */
-/*  ================================================  */
+/*************************************************/
 
 
 #endif

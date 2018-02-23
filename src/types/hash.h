@@ -13,42 +13,34 @@
 *
 ********************************************************************************/
 
-#define HASH_SIZE 64
+
+
+
+#define HASH_SIZE 65
 
 struct Hash
 {
-public:
-  char value[HASH_SIZE / sizeof(byte)]; // = { '\0' };
+  private:
+    
+    static const auto HASH_LENGTH = HASH_SIZE / sizeof(char);
+    char value_[HASH_LENGTH];
 
-  Hash()
-  {
-    for (int i = 0; i < HASH_SIZE; i++)
+  public:
+
+    Hash() : value_() { }
+
+    Hash(const char* const hashStr) : value_()
     {
-      this->value[i] = '0';
+      if (strlen(hashStr) < HASH_LENGTH - 1) {
+        value_[0] = '\0';
+      }
+      else {
+        strncpy(value_, hashStr, sizeof(value_) / sizeof(value_[0]));
+      };
     };
-  };
 
-  /*  =====  */
-
-  Hash(String hashStr)
-  {
-    for (int i = 0; i < HASH_SIZE; i++)
-    {
-      this->value[i] = hashStr[i];
-    };
-  };
-
-  /*  =====  */
-
-  String description()
-  {
-    String resp;
-    for (int i = 0; i < HASH_SIZE; i++)
-    {
-      resp += value[i];
-    };
-    return resp;
-  };
+    const char* getValue() const { return value_; };
 };
+
 
 #endif
