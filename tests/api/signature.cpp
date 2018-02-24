@@ -14,7 +14,7 @@ TEST(signature, test_signature) {
 
 
 	/*  ==================================  */
-	ASSERT_STREQ("", _arkManager.multisignaturesPending(darkPubkey));
+	ASSERT_STREQ("", _arkManager.multisignaturesPending(darkPubkey).c_str());
 
 	/*  ==================================  */
 	/*  ==================================  */
