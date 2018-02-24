@@ -9,12 +9,12 @@ TEST(signature, test_signature) {
 
 	/*  ==================================  */
 	const auto signatures_fee = _arkManager.signaturesFee();
-	ASSERT_STREQ("", signatures_fee.ark());
-	ASSERT_STREQ("", signatures_fee.arktoshi());
+	ASSERT_STREQ("5.00000000", signatures_fee.ark());
+	ASSERT_STREQ("500000000", signatures_fee.arktoshi());
 
 
 	/*  ==================================  */
-	ASSERT_STREQ("", _arkManager.multisignaturesPending(darkPubkey).c_str());
+	ASSERT_STREQ("[]", _arkManager.multisignaturesPending(darkPubkey).c_str());
 
 	/*  ==================================  */
 	/*  ==================================  */
