@@ -5,30 +5,30 @@
 
 #include <cstring>
 
-namespace ARK
-{
-namespace API
-{
-namespace Peer
-{
-namespace Respondable
-{
+namespace ARK {
+namespace API {
+namespace Peer {
+namespace Respondable {
 
 /*  ==========================================================================  */
 /*  ========================  */
 /*  ARK::API::Peer::Respondable::Version  */
-  struct Version {
-    public:
-        char version[64];  //TODO: review sizes
-        char build[64];
+class Version {
+private:
+	char version_[64];  //TODO: review sizes
+	char build_[64];
 
-        Version(const char* const v, const char* const b) : version(), build() {
-            strncpy(version, v, sizeof(version) / sizeof(version[0]));
-            strncpy(build, b, sizeof(build) / sizeof(build[0]));
-        }
+public:
+	Version(const char* const v, const char* const b) : version_(), build_() {
+		strncpy(version_, v, sizeof(version_) / sizeof(version_[0]));
+		strncpy(build_, b, sizeof(build_) / sizeof(build_[0]));
+	}
 
-        void description(char* const buf, size_t size);
-  };
+	const char* version() const noexcept { return version_; }
+	const char* build() const noexcept { return build_; }
+
+	void description(char* const buf, size_t size);
+};
 /*  ========================  */
 /*  ==========================================================================  */
 
@@ -47,10 +47,9 @@ namespace Respondable
 /*  ==========================================================================  */
 
 
-};
-};
-};
-};
-
+}
+}
+}
+}
 
 #endif

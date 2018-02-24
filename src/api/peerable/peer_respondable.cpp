@@ -6,9 +6,9 @@
 /*  Description  */
 void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t size) {
     strcpy(buf, "version: ");
-    strcat(buf, this->version);
+    strcat(buf, this->version_);
     strcat(buf, "\nbuild: ");
-    strcat(buf, this->build);
+    strcat(buf, this->build_);
     strcat(buf, "\n");
 }
 /*  ========================  */
