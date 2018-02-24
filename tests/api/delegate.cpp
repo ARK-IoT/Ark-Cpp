@@ -7,17 +7,17 @@ TEST(delegate, test_delegate) {
 
 	Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 
-	ASSERT_EQ(0, _arkManager.delegatesCount());
+	ASSERT_EQ(190, _arkManager.delegatesCount());
 
 	const auto search = _arkManager.delegateSearch("sleepdeficit");
-	ASSERT_STREQ("", search.username());
-	ASSERT_STREQ("", search.address().description());
-	ASSERT_STREQ("", search.public_key().description());
+	ASSERT_STREQ("sleepdeficit", search.username());
+	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", search.address().description());
+	ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", search.public_key().description());
 	const auto& vote = search.vote();
-	ASSERT_STREQ("", vote.ark());
-	ASSERT_STREQ("", vote.arktoshi());
-	ASSERT_EQ(0, search.produced_blocks());
-	ASSERT_EQ(0, search.missed_blocks());
+	//ASSERT_STREQ("94843.95341862", vote.ark());
+	//ASSERT_STREQ("9484395341862", vote.arktoshi());
+	//ASSERT_EQ(40668, search.produced_blocks());
+	ASSERT_EQ(3319, search.missed_blocks());
 	  
 
 
@@ -32,25 +32,25 @@ TEST(delegate, test_delegate) {
 /*  ==================================  */
 	auto delegate = _arkManager.delegate("sleepdeficit");
 	ASSERT_STREQ("sleepdeficit", delegate.username());
-	ASSERT_STREQ("", delegate.address().description());
-	ASSERT_STREQ("", delegate.public_key().description());
-	ASSERT_STREQ("", delegate.vote().arktoshi());
-	ASSERT_EQ(0, delegate.produced_blocks());
-	ASSERT_EQ(0, delegate.missed_blocks());
-	ASSERT_EQ(0, delegate.rate());
-	ASSERT_EQ(0, delegate.approval());
-	ASSERT_EQ(0, delegate.productivity());	
+	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", delegate.address().description());
+	ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", delegate.public_key().description());
+	//ASSERT_STREQ("9484595341862", delegate.vote().arktoshi());
+	//ASSERT_EQ(40669, delegate.produced_blocks());
+	ASSERT_EQ(3319, delegate.missed_blocks());
+	ASSERT_EQ(31, delegate.rate());
+	ASSERT_EQ(0.07f, (float)delegate.approval());
+	//ASSERT_EQ(92.45f, (float)delegate.productivity());	
 
     delegate = _arkManager.delegate(darkPubkey.description());
     ASSERT_STREQ("sleepdeficit", delegate.username());
-	ASSERT_STREQ("", delegate.address().description());
-	ASSERT_STREQ("", delegate.public_key().description());
-	ASSERT_STREQ("", delegate.vote().arktoshi());
-	ASSERT_EQ(0, delegate.produced_blocks());
-	ASSERT_EQ(0, delegate.missed_blocks());
-	ASSERT_EQ(0, delegate.rate());
-	ASSERT_EQ(0, delegate.approval());
-	ASSERT_EQ(0, delegate.productivity());	
+	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", delegate.address().description());
+	ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", delegate.public_key().description());
+	//ASSERT_STREQ("9484595341862", delegate.vote().arktoshi());
+	//ASSERT_EQ(40669, delegate.produced_blocks());
+	ASSERT_EQ(3319, delegate.missed_blocks());
+	ASSERT_EQ(31, delegate.rate());
+	ASSERT_EQ(0.07f, (float)delegate.approval());
+	//ASSERT_EQ(92.45f, (float)delegate.productivity());	
 
 /*  ==================================  */
 /*    BROKEN: fix for large callbacks    */
@@ -65,19 +65,19 @@ TEST(delegate, test_delegate) {
 /*  ==================================  */
 	//TODO:  fails here
 	const auto delegateFee = _arkManager.delegateFee();
-	ASSERT_STREQ("", delegateFee.ark());
-	ASSERT_STREQ("", delegateFee.arktoshi());
+	ASSERT_STREQ("25.00000000", delegateFee.ark());
+	ASSERT_STREQ("2500000000", delegateFee.arktoshi());
 
 	const auto forged_by_account = _arkManager.delegateForgedByAccount(darkPubkey);
-	ASSERT_STREQ("", forged_by_account.fees().ark());
-	ASSERT_STREQ("", forged_by_account.fees().arktoshi());
-	ASSERT_STREQ("", forged_by_account.forged().ark());
-	ASSERT_STREQ("", forged_by_account.forged().arktoshi());
-	ASSERT_STREQ("", forged_by_account.rewards().ark());
-	ASSERT_STREQ("", forged_by_account.rewards().arktoshi());
+	ASSERT_STREQ("536.50000000", forged_by_account.fees().ark());
+	ASSERT_STREQ("53650000000", forged_by_account.fees().arktoshi());
+	//ASSERT_STREQ("81876.50000000", forged_by_account.forged().ark());
+	//ASSERT_STREQ("8187650000000", forged_by_account.forged().arktoshi());
+	//ASSERT_STREQ("81340.00000000", forged_by_account.rewards().ark());
+	//ASSERT_STREQ("8134000000000", forged_by_account.rewards().arktoshi());
 	
 	const auto next_forgers = _arkManager.delegateNextForgers();
-	ASSERT_STREQ("", next_forgers.current_block());
-	ASSERT_STREQ("", next_forgers.current_slot());
+	//ASSERT_STREQ("2679048", next_forgers.current_block());
+	//ASSERT_STREQ("3674254", next_forgers.current_slot());
 	//ASSERT_STREQ("", next_forgers.delegates().description());  //TODO: compare std::array
 }
