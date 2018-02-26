@@ -37,7 +37,7 @@ add_executable(Ark-Cpp-tests
 	${PROJECT_SOURCE_DIR}/api/loader.cpp
 	${PROJECT_SOURCE_DIR}/api/peer.cpp
 	${PROJECT_SOURCE_DIR}/api/signature.cpp
-	${PROJECT_SOURCE_DIR}/api/transaction.cpp
+	${PROJECT_SOURCE_DIR}/api/transaction.cpp	
 	${PROJECT_SOURCE_DIR}/model/account.cpp
 	${PROJECT_SOURCE_DIR}/model/block.cpp
 	${PROJECT_SOURCE_DIR}/model/currency.cpp
