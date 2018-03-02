@@ -23,7 +23,7 @@ class Connectable;
 * ARK::Utilities::Network::Connector
 **************************************************/
 class Connector
-    : virtual HTTPConnectable
+    : public HTTPConnectable
 {
   public:
   
@@ -41,8 +41,8 @@ class Connector
     int networkPort;
 
     Connector();
-    Connector(const ARK::Network& network);
-	  Connector(ARK::NetworkType networktype);
+    explicit Connector(const ARK::Network& network);
+	  explicit Connector(ARK::NetworkType networktype);
 
     Connector(const Connector&) = delete;
     Connector& operator=(const Connector&) = delete;
@@ -74,9 +74,8 @@ class Connector
 **************************************************/
 class ARK::Utilities::Network::Connectable
 {
-public:
-
-  ARK::Utilities::Network::Connector netConnector;
+  public:
+    ARK::Utilities::Network::Connector netConnector;
 };
 /*************************************************/
 
@@ -89,6 +88,8 @@ public:
 **************************************************/
 ARK::Utilities::Network::Connector::Connector()
 {
+  this->networkPeer[0] = '\0';
+  this->networkPort = -1;
 	this->network = nullptr;
 	this->netType = ARK::NetworkType::INVALID;
 };
@@ -128,15 +129,25 @@ ARK::Utilities::Network::Connector::Connector(ARK::NetworkType networkType)
 **************************************************/
 void ARK::Utilities::Network::Connector::connect(const ARK::Network& network)
 {
-	if (strcmp(network.nethash, ARK::Constants::Networks::Devnet::nethash) == 0) {
+    Serial.println("connect(const ARK::Network& network)");
+
+	if (strcmp(network.nethash.getValue(), ARK::Constants::Networks::Devnet::nethash) == 0)
+  {
 		this->netType = ARK::NetworkType::DEV;
-	} else if (strcmp(network.nethash, ARK::Constants::Networks::Mainnet::nethash) == 0) {
+	}
+  else if (strcmp(network.nethash.getValue(), ARK::Constants::Networks::Mainnet::nethash) == 0)
+  {
 		this->netType = ARK::NetworkType::MAIN;
-	} else if (strcmp(network.nethash, "") != 0) {
+	}
+  else if (strcmp(network.nethash.getValue(), "") != 0)
+  {
 		this->netType = ARK::NetworkType::CUSTOM;
-	} else {
+	}
+  else
+  {
 		this->netType = ARK::NetworkType::INVALID;
 	};
+
 	this->network = &network;
 	this->setNetworkPeer(this->randomPeer());
 }
@@ -165,32 +176,40 @@ void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& netwo
 **************************************************/
 const char* ARK::Utilities::Network::Connector::randomPeer()
 {
-  if (this->netType == ARK::NetworkType::DEV) {
-    return ARK::Constants::Networks::Devnet::randomPeer();
-  }
-  if (this->netType == ARK::NetworkType::MAIN) {
-    return ARK::Constants::Networks::Mainnet::randomPeer();
-  }
-  return "Error: Nethash does not match ARK::Constants";
+  switch (this->netType)
+  {
+    case ARK::NetworkType::DEV:
+        return ARK::Constants::Networks::Devnet::randomPeer();
+        break;
+    case ARK::NetworkType::MAIN:
+        return ARK::Constants::Networks::Mainnet::randomPeer();
+        break;
+    default:
+        return "Error: Nethash does not match ARK::Constants";
+  };
 }
 /*************************************************/
 
 
 /*************************************************
 * Checks this->NetworkType
-* Assigns ip & port to this
-*
-*
+*   @brief: Assigns ip & port to this
 **************************************************/
 void ARK::Utilities::Network::Connector::setNetworkPeer(const char* peer)
 {
-  if (this->netType == ARK::NetworkType::DEV) {
-    this->networkPort = ARK::Constants::Networks::Devnet::port;
-  } else if (this->netType == ARK::NetworkType::MAIN) {
-    this->networkPort = ARK::Constants::Networks::Mainnet::port;
-  }
+  switch (this->netType)
+  {
+    case ARK::NetworkType::DEV:
+        this->networkPort = ARK::Constants::Networks::Devnet::port;
+        break;
+    case ARK::NetworkType::MAIN:
+        this->networkPort = ARK::Constants::Networks::Mainnet::port;
+        break;
+    default:
+        this->networkPort = -1;
+  };
   strncpy(networkPeer, peer, sizeof(networkPeer) / sizeof(networkPeer[0]));
-}
+};
 /*************************************************/
 
 
