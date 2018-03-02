@@ -25,11 +25,9 @@ class Gettable
     )
     {
       char uri[512] = { '\0' }; //TODO: check size
-
-      strcpy(uri, ARK::API::Paths::MultiSignatures::pending_s);
-      strcat(uri, "?publicKey=");
-      strcat(uri, publicKey.getValue());
-
+        strcpy(uri, ARK::API::Paths::MultiSignatures::pending_s);
+        strcat(uri, "?publicKey=");
+        strcat(uri, publicKey.getValue());
       auto callback = netConnector.cb(uri);
       return pendingfromJSON(callback);
     };

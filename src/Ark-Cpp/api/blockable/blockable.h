@@ -26,18 +26,14 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/get?id=_blockID
 		*
-		*		@uri:	/api/blocks/get?id=_blockID
-		*		@returnType:	ARK::Block
+		*		@return:	ARK::Block
 		*
-		*   @method:	block(const char* const blockId)
-		*   @parameter:		const char* const blockId
+		*   block(const char* const blockId)
+		*   @param:		const char* const blockId
 		*
-		*   @outs:	ARK::API::Block::Gettable::block(this->netConnector, blockId)
+		*   calls:	ARK::API::Block::Gettable::block(this->netConnector, blockId)
 		*
-		*   @description:
-		*			Uses Block ID to get that Blocks information 
-		*			from a Node via API.
-		* 
+		*   @brief:	Uses Block ID to get that Blocks information from a Node via API.
 		**************************************************/
 		ARK::Block block(const char* const blockId)
 		{
@@ -66,16 +62,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getEpoch
 		*
-		*		@uri:	/api/blocks/getEpoch
-		*		@returnType:	const char*
+		*		@return:	const char*
 		*
-		*   @method:	blockEpoch()
+		*   blockEpoch()
 		*
-		*   @outs:	ARK::API::Block::Gettable::epoch(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::epoch(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Block Epoch from a Node via API.
-		* 
+		*   @brief:	Gets the Block Epoch from a Node via API.
 		**************************************************/
 		const char* blockEpoch()
 		{
@@ -88,16 +81,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getHeight
 		*
-		*		@uri:	/api/blocks/getHeight
-		*		@returnType:	ARK::API::Block::Respondable::Height
+		*		@return:	ARK::API::Block::Respondable::Height
 		*
-		*   @method:	blockHeight()
+		*   blockHeight()
 		*
-		*   @outs:	ARK::API::Block::Gettable::height(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::height(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Block-Height from a Node via API.
-		* 
+		*   @brief:	Gets the Block-Height from a Node via API.
 		**************************************************/
 		ARK::API::Block::Respondable::Height blockHeight()
 		{
@@ -110,16 +100,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getNethash
 		*
-		*		@uri:	/api/blocks/getNethash
-		*		@returnType:	Hash
+		*		@return:	Hash
 		*
-		*   @method:	blockNethash()
+		*   blockNethash()
 		*
-		*   @outs:	ARK::API::Block::Gettable::nethash(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::nethash(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Networks Hash from a Node via API.
-		* 
+		*   @brief:	Gets the Networks Hash from a Node via API.
 		**************************************************/
 		Hash blockNethash()
 		{
@@ -132,16 +119,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getFee
 		*
-		*		@uri:	/api/blocks/getFee
-		*		@returnType:	Balance
+		*		@return:	Balance
 		*
-		*   @method:	blockFee()
+		*   blockFee()
 		*
-		*   @outs:	ARK::API::Block::Gettable::fee(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::fee(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Block-Fee from a Node via API.
-		* 
+		*   @brief:	Gets the Block-Fee from a Node via API.
 		**************************************************/
 		Balance blockFee()
 		{
@@ -154,16 +138,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getFees
 		*
-		*		@uri:	/api/blocks/getFees
-		*		@returnType:	ARK::Fees
+		*		@return:	ARK::Fees
 		*
-		*   @method:	blockFees()
+		*   blockFees()
 		*
-		*   @outs:	ARK::API::Block::Gettable::fees(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::fees(this->netConnector)
 		*
-		*   @description:
-		*			Gets Ark Network Fees from a Node via API.
-		* 
+		*   @brief:	Gets Ark Network Fees from a Node via API.
 		**************************************************/
 		ARK::Fees blockFees()
 		{
@@ -176,15 +157,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getMilestone
 		*
-		*		@uri:	/api/blocks/getMilestone
-		*		@returnType:	const char*
+		*		@return:	const char*
 		*
-		*   @method:	blockMilestone()
+		*   blockMilestone()
 		*
-		*   @outs:	ARK::API::Block::Gettable::milestone(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::milestone(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Block Milestone from a Node via API.
+		*   @brief:	Gets the Block Milestone from a Node via API.
 		* 
 		**************************************************/
 		const char* blockMilestone()
@@ -198,16 +177,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getReward
 		*
-		*		@uri:	/api/blocks/getReward
-		*		@returnType:	Balance
+		*		@return:	Balance
 		*
-		*   @method:	blockReward()
+		*   blockReward()
 		*
-		*   @outs:	ARK::API::Block::Gettable::reward(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::reward(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Block Reward from a Node via API.
-		* 
+		*   @brief:	Gets the Block Reward from a Node via API.
 		**************************************************/
 		Balance blockReward()
 		{
@@ -220,16 +196,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getSupply
 		*
-		*		@uri:	/api/blocks/getSupply
-		*		@returnType:	Balance
+		*		@return:	Balance
 		*
-		*   @method:	blockSupply()
+		*   blockSupply()
 		*
-		*   @outs:	ARK::API::Block::Gettable::supply(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::supply(this->netConnector)
 		*
-		*   @description:
-		*			Gets the current Ark Supply from a Node via API.
-		* 
+		*   @brief:	Gets the current Ark Supply from a Node via API.
 		**************************************************/
 		Balance blockSupply()
 		{
@@ -242,16 +215,13 @@ class Blockable :
 		/*************************************************
 		*		/api/blocks/getStatus
 		*
-		*		@uri:	/api/blocks/getStatus
-		*		@returnType:	ARK::API::Block::Respondable::Status
+		*		@return:	ARK::API::Block::Respondable::Status
 		*
-		*   @method:	blockStatus()
+		*   blockStatus()
 		*
-		*   @outs:	ARK::API::Block::Gettable::status(this->netConnector)
+		*   calls:	ARK::API::Block::Gettable::status(this->netConnector)
 		*
-		*   @description:
-		*			Gets the Ark Networks Status from a Node via API.
-		* 
+		*   @brief:	Gets the Ark Networks Status from a Node via API.
 		**************************************************/
 		ARK::API::Block::Respondable::Status blockStatus()
 		{

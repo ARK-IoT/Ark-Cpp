@@ -14,11 +14,11 @@ namespace Paths
 **************************************************/
 namespace Account
 {
-const auto getBalance_s = "/api/accounts/getBalance";
-const auto getPublickey_s = "/api/accounts/getPublickey";
-const auto delegatesFee_s = "/api/accounts/delegates/fee";
-const auto delegates_s = "/api/accounts/delegates";
-const auto accounts_s = "/api/accounts";
+  const auto getBalance_s = "/api/accounts/getBalance";
+  const auto getPublickey_s = "/api/accounts/getPublickey";
+  const auto delegatesFee_s = "/api/accounts/delegates/fee";
+  const auto delegates_s = "/api/accounts/delegates";
+  const auto accounts_s = "/api/accounts";
 };
 /*************************************************/
 
@@ -29,17 +29,17 @@ const auto accounts_s = "/api/accounts";
 **************************************************/
 namespace Block
 {
-const auto get_s = "/api/blocks/get"; //using ID
-const auto blocks_s = "/api/blocks";
-const auto getEpoch_s = "/api/blocks/getEpoch";
-const auto getHeight_s = "/api/blocks/getHeight";
-const auto getNethash_s = "/api/blocks/getNethash";
-const auto getFee_s = "/api/blocks/getFee";
-const auto getFees_s = "/api/blocks/getFees";
-const auto getMilestone_s = "/api/blocks/getMilestone";
-const auto getReward_s = "/api/blocks/getReward";
-const auto getSupply_s = "/api/blocks/getSupply";
-const auto getStatus_s = "/api/blocks/getStatus";
+  const auto get_s = "/api/blocks/get"; //using ID
+  const auto blocks_s = "/api/blocks";
+  const auto getEpoch_s = "/api/blocks/getEpoch";
+  const auto getHeight_s = "/api/blocks/getHeight";
+  const auto getNethash_s = "/api/blocks/getNethash";
+  const auto getFee_s = "/api/blocks/getFee";
+  const auto getFees_s = "/api/blocks/getFees";
+  const auto getMilestone_s = "/api/blocks/getMilestone";
+  const auto getReward_s = "/api/blocks/getReward";
+  const auto getSupply_s = "/api/blocks/getSupply";
+  const auto getStatus_s = "/api/blocks/getStatus";
 };
 /*************************************************/
 
@@ -50,14 +50,14 @@ const auto getStatus_s = "/api/blocks/getStatus";
 **************************************************/
 namespace Delegate
 {
-const auto count_s = "/api/delegates/count";
-const auto search_s = "/api/delegates/search";
-const auto voters_s = "/api/delegates/voters";
-const auto get_s = "/api/delegates/get";
-const auto delegates_s = "/api/delegates";
-const auto fee_s = "/api/delegates/fee";
-const auto getForgedByAccount_s = "/api/delegates/forging/getForgedByAccount";
-const auto getNextForgers_s = "/api/delegates/getNextForgers";
+  const auto count_s = "/api/delegates/count";
+  const auto search_s = "/api/delegates/search";
+  const auto voters_s = "/api/delegates/voters";
+  const auto get_s = "/api/delegates/get";
+  const auto delegates_s = "/api/delegates";
+  const auto fee_s = "/api/delegates/fee";
+  const auto getForgedByAccount_s = "/api/delegates/forging/getForgedByAccount";
+  const auto getNextForgers_s = "/api/delegates/getNextForgers";
 };
 /*************************************************/
 
@@ -68,9 +68,9 @@ const auto getNextForgers_s = "/api/delegates/getNextForgers";
 **************************************************/
 namespace Loader
 {
-const auto status_s = "/api/loader/status";
-const auto sync_s = "/api/loader/status/sync";
-const auto autoconfigure_s = "/api/loader/autoconfigure";
+  const auto status_s = "/api/loader/status";
+  const auto sync_s = "/api/loader/status/sync";
+  const auto autoconfigure_s = "/api/loader/autoconfigure";
 };
 /*************************************************/
 
@@ -81,9 +81,9 @@ const auto autoconfigure_s = "/api/loader/autoconfigure";
 **************************************************/
 namespace Peer
 {
-const auto get_s = "/api/peers/get";
-const auto peers_s = "/api/peers";
-const auto version_s = "/api/peers/version";
+  const auto get_s = "/api/peers/get";
+  const auto peers_s = "/api/peers";
+  const auto version_s = "/api/peers/version";
 };
 /*************************************************/
 
@@ -94,7 +94,7 @@ const auto version_s = "/api/peers/version";
 **************************************************/
 namespace Signatures
 {
-const auto fee_s = "/api/signatures/fee";
+  const auto fee_s = "/api/signatures/fee";
 };
 /*************************************************/
 
@@ -105,8 +105,8 @@ const auto fee_s = "/api/signatures/fee";
 **************************************************/
 namespace MultiSignatures
 {
-const auto pending_s = "/api/multisignatures/pending";
-const auto accounts_s = "/api/multisignatures/accounts";
+  const auto pending_s = "/api/multisignatures/pending";
+  const auto accounts_s = "/api/multisignatures/accounts";
 };
 /*************************************************/
 
@@ -117,10 +117,10 @@ const auto accounts_s = "/api/multisignatures/accounts";
 **************************************************/
 namespace Transaction
 {
-const auto getSingle_s = "/api/transactions/get";
-const auto transactions_s = "/api/transactions";
-const auto getSingleUnconfirmed_s = "/api/transactions/unconfirmed/get";
-const auto unconfirmed_s = "/api/transactions/unconfirmed";
+  const auto getSingle_s = "/api/transactions/get";
+  const auto transactions_s = "/api/transactions";
+  const auto getSingleUnconfirmed_s = "/api/transactions/unconfirmed/get";
+  const auto unconfirmed_s = "/api/transactions/unconfirmed";
 };
 /*************************************************/
 
@@ -138,6 +138,7 @@ const auto unconfirmed_s = "/api/transactions/unconfirmed";
 //   const auto height_s = "/peer/height";
 //   const auto status_s = "/peer/status";
 // };
+
 };
 };
 };

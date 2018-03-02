@@ -11,8 +11,6 @@ namespace Peer
 {
 namespace Respondable
 {
-
-
 /*************************************************
 *		ARK::API::Peer::Respondable::version_t
 *
@@ -44,8 +42,8 @@ struct Version :
 	public:
 
 		Version(
-			const char* const newVersion,
-			const char* const newBuild
+				const char* const newVersion,
+				const char* const newBuild
 		)
 		{
 			strncpy(version, newVersion, sizeof(version) / sizeof(version[0]));
@@ -64,7 +62,6 @@ struct Version :
 };
 /*************************************************/
 
-
 /*************************************************/
 /*************************************************/
 /*  ARK::API::Peer::Respondable::Peers  */
@@ -77,7 +74,6 @@ struct Version :
 //   };
 /*************************************************/
 /*************************************************/
-
 
 };
 };

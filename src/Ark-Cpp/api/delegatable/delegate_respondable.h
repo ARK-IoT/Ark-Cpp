@@ -12,18 +12,11 @@ namespace Delegate
 namespace Respondable
 {
 /*************************************************
-*	ARK::API::Delegate::Respondable::search_t
+*		ARK::API::Delegate::Respondable::search_t
 *
-*		@variables:
-*			char username[20];
-*			Address address;
-*			Publickey publicKey;
-*			Balance vote;
-*			int producedblocks;
-*			int missedblocks;
+*		@param: char[20], Address, Publickey, Balance, int, int
 *
-*   @description:
-*			Model for Delegate Search API Response
+*   @brief:	Model for Delegate Search API Response
 *
 **************************************************/
 struct search_t
@@ -38,10 +31,11 @@ struct search_t
 };
 /*************************************************/
 
+
 /*************************************************
-*	ARK::API::Delegate::Respondable::Search
+*		ARK::API::Delegate::Respondable::Search
 *
-*		@inherits:
+*		inherits:
 *			const char* username;
 *			Address address;
 *			Publickey publicKey;
@@ -49,11 +43,9 @@ struct search_t
 *			int producedblocks;
 *			int missedblocks;
 *
-*   @methods:	printTo(HardwareSerial &serial)
+*   printTo(HardwareSerial &serial)
 *
-*   @description:
-*			Model for Delegate Search API Response
-*
+*   @brief:	Model for Delegate Search API Response
 **************************************************/
 struct Search :
 		public search_t, Printable
@@ -102,25 +94,20 @@ struct Search :
 };
 /*************************************************/
 
-
 /**************************************************************************************************/
 
-
 /*************************************************
-*	ARK::API::Delegate::Respondable::Voters
+*		ARK::API::Delegate::Respondable::Voters
 *
-*		@variables:
-*			size_t count;
-*			ARK::Voter* const _voters;
+*		@param:	size_t, ARK::Voter* const
 *
-*   @methods:	printTo(HardwareSerial &serial)
-*		@deconstuctor:	~Voters() { delete [] _voters; };
-*		@operators: 
+*   printTo(HardwareSerial &serial)
+*		deconstuctor:	~Voters() { delete [] _voters; };
+*		operators: 
 *			Voter& operator[](size_t index)
 *			Voter& operator[](size_t index)
 *
-*   @description:
-*			Model for Delegate Voters API Response
+*   @brief:	Model for Delegate Voters API Response
 *
 **************************************************/
 struct Voters :
@@ -130,11 +117,9 @@ struct Voters :
     size_t count;
     ARK::Voter* const voters;
 
-    Voters(size_t c) : count(c), voters(new ARK::Voter[c]) { }
+    Voters(size_t c) : count(c), voters(new ARK::Voter[c]) {}
 
-    ~Voters() {
-			delete [] voters;
-    }
+    ~Voters() { delete [] voters; }
 
     const Voter& operator[](size_t index) const { return voters[index]; }
     Voter& operator[](size_t index) { return voters[index]; }
@@ -161,17 +146,12 @@ struct Voters :
 };
 /*************************************************/
 
-
 /**************************************************************************************************/
 
-
 /*************************************************
-*	ARK::API::Delegate::Respondable::forged_by_account_t
+*		ARK::API::Delegate::Respondable::forged_by_account_t
 *
-*		@variables:
-*			const Balance fees;
-*			const Balance rewards;
-*			const Balance forged;
+*		@param:	const Balance, const Balance, const Balance;
 *
 *   @description:
 *			Model for Delegate Forging Totals API Response
@@ -188,18 +168,13 @@ struct forged_by_account_t
 
 
 /*************************************************
-*	ARK::API::Delegate::Respondable::ForgedByAccount
+*		ARK::API::Delegate::Respondable::ForgedByAccount
 *
-*		@inherits:
-*			Balance fees;
-*			Balance rewards;
-*			Balance forged;
+*		inherits: Balance fees, Balance rewards, Balance forged;
 *
-*   @methods:	printTo(HardwareSerial &serial)
+*   printTo(HardwareSerial &serial)
 *
-*   @description:
-*			Model for Delegate Forging Totals API Response
-*
+*   @brief: Model for Delegate Forging Totals API Response
 **************************************************/
 struct ForgedByAccount :
 		public forged_by_account_t, Printable
@@ -207,9 +182,9 @@ struct ForgedByAccount :
 	public:
 
 		ForgedByAccount(
-			const char* const newFees,
-			const char* const newRewards,
-			const char* const newForged
+				const char* const newFees,
+				const char* const newRewards,
+				const char* const newForged
 		)
 		{
 			this->fees = Balance(newFees);
@@ -232,21 +207,14 @@ struct ForgedByAccount :
 };
 /*************************************************/
 
-
 /**************************************************************************************************/
 
-
 /*************************************************
-*	ARK::API::Delegate::Respondable::next_forgers_t
+*		ARK::API::Delegate::Respondable::next_forgers_t
 *
-*		@variables:
-*			char currentBlock[64];
-*			char currentSlot[64];
-*			Publickey* const delegateKeys = new Publickey[10];
+*		@param: char currentBlock[64], char currentSlot[64], Publickey* const
 *
-*   @description:
-*			Model for Next 10 Forging Delegate Publickeys API Response
-*
+*   @brief:	Model for Next 10 Forging Delegate Publickeys API Response
 **************************************************/
 struct next_forgers_t
 {
@@ -259,18 +227,13 @@ struct next_forgers_t
 
 
 /*************************************************
-*	ARK::API::Delegate::Respondable::NextForgers
+*		ARK::API::Delegate::Respondable::NextForgers
 *
-*		@inherits:
-*			char currentBlock[64];
-*			char currentSlot[64];
-*			Publickey* const delegateKeys = new Publickey[10];
+*		inherits: char[64], char[64], Publickey* const
 *
-*   @methods:	printTo(HardwareSerial &serial)
+*   printTo(HardwareSerial &serial)
 *
-*   @description:
-*			Model for Next 10 Forging Delegate Publickeys API Response
-*
+*   @brief:	Model for Next 10 Forging Delegate Publickeys API Response
 **************************************************/
 struct NextForgers :
 		public next_forgers_t, Printable

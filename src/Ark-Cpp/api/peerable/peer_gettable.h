@@ -9,7 +9,6 @@ namespace API
 {
 namespace Peer
 {
-
 /*************************************************
 *  PROTECTED: ARK::API::Peer::Gettable
 **************************************************/
@@ -23,16 +22,16 @@ class Gettable
     ARK::Peer peer(
         ARK::Utilities::Network::Connector& netConnector,
         const char* const ip,
-        int port)
+        int port
+    )
     {
       char uri[64] = { '\0' };  //TODO: review sizes
-      strcpy(uri, ARK::API::Paths::Peer::get_s);
-      strcat(uri, "?ip=");
-      strcat(uri, ip);
-      strcat(uri, "&port=");
+        strcpy(uri, ARK::API::Paths::Peer::get_s);
+        strcat(uri, "?ip=");
+        strcat(uri, ip);
+        strcat(uri, "&port=");
       const auto len = strlen(uri);
-      sprintf(uri + len, "%d", port);
-
+        sprintf(uri + len, "%d", port);
       auto callback = netConnector.cb(uri);
       return peerfromJSON(callback);
     }

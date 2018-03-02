@@ -24,49 +24,32 @@ class Manager :
 
   public:
 
-    Manager();
-    Manager(const ARK::Network& network);
+    /*************************************************
+    *  ARK::API::Manager
+    **************************************************/
+    Manager() { this->connect(ARK::Network()); };
+    /*************************************************/
+
+    /*************************************************
+    *  ARK::API::Manager
+    **************************************************/
+    explicit Manager(const ARK::Network& network) { this->connect(network); };
+    /*************************************************/
 
   private:
 
-    void connect(const ARK::Network& network);
-
+    /*************************************************
+    *  ARK::API::Manager::connect
+    **************************************************/
+    void connect(const ARK::Network& network)
+    {
+      this->netConnector = ARK::Utilities::Network::Connector(network);
+    };
+    /*************************************************/
 };
 /*************************************************/
 
 };
 };
-
-
-
-/*************************************************
-*  ARK::API::Manager
-**************************************************/
-ARK::API::Manager::Manager()
-{
-  this->connect(ARK::Network());
-};
-/*************************************************/
-
-
-/*************************************************
-*  ARK::API::Manager
-**************************************************/
-ARK::API::Manager::Manager(const ARK::Network& network)
-{
-  this->connect(network);
-};
-/*************************************************/
-
-
-/*************************************************
-*  ARK::API::Manager::connect
-**************************************************/
-void ARK::API::Manager::connect(const ARK::Network& network)
-{
-  this->netConnector = ARK::Utilities::Network::Connector(network);
-};
-/*************************************************/
-
 
 #endif

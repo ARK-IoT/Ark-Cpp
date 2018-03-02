@@ -41,9 +41,7 @@ struct Unconfirmed :
       };
     };
 
-    ~Unconfirmed() {
-      delete [] transactions;
-    };
+    ~Unconfirmed() { delete [] transactions; };
 
     /*************************************************
     *	  ARK::API::Transaction::Respondable::Unconfirmed 
