@@ -10,11 +10,12 @@ namespace Utilities
 /**************************************************
 * ARK::Utilities::JSONParser
 *
-* The purpose of this class is to serve as an
+* 	@brief The purpose of this class is to serve as an
 *   entry point for integrating and simplifying
 *   integration of a JSON library
 **************************************************/
-struct JSONParser : virtual Bufferable
+struct JSONParser
+		: public Bufferable
 {
 
 	private:
@@ -53,8 +54,9 @@ struct JSONParser : virtual Bufferable
 		*   @brief:	{ "key": "keyValue" }
 		**************************************************/
 		const char* valueFor(
-			const char* key
-		) {
+				const char* key
+		)
+		{
 			const size_t capacity = this->size_;
 			DynamicJsonBuffer jsonBuffer(capacity);
 			JsonObject &root = jsonBuffer.parseObject(this->buffer.get());
@@ -74,7 +76,8 @@ struct JSONParser : virtual Bufferable
 		const char* valueIn(
 				const char* key,
 				const char* subkey
-		) {
+		)
+		{
 			const size_t capacity = this->size_;
 			DynamicJsonBuffer jsonBuffer(capacity);
 			JsonObject &root = jsonBuffer.parseObject(this->buffer.get());
@@ -94,7 +97,8 @@ struct JSONParser : virtual Bufferable
 		const char* subvalueFor(
 				const char* key,
 				int pos
-		) {
+		)
+		{
 			const size_t capacity = this->size_;
 			DynamicJsonBuffer jsonBuffer(capacity);
 			JsonObject &root = jsonBuffer.parseObject(this->buffer.get());
@@ -115,7 +119,8 @@ struct JSONParser : virtual Bufferable
 				const char* key,
 				int pos,
 				const char* subkey
-		) {
+		)
+		{
 			const size_t capacity = this->size_;
 			DynamicJsonBuffer jsonBuffer(capacity);
 			JsonObject &root = jsonBuffer.parseObject(this->buffer.get());
