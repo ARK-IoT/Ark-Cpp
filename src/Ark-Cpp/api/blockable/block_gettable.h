@@ -24,14 +24,13 @@ class Gettable
     **************************************************/
     ARK::Block block(
         ARK::Utilities::Network::Connector& netConnector,
-        const char* const blockId)
+        const char* const blockId
+    )
     {
       char uri[256] = { '\0' }; // TODO:  check size
-
-      strcpy(uri, ARK::API::Paths::Block::get_s);
-      strcat(uri, "?id=");
-      strcat(uri, blockId);
-
+        strcpy(uri, ARK::API::Paths::Block::get_s);
+        strcat(uri, "?id=");
+        strcat(uri, blockId);
       auto callback = netConnector.cb(uri);
       return blockfromJSON(callback);
     };
@@ -358,7 +357,6 @@ class Gettable
     ARK::API::Block::Respondable::Status statusfromJSON(const char* const jsonStr)
     {
       ARK::Utilities::JSONParser parser(jsonStr, sizeof(jsonStr) / sizeof(jsonStr[0]));
-
       return {
           parser.valueFor("epoch"),
           parser.valueFor("height"),

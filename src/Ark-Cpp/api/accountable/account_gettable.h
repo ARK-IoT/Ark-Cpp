@@ -12,25 +12,24 @@ namespace Account
 /*************************************************
 *  PROTECTED: ARK::API::Account::Gettable
 **************************************************/
-
 class Gettable
 {
   protected:
+
 		/*************************************************
 		*	ARK::API::Account::Gettable::balance
 		*		/api/accounts/getBalance?address=arkAddress
 		**************************************************/
 		ARK::API::Account::Respondable::Balances balance(
 				ARK::Utilities::Network::Connector &netManager,
-				const Address &arkAddress)
+				const Address &arkAddress
+		)
 		{
 			char uri[256] = {'\0'}; // TODO: check size
-			strcpy(uri, ARK::API::Paths::Account::getBalance_s);
-			strcat(uri, "?address=");
-			strcat(uri, arkAddress.getValue());
-
+				strcpy(uri, ARK::API::Paths::Account::getBalance_s);
+				strcat(uri, "?address=");
+				strcat(uri, arkAddress.getValue());
 			auto callback = netManager.cb(uri);
-
 			return ARK::API::Account::Gettable::balancefromJSON(callback);
 		};
 		/*************************************************
@@ -60,14 +59,13 @@ class Gettable
 		**************************************************/
 		Publickey publickey(
 				ARK::Utilities::Network::Connector &netManager,
-				const Address &arkAddress)
+				const Address &arkAddress
+		)
 		{
 			char uri[256] = {'\0'}; // TODO:  check size
-
-			strcpy(uri, ARK::API::Paths::Account::getPublickey_s);
-			strcat(uri, "?address=");
-			strcat(uri, arkAddress.getValue());
-
+				strcpy(uri, ARK::API::Paths::Account::getPublickey_s);
+				strcat(uri, "?address=");
+				strcat(uri, arkAddress.getValue());
 			auto callback = netManager.cb(uri);
 			return ARK::API::Account::Gettable::publickeyfromJSON(callback);
 		};
@@ -94,17 +92,14 @@ class Gettable
 		**************************************************/
 		Balance delegatesFee(
 				ARK::Utilities::Network::Connector &netManager,
-				const Address &arkAddress)
+				const Address &arkAddress
+		)
 		{
-
 			char uri[256] = {'\0'}; // TODO:  check size
-
-			strcpy(uri, ARK::API::Paths::Account::delegatesFee_s);
-			strcat(uri, "?address=");
-			strcat(uri, arkAddress.getValue());
-
+				strcpy(uri, ARK::API::Paths::Account::delegatesFee_s);
+				strcat(uri, "?address=");
+				strcat(uri, arkAddress.getValue());
 			auto callback = netManager.cb(uri);
-
 			return ARK::API::Account::Gettable::delegatesFeefromJSON(callback);
 		};
 		/*************************************************
@@ -130,14 +125,13 @@ class Gettable
 		**************************************************/
 		ARK::Delegate delegates(
 				ARK::Utilities::Network::Connector &netManager,
-				const Address &arkAddress)
+				const Address &arkAddress
+		)
 		{
 			char uri[256] = {'\0'}; // TODO:  check size
-
-			strcpy(uri, ARK::API::Paths::Account::delegates_s);
-			strcat(uri, "?address=");
-			strcat(uri, arkAddress.getValue());
-
+				strcpy(uri, ARK::API::Paths::Account::delegates_s);
+				strcat(uri, "?address=");
+				strcat(uri, arkAddress.getValue());
 			auto callback = netManager.cb(uri);
 			return ARK::API::Account::Gettable::delegatesfromJSON(callback);
 		};
@@ -187,14 +181,13 @@ class Gettable
 		**************************************************/
 		ARK::Account account(
 				ARK::Utilities::Network::Connector &netManager,
-				const Address &arkAddress)
+				const Address &arkAddress
+		)
 		{
 			char uri[81 + 1] = {'\0'}; // TODO:  check size
-
-			strcpy(uri, ARK::API::Paths::Account::accounts_s);
-			strcat(uri, "?address=");
-			strcat(uri, arkAddress.getValue());
-
+				strcpy(uri, ARK::API::Paths::Account::accounts_s);
+				strcat(uri, "?address=");
+				strcat(uri, arkAddress.getValue());
 			auto callback = netManager.cb(uri);
 			return ARK::API::Account::Gettable::accountfromJSON(callback);
 		};

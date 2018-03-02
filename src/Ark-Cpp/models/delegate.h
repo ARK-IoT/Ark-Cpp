@@ -51,15 +51,15 @@ struct Delegate :
 	public:
 		
 		Delegate(
-			const char* const newUsername,
-			const char* const newAddress,
-			const char* const newPublicKey,
-			const char* const newVote,
-			int newProducedblocks,
-			int newMissedblocks,
-			int newRate,
-			double newApproval,
-			double newProductivity
+				const char* const newUsername,
+				const char* const newAddress,
+				const char* const newPublicKey,
+				const char* const newVote,
+				int newProducedblocks,
+				int newMissedblocks,
+				int newRate,
+				double newApproval,
+				double newProductivity
 		)
 		{
 			strncpy(username, newUsername, sizeof(username) / sizeof(username[0]));

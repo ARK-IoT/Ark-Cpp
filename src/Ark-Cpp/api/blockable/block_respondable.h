@@ -12,17 +12,13 @@ namespace Block
 namespace Respondable
 {
 /*************************************************
-*	ARK::API::Block::Respondable::height_t 
+*	  ARK::API::Block::Respondable::height_t 
 *
-*   @variables:
-*			const char* height
-*			const char* id
+*   @param: char height[64], char id[64]
 *
 *   @methods:	printTo(HardwareSerial &serial)
 *
-*   @description:
-*			Model for Height API Response
-*
+*   @brief: Model for Height API Response
 **************************************************/
 struct height_t
 {
@@ -33,17 +29,15 @@ struct height_t
 /*************************************************/
 
 /*************************************************
-*	ARK::API::Block::Respondable::Height 
+*	  ARK::API::Block::Respondable::Height 
 *
-*   @inherits:
+*   inherits:
 *			const char* height
 *			const char* id
 *
-*   @methods:	printTo(HardwareSerial &serial)
+*   printTo(HardwareSerial &serial)
 *
-*   @description:
-*			Model for Height API Response
-*
+*   @brief: Model for Height API Response
 **************************************************/
 struct Height :
 		public height_t, Printable
@@ -81,18 +75,18 @@ struct Height :
 
 
 /*************************************************
-*	ARK::API::Block::Respondable::status_t 
+*	  ARK::API::Block::Respondable::status_t 
 *
-*		@variables:
-*			const char* epoch;
-*			const char* height;
-*			const Balance fee;
-*			int milestone;
-*			Hash nethash;
-*			const Balance reward;
-*			const Balance supply;
+*		@param:
+*     const char* epoch,
+*     const char* height,
+*     const Balance fee,
+*     int milestone,
+*     Hash nethash,
+*     const Balance reward,
+*     const Balance supply;
 *
-*   @description:
+*   @brief:
 *			Model for Block Status API Response
 *
 **************************************************/
@@ -113,7 +107,7 @@ struct status_t
 /*************************************************
 *	ARK::API::Block::Respondable::Status 
 *
-*		@inherits:
+*		inherits:
 *			const char* epoch;
 *			const char* height;
 *			const Balance fee;
@@ -122,11 +116,9 @@ struct status_t
 *			const Balance reward;
 *			const Balance supply;
 *
-*   @methods:	printTo(HardwareSerial &serial)
+*   printTo(HardwareSerial &serial)
 *
-*   @description:
-*			Constructor Model for Block Status API Response
-*
+*   @brief: Constructor Model for Block Status API Response
 **************************************************/
 struct Status : public status_t
 {

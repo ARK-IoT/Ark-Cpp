@@ -27,9 +27,10 @@ enum NetworkType { INVALID = -1, DEV = 0, MAIN = 1, CUSTOM = 2 };
 /*************************************************
 *   ARK::network_t
 **************************************************/
-struct network_t {
+struct network_t
+{
 	public:
-		char nethash[65];
+		Hash nethash;
 		char token[5];
 		char symbol[2];
 		char explorer[40];
@@ -49,7 +50,7 @@ struct Network :
 
 		Network()
 		{
-			strncpy(nethash, "", sizeof(nethash) / sizeof(nethash[0]));
+			nethash = Hash();
 			strncpy(token, "", sizeof(token) / sizeof(token[0]));
 			strncpy(symbol, "", sizeof(symbol) / sizeof(symbol[0]));
 			strncpy(explorer, "", sizeof(explorer) / sizeof(explorer[0]));
@@ -57,13 +58,14 @@ struct Network :
 		};
 
 		Network(
-			const char* const newNethash,
-			const char* const newToken,
-			const char* const newSymbol,
-			const char* const newExplorer,
-			int newVersion
-		) {
-			strncpy(nethash, newNethash, sizeof(nethash) / sizeof(nethash[0]));
+				const char* const newNethash,
+				const char* const newToken,
+				const char* const newSymbol,
+				const char* const newExplorer,
+				int newVersion
+		)
+		{
+			nethash = Hash(newNethash);
 			strncpy(token, newToken, sizeof(token) / sizeof(token[0]));
 			strncpy(symbol, newSymbol, sizeof(symbol) / sizeof(symbol[0]));
 			strncpy(explorer, newExplorer, sizeof(explorer) / sizeof(explorer[0]));
@@ -78,7 +80,7 @@ struct Network :
 		**************************************************/
 		bool operator==(const Network& rhs) const {
 			return (
-				strcmp(this->nethash, rhs.nethash) == 0
+				strcmp(this->nethash.getValue(), rhs.nethash.getValue()) == 0
 				&& strcmp(this->token, rhs.token) == 0
 				&& strcmp(this->symbol, rhs.symbol) == 0
 				&& strcmp(this->explorer, rhs.explorer) == 0
@@ -86,7 +88,6 @@ struct Network :
 			);
 		};
 		/*************************************************/
-
 
 		/*************************************************
 		*   ARK::Network::Network::operator!=
@@ -96,7 +97,6 @@ struct Network :
 		**************************************************/
 		bool operator!=(const Network& rhs) const { return !(*this == rhs); };
 		/*************************************************/
-
 
 		/*************************************************
 		*

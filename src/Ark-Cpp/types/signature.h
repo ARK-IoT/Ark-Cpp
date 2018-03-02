@@ -28,7 +28,6 @@ struct signature_t :
 
 		signature_t(const char* const signatureString)
 		{
-
 			(signatureString == NULL) ?
 					(void)( value_[0] = { '\0' } ) :
 					(void)( strncpy( this->value_, signatureString, sizeof(value_) / sizeof(value_[0]) ) );
@@ -36,7 +35,8 @@ struct signature_t :
 
 		signature_t& operator=(const signature_t& other)
 		{
-			if (this != &other) {
+			if (this != &other)
+			{
 				strcpy(value_, other.value_);
 			}
 			return *this;
@@ -45,7 +45,6 @@ struct signature_t :
 		const char* getValue() const { return value_; };
 
 };
-
 typedef signature_t Signature;
 
 #endif

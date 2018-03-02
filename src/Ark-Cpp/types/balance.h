@@ -41,37 +41,47 @@ struct Balance
 		{
 			bool isNumeric = true;
 
-			for (auto i = 0u; i < strlen(balanceStr); ++i) {
-				if (!isDigit(balanceStr[i])) {
+			for (auto i = 0u; i < strlen(balanceStr); ++i)
+			{
+				if (!isDigit(balanceStr[i]))
+				{
 					isNumeric = false;
 					break;
 				}
 			}
-			if (isNumeric) {
+			if (isNumeric)
+			{
 				this->setBalance(balanceStr);
 			}
 		};
 
-		Balance(const Balance& other) : arktoshi_(), ark_() {
+		Balance(const Balance& other) : arktoshi_(), ark_()
+		{
 			strcpy(arktoshi_, other.arktoshi_);
 			strcpy(ark_, other.ark_);
 		};
-		Balance& operator=(const Balance& other) {
-			if (this != &other) {
+
+		Balance& operator=(const Balance& other)
+		{
+			if (this != &other)
+			{
 				strcpy(arktoshi_, other.arktoshi_);
 				strcpy(ark_, other.ark_);
 			};
 			return *this;
 		};
 
-		Balance(Balance&& other) : arktoshi_(), ark_() {
+		Balance(Balance&& other) : arktoshi_(), ark_()
+		{
 			strcpy(arktoshi_, other.arktoshi_);
 			strcpy(ark_, other.ark_);
 			other.arktoshi_[0] = '\0';
 			other.ark_[0] = '\0';
 		};
-		Balance& operator=(Balance&& other) {
-			if (this != &other) {
+		Balance& operator=(Balance&& other)
+		{
+			if (this != &other)
+			{
 				strcpy(arktoshi_, other.arktoshi_);
 				strcpy(ark_, other.ark_);
 				other.arktoshi_[0] = '\0';
@@ -84,33 +94,38 @@ struct Balance
     const char* ark() const { return ark_; };
     const char* arktoshi() const { return arktoshi_; };
 
-    void setArktoshi(const char* const balanceStr) {
+
+    void setArktoshi(const char* const balanceStr)
+		{
         strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
     };
 
 		void setArk(const char* const balanceStr)
 		{
 			const auto length = strlen(balanceStr);
-			if (length < DECIMAL_PLACES) {
-					ark_[0] = '.';
-					const auto num_zero_pad = DECIMAL_PLACES - length;
-					for (auto i = 1u; i <= num_zero_pad; ++i)
-					{
-							ark_[i] = '0';
-					}
-					for (auto i = 0u; i <= num_zero_pad + 1; ++i) 
-					{
-							ark_[i + num_zero_pad + 1] = balanceStr[i];
-					}
+
+			if (length < DECIMAL_PLACES)
+			{
+				ark_[0] = '.';
+				const auto num_zero_pad = DECIMAL_PLACES - length;
+
+				for (auto i = 1u; i <= num_zero_pad; ++i)
+				{
+					ark_[i] = '0';
+				}
+				for (auto i = 0u; i <= num_zero_pad + 1; ++i) 
+				{
+					ark_[i + num_zero_pad + 1] = balanceStr[i];
+				}
 			}
 			else
 			{
 			// TODO: making i unsigned causes problems.  Potential array out of bounds but no investigation has been done.
 					for (int i = static_cast<int>(length); i >= 0; --i)
 					{
-							if (i < static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = balanceStr[i]; }
-							if (i == static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = '.'; }
-							if (i > static_cast<int>(length - DECIMAL_PLACES) && i <= static_cast<int>(length)) { this->ark_[i] = balanceStr[i - 1]; }
+						if (i < static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = balanceStr[i]; }
+						if (i == static_cast<int>(length - DECIMAL_PLACES)) { this->ark_[i] = '.'; }
+						if (i > static_cast<int>(length - DECIMAL_PLACES) && i <= static_cast<int>(length)) { this->ark_[i] = balanceStr[i - 1]; }
 					}
 			};
 		};

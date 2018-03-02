@@ -17,5 +17,6 @@ int subCount(const char *str, const char* subStr)
     ++count;
   return count;
 };
+/*************************************************/
 
 #endif

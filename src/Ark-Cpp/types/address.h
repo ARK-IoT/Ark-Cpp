@@ -31,11 +31,12 @@ struct address_t :
 
 		address_t(const char* const addressString) : value_()
 		{
-			if (strlen(addressString) < ADDRESS_LENGTH - 1) {
-
+			if (strlen(addressString) < ADDRESS_LENGTH - 1)
+			{
         value_[0] = '\0';
       }
-      else {
+      else
+			{
         strncpy(value_, addressString, sizeof(value_) / sizeof(value_[0]));
       };
 		};

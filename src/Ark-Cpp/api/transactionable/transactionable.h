@@ -26,16 +26,14 @@ class Transactionable :
 		/*************************************************
 		*		/api/transactions/get?id=
 		*
-		*		@uri:	/api/transactions/get?id=
-		*		@returnType:	ARK::Transaction
+		*		@return:	ARK::Transaction
 		*
 		*   @method:	transaction(Hash id)
-    *   @parameters:
-    *     Hash id
+    *   @param:	Hash id
 		*
-		*   @outs:	eturn ARK::API::Transaction::Gettable::transaction(this->netConnector, id)
+		*   calls:	eturn ARK::API::Transaction::Gettable::transaction(this->netConnector, id)
 		*
-		*   @description:
+		*   @brief:
 		*			Gets Transaction by Hash ID from a Node via API.
 		* 
 		**************************************************/
@@ -45,9 +43,7 @@ class Transactionable :
 		};
     /*************************************************/
 
-
 /**************************************************************************************************/
-
 
     /*************************************************/
     /*************************************************/
@@ -59,23 +55,19 @@ class Transactionable :
     /*************************************************/
     /*************************************************/
 
-
 /**************************************************************************************************/
-
 
 		/*************************************************
 		*		/api/transactions/unconfirmed/get?id=
 		*
-		*		@uri:	/api/transactions/unconfirmed/get?id=
-		*		@returnType:	const char*
+		*		@return:	const char*
 		*
 		*   @method:	transactionUnconfirmed(Hash id)
-    *   @parameters:
-    *     Hash id
+    *   @param:	Hash id
 		*
-		*   @outs:	ARK::API::Transaction::Gettable::transactionUnconfirmed(this->netConnector, id)
+		*   calls:	ARK::API::Transaction::Gettable::transactionUnconfirmed(this->netConnector, id)
 		*
-		*   @description:
+		*   @brief:
 		*			Gets Unconfirmed Transaction by Hash ID from a Node via API.
 		* 
 		**************************************************/
@@ -85,21 +77,18 @@ class Transactionable :
 		};
     /*************************************************/
 
-
 /**************************************************************************************************/
-
 
 		/*************************************************
 		*		/api/transactions/unconfirmed
 		*
-		*		@uri:	/api/transactions/unconfirmed
-		*		@returnType:	const char*
+		*		@return:	const char*
 		*
 		*   @method:	transactionsUnconfirmed()
 		*
-		*   @outs:	ARK::API::Transaction::Gettable::transactionsUnconfirmed(this->netConnector, id)
+		*   calls: ARK::API::Transaction::Gettable::transactionsUnconfirmed(this->netConnector, id)
 		*
-		*   @description:
+		*   @brief:
 		*			Gets Unconfirmed Transactions from a Node via API.
 		* 
 		**************************************************/
@@ -110,7 +99,7 @@ class Transactionable :
     /*************************************************/
 
 };
-    /*************************************************/
+/*************************************************/
 
 // namespace transaction_cb {
 //   struct addTransactionsResponse : virtual ARK::API::Helpers::Successable {};

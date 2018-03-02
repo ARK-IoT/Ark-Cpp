@@ -44,9 +44,9 @@ struct Status :
 	public:
 
     Status(
-      bool newLoaded,
-      int newNow,
-      const char* const newBlocksCount
+        bool newLoaded,
+        int newNow,
+        const char* const newBlocksCount
     )
     {
       loaded = newLoaded;
@@ -69,9 +69,7 @@ struct Status :
 };
 /*************************************************/
 
-
 /**************************************************************************************************/
-
 
 /*************************************************
 *		ARK::API::Loader::Respondable::sync_t 
@@ -106,10 +104,10 @@ struct Sync :
   public:
 
     Sync(
-      bool newSyncing,
-      int newBlocks,
-      const char* const newHeight,
-      const char* const newID
+        bool newSyncing,
+        int newBlocks,
+        const char* const newHeight,
+        const char* const newID
     )
     {
       this->syncing = newSyncing;

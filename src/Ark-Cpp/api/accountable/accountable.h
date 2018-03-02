@@ -16,7 +16,6 @@ namespace API
 *   	virtual ARK::Utilities::Network::Connectable
 *    
 *		API's Account Model
-* 
 **************************************************/
 class Accountable :
 		public Account::Gettable,
@@ -26,18 +25,14 @@ class Accountable :
 		/*************************************************
 		*		/api/accounts/getBalance?address=arkAddress
 		*
-		*		@uri:	api/accounts/getBalance?address=arkAddress
-		*		@returnType:	ARK::API::Account::Respondable::Balances
+		*		@return:	ARK::API::Account::Respondable::Balances
 		*
-		*   @method:	accountBalance(const Address &arkAddress)
-		*   @parameter:		Address arkAddress
+		*   accountBalance(const Address &arkAddress)
+		*   @param:	Address arkAddress
 		*
-		*   @outs:	ARK::API::Account::Gettable::balance(this->netConnector, arkAddress)
+		*   calls:	ARK::API::Account::Gettable::balance(this->netConnector, arkAddress)
 		*
-		*   @description:
-		*			Uses Ark Address to get an Accounts Confirmed
-		*			and Unconfirmed Balances from a Node via API.
-		* 
+		*   @brief:	Uses Ark Address to get an Accounts Confirmed	and Unconfirmed Balances from a Node via API.
 		**************************************************/
 		ARK::API::Account::Respondable::Balances accountBalance(const Address &arkAddress)
 		{
@@ -48,18 +43,16 @@ class Accountable :
 /**************************************************************************************************/
 
 		/*************************************************
+		*		api/accounts/getPublickey?address=arkAddress
 		*
-		*		@uri:	api/accounts/getPublickey?address=arkAddress
-		*		@returnType:	Publickey
+		*		@return:	Publickey
 		*
-		*   @method:	accountPublickey(const Address &arkAddress)
-		*   @parameter:		Address arkAddress
+		*   accountPublickey(const Address &arkAddress)
+		*   @param:	Address arkAddress
 		*
-		*   @outs:	ARK::API::Account::Gettable::publickey(this->netConnector, arkAddress)
+		*   calls:	ARK::API::Account::Gettable::publickey(this->netConnector, arkAddress)
 		*
-		*   @description:
-		*			Uses Ark Address to get an Accounts Publickey from a Node via API.
-		* 
+		*   @brief:	Uses Ark Address to get an Accounts Publickey from a Node via API.
 		**************************************************/
 		Publickey accountPublickey(const Address &arkAddress)
 		{
@@ -70,18 +63,16 @@ class Accountable :
 /**************************************************************************************************/
 
 		/*************************************************
+		*		/api/accounts/delegates/fee?address=arkAddress
 		*
-		*		@uri:	/api/accounts/delegates/fee?address=arkAddress
-		*		@returnType:	Balance
+		*		@return:	Balance
 		*
-		*   @method:	accountDelegatesFee(const Address &arkAddress)
-		*   @parameter:		Address arkAddress
+		*   accountDelegatesFee(const Address &arkAddress)
+		*   @param:	Address arkAddress
 		*
-		*   @outs:	ARK::API::Account::Gettable::delegatesFee(this->netConnector, arkAddress)
+		*   calls:	ARK::API::Account::Gettable::delegatesFee(this->netConnector, arkAddress)
 		*
-		*   @description:
-		*			Uses Ark Address to get Delegate Registration Fee from a Node via API.
-		* 
+		*   @brief:	Uses Ark Address to get Delegate Registration Fee from a Node via API.
 		**************************************************/
 		Balance accountDelegatesFee(const Address &arkAddress)
 		{
@@ -92,18 +83,16 @@ class Accountable :
 /**************************************************************************************************/
 
 	/*************************************************
+	*		/api/accounts/delegates?address=arkAddress
 	*
-	*		@uri:	/api/accounts/delegates?address=arkAddress
-	*		@returnType:	ARK::Delegate
+	*		@return:	ARK::Delegate
 	*
-	*   @method:	ARK::Delegate accountDelegates(const Address &arkAddress)
-	*   @parameter:		Address arkAddress
+	*   ARK::Delegate accountDelegates(const Address &arkAddress)
+	*   @param:	Address arkAddress
 	*
-	*   @outs:	ARK::API::Account::Gettable::delegates(this->netConnector, arkAddress)
+	*   calls:	ARK::API::Account::Gettable::delegates(this->netConnector, arkAddress)
 	*
-	*   @description:
-	*			Uses Ark Address to get Delegate Object from a Node via API.
-	* 
+	*   @brief:	Uses Ark Address to get Delegate Object from a Node via API.
 	**************************************************/
 	ARK::Delegate accountDelegates(const Address &arkAddress)
 	{
@@ -114,18 +103,16 @@ class Accountable :
 /**************************************************************************************************/
 
 	/*************************************************
+	*		/api/accounts?address=arkAddress
 	*
-	*		@uri:	/api/accounts?address=arkAddress
-	*		@returnType:	ARK::Account
+	*		@return:	ARK::Account
 	*
-	*   @method:	ARK::Account account(const Address &arkAddress)
-	*   @parameter:	Address arkAddress
+	*   ARK::Account account(const Address &arkAddress)
+	*   @param:	Address arkAddress
 	*
-	*   @outs:	ARK::API::Account::Gettable::account(this->netConnector, arkAddress)
+	*   calls:	ARK::API::Account::Gettable::account(this->netConnector, arkAddress)
 	*
-	*   @description:
-	*			Uses Ark Address to get Account Object from a Node via API.
-	* 
+	*   @brief:	Uses Ark Address to get Account Object from a Node via API.
 	**************************************************/
 	ARK::Account account(const Address &arkAddress)
 	{

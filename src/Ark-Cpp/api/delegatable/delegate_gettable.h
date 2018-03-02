@@ -47,13 +47,13 @@ class Gettable
 		**************************************************/
 		ARK::API::Delegate::Respondable::Search search(
 				ARK::Utilities::Network::Connector& _netConnector,
-				const char* const username)
+				const char* const username
+		)
 		{
 			char uri[64] = { '\0' }; //TODO review size
 				strcpy(uri, ARK::API::Paths::Delegate::search_s);
 				strcat(uri, "?q=");
 				strcat(uri, username);
-
 			auto callback = _netConnector.cb(uri);
 			return searchfromJSON(callback);
 		};
@@ -78,7 +78,6 @@ class Gettable
 		ARK::API::Delegate::Respondable::Search searchfromJSON(const char* const jsonStr)
 		{
 			ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
-
 			return {
 				parser.subarrayValueIn("delegates", 0, "username"),
 				parser.subarrayValueIn("delegates", 0, "address"),
@@ -98,13 +97,13 @@ class Gettable
 		**************************************************/
 		ARK::API::Delegate::Respondable::Voters voters(
 				ARK::Utilities::Network::Connector& netConnector,
-				const Publickey& publicKey)
+				const Publickey& publicKey
+		)
 		{
 			char uri[256] = { '\0' }; //TODO review size
 				strcpy(uri, ARK::API::Paths::Delegate::voters_s);
 				strcat(uri, "?publicKey=");
 				strcat(uri, publicKey.getValue());
-
 			auto callback = netConnector.cb(uri);
 			return votersfromJSON(callback);
 		};
@@ -160,7 +159,8 @@ class Gettable
 	**************************************************/
 	ARK::Delegate delegate(
 			ARK::Utilities::Network::Connector& netConnector,
-			const char* const parameter)
+			const char* const parameter
+	)
 	{
 		char uri[512] = { '\0' }; //TODO: review sizes
 			strcpy(uri, ARK::API::Paths::Delegate::get_s);
@@ -259,13 +259,13 @@ class Gettable
 		**************************************************/
 		ARK::API::Delegate::Respondable::ForgedByAccount forgedByAccount(
 				ARK::Utilities::Network::Connector& netConnector,
-				const Publickey& generatorPublicKey)
+				const Publickey& generatorPublicKey
+		)
 		{
 			char uri[512] = { '\0' }; //TODO: review sizes
 				strcpy(uri, ARK::API::Paths::Delegate::getForgedByAccount_s);
 				strcat(uri, "?generatorPublicKey=");
 				strcat(uri, generatorPublicKey.getValue());
-
 			auto callback = netConnector.cb(uri);
 			return forgedByAccountfromJSON(callback);
 		};
@@ -282,7 +282,6 @@ class Gettable
 		ARK::API::Delegate::Respondable::ForgedByAccount forgedByAccountfromJSON(const char* const jsonStr)
 		{
 			ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr));
-
 			return {
 				parser.valueFor("fees"),
 				parser.valueFor("rewards"),
@@ -298,7 +297,8 @@ class Gettable
 		*   /api/delegates/getNextForgers
 		**************************************************/
 		ARK::API::Delegate::Respondable::NextForgers nextForgers(
-				ARK::Utilities::Network::Connector& netConnector)
+				ARK::Utilities::Network::Connector& netConnector
+		)
 		{
 			auto callback = netConnector.cb(ARK::API::Paths::Delegate::getNextForgers_s);
 			return nextForgersfromJSON(callback);

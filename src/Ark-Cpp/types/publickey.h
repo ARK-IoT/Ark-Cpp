@@ -32,20 +32,25 @@ struct publickey_t :
 
 		publickey_t(const char* const base64String) : value_()
 		{  
-			if (strlen(base64String) < PUBLICKEY_SIZE - 1) {
+			if (strlen(base64String) < PUBLICKEY_SIZE - 1)
+			{
 				value_[0] = '\0';
 			}
-			else {
+			else
+			{
 				strncpy(value_, base64String, sizeof(value_) / sizeof(value_[0]));
 			}
 		};
 
-		publickey_t(const publickey_t& other) : value_() {
+		publickey_t(const publickey_t& other) : value_()
+		{
 			strcpy(value_, other.value_);
 		};
 
-		publickey_t& operator=(const publickey_t& other) {
-			if (this != &other) {
+		publickey_t& operator=(const publickey_t& other)
+		{
+			if (this != &other)
+			{
 				strcpy(value_, other.value_);
 			}
 			return *this;

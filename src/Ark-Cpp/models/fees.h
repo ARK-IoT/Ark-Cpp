@@ -31,11 +31,11 @@ struct Fees :
 	public:
 
 		Fees (
-			const char* const newSend,
-			const char* const newVote,
-			const char* const newDelegate,
-			const char* const newSS,
-			const char* const newMS
+				const char* const newSend,
+				const char* const newVote,
+				const char* const newDelegate,
+				const char* const newSS,
+				const char* const newMS
 		)
 		{
 			this->send = Balance(newSend);

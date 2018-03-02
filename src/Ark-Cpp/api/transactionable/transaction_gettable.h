@@ -22,7 +22,8 @@ class Gettable
 		ARK::Transaction transaction(
 				ARK::Utilities::Network::Connector& netConnector, 
 				const Hash& id
-		) {
+		)
+		{
 				char uri[512] = { '\0' }; //TODO review sizes
 
 				strcpy(uri, ARK::API::Paths::Transaction::getSingle_s);
@@ -97,7 +98,8 @@ class Gettable
 		ARK::API::Transaction::Respondable::Unconfirmed transactionUnconfirmed(
 				ARK::Utilities::Network::Connector& netConnector, 
 				const Hash& id
-		) {
+		)
+		{
 			char uri[256] = { '\0' }; //TODO review sizes
 
 			strcpy(uri, ARK::API::Paths::Transaction::getSingleUnconfirmed_s);
@@ -173,7 +175,8 @@ class Gettable
 		**************************************************/
 		ARK::API::Transaction::Respondable::Unconfirmed transactionsUnconfirmed(
 				ARK::Utilities::Network::Connector& netConnector
-		) {
+		)
+		{
 			auto callback = netConnector.cb(ARK::API::Paths::Transaction::unconfirmed_s);
 			return transactionsUnconfirmedfromJSON(callback);
 		}

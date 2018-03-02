@@ -28,7 +28,8 @@ struct Voter :
 {
 	public:
 
-		Voter() {
+		Voter()
+		{
 			strncpy(this->username, "", sizeof(this->username) / sizeof(this->username[0]));
 			this->address = Address("");
 			this->publicKey = Publickey("");
@@ -36,17 +37,17 @@ struct Voter :
 		};
 
 		Voter(
-			const char* const newUsername,
-			const char* const newAddress,
-			const char* const newPublickey,
-			const char* const newBalance
-		) {
+				const char* const newUsername,
+				const char* const newAddress,
+				const char* const newPublickey,
+				const char* const newBalance
+		)
+		{
 			strncpy(this->username, newUsername, sizeof(this->username) / sizeof(this->username[0]));
 			this->address = Address(newAddress);
 			this->publicKey = Publickey(newPublickey);
 			this->balance = Balance(newBalance);
 		};
-
 
 		/*************************************************
 		*

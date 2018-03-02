@@ -24,14 +24,16 @@ struct Hash :
 
   public:
 
-    Hash() : value_() { }
+    Hash() : value_() {}
 
     Hash(const char* const hashStr) : value_()
     {
-      if (strlen(hashStr) < HASH_LENGTH - 1) {
+      if (strlen(hashStr) < HASH_LENGTH - 1)
+      {
         value_[0] = '\0';
       }
-      else {
+      else
+      {
         strncpy(value_, hashStr, sizeof(value_) / sizeof(value_[0]));
       };
     };

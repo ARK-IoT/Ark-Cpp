@@ -3,6 +3,9 @@
 #ifndef VALUEPRINTABLE_H
 #define VALUEPRINTABLE_H
 
+/*************************************************
+* ValuePrintable
+**************************************************/
 struct ValuePrintable :
     public Printable
 {
@@ -16,5 +19,6 @@ struct ValuePrintable :
 			return size;
 		};
 };
+/*************************************************/
 
 #endif
