@@ -4,9 +4,9 @@
 *
 * currency: 
 *   {
-*     "ticker": String,   //  "ARK",
-*     "name":  String,    //  "ark",
-*     "symbol":  String,  //  "Ѧ",
+*     "ticker": const char*,   //  "ARK",
+*     "name":  const char*,    //  "ark",
+*     "symbol":  const char*,  //  "Ѧ",
 *   }
 *
 ********************************************************************************/
@@ -20,9 +20,7 @@ void constructBlock() {
   );
 
   Serial.println("Offline Instantiated Block Description\n"); 
-  char buf[512] = {};
-  currency.description(buf, sizeof(buf));
-  Serial.println(buf); 
+  Serial.println(currency); 
 
 };
 

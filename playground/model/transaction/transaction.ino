@@ -42,9 +42,7 @@ void constructTransaction() {
 
   
   Serial.println("Offline Instantiated Transaction Description\n"); 
-  char buf[512] = {};
-  transaction.description(buf, sizeof(buf));
-  Serial.println(buf); 
+  Serial.println(transaction); 
 
 };
 

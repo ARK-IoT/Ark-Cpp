@@ -4,7 +4,7 @@
 *
 * delegate: 
 *   {
-*     "username": String,         //  "sleepdeficit",
+*     "username": const char*,         //  "sleepdeficit",
 *     "address":  Address,        //  "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
 *     "publicKey":  Publickey,    //  "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456",
 *     "vote": Balance,            //  "8418345341862",
@@ -32,9 +32,7 @@ void constructDelegate() {
   );
 
   Serial.println("Offline Instantiated Delegate Description\n"); 
-  char buf[512] = {};
-  delegate.description(buf, sizeof(buf));
-  Serial.println(buf); 
+  Serial.println(delegate); 
 
 };
 

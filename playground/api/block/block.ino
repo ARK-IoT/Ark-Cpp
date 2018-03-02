@@ -27,7 +27,7 @@ void checkAPI() {
   /*************************************************/
   ARK::Block block = arkManager.block("4367122150875693402");
     Serial.println("block: ");
-  block.printTo(Serial);
+    Serial.println(block);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -55,7 +55,7 @@ void checkAPI() {
   /*************************************************/
   auto blockHeight =  arkManager.blockHeight();
     Serial.println("blockHeight: ");
-  blockHeight.printTo(Serial); 
+    Serial.println(blockHeight);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -63,7 +63,7 @@ void checkAPI() {
   /*************************************************/
   Hash blockNethash = arkManager.blockNethash();
     Serial.println("blockNethash: ");
-    Serial.println(blockNethash.getValue());
+    Serial.println(blockNethash);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -79,7 +79,7 @@ void checkAPI() {
   /*************************************************/
   ARK::Fees blockFees = arkManager.blockFees();
     Serial.println("blockFees: ");
-  blockFees.printTo(Serial);
+    Serial.println(blockFees);
     Serial.println("\n=====\n");
     delay(100);
   /*************************************************/
@@ -111,7 +111,7 @@ void checkAPI() {
   /*************************************************/
   auto blockStatus = arkManager.blockStatus();
     Serial.println("blockStatus: ");
-  blockStatus.printTo(Serial);
+    Serial.println(blockStatus);
     delay(50);
   /*************************************************/
 }
