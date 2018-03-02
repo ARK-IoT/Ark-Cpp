@@ -5,6 +5,7 @@
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
+
 ARK KEYWORD1
 Address	KEYWORD1
 Balance	KEYWORD1
@@ -12,20 +13,26 @@ Base64	KEYWORD1
 Hash	KEYWORD1
 Publickey	KEYWORD1
 Signature	KEYWORD1
-ARK::Utilities::Network::Connector	KEYWORD1
+
+ARK::Account	KEYWORD1
+ARK::Block	KEYWORD1
+ARK::Delegate	KEYWORD1
+ARK::Fees	KEYWORD1
+ARK::Loader	KEYWORD1
+ARK::Network	KEYWORD1
+ARK::Peer	KEYWORD1
+ARK::Transaction	KEYWORD1
+ARK::Transport	KEYWORD1
+ARK::Voter	KEYWORD1
+
+ARK::API::Manager KEYWORD1
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-ARK::Account	KEYWORD2
-ARK::Block	KEYWORD2
-ARK::Delegate	KEYWORD2
-ARK::Fees	KEYWORD2
-ARK::Loader	KEYWORD2
-ARK::Network	KEYWORD2
-ARK::Peer	KEYWORD2
-ARK::Transaction	KEYWORD2
-ARK::Transport	KEYWORD2
-ARK::Voter	KEYWORD2
+
+ARK::Utilities::Network::Connector	KEYWORD1
+
 ARK::API::Accountable KEYWORD2
 ARK::API::Blockable KEYWORD2
 ARK::API::Delegatable KEYWORD2
@@ -36,10 +43,13 @@ ARK::API::Peerable KEYWORD2
 ARK::API::Signaturable KEYWORD2
 ARK::API::Transactionable KEYWORD2
 ARK::API::Transportable KEYWORD2
+
 ARK::Utilities::Network::Managable KEYWORD2
+
 ######################################
 # Constants (LITERAL1)
 #######################################
+
 ARK::Constants::Networks::Devnet	LITERAL1
 ARK::Constants::Networks::Devnet::nethash	LITERAL1
 ARK::Constants::Networks::Devnet::seeds	LITERAL1
