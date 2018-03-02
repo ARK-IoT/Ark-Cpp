@@ -1,4 +1,4 @@
-#include <C:\Users\chris\Source\Repos\ciband-Ark-Cpp\ark.h>
+#include <ark.h>
 
 /********************************************************************************
 *
@@ -35,9 +35,7 @@ void constructAccount() {
   );
 
   Serial.println("Offline Instantiated Account Description\n"); 
-  char buf[512] = {};
-  account.description(buf, sizeof(buf));
-  Serial.println(buf); 
+  Serial.println(account); 
 
 };
 

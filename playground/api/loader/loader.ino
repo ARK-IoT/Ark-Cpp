@@ -27,7 +27,7 @@ void checkAPI() {
   /*************************************************/
 	auto loaderStatus = arkManager.loaderStatus();
     Serial.println("loaderStatus: ");
-	loaderStatus.printTo(Serial);
+    Serial.println(loaderStatus);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -35,7 +35,7 @@ void checkAPI() {
   /*************************************************/
 	auto loaderSync = arkManager.loaderSync();
     Serial.println("loaderSync: ");
-	loaderSync.printTo(Serial);
+    Serial.println(loaderSync);
 		Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -43,7 +43,7 @@ void checkAPI() {
   /*************************************************/
 	auto autoconfigure = arkManager.loaderAutoconfigure();
     Serial.println("autoconfigure: ");
-  autoconfigure.printTo(Serial);
+    Serial.println(autoconfigure);
     Serial.println("\n=====\n");
     delay(50); 
   /*************************************************/

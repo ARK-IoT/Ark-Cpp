@@ -28,7 +28,7 @@ Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babec
   /*************************************************/
 	auto transactionFromID = arkManager.transaction(transactionID);
     Serial.println("transactionFromID: ");
-  transactionFromID.printTo(Serial);
+    Serial.println(transactionFromID);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -50,7 +50,7 @@ Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babec
   /*************************************************/
 	auto transactionUnconfirmedFromId = arkManager.transactionUnconfirmed(transactionID);
     Serial.println("transactionUnconfirmedFromId: ");
-  transactionUnconfirmedFromId.printTo(Serial);
+    Serial.println(transactionUnconfirmedFromId);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
@@ -59,7 +59,7 @@ Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babec
   /*************************************************/
 	auto transactionsUnconfirmed = arkManager.transactionsUnconfirmed();
     Serial.println("transactionsUnconfirmed: ");
-  transactionsUnconfirmed.printTo(Serial);
+    Serial.println(transactionsUnconfirmed);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
