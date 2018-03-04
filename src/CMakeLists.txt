@@ -1,8 +1,11 @@
+
 cmake_minimum_required(VERSION 3.6.2)
 
 project(Ark-Cpp-lib)
 
 hunter_add_package(nlohmann_json)
+
+hunter_cmake_args(PocoCpp CMAKE_ARGS DISABLE_INTERNAL_OPENSSL=ON)
 hunter_add_package(PocoCpp)
 
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
