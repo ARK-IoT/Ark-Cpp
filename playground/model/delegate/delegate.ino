@@ -4,7 +4,7 @@
 *
 * delegate: 
 *   {
-*     "username": String,         //  "sleepdeficit",
+*     "username": const char*,         //  "sleepdeficit",
 *     "address":  Address,        //  "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
 *     "publicKey":  Publickey,    //  "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456",
 *     "vote": Balance,            //  "8418345341862",
@@ -19,20 +19,20 @@
 
 void constructDelegate() {
 
-  ARK::Delegate delegate = {
+  ARK::Delegate delegate(
     "sleepdeficit",
-    { "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA" },
-    { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" },
-    { "8418345341862" },
+    "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
+    "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456",
+    "8418345341862",
     35810,
     3164,
     31,
     0.06,
     91.88
-  };
+  );
 
   Serial.println("Offline Instantiated Delegate Description\n"); 
-  Serial.println(delegate.description()); 
+  Serial.println(delegate); 
 
 };
 

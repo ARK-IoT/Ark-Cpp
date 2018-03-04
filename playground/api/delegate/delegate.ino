@@ -1,5 +1,5 @@
 #include <ark.h>
-#include <yourWiFiLibrary.h>
+//#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -9,57 +9,65 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * block: 
 ********************************************************************************/
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
 
 void checkAPI() {
-/*  ==================================  */
+  /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);
-/*  ==================================  */
+  /*************************************************/
 
-Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" };
+  Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 
-/*  ==================================  */
-  int delegatesCount = _arkManager.delegatesCount();
+  /*************************************************/
+  const int delegatesCount = arkManager.delegatesCount();
     Serial.println("delegatesCount: ");
     Serial.println(delegatesCount);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String delegateSearchDescription = _arkManager.delegateSearch("sleepdeficit").description();
-    Serial.println("delegateSearchDescription: ");
-    Serial.println(delegateSearchDescription);
+  /*************************************************/
+  auto delegateSearch = arkManager.delegateSearch("sleepdeficit");
+    Serial.println("delegateSearch: ");
+    Serial.println(delegateSearch);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-//  String delegateVotersDescription = _arkManager.delegateVoters(darkPubkey).description();
-//    Serial.println("delegateVotersDescription: ");
-//    Serial.println(delegateVotersDescription);
-//    Serial.println("\n=====\n");
-//    delay(50);
-/*  ==================================  */
-
-/*  ==================================  */
-  String delegateByUsernameDescription = _arkManager.delegate("sleepdeficit").description();
-    Serial.println("delegateByUsernameDescription: ");
-    Serial.println(delegateByUsernameDescription);
+  /*************************************************/
+  auto delegateVoters = arkManager.delegateVoters(darkPubkey);
+    Serial.println("delegateVoters: ");
+    Serial.println(delegateVoters);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String delegateByPublickeyDescription = _arkManager.delegate(darkPubkey.description()).description();
-    Serial.println("delegateByPublickeyDescription: ");
-    Serial.println(delegateByPublickeyDescription);
+  /*************************************************/
+  ARK::Delegate delegateByUsername = arkManager.delegate("sleepdeficit");
+    Serial.println("delegateByUsername: ");
+    Serial.println(delegateByUsername);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
+  /*************************************************/
+  ARK::Delegate delegateByPublickey = arkManager.delegate(darkPubkey);
+    Serial.println("delegateByPublickey: ");
+    Serial.println(delegateByPublickey);
+    Serial.println("\n=====\n");
+    delay(50);
+  /*************************************************/
+
+  /*************************************************/
+  /*************************************************/
 /*    BROKEN: fix for large callbacks    */
 /*  Delegates callback is ~13,564 bytes  */
 //  String delegates = _arkManager.getDelegates();
@@ -67,56 +75,78 @@ Publickey darkPubkey = { "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a280
 //    Serial.println(delegates);
 //    Serial.println("\n=====\n");
 //    delay(50);
-/*  ==================================  */
+  /*************************************************/
+  /*************************************************/
 
-/*  ==================================  */
-  String delegateFeeArk = _arkManager.delegateFee().ark;
-    Serial.println("delegateFeeArk: ");
-    Serial.println(delegateFeeArk);
+  /*************************************************/
+	Balance delegateFee = arkManager.delegateFee();
+    Serial.println("delegateFee: ");
+    Serial.println(delegateFee.ark());
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String delegateForgedByAccountDescription = _arkManager.delegateForgedByAccount(darkPubkey).description();
-    Serial.println("delegateForgedByAccountDescription: ");
-    Serial.println(delegateForgedByAccountDescription);
+  /*************************************************/
+  auto delegateForgedByAccount = arkManager.delegateForgedByAccount(darkPubkey);
+    Serial.println("delegateForgedByAccount: ");
+    Serial.println(delegateForgedByAccount);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  String delegateNextForgersDescription = _arkManager.delegateNextForgers().description();
-    Serial.println("delegateNextForgersDescription: ");
-    Serial.println(delegateNextForgersDescription);
+  /*************************************************/
+  auto delegateNextForgers = arkManager.delegateNextForgers();
+    Serial.println("delegateNextForgers: ");
+    Serial.println(delegateNextForgers);
     Serial.println("\n=====\n");
-    delay(50);        
-/*  ==================================  */
+    delay(50);
+  /*************************************************/
 }
+/*************************************************/
 
 
-/*  ==========================================================================  */
+/*************************************************/
 extern "C" {
 #include "user_interface.h"
 }
-void reportFreeHeap() {
+void reportFreeHeap()
+{
   Serial.print("\n\nsystem_get_free_heap_size: ");
   Serial.print(system_get_free_heap_size());
   Serial.println("\n\n");
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
-void check() {
+/*************************************************/
+void check()
+{
   checkAPI();
     reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
+/*************************************************/
 
-void setup() {
+
+/*************************************************/
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
+  reportFreeHeap();
+
+  WiFi.mode(WIFI_STA);
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(500);
+		Serial.print(".");
+	}
+	Serial.println();
+
+	Serial.print("Connected, IP address: ");
+	Serial.println(WiFi.localIP());
   check();
 }
 
 void loop() {}
+/*************************************************/

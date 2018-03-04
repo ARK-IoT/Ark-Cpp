@@ -15,16 +15,16 @@
 
 void constructFees() {
 
-  ARK::Fees fees = {
-    { "10000000" },
-    { "100000000" },
-    { "500000000" },
-    { "2500000000" },
-    { "500000000" }
-  };
+  ARK::Fees fees(
+    "10000000",
+    "100000000",
+    "500000000",
+    "2500000000",
+    "500000000"
+  );
 
-  Serial.println("Offline Instantiated Fees Description\n"); 
-  Serial.println(fees.description()); 
+  Serial.println("Offline Instantiated Fees Description\n");
+  Serial.println(fees); 
 
 };
 
