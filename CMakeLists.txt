@@ -6,8 +6,8 @@ set (HUNTER_STATUS_DEBUG ON)
 include("HunterGate.cmake")
 
 HunterGate(
-	URL "https://github.com/ruslo/hunter/archive/v0.20.9.tar.gz"
-	SHA1 "8f7cf6d719d05c49224a4ebeba90c6bb90b90f4a"
+    URL "https://github.com/ruslo/hunter/archive/v0.20.14.tar.gz"
+    SHA1 "18cdbf5c47abdda437c73bf5437b7c3c65afe47c"
 )
 
 project(Ark-Cpp)
