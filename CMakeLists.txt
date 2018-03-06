@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.6.2)
 
 set (HUNTER_ROOT .)
+set (HUNTER_STATUS_DEBUG ON)
 
 include("HunterGate.cmake")
 
