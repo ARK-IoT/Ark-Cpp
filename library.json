@@ -1,0 +1,22 @@
+{
+    "name": "Ark-Cpp",
+    "keywords": "ark ecosystem, crypto, blockchain, arduino",
+    "description": "Cpp Wrapper for the Ark Ecosystem",
+    "homepage": "https://github.com/Ark-IoT/Ark-Cpp",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Ark-IoT/Ark-Cpp.git"
+    },
+    "version": "0.6.1",
+    "authors": {
+        "name": "S. Downey(sleepdeficit",
+        "email": "simon@ark.io",
+        "url": "https://sleepdev.sh"
+    },
+    "contributors": {
+        "name": "Chris Johnson",
+        "url": "https://github.com/ciband"
+    },
+    "frameworks": "arduino",
+    "platforms": "*"
+}

@@ -2,7 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/.history
 /.vs
+/.vscode
 /bin
 /lib
 /_Base

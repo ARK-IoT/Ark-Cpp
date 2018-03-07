@@ -1,14 +1,11 @@
-// Copyright Benoit Blanchon 2014-2017
+// ArduinoJson - arduinojson.org
+// Copyright Benoit Blanchon 2014-2018
 // MIT License
-//
-// Arduino JSON library
-// https://bblanchon.github.io/ArduinoJson/
-// If you like this project, please add a star!
 
 #include <ArduinoJson/Polyfills/isInteger.hpp>
 #include <catch.hpp>
 
-using namespace ArduinoJson::Polyfills;
+using namespace ArduinoJson::Internals;
 
 TEST_CASE("isInteger()") {
   SECTION("Null") {

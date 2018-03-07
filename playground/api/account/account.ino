@@ -1,95 +1,113 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
-
 /********************************************************************************
 * account: 
 ********************************************************************************/
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
 
 void checkAPI() {
-/*  ==================================  */
+  /*************************************************/
   ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
-/*  ==================================  */
-  char buf[512] = {};
-Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
+  /*************************************************/
+  
+  Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 
-/*  ==================================  */
-  arkManager.accountBalance(darkAddress).description(buf, sizeof(buf));
+  /*************************************************/
+  auto balances = arkManager.accountBalance(darkAddress);
     Serial.println("balanceDescription: ");
-    Serial.println(buf);
+    Serial.println(balances);
     Serial.println("\n=====\n");
     delay(50); 
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  auto publicKeyDescription = arkManager.accountPublickey(darkAddress).description();
-    Serial.println("publicKeyDescription: ");
-    Serial.println(publicKeyDescription);
+  /*************************************************/
+  auto publicKey = arkManager.accountPublickey(darkAddress);
+    Serial.println("publicKey: ");
+    Serial.println(publicKey);
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
 
-/*  ==================================  */
-  auto delegatesFeeArk = arkManager.accountDelegatesFee(darkAddress).ark();
-    Serial.println("delegatesFeeArk: ");
-    Serial.println(delegatesFeeArk);
+  /*************************************************/
+  Balance delegatesFee = arkManager.accountDelegatesFee(darkAddress);
+    Serial.println("delegatesFee: ");
+    Serial.println(delegatesFee.ark());
     Serial.println("\n=====\n");
     delay(50);
-/*  ==================================  */
+  /*************************************************/
   
-/*  ==================================  */
-    arkManager.accountDelegates(darkAddress).description(buf, sizeof(buf));
-    Serial.println("delegatesDescription: ");
-    Serial.println(buf);
+  /*************************************************/
+  ARK::Delegate delegate = arkManager.accountDelegates(darkAddress);
+    Serial.println("delegate: ");
+    Serial.println(delegate);
     Serial.println("\n=====\n");
-    delay(50);
-/*  ==================================  */
+  delay(50);
+  /*************************************************/
 
-/*  ==================================  */
-  arkManager.account(darkAddress).description(buf, sizeof(buf));
-    Serial.println("accountDescription: ");
-    Serial.println(buf);
-/*  ==================================  */
+  /*************************************************/
+  auto account = arkManager.account(darkAddress);
+    Serial.println("account: ");
+    Serial.println(account);
+    Serial.println("\n=====\n");
+  /*************************************************/
 }
+/*************************************************/
 
 
-/*  ==========================================================================  */
+/*************************************************/
 extern "C" {
 #include "user_interface.h"
 }
-void reportFreeHeap() {
+void reportFreeHeap()
+{
   Serial.print("\n\nsystem_get_free_heap_size: ");
   Serial.print(system_get_free_heap_size());
   Serial.println("\n\n");
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 
-void check() {
+/*************************************************/
+void check()
+{
   checkAPI();
-    reportFreeHeap();
+	reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
+/*************************************************/
 
-void setup() {
-    Serial.begin(115200);
-    reportFreeHeap();
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-      delay(500);
-      Serial.print(".");
-    }
-    Serial.println();
-  
-    Serial.print("Connected, IP address: ");
-    Serial.println(WiFi.localIP());
-    check();
+
+/*************************************************/
+void setup()
+{
+  Serial.begin(115200);
+  reportFreeHeap();
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
+  check();
 }
 
 void loop() {}
+/*************************************************/

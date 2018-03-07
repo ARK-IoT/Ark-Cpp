@@ -23,9 +23,7 @@ void constructVoter() {
   );
 
   Serial.println("Offline Instantiated Voter Description\n"); 
-  char buf[512] = {};
-  voter.description(buf, sizeof(buf));
-  Serial.println(buf); 
+  Serial.println(voter); 
 
 };
 

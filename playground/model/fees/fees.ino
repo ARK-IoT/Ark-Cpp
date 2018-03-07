@@ -24,9 +24,7 @@ void constructFees() {
   );
 
   Serial.println("Offline Instantiated Fees Description\n");
-  char buf[512] = {};
-  fees.description(buf, sizeof(buf));
-  Serial.println(buf); 
+  Serial.println(fees); 
 
 };
 

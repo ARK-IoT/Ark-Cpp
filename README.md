@@ -2,11 +2,11 @@
   <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
-# Ark for Machines v0.4  
+# Ark for Machines v0.6.1  
 
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
-![version](https://img.shields.io/badge/version-v0.4-orange.svg?style=flat)
+![version](https://img.shields.io/badge/version-v0.6.1-orange.svg?style=flat)
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
 Travis: [![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=feature%2Fcmake)](https://travis-ci.org/ciband/Ark-Cpp)
@@ -53,7 +53,8 @@ or
 > ARK::API::Manager arkManager(devnet)  
 
 3) Use manager to get info from the Ark Blockchain  
-> String statusDescription = arkManager.loaderStatus().description()  
+> auto status = arkManager.loaderStatus()
+> Serial.print(status) 
 > prints {  
   "success":true,  
   "loaded":false,  
@@ -68,14 +69,8 @@ or
   - [x] add models & constants
   - [x] add static endpoints
   - [x] Network manager
-    - [x] test network manager
-    - [x] add network manager
   - [X] Network Client
-    - [X] test network client
-    - [X] add network client
   - [X] API Gets
-    - [X] test api calls
-    - [X] finish api calls
   - [ ] API Posts
     - [ ] test api posts
     - [ ] finish api posts
@@ -105,5 +100,5 @@ or
   - [ ] Documentation 
   - [ ] Tests 
   - [ ] Handle Large Callbacks 
-  - [ ] Remove 'String' objects in favor of 'const char*'
+  - [X] Remove 'String' objects in favor of 'const char*'
 
