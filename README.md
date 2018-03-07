@@ -7,8 +7,12 @@
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
 ![version](https://img.shields.io/badge/version-v0.4-orange.svg?style=flat)
-[![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=feature%2Fcmake)](https://travis-ci.org/ciband/Ark-Cpp)
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
+
+Travis: [![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=feature%2Fcmake)](https://travis-ci.org/ciband/Ark-Cpp)
+
+Appveyor: [![Build status](https://ci.appveyor.com/api/projects/status/guny8h1g0jqfog45/branch/feature/cmake?svg=true)](https://ci.appveyor.com/project/ciband/ark-cpp/branch/feature/cmake)
+
 
 Not production ready.  
 
