@@ -7,7 +7,7 @@ TEST(delegate, test_delegate) {
 
 	Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 
-	ASSERT_EQ(190, _arkManager.delegatesCount());
+	ASSERT_NE(0, _arkManager.delegatesCount());
 
 	const auto search = _arkManager.delegateSearch("sleepdeficit");
 	ASSERT_STREQ("sleepdeficit", search.username());
