@@ -2,6 +2,9 @@
 
 #ifndef PUBLICKEY_H
 #define PUBLICKEY_H
+#pragma once
+
+#include <cstring>
 
 /********************************************************************************
 *
@@ -12,57 +15,37 @@
 *
 ********************************************************************************/
 
-typedef char PUBLIC_KEY_VALUE[66];
+    struct publickey_t {
+    private:
+        static const auto PUBLICKEY_SIZE = 67;
 
-/*************************************************
-*
-**************************************************/
-struct publickey_t :
-		public ValuePrintable
-{
+        char value_[PUBLICKEY_SIZE];
 
-	private:
+    public:
+        publickey_t() : value_() { };
 
-		static const auto PUBLICKEY_SIZE = 67;
-		char value_[PUBLICKEY_SIZE];
+        publickey_t(const char* const _base64String) : value_() {      
+          strncpy(value_, _base64String, sizeof(value_) / sizeof(value_[0]));
+        };
 
-	public:
+        publickey_t(const publickey_t& other) : value_() {
+            strcpy(value_, other.value_);
+        }
+        publickey_t& operator=(const publickey_t& other) {
+            if (this != &other) {
+                strcpy(value_, other.value_);
+            }
+            return *this;
+        }
 
-		publickey_t() : value_() {};
+        const char* description() const { return value_; };      
+    };
 
-		publickey_t(const char* const base64String) : value_()
-		{  
-			if (strlen(base64String) < PUBLICKEY_SIZE - 1)
-			{
-				value_[0] = '\0';
-			}
-			else
-			{
-				strncpy(value_, base64String, sizeof(value_) / sizeof(value_[0]));
-			}
-		};
+    typedef publickey_t Publickey;
 
-		publickey_t(const publickey_t& other) : value_()
-		{
-			strcpy(value_, other.value_);
-		};
 
-		publickey_t& operator=(const publickey_t& other)
-		{
-			if (this != &other)
-			{
-				strcpy(value_, other.value_);
-			}
-			return *this;
-		};
+//   };
+// };
 
-    const char* getValue() const { return value_; };
-
-};
-/*************************************************/
-
-/*************************************************/
-typedef publickey_t Publickey;
-/*************************************************/
 
 #endif

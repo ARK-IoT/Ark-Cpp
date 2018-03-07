@@ -8,9 +8,9 @@
 TEST_CASE("JsonBuffer nested objects") {
   SECTION("ArrayNestedInObject") {
     DynamicJsonBuffer jsonBuffer;
-    char jsonString[] = " { \"ab\" : [ 1 , 2 ] , \"cd\" : [ 3 , 4 ] } ";
+    char JSONInterface[] = " { \"ab\" : [ 1 , 2 ] , \"cd\" : [ 3 , 4 ] } ";
 
-    JsonObject &object = jsonBuffer.parseObject(jsonString);
+    JsonObject &object = jsonBuffer.parseObject(JSONInterface);
     JsonArray &array1 = object["ab"];
     const JsonArray &array2 = object["cd"];
     JsonArray &array3 = object["ef"];
@@ -36,10 +36,10 @@ TEST_CASE("JsonBuffer nested objects") {
 
   SECTION("ObjectNestedInArray") {
     DynamicJsonBuffer jsonBuffer;
-    char jsonString[] =
+    char JSONInterface[] =
         " [ { \"a\" : 1 , \"b\" : 2 } , { \"c\" : 3 , \"d\" : 4 } ] ";
 
-    JsonArray &array = jsonBuffer.parseArray(jsonString);
+    JsonArray &array = jsonBuffer.parseArray(JSONInterface);
     JsonObject &object1 = array[0];
     const JsonObject &object2 = array[1];
     JsonObject &object3 = array[2];

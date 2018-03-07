@@ -3,138 +3,76 @@
 #ifndef LOADER_RESPONDABLE_H
 #define LOADER_RESPONDABLE_H
 
+#include <cstring>
 
-namespace ARK
-{
-namespace API
-{
-namespace Loader
-{
-namespace Respondable
-{
-/*************************************************
-*		ARK::API::Loader::Respondable::status_t
-*
-*   @param:	bool loaded, int now, char blocksCount[64]
-*
-*   @brief:	Model for Loader Status API Response
-**************************************************/
-struct status_t
-{
-	public:
-		bool loaded;
-		int now;
-		char blocksCount[32];
-};
-/*************************************************/
+namespace ARK {
+namespace API {
+namespace Loader {
+namespace Respondable {
 
+/*  ================================================  */
+/*  ============  */
+/*  ARK::API::Loader::Respondable::Status  */
+class Status {
+private:
+    bool loaded_;
+    int now_;
+    char blocksCount_[64];  //TODO review sizes
 
-/*************************************************
-*	ARK::API::Loader::Respondable::Status
-*
-*   @param: bool loaded, int now, char blocksCount[64]
-*
-*   @methods:	printTo(HardwareSerial &serial)
-*
-*   @brief:	Model for Loader Status API Response
-**************************************************/
-struct Status :
-		public status_t, Printable
-{
-	public:
-
+public:
     Status(
-        bool newLoaded,
-        int newNow,
-        const char* const newBlocksCount
-    )
-    {
-      loaded = newLoaded;
-      now = newNow;
-      strncpy(blocksCount, newBlocksCount, sizeof(blocksCount) / sizeof(blocksCount[0]));
-    };
-
-    virtual size_t printTo(Print& p) const
-    {
-      size_t size = 0;
-        size += p.print("loaded: ");
-        size += p.print(this->loaded ? "true" : "false");
-        size += p.print("\nnow: ");
-        size += p.print(this->now);
-        size += p.print("\nblocksCount: ");
-        size += p.print(this->blocksCount);
-      return size;
-    };
-
-};
-/*************************************************/
-
-/**************************************************************************************************/
-
-/*************************************************
-*		ARK::API::Loader::Respondable::sync_t 
-*
-*   @param:	bool syncing, int blocks, char height[32], char id[32];
-*
-*   @brief:	Model for Loader Sync API Response
-**************************************************/
-struct sync_t
-{
-  public:
-    bool syncing;
-    int blocks;
-    char height[32];
-    char id[32];
-};
-/*************************************************/
-
-
-/*************************************************
-*		ARK::API::Loader::Respondable::Sync 
-*
-*   @param:	bool syncing, int blocks, char height[32], char id[32]
-*
-*   @methods:	printTo(HardwareSerial &serial)
-*
-*   @brief:	Model for Loader Sync API Response
-**************************************************/
-struct Sync :
-    public sync_t, Printable
-{
-  public:
-
-    Sync(
-        bool newSyncing,
-        int newBlocks,
-        const char* const newHeight,
-        const char* const newID
-    )
-    {
-      this->syncing = newSyncing;
-      this->blocks = newBlocks;
-      strncpy(height, newHeight, sizeof(height) / sizeof(height[0]));
-      strncpy(id, newID, sizeof(id) / sizeof(id[0]));
-    };
-
-    virtual size_t printTo(Print& p) const
-    {
-      size_t size = 0;
-        size += p.print("syncing: ");
-        size += p.print(this->syncing ? "true" : "false");
-        size += p.print("\nblocks: ");
-        size += p.print(this->blocks);
-        size += p.print("\nheight: ");
-        size += p.print(this->height);
-        size += p.print("\nid: ");
-        size += p.print(this->id);
-      return size;
+        const char* const l,
+        int n,
+        const char* const bc
+    ) : loaded_(strcmp(l, "true") == 0), now_(n), blocksCount_() {
+        strncpy(blocksCount_, bc, sizeof(blocksCount_) / sizeof(blocksCount_[0]));
     }
-};
-/*************************************************/
 
+	bool loaded() const noexcept { return loaded_; }
+	int now() const noexcept { return now_; }
+	const char* blocks_count() const noexcept { return blocksCount_; }
+
+    void description(char* const buf, size_t size);
 };
+/*  ============  */
+/*  ================================================  */
+
+
+/*  ================================================  */
+/*  ============  */
+/*  ARK::API::Loader::Respondable::Sync  */
+class Sync {
+private:
+    bool syncing_;
+    int blocks_;
+    char height_[64]; //TODO: review sizes
+    char id_[64];
+
+public:
+    Sync(
+        const char* s,
+        int b,
+        const char* const h,
+        const char* const i
+    ) : syncing_(strcmp(s, "true") == 0), blocks_(b), height_(), id_() {
+        strncpy(height_, h, sizeof(height_) / sizeof(height_[0]));
+        strncpy(id_, i, sizeof(id_) / sizeof(id_[0]));
+    }
+
+	bool syncing() const noexcept { return syncing_; }
+	int blocks() const noexcept { return blocks_; }
+	const char* height() const noexcept { return height_; }
+	const char* id() const noexcept { return id_; }
+
+    void description(char* const buf, size_t size);
 };
-};
-};
+/*  ============  */
+/*  ================================================  */
+
+}
+}
+}
+}
+
 
 #endif
