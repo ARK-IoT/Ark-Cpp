@@ -12,60 +12,60 @@ set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
 include_directories(${PROJECT_SOURCE_DIR})
-include_directories(${PROJECT_SOURCE_DIR}/api)
-include_directories(${PROJECT_SOURCE_DIR}/api/accountable)
-include_directories(${PROJECT_SOURCE_DIR}/api/blockable)
-include_directories(${PROJECT_SOURCE_DIR}/api/delegatable)
-include_directories(${PROJECT_SOURCE_DIR}/api/loadable)
-include_directories(${PROJECT_SOURCE_DIR}/api/multisignaturable)
-include_directories(${PROJECT_SOURCE_DIR}/api/peerable)
-include_directories(${PROJECT_SOURCE_DIR}/api/signaturable)
-include_directories(${PROJECT_SOURCE_DIR}/api/transactionable)
-include_directories(${PROJECT_SOURCE_DIR}/constants)
-include_directories(${PROJECT_SOURCE_DIR}/model)
-include_directories(${PROJECT_SOURCE_DIR}/types)
-include_directories(${PROJECT_SOURCE_DIR}/utilities)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/accountable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/blockable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/delegatable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/loadable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/multisignaturable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/peerable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/signaturable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/transactionable)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/constants)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/model)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/types)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities)
  
  find_package(nlohmann_json CONFIG REQUIRED)
  find_package(Poco REQUIRED Net CONFIG)
 
 set(COMMON_SRC 
-	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/accountable/account_respondable.cpp
-	${PROJECT_SOURCE_DIR}/api/blockable/block_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/blockable/block_respondable.cpp
-	${PROJECT_SOURCE_DIR}/api/delegatable/delegate_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/delegatable/delegate_respondable.cpp
-	${PROJECT_SOURCE_DIR}/api/loadable/loader_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/loadable/loader_respondable.cpp
-	${PROJECT_SOURCE_DIR}/api/multisignaturable/multisignature_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/peerable/peer_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/peerable/peer_respondable.cpp
-	${PROJECT_SOURCE_DIR}/api/signaturable/signature_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_gettable.cpp
-	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
-	${PROJECT_SOURCE_DIR}/api/manager.cpp
-	${PROJECT_SOURCE_DIR}/constants/networks.cpp
-	${PROJECT_SOURCE_DIR}/model/account.cpp
-	${PROJECT_SOURCE_DIR}/model/block.cpp
-	${PROJECT_SOURCE_DIR}/model/currency.cpp
-	${PROJECT_SOURCE_DIR}/model/delegate.cpp
-	${PROJECT_SOURCE_DIR}/model/fees.cpp
-	${PROJECT_SOURCE_DIR}/model/network.cpp
-	${PROJECT_SOURCE_DIR}/model/peer.cpp
-	${PROJECT_SOURCE_DIR}/model/transaction.cpp
-	${PROJECT_SOURCE_DIR}/model/voter.cpp
-	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/accountable/account_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/accountable/account_respondable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/blockable/block_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/blockable/block_respondable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/delegatable/delegate_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/delegatable/delegate_respondable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/loadable/loader_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/loadable/loader_respondable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/multisignaturable/multisignature_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/peerable/peer_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/peerable/peer_respondable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/signaturable/signature_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/transactionable/transaction_gettable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/transactionable/transaction_respondable.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/manager.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/constants/networks.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/account.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/block.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/currency.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/delegate.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/fees.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/network.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/peer.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/transaction.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/voter.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/connector.cpp
 )
 
 set(PLATFORM_SRC 
-	${PROJECT_SOURCE_DIR}/utilities/json.cpp
-	${PROJECT_SOURCE_DIR}/utilities/http.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http.cpp
 )
 
 #set(PLATFORM_SRC 
-#	${PROJECT_SOURCE_DIR}/utilities/json_arduino.cpp
-#	${PROJECT_SOURCE_DIR}/utilities/http_arduino.cpp
+#	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json_arduino.cpp
+#	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http_arduino.cpp
 #)
 
 add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
