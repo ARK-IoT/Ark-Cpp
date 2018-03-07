@@ -38,7 +38,7 @@ TEST(delegate, test_delegate) {
 	//ASSERT_EQ(40669, delegate.produced_blocks());
 	ASSERT_EQ(3319, delegate.missed_blocks());
 	ASSERT_EQ(31, delegate.rate());
-	ASSERT_EQ(0.07f, (float)delegate.approval());
+	ASSERT_NE(0.0, delegate.approval());
 	//ASSERT_EQ(92.45f, (float)delegate.productivity());	
 
     delegate = _arkManager.delegate(darkPubkey.description());
@@ -49,7 +49,7 @@ TEST(delegate, test_delegate) {
 	//ASSERT_EQ(40669, delegate.produced_blocks());
 	ASSERT_EQ(3319, delegate.missed_blocks());
 	ASSERT_EQ(31, delegate.rate());
-	ASSERT_EQ(0.07f, (float)delegate.approval());
+	ASSERT_NE(0.0, delegate.approval());
 	//ASSERT_EQ(92.45f, (float)delegate.productivity());	
 
 /*  ==================================  */
