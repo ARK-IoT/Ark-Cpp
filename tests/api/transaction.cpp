@@ -35,6 +35,6 @@ TEST(transaction, test_transaction) {
 	/*  ==================================  */
 
 	/*  ==================================  */
-	ASSERT_STREQ("", _arkManager.transactionUnconfirmed(transactionID).c_str());
-	ASSERT_STREQ("", _arkManager.transactionsUnconfirmed().c_str());
+	ASSERT_STREQ("There are currently No unconfirmed transactions by that transactionID", _arkManager.transactionUnconfirmed(transactionID).c_str());
+	ASSERT_STREQ("There are currently No Unconfirmed Transactions", _arkManager.transactionsUnconfirmed().c_str());
 }

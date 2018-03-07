@@ -196,7 +196,7 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmed(
     ARK::Utilities::Network::Connector& netConnector, 
     const Hash& id
 ) {
-    char uri[64] = { '\0' }; //TODO review sizes
+    char uri[1024] = { '\0' }; //TODO review sizes
 
     strcpy(uri, ARK::API::Paths::Transaction::getSingleUnconfirmed_s);
     strcat(uri, "?id=");
