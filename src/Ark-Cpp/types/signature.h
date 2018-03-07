@@ -2,6 +2,9 @@
 
 #ifndef SIGNATURE_H
 #define SIGNATURE_H
+#pragma once
+
+#include <cstring>
 
 /********************************************************************************
 *
@@ -12,39 +15,22 @@
 *
 ********************************************************************************/
 
-#define SIGNATURE_SIZE 143
 
-struct signature_t :
-		public ValuePrintable
-{
-	private:
+class Signature {
+private:
+    static const auto SIGNATURE_SIZE = 143;
+    char value_[SIGNATURE_SIZE];
 
-		static const auto SIGNATURE_LENGTH = SIGNATURE_SIZE / sizeof(char);
-		char value_[SIGNATURE_LENGTH];
+public:
+	Signature(){};
 
-	public:
+	Signature(const char* const _signatureString) : value_() {
+      strncpy(value_, _signatureString, sizeof(value_) / sizeof(value_[0]));
+    };
 
-		signature_t() : value_() {};
-
-		signature_t(const char* const signatureString)
-		{
-			(signatureString == NULL) ?
-					(void)( value_[0] = { '\0' } ) :
-					(void)( strncpy( this->value_, signatureString, sizeof(value_) / sizeof(value_[0]) ) );
-		};
-
-		signature_t& operator=(const signature_t& other)
-		{
-			if (this != &other)
-			{
-				strcpy(value_, other.value_);
-			}
-			return *this;
-		};
-
-		const char* getValue() const { return value_; };
-
+    const char* description() const noexcept { return value_; };      
 };
-typedef signature_t Signature;
+
+const  Signature SIGNATURE_EMPTY();
 
 #endif

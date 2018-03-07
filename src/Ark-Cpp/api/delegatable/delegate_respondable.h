@@ -3,281 +3,126 @@
 #ifndef DELEGATE_RESPONDABLE_H
 #define DELEGATE_RESPONDABLE_H
 
-namespace ARK
-{
-namespace API
-{
-namespace Delegate
-{
-namespace Respondable
-{
-/*************************************************
-*		ARK::API::Delegate::Respondable::search_t
-*
-*		@param: char[20], Address, Publickey, Balance, int, int
-*
-*   @brief:	Model for Delegate Search API Response
-*
-**************************************************/
-struct search_t
-{
-	public:
-    char username[20];
-    Address address;
-    Publickey publicKey;
-    Balance vote;
-    int producedblocks;
-    int missedblocks;
+#include "address.h"
+#include "publickey.h"
+#include "balance.h"
+#include "voter.h"
+
+#include <array>
+#include <memory>
+
+namespace ARK {
+namespace API {
+namespace Delegate {
+namespace Respondable {
+
+
+/*  ==========================================================================  */
+/*  =======================================  */
+/*  ARK::API::Delegate::Respondable::Search  */
+class Search {
+private:
+	char username_[64]; //TODO review sizes
+	Address address_;
+	Publickey publicKey_;
+	Balance vote_;
+	int producedblocks_;
+	int missedblocks_;
+
+public:
+	Search(
+		const char* const u, 
+		const char* const a, 
+		const char* const pk, 
+		const char* const v, 
+		int pb, 
+		int mb
+	) : username_(), address_(a), publicKey_(pk), vote_(v), producedblocks_(pb), missedblocks_(mb) {
+		strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
+	}
+
+	const char* username() const noexcept { return username_; }
+	const Address& address() const noexcept { return address_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	const Balance& vote() const noexcept { return vote_; }
+	int produced_blocks() const noexcept { return producedblocks_; }
+	int missed_blocks() const noexcept { return missedblocks_; }
+
+	void description(char* const buf, size_t size);
 };
-/*************************************************/
+/*  =======================================  */
+/*  ==========================================================================  */
 
 
-/*************************************************
-*		ARK::API::Delegate::Respondable::Search
-*
-*		inherits:
-*			const char* username;
-*			Address address;
-*			Publickey publicKey;
-*			const Balance vote;
-*			int producedblocks;
-*			int missedblocks;
-*
-*   printTo(HardwareSerial &serial)
-*
-*   @brief:	Model for Delegate Search API Response
-**************************************************/
-struct Search :
-		public search_t, Printable
-{
-	public:
+/*  ==========================================================================  */
+/*  =========================================  */
+  /*  ARK::API::Delegate::Respondable::Voters  */
+class Voters {
+private:
+    size_t count_;
+    std::unique_ptr<ARK::Voter> voters_;
 
-		Search(
-				const char* const newUsername,
-				const char* const newAddress,
-				const char* const newPublickey,
-				const char* const newVote,
-				int newProducedBlocks,
-				int newMissedBlocks
-		)
-		{
-			strncpy(username, newUsername, sizeof(username) / sizeof(username[0]));
-			address = Address(newAddress);
-			publicKey = Publickey(newPublickey);
-			vote = Balance(newVote);
-			producedblocks = newProducedBlocks;
-			missedblocks = newMissedBlocks;
-		};
+public:
+    Voters(size_t c) : count_(c), voters_(new ARK::Voter[c]) { }
 
-		virtual size_t printTo(Print& p) const
-		{
-			size_t size = 0;
-				size += p.print("\nusername: ");
-				size += p.print(this->username);
+    const Voter& operator[](size_t index) const { return voters_.get()[index]; }
+    Voter& operator[](size_t index) { return voters_.get()[index]; }
 
-				size += p.print("\naddress: ");
-				size += p.print(this->address);
-
-				size += p.print("\npublicKey: ");
-				size += p.print(this->publicKey);
-
-				size += p.print("\nvote: ");
-				size += p.print(this->vote.ark());
-
-				size += p.print("\nproducedblocks: ");
-				size += p.print(this->producedblocks);
-
-				size += p.print("\nmissedblocks: ");
-				size += p.print(this->missedblocks);
-			return size;
-		};
+    void description(char* const buf, size_t size);
 };
-/*************************************************/
+/*  =========================================  */
+/*  ==========================================================================  */
 
-/**************************************************************************************************/
 
-/*************************************************
-*		ARK::API::Delegate::Respondable::Voters
-*
-*		@param:	size_t, ARK::Voter* const
-*
-*   printTo(HardwareSerial &serial)
-*		deconstuctor:	~Voters() { delete [] _voters; };
-*		operators: 
-*			Voter& operator[](size_t index)
-*			Voter& operator[](size_t index)
-*
-*   @brief:	Model for Delegate Voters API Response
-*
-**************************************************/
-struct Voters :
-		public Printable
-{
-	public:
-    size_t count;
-    ARK::Voter* const voters;
+/*  ==========================================================================  */
+/*  ==================================================  */
+  /*  ARK::API::Delegate::Respondable::ForgedByAccount  */
+class ForgedByAccount {
+private:
+	Balance fees_;
+	Balance rewards_;
+	Balance forged_;
 
-    Voters(size_t c) : count(c), voters(new ARK::Voter[c]) {}
+public:
+	ForgedByAccount(
+		const char* const f, 
+		const char* const r, 
+		const char* const fg
+	) : fees_(f), rewards_(r), forged_(fg) { }
 
-    ~Voters() { delete [] voters; }
+	const Balance& fees() const noexcept { return fees_; }
+	const Balance& rewards() const noexcept { return rewards_; }
+	const Balance& forged() const noexcept { return forged_; }
 
-    const Voter& operator[](size_t index) const { return voters[index]; }
-    Voter& operator[](size_t index) { return voters[index]; }
-
-    virtual size_t printTo(Print& p) const
-		{
-			size_t size = 0;
-
-			if (this->count > 0)
-			{
-				size += p.print("\n\0");
-
-				for (int i = 0; i < static_cast<int>(this->count); i++)
-				{
-					size += p.print("\nvoter ");
-					size += p.print(i + 1);
-					size += p.print(":\n");
-					size += p.print(voters[i]);
-					size += p.print("\n");
-				};
-			};
-			return size;
-		}
+	void description(char* const buf, size_t size);
 };
-/*************************************************/
+/*  ==================================================  */
+/*  ==========================================================================  */
 
-/**************************************************************************************************/
 
-/*************************************************
-*		ARK::API::Delegate::Respondable::forged_by_account_t
-*
-*		@param:	const Balance, const Balance, const Balance;
-*
-*   @description:
-*			Model for Delegate Forging Totals API Response
-*
-**************************************************/
-struct forged_by_account_t
-{
-	public:
-    Balance fees;
-    Balance rewards;
-    Balance forged;
+/*  ==========================================================================  */
+/*  ==============================================  */
+  /*  ARK::API::Delegate::Respondable::NextForgers  */
+class NextForgers {
+public:
+	char currentBlock_[64];
+	char currentSlot_[64];
+	std::array<Publickey, 10> delegates_;
+
+	NextForgers(const char* const _currentBlock, const char* const _currentSlot, const Publickey* const _delegates);
+
+	const char* current_block() const noexcept { return currentBlock_; }
+	const char* current_slot() const noexcept { return currentSlot_; }
+	const std::array<Publickey, 10>& delegates() const noexcept { return delegates_; }
+
+	void description(char* const buf, size_t size);
 };
-/*************************************************/
+/*  ==============================================  */
+/*  ==========================================================================  */
 
-
-/*************************************************
-*		ARK::API::Delegate::Respondable::ForgedByAccount
-*
-*		inherits: Balance fees, Balance rewards, Balance forged;
-*
-*   printTo(HardwareSerial &serial)
-*
-*   @brief: Model for Delegate Forging Totals API Response
-**************************************************/
-struct ForgedByAccount :
-		public forged_by_account_t, Printable
-{
-	public:
-
-		ForgedByAccount(
-				const char* const newFees,
-				const char* const newRewards,
-				const char* const newForged
-		)
-		{
-			this->fees = Balance(newFees);
-			this->rewards = Balance(newRewards);
-			this->forged = Balance(newForged);
-		};
-
-		virtual size_t printTo(Print& p) const
-		{
-			size_t size = 0;
-				size += p.print("fees: ");
-				size += p.print(this->fees.ark());
-				size += p.print("\nrewards: ");
-				size += p.print(this->rewards.ark());
-				size += p.print("\nforged: ");
-				size += p.print(this->forged.ark());
-			return size;
-		};
-
-};
-/*************************************************/
-
-/**************************************************************************************************/
-
-/*************************************************
-*		ARK::API::Delegate::Respondable::next_forgers_t
-*
-*		@param: char currentBlock[64], char currentSlot[64], Publickey* const
-*
-*   @brief:	Model for Next 10 Forging Delegate Publickeys API Response
-**************************************************/
-struct next_forgers_t
-{
-	public:
-		char currentBlock[64];
-		char currentSlot[64];
-		Publickey* const delegateKeys = new Publickey[10];
-};
-/*************************************************/
-
-
-/*************************************************
-*		ARK::API::Delegate::Respondable::NextForgers
-*
-*		inherits: char[64], char[64], Publickey* const
-*
-*   printTo(HardwareSerial &serial)
-*
-*   @brief:	Model for Next 10 Forging Delegate Publickeys API Response
-**************************************************/
-struct NextForgers :
-		public next_forgers_t, Printable
-{
-	public:
-
-		NextForgers
-		(
-				const char* const newCB,
-				const char* const newCS,
-				const Publickey* const newDelegateKeys
-		)
-		{
-			strncpy(this->currentBlock, newCB, sizeof(this->currentBlock));
-			strncpy(this->currentSlot, newCS, sizeof(this->currentSlot));
-			for (auto i = 0; i < 10; ++i)
-			{
-				this->delegateKeys[i] = newDelegateKeys[i];
-			};
-		}
-
-		virtual size_t printTo(Print& p) const
-		{
-			size_t size = 0;
-				size += p.print("currentBlock: ");
-				size += p.print(this->currentBlock);
-				size += p.print("\ncurrentSlot: ");
-				size += p.print(this->currentSlot);
-
-			for (int i = 0; i < 9; i++)
-			{
-				size += p.print("delegate ");
-				size += p.print(i + 1);
-				size += p.print(":\npublicKey: ");
-				size += p.print(delegateKeys[i]);
-			};
-			return size;
-		};
-};
-/*************************************************/
-
-};
-};
-};
-};
+}
+}
+}
+}
 
 #endif
