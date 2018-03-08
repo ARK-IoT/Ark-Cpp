@@ -4,67 +4,66 @@
 #include <cstring>
 #include <cstdio>
 
-/*  ==========================================================================  */
-/*  =======================================  */
-/*  ARK::API::Delegate::Respondable::Search  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::Search::description(char* const buf, size_t size)
+namespace ARK {
+namespace API {
+namespace Delegate {
+namespace Respondable {
+
+size_t Search::printTo(Print& p) const
 {
-    strcpy(buf, "username: ");
-    strcat(buf, this->username_);
-    strcat(buf, "\naddress.description: ");
-    strcat(buf, this->address_.description());
-    strcat(buf, "\npublicKey.description: ");
-    strcat(buf, this->publicKey_.description());
-    strcat(buf, "\nvote.ark: ");
-    strcat(buf, this->vote_.ark());
-    strcat(buf, "\nproducedblocks: ");
-    sprintf(buf + strlen(buf), "%d", this->producedblocks_);
-    strcat(buf, "\nmissedblocks: ");
-    sprintf(buf + strlen(buf), "%d", this->missedblocks_);
+	size_t size = 0;
+		size += p.print("\nusername: ");
+		size += p.print(this->username_);
+
+		size += p.print("\naddress: ");
+		size += p.print(this->address_);
+
+		size += p.print("\npublicKey: ");
+		size += p.print(this->publicKey_);
+
+		size += p.print("\nvote: ");
+		size += p.print(this->vote_.ark());
+
+		size += p.print("\nproducedblocks: ");
+		size += p.print(this->producedblocks_);
+
+		size += p.print("\nmissedblocks: ");
+		size += p.print(this->missedblocks_);
+	return size;
 }
-/*  =======================================  */
-/*  ==========================================================================  */
 
 
-
-/*  =========================================  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::Voters::description(char* const buf, size_t size) {
-	if (this->count_ > 0) {
-		buf[0] = '\0';
-		for (auto i = 0u; i < this->count_; ++i) {
-			strcat(buf, "\nvoter ");
-			sprintf(buf + strlen(buf), "%d", i + 1);
-			strcat(buf, ":\n");
-			const auto len = strlen(buf);
-			(*this)[i].description(buf + len, size - len);
-			strcat(buf, "\n");
-		}
-	}
-}
-/*  =========================================  */
-/*  ==========================================================================  */
-
-
-
-
-/*  ==========================================================================  */
-/*  ==================================================  */
-/*  ARK::API::Delegate::Respondable::ForgedByAccount  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::ForgedByAccount::description(char* const buf, size_t size)
+size_t Voters::printTo(Print& p) const
 {
-	strcpy(buf, "fees.ark: ");
-	strcat(buf, this->fees_.ark());
-	strcat(buf, "\nrewards.ark: ");
-	strcat(buf, this->rewards_.ark());
-	strcat(buf, "\nforged.ark: ");
-	strcat(buf, this->forged_.ark());
-}
-/*  ==================================================  */
-/*  ==========================================================================  */
+	size_t size = 0;
 
+	if (this->count_ > 0)
+	{
+		size += p.print("\n\0");
+
+		for (int i = 0; i < static_cast<int>(this->count_); i++)
+		{
+			size += p.print("\nvoter ");
+			size += p.print(i + 1);
+			size += p.print(":\n");
+			size += p.print(voters_[i]);
+			size += p.print("\n");
+		};
+	};
+	return size;
+}
+
+size_t ForgedByAccount::printTo(Print& p) const
+{
+	size_t size = 0;
+	size += p.print("fees: ");
+	size += p.print(this->fees_.ark());
+	size += p.print("\nrewards: ");
+	size += p.print(this->rewards_.ark());
+	size += p.print("\nforged: ");
+	size += p.print(this->forged_.ark());
+	return size;
+}
 
 
 
@@ -84,25 +83,26 @@ ARK::API::Delegate::Respondable::NextForgers::NextForgers(
 		this->delegates_[i] = delegates[i];
 	};
 }
-/*  ============================================  */
-/*  Description  */
-void ARK::API::Delegate::Respondable::NextForgers::description(char* const buf, size_t size)
+size_t NextForgers::printTo(Print& p) const
 {
-	strcpy(buf, "currentBlock: ");
-	strcat(buf, this->currentBlock_);
-	strcat(buf, "\ncurrentSlot: ");
-	strcat(buf, this->currentSlot_);
-	strcat(buf, "\n");
+	size_t size = 0;
+	size += p.print("currentBlock: ");
+	size += p.print(this->currentBlock_);
+	size += p.print("\ncurrentSlot: ");
+	size += p.print(this->currentSlot_);
 
-	for (auto i = 0; i < 10; ++i)
+	for (int i = 0; i < 9; i++)
 	{
-		strcat(buf, "delegate ");
-		sprintf(buf + strlen(buf), "%d", i + 1);
-		strcat(buf, ": \n publicKey: ");
-		strcat(buf, delegates_[i].description());
-		strcat(buf, "\n");
-	}
+		size += p.print("delegate ");
+		size += p.print(i + 1);
+		size += p.print(":\npublicKey: ");
+		size += p.print(delegateKeys_[i]);
+	};
+	return size;
 }
-/*  ============================================  */
-/*  ==========================================================================  */
+
+}
+}
+}
+}
 

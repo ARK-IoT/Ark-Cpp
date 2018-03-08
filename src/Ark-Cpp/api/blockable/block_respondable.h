@@ -5,16 +5,30 @@
 
 #include "balance.h"
 #include "hash.h"
+#include "platform.h"
 
 namespace ARK {
 namespace API {
 namespace Block {
 namespace Respondable {
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Status  */
-class Status
+/*************************************************
+*	ARK::API::Block::Respondable::Status 
+*
+*		inherits:
+*			const char* epoch;
+*			const char* height;
+*			const Balance fee;
+*			int milestone;
+*			Hash nethash;
+*			const Balance reward;
+*			const Balance supply;
+*
+*   printTo(HardwareSerial &serial)
+*
+*   @brief: Constructor Model for Block Status API Response
+**************************************************/
+class Status : Printable
 {
 private:
     char epoch_[64];  //TODO: check sizes
@@ -48,7 +62,7 @@ public:
 	const Balance& reward() const noexcept { return reward_; }
 	const Balance& supply() const noexcept { return supply_; }
 
-    void description(char* const buf, size_t size);
+    size_t printTo(Print& p) const override;
 };
 /*  ====================================  */
 /*  ================================================  */

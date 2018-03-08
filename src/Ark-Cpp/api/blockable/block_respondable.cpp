@@ -3,30 +3,36 @@
 #include <cstring>
 #include <cstdio>
 
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Status  */
-/*  Description  */
-void ARK::API::Block::Respondable::Status::description(char* const buf, size_t size)
-{
-    strcpy(buf, "epoch: ");
-    strcat(buf, this->epoch_);
-    strcat(buf, "\nheight: ");
-    strcat(buf, this->height_);
-    strcat(buf, "\nfee.ark: ");
-    strcat(buf, this->fee_.ark());
-    strcat(buf, "\nmilestone: ");
-    sprintf(buf + strlen(buf), "%d", this->milestone_);
-    strcat(buf, "\nnethash.description: ");
-    strcat(buf, this->nethash_.description());
-    strcat(buf, "\nreward.ark: ");
-    strcat(buf, this->reward_.ark());
-    strcat(buf, "\nsupply.ark: ");
-    strcat(buf, this->supply_.ark());
-}
-/*  ====================================  */
-/*  ==========================================================================  */
+namespace ARK {
+namespace API {
+namespace Block {
+namespace Respondable {
 
+size_t Status::printTo(Print& p) const
+    {
+      size_t size = 0;
+        size += p.print("\nepoch: ");
+        size += p.print(this->epoch_);
+
+        size += p.print("\nheight: ");
+        size += p.print(this->height_);
+
+				size += p.print("\nfee: ");
+        size += p.print(this->fee_.ark());
+
+				size += p.print("\nmilestone: ");
+        size += p.print(this->milestone_);
+
+				size += p.print("\nnethash: ");
+        size += p.print(this->nethash_);
+
+				size += p.print("\nreward: ");
+        size += p.print(this->reward_.ark());
+
+				size += p.print("\nsupply: ");
+        size += p.print(this->supply_.ark());
+      return size;
+    };
 
 
 
@@ -43,3 +49,9 @@ void ARK::API::Block::Respondable::Height::description(char* const buf, size_t s
 }
 /*  ====================================  */
 /*  ==========================================================================  */
+
+}
+}
+}
+}
+
