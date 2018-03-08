@@ -1,18 +1,24 @@
 #include "account_respondable.h"
+namespace ARK {
+namespace API {
+namespace Account {
+namespace Respondable {
 
-/*  ==========================================================================  */
-/*  =====================================================  */
-/*  ARK::API::Account::Respondable::Balances::description  */
-/*  Description  */
-void ARK::API::Account::Respondable::Balances::description(char* const buf, size_t size) {
-	strcpy(buf, "confirmed balance.ark: ");
-	strcat(buf, this->confirmed_.ark());
-	strcat(buf, "\nconfirmed balance.arktoshi: ");
-	strcat(buf, this->confirmed_.arktoshi());
-	strcat(buf, "\n\nunconfirmed balance.ark: ");
-	strcat(buf, this->unconfirmed_.ark());
-	strcat(buf, "\nunconfirmed balance.arktoshi: ");
-	strcat(buf, this->unconfirmed_.arktoshi());
+size_t Balances::printTo(Print& p) const
+{
+    size_t size = 0;
+    size += p.print("\nconfirmed balance.ark: ");
+    size += p.print(this->confirmed_.ark());
+    size += p.print("\nconfirmed balance.arktoshi: ");
+    size += p.print(this->confirmed_.arktoshi());
+    size += p.print("\n\nunconfirmed balance.ark: ");
+    size += p.print(this->unconfirmed_.ark());
+    size += p.print("\nunconfirmed balance.arktoshi: ");
+    size += p.print(this->unconfirmed_.arktoshi());
+    return size;
 }
-/*  =====================================================  */
-/*  ==========================================================================  */
+
+}
+}
+}
+}
