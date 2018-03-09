@@ -137,13 +137,13 @@ class NextForgers : public Printable {
 public:
 	char currentBlock_[64];
 	char currentSlot_[64];
-	std::array<Publickey, 10> delegates_;
+	std::array<Publickey, 10> delegate_keys_;
 
 	NextForgers(const char* const _currentBlock, const char* const _currentSlot, const Publickey* const _delegates);
 
 	const char* current_block() const noexcept { return currentBlock_; }
 	const char* current_slot() const noexcept { return currentSlot_; }
-	const std::array<Publickey, 10>& delegates() const noexcept { return delegates_; }
+	const std::array<Publickey, 10>& delegate_keys() const noexcept { return delegate_keys_; }
 
 	size_t printTo(Print& p) const override;
 };

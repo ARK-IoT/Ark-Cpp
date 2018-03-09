@@ -3,6 +3,8 @@
 #ifndef LOADER_RESPONDABLE_H
 #define LOADER_RESPONDABLE_H
 
+#include "platform.h"
+
 #include <cstring>
 
 namespace ARK {
@@ -10,14 +12,20 @@ namespace API {
 namespace Loader {
 namespace Respondable {
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::API::Loader::Respondable::Status  */
-class Status {
+/*************************************************
+*	ARK::API::Loader::Respondable::Status
+*
+*   @param: bool loaded, int now, char blocksCount[64]
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @brief:	Model for Loader Status API Response
+**************************************************/
+class Status : public Printable {
 private:
     bool loaded_;
     int now_;
-    char blocksCount_[64];  //TODO review sizes
+    char blocksCount_[32];  //TODO review sizes
 
 public:
     Status(
@@ -32,21 +40,27 @@ public:
 	int now() const noexcept { return now_; }
 	const char* blocks_count() const noexcept { return blocksCount_; }
 
-    void description(char* const buf, size_t size);
+    size_t printTo(Print& p) const override;
 };
 /*  ============  */
 /*  ================================================  */
 
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::API::Loader::Respondable::Sync  */
-class Sync {
+/*************************************************
+*		ARK::API::Loader::Respondable::Sync 
+*
+*   @param:	bool syncing, int blocks, char height[32], char id[32]
+*
+*   @methods:	printTo(HardwareSerial &serial)
+*
+*   @brief:	Model for Loader Sync API Response
+**************************************************/
+class Sync : public Printable {
 private:
     bool syncing_;
     int blocks_;
-    char height_[64]; //TODO: review sizes
-    char id_[64];
+    char height_[32]; //TODO: review sizes
+    char id_[32];
 
 public:
     Sync(
@@ -64,15 +78,12 @@ public:
 	const char* height() const noexcept { return height_; }
 	const char* id() const noexcept { return id_; }
 
-    void description(char* const buf, size_t size);
+    size_t printTo(Print& p) const override;
 };
-/*  ============  */
-/*  ================================================  */
 
 }
 }
 }
 }
-
 
 #endif

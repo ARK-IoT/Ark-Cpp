@@ -3,40 +3,41 @@
 #include <cstring>
 #include <cstdio>
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::API::Loader::Respondable::Status  */
-/*  Description  */
-void ARK::API::Loader::Respondable::Status::description(char* const buf, size_t size)
-{
-    //TODO validate size
-    strcpy(buf, "loaded: ");
-    strcat(buf, this->loaded_ ? "true" : "false");
-    strcat(buf, "\nnow: ");
-    sprintf(buf + strlen(buf), "%d", this->now_);
-    strcat(buf, "\nblocksCount: ");
-    strcat(buf, this->blocksCount_);
+
+namespace ARK {
+namespace API {
+namespace Loader {
+namespace Respondable {
+
+size_t Status::printTo(Print& p) const
+    {
+      size_t size = 0;
+        size += p.print("loaded: ");
+        size += p.print(this->loaded_ ? "true" : "false");
+        size += p.print("\nnow: ");
+        size += p.print(this->now_);
+        size += p.print("\nblocksCount: ");
+        size += p.print(this->blocksCount_);
+      return size;
+    }
+
+
+
+size_t Sync::printTo(Print& p) const
+    {
+      size_t size = 0;
+        size += p.print("syncing: ");
+        size += p.print(this->syncing_ ? "true" : "false");
+        size += p.print("\nblocks: ");
+        size += p.print(this->blocks_);
+        size += p.print("\nheight: ");
+        size += p.print(this->height_);
+        size += p.print("\nid: ");
+        size += p.print(this->id_);
+      return size;
+    }
+
 }
-/*  ============  */
-/*  ================================================  */
-
-
-
-
-/*  ================================================  */
-/*  ============  */
-/*  ARK::Loader::Loader::Sync  */
-/*  Description  */
-void ARK::API::Loader::Respondable::Sync::description(char* const buf, size_t size)
-{
-    strcpy(buf, "syncing: ");
-    strcat(buf, this->syncing_ ? "true" : "false");
-    strcat(buf, "\nblocks: ");
-    sprintf(buf + strlen(buf), "%d", this->blocks_);
-    strcat(buf, "\nheight: ");
-    strcat(buf, this->height_);
-    strcat(buf, "\nid: ");
-    strcat(buf, this->id_);
 }
-/*  ============  */
-/*  ================================================  */
+}
+}

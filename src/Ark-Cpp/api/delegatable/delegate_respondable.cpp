@@ -78,9 +78,9 @@ ARK::API::Delegate::Respondable::NextForgers::NextForgers(
     //TODO:  wish i had std::array for _delegates.  pointer decay sucks.
     strncpy(this->currentBlock_, currentBlock, sizeof(this->currentBlock_));
     strncpy(this->currentSlot_, currentSlot, sizeof(this->currentSlot_));
-	for (auto i = 0; i < 10; ++i)
+	for (auto i = 0u; i < delegate_keys_.size(); ++i)
 	{
-		this->delegates_[i] = delegates[i];
+		this->delegate_keys_[i] = delegates[i];
 	};
 }
 size_t NextForgers::printTo(Print& p) const
@@ -96,7 +96,7 @@ size_t NextForgers::printTo(Print& p) const
 		size += p.print("delegate ");
 		size += p.print(i + 1);
 		size += p.print(":\npublicKey: ");
-		size += p.print(delegateKeys_[i]);
+		size += p.print(delegate_keys_[i]);
 	};
 	return size;
 }
