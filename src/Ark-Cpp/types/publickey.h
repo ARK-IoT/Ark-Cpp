@@ -37,7 +37,7 @@
             return *this;
         }
 
-        const char* description() const { return value_; }     
+        const char* getValue() const { return value_; }     
     };
 
     typedef publickey_t Publickey;

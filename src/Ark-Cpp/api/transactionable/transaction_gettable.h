@@ -4,6 +4,7 @@
 #define TRANSACTION_GETTABLE_H
 
 #include "transaction.h"
+#include "transaction_respondable.h"
 #include "connector.h"
 #include "hash.h"
 
@@ -66,7 +67,7 @@ class Gettable
 		* ARK::API::Transaction::Gettable::transactionUnconfirmed
 		*   /api/transactions/unconfirmed/get?id=
 		**************************************************/
-    String transactionUnconfirmed(
+    ARK::API::Transaction::Respondable::Unconfirmed transactionUnconfirmed(
         ARK::Utilities::Network::Connector& netConnector,
         const Hash& id);
         
@@ -99,8 +100,8 @@ class Gettable
 		*	}
 		*
 		**************************************************/
-    String transactionUnconfirmedfromJSON(const char* const jsonStr);
-    String transactionUnconfirmedfromJSON(const String& _jsonStr) {
+    ARK::API::Transaction::Respondable::Unconfirmed transactionUnconfirmedfromJSON(const char* const jsonStr);
+    ARK::API::Transaction::Respondable::Unconfirmed transactionUnconfirmedfromJSON(const String& _jsonStr) {
         return transactionUnconfirmedfromJSON(_jsonStr.c_str());
     }
 
@@ -108,7 +109,7 @@ class Gettable
 		* ARK::API::Transaction::Gettable::transactionsUnconfirmed
 		*   /api/transactions/unconfirmed
 		**************************************************/
-    String transactionsUnconfirmed(ARK::Utilities::Network::Connector& netConnector);
+    ARK::API::Transaction::Respondable::Unconfirmed transactionsUnconfirmed(ARK::Utilities::Network::Connector& netConnector);
 
 	/*************************************************
 		*
@@ -118,8 +119,8 @@ class Gettable
 		*	}
 		*
 		**************************************************/
-    String transactionsUnconfirmedfromJSON(const char* const jsonStr);
-    String transactionsUnconfirmedfromJSON(const String& _jsonStr) {
+    ARK::API::Transaction::Respondable::Unconfirmed transactionsUnconfirmedfromJSON(const char* const jsonStr);
+    ARK::API::Transaction::Respondable::Unconfirmed transactionsUnconfirmedfromJSON(const String& _jsonStr) {
         return transactionsUnconfirmedfromJSON(_jsonStr.c_str());
     }
 /*  ==========================================================================  */

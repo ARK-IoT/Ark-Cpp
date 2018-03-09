@@ -14,7 +14,7 @@ ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balance(
     char uri[256] = { '\0' }; // TODO: check size
     strcpy(uri, ARK::API::Paths::Account::getBalance_s);
     strcat(uri, "?address=");
-    strcat(uri, arkAddress.description());
+    strcat(uri, arkAddress.getValue());
   
     auto callback = netManager.cb(uri);
 
@@ -51,7 +51,7 @@ Publickey ARK::API::Account::Gettable::publickey(
 
     strcpy(uri, ARK::API::Paths::Account::getPublickey_s);
     strcat(uri, "?address=");
-    strcat(uri, arkAddress.description());
+    strcat(uri, arkAddress.getValue());
 
     auto callback = netManager.cb(uri);
     return ARK::API::Account::Gettable::publickeyfromJSON(callback);
@@ -87,7 +87,7 @@ Balance ARK::API::Account::Gettable::delegatesFee(
 
     strcpy(uri, ARK::API::Paths::Account::delegatesFee_s);
     strcat(uri, "?address=");
-    strcat(uri, arkAddress.description());
+    strcat(uri, arkAddress.getValue());
 
     auto callback = netManager.cb(uri);
 
@@ -123,7 +123,7 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 
     strcpy(uri, ARK::API::Paths::Account::delegates_s);
     strcat(uri, "?address=");
-    strcat(uri, arkAddress.description());
+    strcat(uri, arkAddress.getValue());
 
     auto callback = netManager.cb(uri);
 
@@ -179,7 +179,7 @@ ARK::Account ARK::API::Account::Gettable::account(
 
     strcpy(uri, ARK::API::Paths::Account::accounts_s);
     strcat(uri, "?address=");
-    strcat(uri, arkAddress.description());
+    strcat(uri, arkAddress.getValue());
 
     auto callback = netManager.cb(uri);
 

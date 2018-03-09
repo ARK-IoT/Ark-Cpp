@@ -6,6 +6,7 @@
 #include "address.h"
 #include "balance.h"
 #include "publickey.h"
+#include "platform.h"
 
 #include <cstring>
 

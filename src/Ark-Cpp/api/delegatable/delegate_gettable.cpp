@@ -95,7 +95,7 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::voters(
     char uri[64] = { '\0' }; //TODO review size
     strcpy(uri, ARK::API::Paths::Delegate::voters_s);
     strcat(uri, "?publicKey=");
-    strcat(uri, _publicKey.description());
+    strcat(uri, _publicKey.getValue());
 
     auto callback = _netConnector.cb(uri);
 
@@ -330,7 +330,7 @@ ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::f
     char uri[512] = { '\0' }; //TODO: review sizes
     strcpy(uri, ARK::API::Paths::Delegate::getForgedByAccount_s);
     strcat(uri, "?generatorPublicKey=");
-    strcat(uri, _generatorPublicKey.description());
+    strcat(uri, _generatorPublicKey.getValue());
 
     auto callback = _netConnector.cb(uri);
 

@@ -22,7 +22,7 @@ include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/peerable)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/signaturable)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/transactionable)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/constants)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/model)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/models)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/types)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities)
  

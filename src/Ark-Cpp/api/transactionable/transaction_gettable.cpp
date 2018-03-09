@@ -19,7 +19,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 
     strcpy(uri, ARK::API::Paths::Transaction::getSingle_s);
     strcat(uri, "?id=");
-    strcat(uri, id.description());
+    strcat(uri, id.getValue());
 
     auto callback = netConnector.cb(uri);
     return ARK::API::Transaction::Gettable::transactionfromJSON(callback);
@@ -192,7 +192,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char
 /*  =====================================================  */
 /*  ARK::API::Transaction::Gettable::transactionUnconfirmed  */
 /*  /api/transactions/unconfirmed/get?id=  */
-String ARK::API::Transaction::Gettable::transactionUnconfirmed(
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionUnconfirmed(
     ARK::Utilities::Network::Connector& netConnector, 
     const Hash& id
 ) {
@@ -200,7 +200,7 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmed(
 
     strcpy(uri, ARK::API::Paths::Transaction::getSingleUnconfirmed_s);
     strcat(uri, "?id=");
-    strcat(uri, id.description());
+    strcat(uri, id.getValue());
 
     auto callback = netConnector.cb(uri);
     return ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(callback);
@@ -231,8 +231,8 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmed(
   "error":"Transaction not found"
 }
 */
-String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const char* const jsonStr) {
-  auto jString = ARK::Utilities::make_json_string(jsonStr); 
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const char* const jsonStr) {
+  /*auto jString = ARK::Utilities::make_json_string(jsonStr); 
   String resp;
   if (strstr(jsonStr, "Transaction not found") != nullptr) {
     resp += "There are currently No unconfirmed transactions by that transactionID";
@@ -256,7 +256,33 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const cha
     transaction.description(buf, sizeof(buf) / sizeof(buf[0]));
     resp += buf;
   }
-  return resp;
+  return resp;*/
+
+	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+			
+			int txCount = subCount(jsonStr, "id");
+
+			ARK::Transaction* transactions = new ARK::Transaction[txCount];
+			
+			for (int i = 0; i < txCount; i++)
+			{
+				transactions[i] = {
+					parser.valueIn("transaction", "id"),
+					parser.valueIn("transaction", "blockid"),
+					parser.valueIn("transaction", "height"),
+					atoi(parser.valueIn("transaction", "type")),
+					parser.valueIn("transaction", "timestamp"),
+					parser.valueIn("transaction", "amount"),
+					parser.valueIn("transaction", "fee"),
+					parser.valueIn("transaction", "vendorField"),
+					parser.valueIn("transaction", "senderId"),
+					parser.valueIn("transaction", "recipientId"),
+					parser.valueIn("transaction", "senderPublicKey"),
+					parser.valueIn("transaction", "signature"),
+					parser.valueIn("transaction", "confirmations")
+				};
+			}
+			return ARK::API::Transaction::Respondable::Unconfirmed(transactions, txCount);
 }
 /*  =====================================================  */
 /*  ==========================================================================  */
@@ -268,7 +294,7 @@ String ARK::API::Transaction::Gettable::transactionUnconfirmedfromJSON(const cha
 /*  ======================================================  */
 /*  ARK::API::Transaction::Gettable::transactionsUnconfirmed  */
 /*  /api/transactions/unconfirmed  */
-String ARK::API::Transaction::Gettable::transactionsUnconfirmed(
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionsUnconfirmed(
     ARK::Utilities::Network::Connector& netConnector
 ) {
     auto callback = netConnector.cb(ARK::API::Paths::Transaction::unconfirmed_s);
@@ -282,8 +308,8 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmed(
   "transactions":[]
 }
 */
-String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const char* const jsonStr) {
-  auto jString = ARK::Utilities::make_json_string(jsonStr); 
+ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const char* const jsonStr) {
+  /*auto jString = ARK::Utilities::make_json_string(jsonStr); 
 
   int txCount = ARK::API::Helpers::substringCount(jsonStr, "id");
 
@@ -320,7 +346,33 @@ String ARK::API::Transaction::Gettable::transactionsUnconfirmedfromJSON(const ch
   } else {
     resp += "There are currently No Unconfirmed Transactions";
   };
-  return resp;
+  return resp;*/
+
+ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+			
+			int txCount = subCount(jsonStr, "id");
+
+			ARK::Transaction* transactions = new ARK::Transaction[txCount];
+			
+			for (int i = 0; i < txCount; i++)
+			{
+				transactions[i] = {
+					parser.valueIn("transaction", "id"),
+					parser.valueIn("transaction", "blockid"),
+					parser.valueIn("transaction", "height"),
+					atoi(parser.valueIn("transaction", "type")),
+					parser.valueIn("transaction", "timestamp"),
+					parser.valueIn("transaction", "amount"),
+					parser.valueIn("transaction", "fee"),
+					parser.valueIn("transaction", "vendorField"),
+					parser.valueIn("transaction", "senderId"),
+					parser.valueIn("transaction", "recipientId"),
+					parser.valueIn("transaction", "senderPublicKey"),
+					parser.valueIn("transaction", "signature"),
+					parser.valueIn("transaction", "confirmations")
+				};
+			};
+			return ARK::API::Transaction::Respondable::Unconfirmed(transactions, txCount);
 }
 /*  ======================================================  */
 /*  ==========================================================================  */
