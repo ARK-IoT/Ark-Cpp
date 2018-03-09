@@ -12,14 +12,18 @@ Currency::Currency(const char* const t, const char* const n, const char* const s
 	strncpy(symbol_, s, sizeof(symbol_) / sizeof(symbol_[0]));
 }
 
-void Currency::description(char* const buf, size_t /*size*/) {
-	//TODO:  check len for sufficient size  
-	strcpy(buf, "ticker: ");
-	strcat(buf, ticker_);
-	strcat(buf, ", name: ");
-	strcat(buf, name_);
-	strcat(buf, ", symbol: ");
-	strcat(buf, symbol_);
+size_t Currency::printTo(Print& p) const
+{
+	size_t size = 0;
+      size += p.print("ticker: ");
+      size += p.print(this->ticker_);
+
+      size += p.print("\nname: ");
+      size += p.print(this->name_);
+
+      size += p.print("\nsymbol: ");
+      size += p.print(this->symbol_);
+	return size;
 }
 
 }

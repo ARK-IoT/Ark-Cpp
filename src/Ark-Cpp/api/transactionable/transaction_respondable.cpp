@@ -1,24 +1,31 @@
 #include "transaction_respondable.h"
 
-// /*  ==========================================================================  */
-// /*  ===============================================  */
-// /*  ARK::API::Transaction::Respondable::Unconfirmed  */
-// ARK::API::Transaction::Respondable::Unconfirmed::Unconfirmed(int count) {
-//   this->count = count;
-// };
-// /*  ===============================================  */
-// String ARK::API::Transaction::Respondable::Unconfirmed::description() {
-//   String resp;
-//   if (this->count > 0) {
-//     for (int i = 0; i < this->count; i++) {
-//       resp += "\ntransaction ";
-//       resp += i + 1;
-//       resp += ":\n";
-//       resp += this->list[i].description();
-//       resp += "\n";
-//     };
-//   } else { resp += "There are currently no Unconfirmed Transactions"; };
-//   return resp;
-// };
-// /*  ===============================================  */
-// /*  ==========================================================================  */
+namespace ARK {
+namespace API {
+namespace Transaction {
+namespace Respondable  {
+
+size_t Unconfirmed::printTo(Print& p) const {
+    size_t size = 0;
+
+    if (this->count_ == 0)
+    {
+        size += p.print("There are currently no Unconfirmed Transactions");
+    }
+    else
+    {
+        for (auto i = 0u; i < this->count_; ++i) {
+			size += p.print("\ntransaction ");
+			size += p.print(i + 1);
+			size += p.print(":\n");
+			size += p.print(this->transactions_[i]);
+        }
+    };
+    return size;
+}
+
+}
+}
+}
+}
+

@@ -7,10 +7,8 @@
 
 #include <memory>
 
-namespace ARK
-{
-namespace Utilities
-{
+namespace ARK {
+namespace Utilities {
 
 /*  ==========================================================================  */
 /**************************************************

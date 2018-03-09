@@ -17,10 +17,9 @@ namespace ARK
 {
 namespace API
 {
-
-/*  ==========================================================================  */
-/*  =================  */
-/*  ARK::API::Manager  */
+/*************************************************
+*  ARK::API::Manager
+**************************************************/
 class Manager :
     public ARK::API::Accountable,
     public ARK::API::Blockable,
@@ -34,12 +33,20 @@ class Manager :
 {
 
   public:
-
+ /*************************************************
+    *  ARK::API::Manager
+    **************************************************/
     Manager();
-    Manager(const ARK::Network& network);
+
+/*************************************************
+    *  ARK::API::Manager
+    **************************************************/
+    explicit Manager(const ARK::Network& network);
 
   private:
-
+/*************************************************
+    *  ARK::API::Manager::connect
+    **************************************************/
     void connect(const ARK::Network& network);
 
 };

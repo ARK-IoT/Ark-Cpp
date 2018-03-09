@@ -6,12 +6,12 @@
 * ARK::Utilities::Network::Connector
 *   Default empty constructor
 **************************************************/
-ARK::Utilities::Network::Connector::Connector()
-{
-    this->network = nullptr;
-    networkPeer = "";
-    netType = ARK::NetworkType::INVALID;
-};
+ARK::Utilities::Network::Connector::Connector() : 
+    network(nullptr),
+    netType(ARK::NetworkType::INVALID),
+    networknetworkPeer(),
+    networkPort(-1)
+{}
 
 /**************************************************
 * Connects this to the supplied ARK::Network
@@ -58,12 +58,12 @@ void ARK::Utilities::Network::Connector::connect(const ARK::Network& network)
 *
 *
 **************************************************/
-void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& network, const String& peer, int port)
+void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& network, const char* peer, int port)
 {
     this->netType = ARK::NetworkType::CUSTOM;
     this->network = &network;
 
-    this->networkPeer = peer;
+    strncpy(this->networkPeer, peer, sizeof(this->networkPeer) / sizeof(this->networkPeer[0]));
     this->networkPort = port;
 }
 
@@ -71,7 +71,7 @@ void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& netwo
 * Sets Random Peer based on this->NetworkType
 *   returns error String if error
 **************************************************/
-String ARK::Utilities::Network::Connector::randomPeer()
+const char* ARK::Utilities::Network::Connector::randomPeer()
 {
     if (this->netType == ARK::NetworkType::DEV) {
         return ARK::Constants::Networks::Devnet::randomPeer();
@@ -86,7 +86,7 @@ String ARK::Utilities::Network::Connector::randomPeer()
 * Checks this->NetworkType
 * Assigns ip & port to this
 **************************************************/
-void ARK::Utilities::Network::Connector::setNetworkPeer(const String& peer)
+void ARK::Utilities::Network::Connector::setNetworkPeer(const char* peer)
 {
     if (this->netType == ARK::NetworkType::DEV) {
         this->networkPort = ARK::Constants::Networks::Devnet::port;
@@ -94,7 +94,7 @@ void ARK::Utilities::Network::Connector::setNetworkPeer(const String& peer)
     else if (this->netType == ARK::NetworkType::MAIN) {
         this->networkPort = ARK::Constants::Networks::Mainnet::port;
     }
-    this->networkPeer = peer;
+    strncpy(networkPeer, peer, sizeof(networkPeer) / sizeof(networkPeer[0]));
 }
 
 /**************************************************

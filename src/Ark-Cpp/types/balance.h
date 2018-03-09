@@ -2,7 +2,6 @@
 
 #ifndef BALANCE_H
 #define BALANCE_H
-#pragma once
 
 #include <cstring>
 #include <cctype>
@@ -21,11 +20,13 @@
 *
 ********************************************************************************/
 
-struct Balance
-{
+/*************************************************
+*   Balance
+**************************************************/
+class Balance {
 private:
     static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
-    static const auto ARK_SIZE = 18 * sizeof(int);
+    static const auto ARK_SIZE = ((18 * sizeof(char)) + sizeof(int));
     static const auto DECIMAL_PLACES = 8u;
 
     char arktoshi_[ARKTOSHI_SIZE];
@@ -42,7 +43,6 @@ public:
 		bool isNumeric = true;
 
 		for (auto i = 0u; i < strlen(balanceStr); ++i) {
-			//if (!isDigit(balanceStr[i])) {
 			if (!isdigit(balanceStr[i])) {
 				isNumeric = false;
 				break;
@@ -127,8 +127,8 @@ public:
     {
       this->setArktoshi(_balanceStr);
       this->setArk(_balanceStr);
-    };
-  };
+    }
+  }
 };
 
 #endif

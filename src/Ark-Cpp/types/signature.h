@@ -2,7 +2,6 @@
 
 #ifndef SIGNATURE_H
 #define SIGNATURE_H
-#pragma once
 
 #include <cstring>
 
@@ -22,15 +21,13 @@ private:
     char value_[SIGNATURE_SIZE];
 
 public:
-	Signature(){};
+	Signature() = default;
 
-	Signature(const char* const _signatureString) : value_() {
+	explicit Signature(const char* const _signatureString) : value_() {
       strncpy(value_, _signatureString, sizeof(value_) / sizeof(value_[0]));
     };
 
-    const char* description() const noexcept { return value_; };      
+    const char* getValue() const noexcept { return value_; };      
 };
-
-const  Signature SIGNATURE_EMPTY();
 
 #endif

@@ -2,23 +2,27 @@
 
 #include <cstdio>
 
-/*  ================================================  */
-/*  ============  */
-/*  ARK::Delegate  */
-/*  Description  */
-void ARK::Network::Network::description(char* const buf, size_t /*size*/) const {
-    strcpy(buf, "nethash: ");
-    strcat(buf, this->nethash_);
-    strcat(buf, "\ntoken: ");
-    strcat(buf, this->token_);
-    strcat(buf, "\nsymbol: ");
-    strcat(buf, this->symbol_);
-    strcat(buf, "\nexplorer: ");
-    strcat(buf, this->explorer_);
-    strcat(buf, "\nversion: ");
-    const auto len = strlen(buf);
-    sprintf(buf + len, "%d", this->version_);
-};
+size_t ARK::Network::printTo(Print& p) const
+{
+	size_t size = 0;
+	
+	size += p.print("\nnethash: ");
+	size += p.print(this->nethash_);
+
+	size += p.print("\ntoken: ");
+	size += p.print(this->token_);
+
+	size += p.print("\nsymbol: ");
+	size += p.print(this->symbol_);
+
+	size += p.print("\nexplorer: ");
+	size += p.print(this->explorer_);
+
+	size += p.print("\nversion: ");
+	size += p.print(this->version_);
+
+	return size;
+}
 /*  =====  */
 /*  Operator  */
 /*  ARK::Network == ARK::Network  */

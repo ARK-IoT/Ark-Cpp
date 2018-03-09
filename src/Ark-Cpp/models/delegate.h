@@ -3,6 +3,14 @@
 #ifndef delegate_h
 #define delegate_h
 
+#include "address.h"
+#include "balance.h"
+#include "publickey.h"
+#include "platform.h"
+
+#include <cstring>
+#include <cstdio>
+
 /********************************************************************************
 *
 * delegate: 
@@ -20,100 +28,64 @@
 *
 ********************************************************************************/
 
-namespace ARK
-{
-/*************************************************
-*   ARK::delegate_t
-**************************************************/
-struct delegate_t
-{
-	public:
-		char username[20];
-		Address address;
-		Publickey publicKey;
-		Balance vote;
-		int producedblocks;
-		int missedblocks;
-		int rate;
-		double approval;
-		double productivity;
-};
-/*************************************************/
+namespace ARK {
+	
+/*  ================================================  */
+/*  =============  */
+/*  ARK::Delegate  */
+class Delegate : public Printable {
+private:
+	char username_[1024];
+	Address address_;
+	Publickey publicKey_;
+	Balance vote_;
+	int producedblocks_;
+	int missedblocks_;
+	int rate_;
+	double approval_;
+	double productivity_;
 
-/**************************************************************************************************/
+public:
+    Delegate(
+        const char* const u, 
+        const char* const a, 
+        const char* const p, 
+        const char* const v,
+        int pb,
+        int mb,
+        int r,
+        double ap,
+        double pr
+    ) : 
+		username_(), 
+		address_(a), 
+		publicKey_(p), 
+		vote_(v), 
+		producedblocks_(pb), 
+		missedblocks_(mb), 
+		rate_(r), 
+		approval_(ap), 
+		productivity_(pr)
+    { 
+        strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
+    }
 
-/*************************************************
-*   ARK::Delegate
-**************************************************/
-struct Delegate :
-		public delegate_t, Printable
-{
-	public:
-		
-		Delegate(
-				const char* const newUsername,
-				const char* const newAddress,
-				const char* const newPublicKey,
-				const char* const newVote,
-				int newProducedblocks,
-				int newMissedblocks,
-				int newRate,
-				double newApproval,
-				double newProductivity
-		)
-		{
-			strncpy(username, newUsername, sizeof(username) / sizeof(username[0]));
-			address = Address(newAddress);
-			publicKey = Publickey(newPublicKey);
-			vote = Balance(newVote);
-			producedblocks = newProducedblocks;
-			missedblocks =  newMissedblocks;
-			rate = newRate;
-			approval = newApproval;
-			productivity = newProductivity;
-		};
+	const char* username() const noexcept { return username_; }
+	const Address& address() const noexcept { return address_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	const Balance& vote() const noexcept { return vote_; }
+	int produced_blocks() const noexcept { return producedblocks_; }
+	int missed_blocks() const noexcept { return missedblocks_; }
+	int rate() const noexcept { return rate_; }
+	double approval() const noexcept { return approval_; }
+	double productivity() const noexcept { return productivity_; }
 
-		/*************************************************
-		*
-		**************************************************/
-		virtual size_t printTo(Print& p) const
-		{
-			size_t size = 0;
-
-			size += p.print("username: ");
-			size += p.print(this->username);
-
-			size += p.print("\naddress: ");
-			size += p.print(this->address);
-
-			size += p.print("\npublicKey: ");
-			size += p.print(this->publicKey);
-
-			size += p.print("\nvote: ");
-			size += p.print(this->vote.ark());
-
-			size += p.print("\nproducedblocks: ");
-			size += p.print(this->producedblocks);
-			
-			size += p.print("\nmissedblocks: ");
-			size += p.print(this->missedblocks);
-
-			size += p.print("\nrate: ");
-			size += p.print(this->rate);
-
-			size += p.print("\napproval: ");
-			size += p.print(this->approval);
-
-			size += p.print("%\nproductivity: ");
-			size += p.print(this->productivity);
-			size += p.print("%");
-
-			return size;
-		};
-		/*************************************************/
-};
-/*************************************************/
+	size_t printTo(Print& p) const override;
 
 };
+/*  =============  */
+/*  ================================================  */
+
+}
 
 #endif

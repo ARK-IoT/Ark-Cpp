@@ -2,7 +2,6 @@
 
 #ifndef HASH_H
 #define HASH_H
-#pragma once
 
 #include <cstring>
 
@@ -34,7 +33,7 @@ public:
 
   /*  =====  */
 
-  const char* description() const { return value_; }
+  const char* getValue() const { return value_; }
 };
 
 #endif

@@ -3,6 +3,15 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
+#include "address.h"
+#include "balance.h"
+#include "publickey.h"
+#include "signature.h"
+#include "platform.h"
+
+#include <cstring>
+#include <cstdio>
+
 /********************************************************************************
 *
 * account: 
@@ -25,96 +34,60 @@
 
 namespace ARK
 {
-/*************************************************
-*   ARK::account_t
-**************************************************/
-struct account_t
-{
-	public:
-    Address address;
-    Balance unconfirmedBalance;
-    Balance balance;
-    Publickey publicKey;
-    int unconfirmedSignature;
-    int secondSignature;
-    Publickey secondPublicKey;
-    Signature multisignatures;
-    Signature u_multisignatures;
-};
-/*************************************************/
-
-/**************************************************************************************************/
 
 /*************************************************
 *   ARK::Account
 **************************************************/
-struct Account :
-		public account_t, Printable
-{
-	public:
+class Account :	public Printable {
+private:
+    Address address_;
+    Balance unconfirmedBalance_;
+    Balance balance_;
+    Publickey publicKey_;
+    int unconfirmedSignature_;
+    int secondSignature_;
+    Publickey secondPublicKey_;
+    Signature multisignatures_;
+    Signature u_multisignatures_;
+    
+public:
+    Account(
+        const char* const a, 
+        const char* const ub,
+        const char* const b,
+        const char* const pk,
+        int us,
+        int ss,
+        const char* const spk,
+        const char* const ms,
+        const char* const ums
+    ) : 
+		address_(a), 
+		unconfirmedBalance_(ub), 
+		balance_(b), 
+		publicKey_(pk), 
+		unconfirmedSignature_(us), 
+		secondSignature_(ss), 
+		secondPublicKey_(spk), 
+		multisignatures_(ms), 
+		u_multisignatures_(ums)
+    { }
 
-		Account(
-				const char* const newAddress,
-				const char* const newUnconfirmedBalance,
-				const char* const newBalance,
-				const char* const newPublickey,
-				int newUnconfirmedSignature,
-				int newSecondSignature,
-				const char* const newSecondPublickey,
-				const char* const newMultisignatures,
-				const char* const newU_Multisignatures
-		)
-		{
-			address = Address(newAddress);
-			unconfirmedBalance = Balance(newUnconfirmedBalance);
-			balance = Balance(newBalance);
-			publicKey = Publickey(newPublickey);
-			unconfirmedSignature = newUnconfirmedSignature;
-			secondSignature = newSecondSignature;
-			secondPublicKey = Publickey(newSecondPublickey);
-			multisignatures = Signature(newMultisignatures);
-			u_multisignatures = Signature(newU_Multisignatures);
-		}
+	const Address& address() const noexcept { return address_; }
+	const Balance& unconfirmed_balance() const noexcept { return unconfirmedBalance_; }
+	const Balance& balance() const noexcept { return balance_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	int unconfirmed_signature() const noexcept { return unconfirmedSignature_; }
+	int second_signature() const noexcept { return secondSignature_; }
+	const Publickey& second_public_key() const noexcept { return secondPublicKey_; }
+	const Signature& multi_signatures() const noexcept { return multisignatures_; }
+	const Signature& u_multi_signatures() const noexcept { return u_multisignatures_; }
+	
 
-		/*************************************************
-		* 
-		**************************************************/
-		virtual size_t printTo(Print& p) const
-		{
-			size_t size = 0;
-
-			size += p.print("address: ");
-			size += p.print(address);
-
-			size += p.print("\nunconfirmedBalance: ");
-			size += p.print(this->unconfirmedBalance.ark());
-
-			size += p.print("\nbalance: ");
-			size += p.print(this->balance.ark());
-
-			size += p.print("\npublicKey: ");
-			size += p.print(this->publicKey);
-
-			size += p.print("\nunconfirmedSignature: ");
-			size += p.print(this->unconfirmedSignature);
-
-			size += p.print("\nsecondSignature: ");
-			size += p.print(this->secondSignature);
-
-			size += p.print("\nsecondPublicKey: ");
-			size += p.print(this->secondPublicKey);
-
-			size += p.print("\nmultisignatures: ");
-			size += p.print(this->multisignatures);
-
-			size += p.print("\nu_multisignatures: ");
-			size += p.print(this->u_multisignatures);
-
-			return size;
-		}
-		/*************************************************/
-
+    size_t printTo(Print& p) const override;
 };
+/*  ============  */
+/*  ================================================  */
 
 };
 

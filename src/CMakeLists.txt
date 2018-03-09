@@ -46,15 +46,15 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/manager.cpp
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/constants/networks.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/account.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/block.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/currency.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/delegate.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/fees.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/network.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/peer.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/transaction.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/model/voter.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/account.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/block.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/currency.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/delegate.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/fees.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/network.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/peer.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/transaction.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/connector.cpp
 )
 

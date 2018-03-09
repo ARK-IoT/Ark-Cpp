@@ -2,7 +2,6 @@
 
 #ifndef PUBLICKEY_H
 #define PUBLICKEY_H
-#pragma once
 
 #include <cstring>
 
@@ -38,7 +37,7 @@
             return *this;
         }
 
-        const char* description() const { return value_; };      
+        const char* description() const { return value_; }     
     };
 
     typedef publickey_t Publickey;

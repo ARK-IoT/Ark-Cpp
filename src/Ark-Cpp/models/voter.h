@@ -3,78 +3,47 @@
 #ifndef voter_h
 #define voter_h
 
-namespace ARK
-{
-/*************************************************
-*   ARK::voter_t
-**************************************************/
-struct voter_t
-{
-	public:
-    char username[20];
-    Address address;
-    Publickey publicKey;
-    Balance balance;
+#include "address.h"
+#include "balance.h"
+#include "publickey.h"
+
+#include <cstring>
+
+namespace ARK {
+    
+/*  ================================================  */
+  /*  ==========  */
+  /*  ARK::Voter  */
+class Voter : public Printable {
+private:
+    char username_[64];
+    Address address_;
+    Publickey publicKey_;
+    Balance balance_;
+
+public:
+    Voter() : username_() { }
+
+    Voter(
+        const char* const u, 
+        const char* const a, 
+        const char* const pk,
+        const char* const b
+    ) : username_(), address_(a), publicKey_(pk), balance_(b) {
+        strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
+    }
+
+	const char* username() const noexcept { return username_; }
+	const Address& address() const noexcept { return address_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	const Balance& balance() const noexcept { return balance_; }
+
+	size_t printTo(Print& p) const override;
 };
-/*************************************************/
-
-/**************************************************************************************************/
-
-/*************************************************
-*   ARK::Voter
-**************************************************/
-struct Voter :
-		public voter_t, Printable
-{
-	public:
-
-		Voter()
-		{
-			strncpy(this->username, "", sizeof(this->username) / sizeof(this->username[0]));
-			this->address = Address("");
-			this->publicKey = Publickey("");
-			this->balance = Balance("0");
-		};
-
-		Voter(
-				const char* const newUsername,
-				const char* const newAddress,
-				const char* const newPublickey,
-				const char* const newBalance
-		)
-		{
-			strncpy(this->username, newUsername, sizeof(this->username) / sizeof(this->username[0]));
-			this->address = Address(newAddress);
-			this->publicKey = Publickey(newPublickey);
-			this->balance = Balance(newBalance);
-		};
-
-		/*************************************************
-		*
-		**************************************************/
-		virtual size_t printTo(Print& p) const 
-		{
-			size_t size = 0;
-
-			size += p.print("\nusername: ");
-			size += p.print(this->username);
-
-			size += p.print("\naddress: ");
-			size += p.print(this->address);
-
-			size += p.print("\npublicKey: ");
-			size += p.print(this->publicKey);
-
-			size += p.print("\nbalance.ark: ");
-			size += p.print(this->balance.ark());
-
-			return size;
-		}
-		/*************************************************/
+/*  ==========  */
+/*  ================================================  */
 
 };
-/*************************************************/
 
-};
 
 #endif

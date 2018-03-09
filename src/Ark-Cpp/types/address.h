@@ -2,7 +2,6 @@
 
 #ifndef ADDRESS_H
 #define ADDRESS_H
-#pragma once
 
 #include <cstring>
 
@@ -17,8 +16,7 @@
 
 #define ADDRESS_SIZE 35
 
-struct address_t
-{
+class address_t {
 private:
 	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
 	char value_[ADDRESS_LENGTH];
@@ -31,9 +29,12 @@ public:
         strncpy(value_, addressString, ADDRESS_LENGTH);
 	}
 
-	const char* description() const { return value_; }
+	const char* getValue() const { return value_; }
 };
 
+/*************************************************
+*   Address
+**************************************************/
 typedef address_t Address;
 
 #endif

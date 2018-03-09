@@ -43,14 +43,14 @@ class Connector
 *****************************************/
 
     const ARK::Network* network;
-	ARK::NetworkType netType;
+	  ARK::NetworkType netType;
 
-    String networkPeer;
+    char networkPeer[16];
     int networkPort;
 
     Connector();
-    Connector(const ARK::Network& network);
-	Connector(ARK::NetworkType networktype);
+    explicit Connector(const ARK::Network& network);
+	  explicit Connector(ARK::NetworkType networktype);
 
     Connector(const Connector&) = delete;
     Connector& operator=(const Connector&) = delete;
@@ -58,7 +58,7 @@ class Connector
     Connector& operator=(Connector&&) = default;
 
     void connect(const ARK::Network& network);
-    void connectCustom(const ARK::Network& network, const String& peer, int port);
+    void connectCustom(const ARK::Network& network, const char* peer, int port);
 
     bool disconnect();
 
@@ -70,7 +70,7 @@ class Connector
   private:
   
     String randomPeer();
-    void setNetworkPeer(const String& peer);
+    void setNetworkPeer(const char* peer);
 /*  ==================================  */
 /*  ==========================================================================  */
 

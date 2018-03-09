@@ -3,76 +3,41 @@
 #ifndef fees_h
 #define fees_h
 
-namespace ARK
-{
-/*************************************************
-*   ARK::fees_t
-**************************************************/
-struct fees_t
-{
-	public:
-		Balance send;
-		Balance vote;
-		Balance delegate;
-		Balance secondsignature;
-		Balance multisignature;
+#include "balance.h"
+
+namespace ARK {
+
+/*  ================================================  */
+/*  =========  */
+/*  ARK::Fees  */
+/*  /api/blocks/getFees */
+class Fees : public Printable {
+private:
+    Balance send_;
+    Balance vote_;
+    Balance delegate_;
+    Balance secondsignature_;
+    Balance multisignature_;
+
+public:
+    Fees(
+        const char* const s,
+        const char* const v,
+        const char* const d,
+        const char* const ss,
+        const char* const ms
+    ) : send_(s), vote_(v), delegate_(d), secondsignature_(ss), multisignature_(ms) { }
+
+	const Balance& send() const noexcept { return send_; }
+	const Balance& vote() const noexcept { return vote_; }
+	const Balance& delegate() const noexcept { return delegate_; }
+	const Balance& second_signature() const noexcept { return secondsignature_; }
+	const Balance& multi_signature() const noexcept { return multisignature_; }
+
+    size_t printTo(Print& p) const override;
 };
-/*************************************************/
-
-/**************************************************************************************************/
-
-/*************************************************
-* ARK::Fees
-*   /api/blocks/getFees
-**************************************************/
-struct Fees :
-		public fees_t, Printable
-{
-	public:
-
-		Fees (
-				const char* const newSend,
-				const char* const newVote,
-				const char* const newDelegate,
-				const char* const newSS,
-				const char* const newMS
-		)
-		{
-			this->send = Balance(newSend);
-			this->vote = Balance(newVote);
-			this->delegate = Balance(newDelegate);
-			this->secondsignature = Balance(newSS);
-			this->multisignature = Balance(newMS);
-		};
-
-    /*************************************************
-    *
-    **************************************************/
-    virtual size_t printTo(Print& p) const
-    {
-        size_t size = 0;
-
-        size += p.print("\nsend: ");
-        size += p.print(this->send.ark());
-
-        size += p.print("\nvote: ");
-        size += p.print(this->vote.ark());
-
-        size += p.print("\ndelegate: ");
-        size += p.print(this->delegate.ark());
-
-        size += p.print("\nsecondsignature: ");
-        size += p.print(this->secondsignature.ark());
-
-        size += p.print("\nmultisignature: ");
-        size += p.print(this->multisignature.ark());
-        
-        return size;
-    }
-    /*************************************************/
-
-};
-/*************************************************/
+/*  =========  */
+/*  ================================================  */
 
 };
 

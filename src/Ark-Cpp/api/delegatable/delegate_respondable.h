@@ -134,11 +134,12 @@ public:
 *   @brief:	Model for Next 10 Forging Delegate Publickeys API Response
 **************************************************/
 class NextForgers : public Printable {
-public:
+private:
 	char currentBlock_[64];
 	char currentSlot_[64];
 	std::array<Publickey, 10> delegate_keys_;
 
+public:
 	NextForgers(const char* const _currentBlock, const char* const _currentSlot, const Publickey* const _delegates);
 
 	const char* current_block() const noexcept { return currentBlock_; }
