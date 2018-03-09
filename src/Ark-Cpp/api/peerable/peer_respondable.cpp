@@ -1,18 +1,19 @@
 #include "peer_respondable.h"
 
-/*  ==========================================================================  */
-/*  ========================  */
-/*  ARK::API::Peer::Respondable::Version  */
-/*  Description  */
-void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t size) {
-    strcpy(buf, "version: ");
-    strcat(buf, this->version_);
-    strcat(buf, "\nbuild: ");
-    strcat(buf, this->build_);
-    strcat(buf, "\n");
-}
-/*  ========================  */
-/*  ==========================================================================  */
+namespace ARK {
+namespace API {
+namespace Peer {
+namespace Respondable {
+
+size_t Version::printTo(Print& p) const
+  {
+    size_t size = 0;
+      size += p.print("version: ");
+      size += p.print(this->version_);
+      size += p.print("\nbuild: ");
+      size += p.print(this->build_);
+    return size;
+  }
 
 
 
@@ -35,3 +36,8 @@ void ARK::API::Peer::Respondable::Version::description(char* const buf, size_t s
 // }
 /*  ==================================  */
 /*  ==========================================================================  */
+
+}
+}
+}
+}

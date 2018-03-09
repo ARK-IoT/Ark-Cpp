@@ -3,6 +3,8 @@
 #ifndef PEER_RESPONDABLE_H
 #define PEER_RESPONDABLE_H
 
+#include "platform.h"
+
 #include <cstring>
 
 namespace ARK {
@@ -10,10 +12,16 @@ namespace API {
 namespace Peer {
 namespace Respondable {
 
-/*  ==========================================================================  */
-/*  ========================  */
-/*  ARK::API::Peer::Respondable::Version  */
-class Version {
+/*************************************************
+*		ARK::API::Peer::Respondable::Version
+*
+*   @param:	char version{32], char build[32]
+*
+*   @methods:	printTo(Print& p)
+*
+*   @brief:	Model for Loader Status API Response
+**************************************************/
+class Version : public Printable {
 private:
 	char version_[64];  //TODO: review sizes
 	char build_[64];
@@ -27,7 +35,7 @@ public:
 	const char* version() const noexcept { return version_; }
 	const char* build() const noexcept { return build_; }
 
-	void description(char* const buf, size_t size);
+	size_t printTo(Print& p) const override;
 };
 /*  ========================  */
 /*  ==========================================================================  */
@@ -43,6 +51,27 @@ public:
 //       // PeersResponse(int);
 //       String description();
 //   };
+/*************************************************/
+/*************************************************/
+
+
+/*************************************************/
+/*************************************************/
+/*  ARK::API::Peer::Respondable::Peers  */
+/*  Description  */
+// String ARK::API::Peer::Respondable::Peers::description() {
+//   String resp;
+//   if (this->count > 0) {
+//     for (int i = 0; i < this->count; i++) {
+//       resp += "\npeer ";
+//       resp += i + 1;
+//       resp += ":\n";
+//       resp += this->list[i].description();
+//       resp += "\n";
+//     };
+//   };
+//   return resp;
+// }
 /*  ==================================  */
 /*  ==========================================================================  */
 
