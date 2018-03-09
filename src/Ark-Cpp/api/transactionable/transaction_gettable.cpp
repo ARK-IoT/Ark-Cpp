@@ -4,6 +4,7 @@
 #include "hash.h"
 #include "connector.h"
 #include "helpers.h"
+#include "subcount.h"
 
 #include <cstring>
 
@@ -258,31 +259,32 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
   }
   return resp;*/
 
-	ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+	//ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+	auto parser = ARK::Utilities::make_json_string(jsonStr);
 			
 			int txCount = subCount(jsonStr, "id");
 
-			ARK::Transaction* transactions = new ARK::Transaction[txCount];
+			auto transactions = std::make_unique<ARK::Transaction[]>(txCount);
 			
 			for (int i = 0; i < txCount; i++)
 			{
-				transactions[i] = {
-					parser.valueIn("transaction", "id"),
-					parser.valueIn("transaction", "blockid"),
-					parser.valueIn("transaction", "height"),
-					atoi(parser.valueIn("transaction", "type")),
-					parser.valueIn("transaction", "timestamp"),
-					parser.valueIn("transaction", "amount"),
-					parser.valueIn("transaction", "fee"),
-					parser.valueIn("transaction", "vendorField"),
-					parser.valueIn("transaction", "senderId"),
-					parser.valueIn("transaction", "recipientId"),
-					parser.valueIn("transaction", "senderPublicKey"),
-					parser.valueIn("transaction", "signature"),
-					parser.valueIn("transaction", "confirmations")
-				};
+				transactions[i] = ARK::Transaction(
+					parser->valueIn("transaction", "id").c_str(),
+					parser->valueIn("transaction", "blockid").c_str(),
+					parser->valueIn("transaction", "height").c_str(),
+					convert_to_int(parser->valueIn("transaction", "type")),
+					parser->valueIn("transaction", "timestamp").c_str(),
+					parser->valueIn("transaction", "amount").c_str(),
+					parser->valueIn("transaction", "fee").c_str(),
+					parser->valueIn("transaction", "vendorField").c_str(),
+					parser->valueIn("transaction", "senderId").c_str(),
+					parser->valueIn("transaction", "recipientId").c_str(),
+					parser->valueIn("transaction", "senderPublicKey").c_str(),
+					parser->valueIn("transaction", "signature").c_str(),
+					parser->valueIn("transaction", "confirmations").c_str()
+				);
 			}
-			return ARK::API::Transaction::Respondable::Unconfirmed(transactions, txCount);
+			return ARK::API::Transaction::Respondable::Unconfirmed(transactions.get(), txCount);
 }
 /*  =====================================================  */
 /*  ==========================================================================  */
@@ -348,31 +350,31 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
   };
   return resp;*/
 
-ARK::Utilities::JSONParser parser(jsonStr, strlen(jsonStr)); 
+	auto parser = ARK::Utilities::make_json_string(jsonStr);
 			
 			int txCount = subCount(jsonStr, "id");
 
-			ARK::Transaction* transactions = new ARK::Transaction[txCount];
+			auto transactions = std::make_unique<ARK::Transaction[]>(txCount);
 			
-			for (int i = 0; i < txCount; i++)
+			for (int i = 0; i < txCount; ++i)
 			{
-				transactions[i] = {
-					parser.valueIn("transaction", "id"),
-					parser.valueIn("transaction", "blockid"),
-					parser.valueIn("transaction", "height"),
-					atoi(parser.valueIn("transaction", "type")),
-					parser.valueIn("transaction", "timestamp"),
-					parser.valueIn("transaction", "amount"),
-					parser.valueIn("transaction", "fee"),
-					parser.valueIn("transaction", "vendorField"),
-					parser.valueIn("transaction", "senderId"),
-					parser.valueIn("transaction", "recipientId"),
-					parser.valueIn("transaction", "senderPublicKey"),
-					parser.valueIn("transaction", "signature"),
-					parser.valueIn("transaction", "confirmations")
-				};
+				transactions[i] = ARK::Transaction(
+					parser->valueIn("transaction", "id").c_str(),
+					parser->valueIn("transaction", "blockid").c_str(),
+					parser->valueIn("transaction", "height").c_str(),
+					convert_to_int(parser->valueIn("transaction", "type")),
+					parser->valueIn("transaction", "timestamp").c_str(),
+					parser->valueIn("transaction", "amount").c_str(),
+					parser->valueIn("transaction", "fee").c_str(),
+					parser->valueIn("transaction", "vendorField").c_str(),
+					parser->valueIn("transaction", "senderId").c_str(),
+					parser->valueIn("transaction", "recipientId").c_str(),
+					parser->valueIn("transaction", "senderPublicKey").c_str(),
+					parser->valueIn("transaction", "signature").c_str(),
+					parser->valueIn("transaction", "confirmations").c_str()
+				);
 			};
-			return ARK::API::Transaction::Respondable::Unconfirmed(transactions, txCount);
+			return ARK::API::Transaction::Respondable::Unconfirmed(transactions.get(), txCount);
 }
 /*  ======================================================  */
 /*  ==========================================================================  */

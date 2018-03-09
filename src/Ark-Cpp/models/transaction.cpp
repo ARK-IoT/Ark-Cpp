@@ -72,13 +72,13 @@ size_t Transaction::printTo(Print& p) const
 		size += p.print(this->vendorField_);
 
 		size += p.print("\nsenderId: ");
-		size += p.print(this->senderId_);
+		size += p.print(this->senderId_.getValue());
 
 		size += p.print("\nrecipientId: ");
-		size += p.print(this->recipientId_);
+		size += p.print(this->recipientId_.getValue());
 
 		size += p.print("\nsenderPublicKey: ");
-		size += p.print(this->senderPublicKey_);
+		size += p.print(this->senderPublicKey_.getValue());
 
 		size += p.print("\nsignature: ");
 		size += p.print(this->signature_);

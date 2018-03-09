@@ -18,7 +18,7 @@ size_t Unconfirmed::printTo(Print& p) const {
 			size += p.print("\ntransaction ");
 			size += p.print(i + 1);
 			size += p.print(":\n");
-			size += p.print(this->transactions_[i]);
+			size += this->transactions_[i].printTo(p);
         }
     };
     return size;

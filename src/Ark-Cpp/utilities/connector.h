@@ -7,12 +7,9 @@
 #include "network.h"
 #include "networks.h"
 
-namespace ARK
-{
-namespace Utilities
-{
-namespace Network
-{
+namespace ARK {
+namespace Utilities {
+namespace Network {
 
 /*  ==========================================================================  */
 /**************************************************
@@ -50,7 +47,7 @@ class Connector
 
     Connector();
     explicit Connector(const ARK::Network& network);
-	  explicit Connector(ARK::NetworkType networktype);
+	explicit Connector(ARK::NetworkType networktype);
 
     Connector(const Connector&) = delete;
     Connector& operator=(const Connector&) = delete;
@@ -69,7 +66,7 @@ class Connector
 /*  ==================================  */
   private:
   
-    String randomPeer();
+    const char* randomPeer() const;
     void setNetworkPeer(const char* peer);
 /*  ==================================  */
 /*  ==========================================================================  */

@@ -8,10 +8,10 @@ size_t ARK::Delegate::printTo(Print& p) const
 	size += p.print(this->username_);
 
 	size += p.print("\naddress: ");
-	size += p.print(this->address_);
+	size += p.print(this->address_.getValue());
 
 	size += p.print("\npublicKey: ");
-	size += p.print(this->publicKey_);
+	size += p.print(this->publicKey_.getValue());
 
 	size += p.print("\nvote: ");
 	size += p.print(this->vote_.ark());

@@ -84,7 +84,7 @@ public:
 class Voters : public Printable{
 private:
     size_t count_;
-    std::unique_ptr<ARK::Voter> voters_;
+    std::unique_ptr<ARK::Voter[]> voters_;
 
 public:
     Voters(size_t c) : count_(c), voters_(new ARK::Voter[c]) { }

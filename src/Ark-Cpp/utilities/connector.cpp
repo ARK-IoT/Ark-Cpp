@@ -9,7 +9,7 @@
 ARK::Utilities::Network::Connector::Connector() : 
     network(nullptr),
     netType(ARK::NetworkType::INVALID),
-    networknetworkPeer(),
+    networkPeer(),
     networkPort(-1)
 {}
 
@@ -71,7 +71,7 @@ void ARK::Utilities::Network::Connector::connectCustom(const ARK::Network& netwo
 * Sets Random Peer based on this->NetworkType
 *   returns error String if error
 **************************************************/
-const char* ARK::Utilities::Network::Connector::randomPeer()
+const char* ARK::Utilities::Network::Connector::randomPeer() const
 {
     if (this->netType == ARK::NetworkType::DEV) {
         return ARK::Constants::Networks::Devnet::randomPeer();

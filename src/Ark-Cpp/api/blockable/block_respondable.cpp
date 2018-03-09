@@ -24,7 +24,7 @@ size_t Status::printTo(Print& p) const
         size += p.print(this->milestone_);
 
 				size += p.print("\nnethash: ");
-        size += p.print(this->nethash_);
+        size += p.print(this->nethash_.getValue());
 
 				size += p.print("\nreward: ");
         size += p.print(this->reward_.ark());

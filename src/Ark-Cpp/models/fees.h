@@ -4,6 +4,7 @@
 #define fees_h
 
 #include "balance.h"
+#include "platform.h"
 
 namespace ARK {
 
