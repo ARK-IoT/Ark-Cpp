@@ -1,6 +1,6 @@
-﻿#include "currency.h"
+﻿#include "gtest/gtest.h"
 
-#include "gtest/gtest.h"
+#include "currency.h"
 
 TEST( currency, construct_currency) {
     ARK::Model::Currency currency(

@@ -20,7 +20,7 @@ TEST(peer, test_peer) {
 	/*  ==================================  */
 	/*    BROKEN: fix for large callbacks  */
 	/*    Peers callback is ~10,000 bytes  */
-	//  String peersDescription = _arkManager.peers().description();
+	//  String peersDescription = _arkManager.peers().getValue();
 	//    Serial.println("peersDescription: ");
 	//    Serial.println(peersDescription);
 	//    Serial.println("\n=====\n");
