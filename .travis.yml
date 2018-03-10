@@ -3,25 +3,26 @@ language: cpp
 matrix:
   include:
     - os: linux
-      dist: trusty
-      sudo: false
+        dist: trusty
+        sudo: false
+        addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - openssl 
+            - libssl-dev
+          #  - g++-7 
+        before_install:
+          - pip install --user cpp-coveralls
+          
     - os: osx      
-
+        before_install:
+          - pip2 install --user cpp-coveralls
+          
 compiler: 
  # - gcc
   - clang
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - openssl 
-      - libssl-dev
-    #  - g++-7 
-
-before_install:
-  - pip install --user cpp-coveralls
 
 script:
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
