@@ -2,19 +2,18 @@ language: cpp
 
 matrix:
   include:
-    - os: linux
-        dist: trusty
-        sudo: false
-        addons:
-          apt:
-            sources:
-              - ubuntu-toolchain-r-test
-            packages:
-              - openssl 
-              - libssl-dev
+    #- os: linux
+      #dist: trusty
+      #addons:
+          # apt:
+         #   sources:
+       #      - ubuntu-toolchain-r-test
+           # packages:
+           #   - openssl 
+           #   - libssl-dev
             #  - g++-7 
-        env:
-          - PYTHON="pip"
+       # env:
+         # - PYTHON="pip"
           
     - os: osx
       env:
