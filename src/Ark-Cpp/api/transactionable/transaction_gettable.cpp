@@ -355,7 +355,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			
 			int txCount = subCount(jsonStr, "id");
 
-			auto transactions = std::make_unique<ARK::Transaction[]>(txCount);
+			std::unique_ptr<ARK::Transaction[]> transactions(new ARK::Transaction[txCount]);
 			
 			for (int i = 0; i < txCount; ++i)
 			{
