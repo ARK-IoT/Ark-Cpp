@@ -1,7 +1,3 @@
-os:
-  - linux
-  - osx
-
 language: cpp
 
 matrix:
@@ -47,8 +43,8 @@ matrix:
   #- pyenv rehash
           
 compiler: 
- # - gcc
-  - clang
+  - gcc
+ # - clang
 
 script:
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
