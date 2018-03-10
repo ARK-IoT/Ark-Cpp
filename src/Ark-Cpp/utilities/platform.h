@@ -142,7 +142,7 @@ public:
 			break;
 
 		case BIN:
-			std::cout << std::bin << t;
+			std::cout << std::hex << t;
 			break;
 
 		case DEC:
