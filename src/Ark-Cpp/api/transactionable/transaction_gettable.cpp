@@ -82,7 +82,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char
 /*  ==========================================================================  */
 /*  ==========================================================================  */
 /*    BROKEN: fix for large callbacks  */
-/*    Peers callback is ~28,908 bytes  */
+/*    Peers callback is ~28,908 bytes  */F
 /*  ===========================================  */
 /*  ARK::API::Transaction::Gettable::transactions  */
 // /*  /api/transactions */
@@ -265,7 +265,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			
 			int txCount = subCount(jsonStr, "id");
 
-			auto transactions = std::make_unique<ARK::Transaction[]>(txCount);
+			std::unique_ptr<ARK::Transaction[]> transactions(new ARK::Transaction[txCount]);
 			
 			for (int i = 0; i < txCount; i++)
 			{
