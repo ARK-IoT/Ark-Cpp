@@ -82,7 +82,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transactionfromJSON(const char
 /*  ==========================================================================  */
 /*  ==========================================================================  */
 /*    BROKEN: fix for large callbacks  */
-/*    Peers callback is ~28,908 bytes  */F
+/*    Peers callback is ~28,908 bytes  */
 /*  ===========================================  */
 /*  ARK::API::Transaction::Gettable::transactions  */
 // /*  /api/transactions */
