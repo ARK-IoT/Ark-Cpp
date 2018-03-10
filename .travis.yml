@@ -6,19 +6,22 @@ matrix:
         dist: trusty
         sudo: false
         addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - openssl 
-            - libssl-dev
-          #  - g++-7 
-        before_install:
-          - pip install --user cpp-coveralls
+          apt:
+            sources:
+              - ubuntu-toolchain-r-test
+            packages:
+              - openssl 
+              - libssl-dev
+            #  - g++-7 
+        env:
+          - PYTHON="pip"
           
-    - os: osx      
-        before_install:
-          - pip2 install --user cpp-coveralls
+    - os: osx
+      env:
+          - PYTHON="pip2"
+        
+before_install:
+  - $(PYTHON) install --user cpp-coveralls
           
 compiler: 
  # - gcc
