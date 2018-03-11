@@ -7,7 +7,7 @@ TEST(loader, test_loader) {
 
 	const auto status = _arkManager.loaderStatus();
 	ASSERT_FALSE(status.loaded());
-	ASSERT_EQ(2392911, status.now());
+	ASSERT_NE(0, status.now());
 	ASSERT_STREQ("0", status.blocks_count());
 
 	const auto sync = _arkManager.loaderSync();
