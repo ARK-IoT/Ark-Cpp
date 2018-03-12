@@ -18,40 +18,6 @@ matrix:
       osx_image: xcode9.2
       env:
         - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
-
-
-#matrix:
-  #include:
-    #- os: linux
-      #dist: trusty
-      #addons:
-          # apt:
-         #   sources:
-       #      - ubuntu-toolchain-r-test
-           # packages:
-           #   - openssl 
-           #   - libssl-dev
-            #  - g++-7 
-       # env:
-         # - PYTHON="pip"
-          
-    #- os: osx
-      #      osx_image: xcode9.2
-
-     # env:
-       #   - PYTHON="pip2"
-
-#before_install:
-  #- $(PYTHON) install --user cpp-coveralls
-  #before_install:
-  #- brew update
-  #- brew install pyenv
-  #- eval "$(pyenv init -)"
-  #- pyenv install 2.7.6
-  #- pyenv global 2.7.6
-  #- pyenv rehash
-  #- pip install cpp-coveralls
-  #- pyenv rehash
  
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -68,5 +34,5 @@ script:
   - ./bin/Ark-Cpp-tests
   
 after_success:
-  - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
+  #- coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
   
