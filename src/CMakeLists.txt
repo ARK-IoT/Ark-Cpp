@@ -3,10 +3,11 @@ cmake_minimum_required(VERSION 3.6.2)
 
 project(Ark-Cpp-lib)
 
-hunter_add_package(nlohmann_json)
-
-hunter_cmake_args(PocoCpp CMAKE_ARGS DISABLE_INTERNAL_OPENSSL=ON)
-hunter_add_package(PocoCpp)
+if (ARDUINO=OFF)
+	hunter_add_package(nlohmann_json)
+	#hunter_cmake_args(PocoCpp CMAKE_ARGS DISABLE_INTERNAL_OPENSSL=ON)
+	hunter_add_package(PocoCpp)
+endif()
 
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -27,8 +28,10 @@ include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/models)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/types)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities)
  
- find_package(nlohmann_json CONFIG REQUIRED)
- find_package(Poco REQUIRED Net CONFIG)
+ if (ARDUINO=OFF)
+	find_package(nlohmann_json CONFIG REQUIRED)
+	find_package(Poco REQUIRED Net CONFIG)
+endif()
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/accountable/account_gettable.cpp
@@ -59,18 +62,23 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/connector.cpp
 )
 
-set(PLATFORM_SRC 
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json.cpp
-	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http.cpp
-)
+if (ARDUINO)
+	set(PLATFORM_SRC 
+		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json_arduino.cpp
+		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http_arduino.cpp
+	)
+else()
+	set(PLATFORM_SRC 
+		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json.cpp
+		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http.cpp
+	)
+endif()
 
-#set(PLATFORM_SRC 
-#	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json_arduino.cpp
-#	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http_arduino.cpp
-#)
+if (ARDUINO)
+	generate_arduino_library()
+else()
+	add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
-
-target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
-target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
-
+	target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
+	target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
+endif()

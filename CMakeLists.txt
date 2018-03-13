@@ -1,17 +1,22 @@
 cmake_minimum_required(VERSION 3.6.2)
 
-set (HUNTER_ROOT .)
+if (ARDUINO=OFF)
+	set (HUNTER_ROOT .)
 
-include("HunterGate.cmake")
+	include("cmake/HunterGate.cmake")
 
-HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.20.14.tar.gz"
-    SHA1 "18cdbf5c47abdda437c73bf5437b7c3c65afe47c"
+	HunterGate(
+		URL "https://github.com/ruslo/hunter/archive/v0.20.14.tar.gz"
+		SHA1 "18cdbf5c47abdda437c73bf5437b7c3c65afe47c"
 )
+endif()
 
 project(Ark-Cpp)
 
-#set(CMAKE_CXX_STANDARD 11)
+if (ARDUINO)
+	set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/ArduinoToolchain.cmake)
+	set(ARDUINO_DEFAULT_BOARD ESP8266) # Default Board ID, when not specified
+endif()
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
  
@@ -31,4 +36,6 @@ include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 
 add_subdirectory(src)
+if (ARDUINO=OFF)
 add_subdirectory(tests)
+endif()
