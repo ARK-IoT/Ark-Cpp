@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.6.2)
 
 project(Ark-Cpp-lib)
 
-if (ARDUINO=OFF)
+if (ARDUINO)
+else()
 	hunter_add_package(nlohmann_json)
 	#hunter_cmake_args(PocoCpp CMAKE_ARGS DISABLE_INTERNAL_OPENSSL=ON)
 	hunter_add_package(PocoCpp)
@@ -28,7 +29,8 @@ include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/models)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/types)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities)
  
- if (ARDUINO=OFF)
+ if (ARDUINO)
+ else()
 	find_package(nlohmann_json CONFIG REQUIRED)
 	find_package(Poco REQUIRED Net CONFIG)
 endif()
@@ -75,7 +77,10 @@ else()
 endif()
 
 if (ARDUINO)
-	generate_arduino_library()
+	generate_arduino_library(Ark-Cpp-lib 
+		SRCS ${COMMON_SRC} ${PLATFORM_SRC}
+		BOARD ESP8266
+	)
 else()
 	add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 
