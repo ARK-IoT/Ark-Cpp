@@ -11,8 +11,6 @@ HunterGate(
 
 project(Ark-Cpp)
 
-#set(CMAKE_CXX_STANDARD 11)
-
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
  
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -23,7 +21,11 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR})
 if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 elseif (UNIX)
-	set (CMAKE_CXX_FLAGS -std=c++11)
+	if (APPLE)
+		set (CMAKE_CXX_FLAGS -std=c++11 -mmacosx-version-min=10.12)	
+	else()
+		set (CMAKE_CXX_FLAGS -std=c++11)
+	endif()
 endif()
 
  
