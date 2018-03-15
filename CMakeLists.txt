@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.6.2)
 
-if (APPLE)
-    set (CMAKE_TOOLCHAIN_FILE osx.cmake)
-endif()
-
 set (HUNTER_ROOT .)
 
 include("HunterGate.cmake")
