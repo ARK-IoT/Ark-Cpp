@@ -25,11 +25,7 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR})
 if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 elseif (UNIX)
-	if (APPLE)
-		set (CMAKE_CXX_FLAGS -std=c++11 -mmacosx-version-min=10.12)	
-	else()
-		set (CMAKE_CXX_FLAGS -std=c++11)
-	endif()
+	set (CMAKE_CXX_FLAGS -std=c++11)
 endif()
 
  
