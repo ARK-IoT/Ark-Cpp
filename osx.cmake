@@ -1,1 +1,0 @@
-set(OSX_SDK_VERSION "10.12")
