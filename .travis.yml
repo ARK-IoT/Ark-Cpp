@@ -13,22 +13,28 @@ matrix:
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+      compiler:
+        - gcc
         
     - os: osx
       osx_image: xcode9.2
       env:
         - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
+      compiler:
+        - gcc
         
     - os: osx
       osx_image: xcode9.3beta
       env:
-        - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
+        #- MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
+      compiler:
+        - clang
  
 before_install:
     - eval "${MATRIX_EVAL}"
  
-compiler: 
-  - gcc
+#compiler: 
+  #- gcc
  # - clang
 
 script:
