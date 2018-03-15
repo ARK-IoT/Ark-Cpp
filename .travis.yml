@@ -22,7 +22,7 @@ matrix:
     - os: osx
       osx_image: xcode9.3beta
       env:
-        - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
+        - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc5 && CC=gcc-5 && CXX=g++-5"
         
  
 before_install:
@@ -34,7 +34,7 @@ before_install:
 
 script:
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
-  - cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.12 .
+  - cmake .
   - cmake --build .
   # run Gtest
   - ./bin/Ark-Cpp-tests
