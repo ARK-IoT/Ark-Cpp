@@ -45,6 +45,7 @@ inline int substringCount(const String &str, const String &sub)
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <stdexcept>
 
 inline int convert_to_int(const std::string& s) {
 	return std::stoi(s);
