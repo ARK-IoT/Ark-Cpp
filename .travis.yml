@@ -14,6 +14,18 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         
+    - os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        
     - os: osx
       osx_image: xcode9.2
       env:
@@ -28,13 +40,8 @@ matrix:
  
 before_install:
     - eval "${MATRIX_EVAL}"
- 
-#compiler: 
-  #- gcc
- # - clang
 
 script:
-  #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
   - cmake .
   - cmake --build .
   # run Gtest
