@@ -9,3 +9,7 @@
 /lib/Debug
 /_Base
 /CMakeFiles
+/cmake/Platform/Core
+/cmake/Platform/Extras
+/cmake/Platform/Generation
+/cmake/Platform/Initialization

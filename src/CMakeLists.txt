@@ -79,7 +79,7 @@ endif()
 if (ARDUINO)
 	generate_arduino_library(Ark-Cpp-lib 
 		SRCS ${COMMON_SRC} ${PLATFORM_SRC}
-		BOARD ESP8266
+		BOARD uno
 	)
 else()
 	add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})

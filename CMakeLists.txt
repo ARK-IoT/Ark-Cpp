@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6.2)
 if (ARDUINO)
 
 	set(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
-	set(ARDUINO_DEFAULT_BOARD ESP8266) # Default Board ID, when not specified
+	set(ARDUINO_DEFAULT_BOARD esp8266) # Default Board ID, when not specified
 
 else()
 	set (HUNTER_ROOT .)
