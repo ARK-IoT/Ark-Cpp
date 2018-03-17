@@ -11,6 +11,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
+            - arduino
+            - arduino-core
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         
@@ -21,7 +23,11 @@ matrix:
  
 before_install:
     - eval "${MATRIX_EVAL}"
+    - ${TRAVIS_BUILD_DIR/travis/before_install_linux.sh}
  
+ install:
+    - ${TRAVIS_BUILD_DIR/travis/install_linux.sh}
+
 compiler: 
   - gcc
  # - clang
