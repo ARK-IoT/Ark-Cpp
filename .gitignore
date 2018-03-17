@@ -10,3 +10,7 @@
 /_Base
 /CMakeFiles
  
+/bin/CMakeFiles
+/libraries
+/lib
+/bin

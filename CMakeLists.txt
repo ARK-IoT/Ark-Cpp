@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.6.2)
 if (ARDUINO)
 
 	set(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
-	set(ARDUINO_DEFAULT_BOARD esp8266) # Default Board ID, when not specified
 
 else()
 	set (HUNTER_ROOT .)
@@ -28,7 +27,9 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR})
 if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 elseif (UNIX)
-	set (CMAKE_CXX_FLAGS -std=c++11)
+	set (CMAKE_CXX_FLAGS "-std=c++11")
+elseif (ARDUINO)
+	set (CMAKE_CXX_FLAGS "-std=gnu++11 -fno-threadsafe-statics")
 endif()
 
  
@@ -36,7 +37,4 @@ include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 
 add_subdirectory(src)
-if (ARDUINO)
-else()
 add_subdirectory(tests)
-endif()

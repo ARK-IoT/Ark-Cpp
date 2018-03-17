@@ -1,6 +1,6 @@
 #include "json.h"
 
-#include "ArduinoJson.h"
+#include "ArduinoJson/ArduinoJson.h"
 
 namespace ARK
 {
@@ -9,7 +9,7 @@ namespace Utilities
 
 namespace {
 
-struct JSONInterface : public JSONInterface
+struct JSON : public JSONInterface
 {
 
 private:
@@ -18,7 +18,7 @@ private:
 	String jsonStr;
 
 public:
-	JSONInterface(const String& _jsonStr) {
+	JSON(const String& _jsonStr) {
 		this->jsonStr = _jsonStr;
 	}
 
@@ -77,7 +77,7 @@ public:
 }
 
 std::unique_ptr<JSONInterface> make_json_string(const String& json_str) {
-	return std::make_unique(new JSONInterface(json_str));
+	return std::unique_ptr<JSONInterface>(new JSON(json_str));
 }
 
 /*  ==========================================================================  */

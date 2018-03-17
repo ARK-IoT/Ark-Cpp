@@ -30,6 +30,11 @@ include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/types)
 include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities)
  
  if (ARDUINO)
+	#include the C++ STL wrapper/implementation for the Arduino platform
+	include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/arduino/stl)
+	include_directories(${PROJECT_SOURCE_DIR}/../include)
+	include_directories(${ARDUINO_SDK_PATH}/hardware/arduino/avr/libraries/SPI/src)
+	include_directories(${ARDUINO_SDK_PATH}/libraries/Ethernet/src)
  else()
 	find_package(nlohmann_json CONFIG REQUIRED)
 	find_package(Poco REQUIRED Net CONFIG)
@@ -68,6 +73,7 @@ if (ARDUINO)
 	set(PLATFORM_SRC 
 		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json_arduino.cpp
 		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http_arduino.cpp
+		${PROJECT_SOURCE_DIR}/../include/RestClient/RestClient.cpp
 	)
 else()
 	set(PLATFORM_SRC 
@@ -79,7 +85,7 @@ endif()
 if (ARDUINO)
 	generate_arduino_library(Ark-Cpp-lib 
 		SRCS ${COMMON_SRC} ${PLATFORM_SRC}
-		BOARD uno
+		BOARD ${BOARD_ID}
 	)
 else()
 	add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})

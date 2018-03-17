@@ -7,6 +7,7 @@
 #include "transaction.h"
 
 #include <array>
+#include <cassert>
 
 namespace ARK {
 namespace API {
@@ -30,9 +31,7 @@ class Unconfirmed : public Printable {
 
   public:
     Unconfirmed(const ARK::Transaction* const tx, size_t count) : count_(count) {
-		if (count_ > transactions_.size()) {
-			throw std::runtime_error("Too many transactions");
-		}
+	assert(count <= transactions_.size());
       for (auto i = 0u; i < count_; ++i)
       {
         this->transactions_[i] = tx[i];

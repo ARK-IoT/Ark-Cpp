@@ -1,7 +1,12 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-#ifdef ARDUINO_ARCH_ESP8266
+#ifdef ARDUINO
+
+#include <Arduino.h>
+#include <WString.h>
+#include <Printable.h>
+#include <Print.h>
 
 inline int convert_to_int(const String& s) {
 	return s.toInt();
@@ -24,7 +29,7 @@ inline int substringCount(const String &str, const String &sub)
     return 0;
   int count = 0;
   for (size_t offset = str.indexOf(sub);
-       offset != std::string::npos;
+       offset != -1;
        offset = str.indexOf(sub, offset + sub.length()))
   {
     ++count;

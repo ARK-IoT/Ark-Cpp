@@ -2,10 +2,13 @@ cmake_minimum_required(VERSION 3.6.2)
 
 project(Ark-Cpp-tests)
 
-hunter_add_package(GTest)
-find_package(GTest CONFIG REQUIRED)
+if (ARDUINO)
+else()
+	hunter_add_package(GTest)
+	find_package(GTest CONFIG REQUIRED)
 
-include(CTest)
+	include(CTest)
+endif()
 
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -31,7 +34,17 @@ include_directories(${PROJECT_SOURCE_DIR}/../src/Ark-Cpp/utilities)
 
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-add_executable(Ark-Cpp-tests
+if (ARDUINO)
+	include_directories(${PROJECT_SOURCE_DIR}/../include)
+	include_directories(${PROJECT_SOURCE_DIR}/../include/arduinounit)
+	include_directories(${PROJECT_SOURCE_DIR}/arduino)
+	include_directories(${PROJECT_SOURCE_DIR}/../src/Ark-Cpp/arduino/stl)
+	include_directories(${ARDUINO_SDK_PATH}/hardware/arduino/avr/libraries/SPI/src)
+	include_directories(${ARDUINO_SDK_PATH}/libraries/Ethernet/src)
+endif()
+
+
+set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/api/account.cpp
 	${PROJECT_SOURCE_DIR}/api/block.cpp
 	${PROJECT_SOURCE_DIR}/api/delegate.cpp
@@ -56,15 +69,34 @@ add_executable(Ark-Cpp-tests
 )
 
 find_library(Ark-Cpp-tests NAMES Ark-Cpp-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-target_link_libraries(Ark-Cpp-tests Ark-Cpp-lib)
 
-target_link_libraries(Ark-Cpp-tests GTest::main) # GTest::gtest will be linked automatically
-target_link_libraries(Ark-Cpp-tests GTest::gtest)
+if (ARDUINO)
+	set(PLATFORM_SRC
+		 "${PROJECT_SOURCE_DIR}/../include/arduinounit/ArduinoUnitUtility/ArduinoUnit.cpp"
+		 "${ARDUINO_SDK_PATH}/libraries/Ethernet/src/EthernetClient.cpp"
+		 "${ARDUINO_SDK_PATH}/libraries/Ethernet/src/Ethernet.cpp"
+		 "${PROJECT_SOURCE_DIR}/arduino/tests.cpp"
+	)
 
-if (COVERAGE)
-    target_compile_options(tests PRIVATE --coverage)
-    target_link_libraries(tests PRIVATE --coverage)
+	link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries)
+
+	generate_arduino_firmware(Ark-Cpp-tests
+		SRCS ${PLATFORM_SRC}
+		LIBS Ark-Cpp-lib
+		BOARD ${BOARD_ID}
+	)
+else()
+	add_executable(Ark-Cpp-tests ${TEST_SRC})
+
+	target_link_libraries(Ark-Cpp-tests Ark-Cpp-lib)
+
+	target_link_libraries(Ark-Cpp-tests GTest::main) # GTest::gtest will be linked automatically
+	target_link_libraries(Ark-Cpp-tests GTest::gtest)
+
+	if (COVERAGE)
+		target_compile_options(tests PRIVATE --coverage)
+		target_link_libraries(tests PRIVATE --coverage)
+	endif()
+
+	add_test(NAME test COMMAND Ark-Cpp-tests)
 endif()
-
-add_test(NAME test COMMAND Ark-Cpp-tests)
-

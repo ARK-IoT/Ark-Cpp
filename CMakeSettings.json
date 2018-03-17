@@ -90,11 +90,23 @@
 			"generator": "Ninja",
 			//"configurationType": "Debug",
 			"inheritEnvironments": [ "msvc_x86" ],
-		//	/buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
+			//	/buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
 			//"installRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}",
-			"cmakeCommandArgs": "-DARDUINO=ON",
+			"cmakeCommandArgs": "-DARDUINO=ON -DBOARD_ID=esp8266"
+			//"buildCommandArgs": "",
+			//"ctestCommandArgs": ""
+		},
+		{
+			"name": "Arduino-UnoWifi-Debug",
+			"generator": "Ninja",
+			//"configurationType": "Debug",
+			"inheritEnvironments": [ "msvc_x86" ],
+			//	/buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
+			//"installRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}",
+			"cmakeCommandArgs": "-DARDUINO=ON -DBOARD_ID=unowifi"
 			//"buildCommandArgs": "",
 			//"ctestCommandArgs": ""
 		}
+
 	]
 }
