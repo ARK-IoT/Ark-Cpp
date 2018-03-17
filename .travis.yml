@@ -29,8 +29,8 @@ before_install:
     - eval "${MATRIX_EVAL}"
     - "chmod +x ${BEFORE_INSTALL_SCRIPT} && ${BEFORE_INSTALL_SCRIPT}"
  
- #install:
- #   - "${INSTALL_SCRIPT}"
+install:
+    - "chmod +x ${INSTALL_SCRIPT} && ${INSTALL_SCRIPT}"
 
 compiler: 
   - gcc
