@@ -27,7 +27,7 @@ matrix:
  
 before_install:
     - eval "${MATRIX_EVAL}"
- #   - "${BEFORE_INSTALL_SCRIPT}"
+    - "${BEFORE_INSTALL_SCRIPT}"
  
  #install:
  #   - "${INSTALL_SCRIPT}"
