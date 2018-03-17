@@ -92,7 +92,7 @@
 			"inheritEnvironments": [ "msvc_x86" ],
 			//	/buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
 			//"installRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}",
-			"cmakeCommandArgs": "-DARDUINO=ON -DBOARD_ID=esp8266"
+			"cmakeCommandArgs": "-DARDUINO=ON -DBOARD_ID=nodemcuv2 -DARDUINO_DEFAULT_PORT=COM5" 
 			//"buildCommandArgs": "",
 			//"ctestCommandArgs": ""
 		},
@@ -103,7 +103,7 @@
 			"inheritEnvironments": [ "msvc_x86" ],
 			//	/buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
 			//"installRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}",
-			"cmakeCommandArgs": "-DARDUINO=ON -DBOARD_ID=unowifi"
+			"cmakeCommandArgs": "-DARDUINO=ON -DBOARD_ID=unowifi -DARDUINO_DEFAULT_PORT=COM5"
 			//"buildCommandArgs": "",
 			//"ctestCommandArgs": ""
 		}

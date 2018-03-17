@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.6.2)
 
 if (ARDUINO)
 
+	#if (${BOARD_ID} EQUAL "nodemcuv2")
+		#set(PLATFORM_PATH "$ENV{localappdata}\arduino15\packages\esp8266\hardware\esp8266\2.4.0")
+		set (PLATFORM_PATH "C:/Users/chris/AppData/Local/arduino15/packages/esp8266/hardware/esp8266")
+	#endif()
+
 	set(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
+
+	set(ARDUINO_DEFAULT_PORT COM1) # Default Port, when not specified
 
 else()
 	set (HUNTER_ROOT .)

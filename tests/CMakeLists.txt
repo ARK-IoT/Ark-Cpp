@@ -84,6 +84,7 @@ if (ARDUINO)
 		SRCS ${PLATFORM_SRC}
 		LIBS Ark-Cpp-lib
 		BOARD ${BOARD_ID}
+		PORT ${ARDUINO_DEFAULT_PORT}
 	)
 else()
 	add_executable(Ark-Cpp-tests ${TEST_SRC})
