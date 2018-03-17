@@ -15,18 +15,22 @@ matrix:
             - arduino-core
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - BEFORE_INSTALL_SCRIPT="./travis/before_install_linux.sh"
+        - INSTALL_SCRIPT="./travis/install_linux.sh"
         
     - os: osx
       osx_image: xcode9.2
       env:
         - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
+        - BEFORE_INSTALL_SCRIPT="./travis/before_install_osx.sh"
+        - INSTALL_SCRIPT="./travis/install_osx.sh"
  
 before_install:
     - eval "${MATRIX_EVAL}"
-    - ${TRAVIS_BUILD_DIR/travis/before_install_linux.sh}
+    - "${BEFORE_INSTALL_SCRIPT}"
  
  install:
-    - ${TRAVIS_BUILD_DIR/travis/install_linux.sh}
+    - "${INSTALL_SCRIPT}"
 
 compiler: 
   - gcc
