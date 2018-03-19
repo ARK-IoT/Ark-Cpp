@@ -3,8 +3,8 @@
 #ifndef ACCOUNTABLE_H
 #define ACCOUNTABLE_H
 
-#include "account_respondable.h"
-#include "account_gettable.h"
+#include "api/accountable/account_respondable.h"
+#include "api/accountable/account_gettable.h"
 
 namespace ARK
 {

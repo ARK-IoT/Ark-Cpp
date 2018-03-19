@@ -3,7 +3,7 @@
 #ifndef network_h
 #define network_h
 
-#include "platform.h"
+#include "utilities/platform.h"
 
 #include <cstring>
 

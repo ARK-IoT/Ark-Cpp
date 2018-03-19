@@ -3,10 +3,10 @@
 #ifndef TRANSACTION_GETTABLE_H
 #define TRANSACTION_GETTABLE_H
 
-#include "transaction.h"
-#include "transaction_respondable.h"
-#include "connector.h"
-#include "hash.h"
+#include "models/transaction.h"
+#include "api/transactionable/transaction_respondable.h"
+#include "utilities/connector.h"
+#include "types/hash.h"
 
 namespace ARK
 {

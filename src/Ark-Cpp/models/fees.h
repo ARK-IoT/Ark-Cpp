@@ -3,8 +3,8 @@
 #ifndef fees_h
 #define fees_h
 
-#include "balance.h"
-#include "platform.h"
+#include "types/balance.h"
+#include "utilities/platform.h"
 
 namespace ARK {
 

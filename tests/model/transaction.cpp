@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "transaction.h"
+#include "models/transaction.h"
 
 TEST(transaction, construct_transaction) {
     ARK::Transaction transaction(

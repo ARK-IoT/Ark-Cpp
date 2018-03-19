@@ -9,17 +9,17 @@
 #ifndef api_h
 #define api_h
 
-#include "paths.h"
+#include "api/paths.h"
 
-#include "accountable/accountable.h"
-#include "blockable/blockable.h"
-#include "delegatable/delegatable.h"
-#include "loadable/loadable.h"
-#include "multisignaturable/multisignaturable.h"
-#include "peerable/peerable.h"
-#include "signaturable/signaturable.h"
-#include "transactionable/transactionable.h"
+#include "api/accountable/accountable.h"
+#include "api/blockable/blockable.h"
+#include "api/delegatable/delegatable.h"
+#include "api/loadable/loadable.h"
+#include "api/multisignaturable/multisignaturable.h"
+#include "api/peerable/peerable.h"
+#include "api/signaturable/signaturable.h"
+#include "api/transactionable/transactionable.h"
 
-#include "manager.h"
+#include "api/manager.h"
 
 #endif

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "delegate.h"
+#include "models/delegate.h"
 
 TEST( delegate, constructo_delegate) {
     ARK::Delegate delegate(

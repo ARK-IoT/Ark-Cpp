@@ -3,9 +3,9 @@
 #ifndef DELEGATE_GETTABLE_H
 #define DELEGATE_GETTABLE_H
 
-#include "connector.h"
-#include "delegate.h"
-#include "delegate_respondable.h"
+#include "utilities/connector.h"
+#include "models/delegate.h"
+#include "api/delegatable/delegate_respondable.h"
 
 namespace ARK
 {

@@ -3,8 +3,8 @@
 #ifndef NETWORKS_H
 #define NETWORKS_H
 
-#include "platform.h"
-#include "network.h"
+#include "utilities/platform.h"
+#include "models/network.h"
 
 namespace ARK
 {

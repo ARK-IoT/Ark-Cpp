@@ -9,15 +9,15 @@
 #ifndef MODELS_H
 #define MODELS_H
 
-#include "account.h"
-#include "block.h"
-#include "currency.h"
-#include "delegate.h"
-#include "fees.h"
-#include "network.h"
-#include "peer.h"
-#include "transaction.h"
-#include "transport.h"
-#include "voter.h"
+#include "models/account.h"
+#include "models/block.h"
+#include "models/currency.h"
+#include "models/delegate.h"
+#include "models/fees.h"
+#include "models/network.h"
+#include "models/peer.h"
+#include "models/transaction.h"
+#include "models/transport.h"
+#include "models/voter.h"
 
 #endif

@@ -3,42 +3,17 @@ cmake_minimum_required(VERSION 3.6.2)
 
 project(Ark-Cpp-lib)
 
-if (ARDUINO)
-else()
-	hunter_add_package(nlohmann_json)
-	#hunter_cmake_args(PocoCpp CMAKE_ARGS DISABLE_INTERNAL_OPENSSL=ON)
-	hunter_add_package(PocoCpp)
-endif()
+hunter_add_package(nlohmann_json)
+hunter_add_package(PocoCpp)
 
-set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+#set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
 include_directories(${PROJECT_SOURCE_DIR})
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/accountable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/blockable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/delegatable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/loadable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/multisignaturable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/peerable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/signaturable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/api/transactionable)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/constants)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/helpers)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/models)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/types)
-include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities)
+include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp)
  
- if (ARDUINO)
-	#include the C++ STL wrapper/implementation for the Arduino platform
-	include_directories(${PROJECT_SOURCE_DIR}/Ark-Cpp/arduino/stl)
-	include_directories(${PROJECT_SOURCE_DIR}/../include)
-	include_directories(${ARDUINO_SDK_PATH}/hardware/arduino/avr/libraries/SPI/src)
-	include_directories(${ARDUINO_SDK_PATH}/libraries/Ethernet/src)
- else()
-	find_package(nlohmann_json CONFIG REQUIRED)
-	find_package(Poco REQUIRED Net CONFIG)
-endif()
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(Poco REQUIRED Net CONFIG)
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/api/accountable/account_gettable.cpp
@@ -69,27 +44,13 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/connector.cpp
 )
 
-if (ARDUINO)
-	set(PLATFORM_SRC 
-		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json_arduino.cpp
-		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http_arduino.cpp
-		${PROJECT_SOURCE_DIR}/../include/RestClient/RestClient.cpp
-	)
-else()
-	set(PLATFORM_SRC 
-		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/json.cpp
-		${PROJECT_SOURCE_DIR}/Ark-Cpp/utilities/http.cpp
-	)
-endif()
+set(PLATFORM_SRC 
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/platform/json.cpp
+	${PROJECT_SOURCE_DIR}/Ark-Cpp/platform/http.cpp
+)
 
-if (ARDUINO)
-	generate_arduino_library(Ark-Cpp-lib 
-		SRCS ${COMMON_SRC} ${PLATFORM_SRC}
-		BOARD ${BOARD_ID}
-	)
-else()
-	add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 
-	target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
-	target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
-endif()
+target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
+target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
+

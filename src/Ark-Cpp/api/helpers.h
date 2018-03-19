@@ -3,7 +3,7 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include "platform.h"
+#include "utilities/platform.h"
 
 namespace ARK
 {

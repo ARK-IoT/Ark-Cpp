@@ -3,10 +3,10 @@
 #ifndef delegate_h
 #define delegate_h
 
-#include "address.h"
-#include "balance.h"
-#include "publickey.h"
-#include "platform.h"
+#include "types/address.h"
+#include "types/balance.h"
+#include "types/publickey.h"
+#include "utilities/platform.h"
 
 #include <cstring>
 #include <cstdio>

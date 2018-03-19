@@ -14,3 +14,7 @@
 /libraries
 /lib
 /bin
+/src/.pioenvs
+/src/.vscode
+/tests/.vscode
+/tests/.pioenvs

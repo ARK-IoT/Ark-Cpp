@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "account.h"
+#include "models/account.h"
 
 TEST(account, construct_account) {
     ARK::Account account(

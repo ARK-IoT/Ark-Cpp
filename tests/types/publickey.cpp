@@ -1,4 +1,4 @@
-#include "publickey.h"
+#include "types/publickey.h"
 
 #include "gtest/gtest.h"
 

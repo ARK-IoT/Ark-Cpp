@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "fees.h"
+#include "models/fees.h"
 
 TEST(Fees, construct_fees) {
     ARK::Fees fees(

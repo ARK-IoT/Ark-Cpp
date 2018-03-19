@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "api.h"
+#include "api/api.h"
 
 TEST(account, test_account) {
 

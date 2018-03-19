@@ -1,6 +1,6 @@
-#include "peer_gettable.h"
-#include "paths.h"
-#include "json.h"
+#include "api/peerable/peer_gettable.h"
+#include "api/paths.h"
+#include "utilities/json.h"
 
 #include <cstring>
 #include <cstdio>

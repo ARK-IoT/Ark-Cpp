@@ -3,8 +3,8 @@
 #ifndef SIGNATURE_GETTABLE_H
 #define SIGNATURE_GETTABLE_H
 
-#include "balance.h"
-#include "connector.h"
+#include "types/balance.h"
+#include "utilities/connector.h"
 
 namespace ARK {
 namespace API {

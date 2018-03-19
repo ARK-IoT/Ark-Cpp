@@ -3,8 +3,8 @@
 #ifndef BLOCKABLE_H
 #define BLOCKABLE_H
 
-#include "block_respondable.h"
-#include "block_gettable.h"
+#include "api/blockable/block_respondable.h"
+#include "api/blockable/block_gettable.h"
 
 namespace ARK
 {

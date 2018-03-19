@@ -1,7 +1,7 @@
-#include "delegate_gettable.h"
-#include "json.h"
-#include "paths.h"
-#include "helpers.h"
+#include "api/delegatable/delegate_gettable.h"
+#include "utilities/json.h"
+#include "api/paths.h"
+#include "api/helpers.h"
 
 /*  ==========================================================================  */
 /*  ===================================  */

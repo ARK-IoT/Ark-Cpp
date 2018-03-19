@@ -1,6 +1,6 @@
-#include "signature_gettable.h"
-#include "paths.h"
-#include "json.h"
+#include "api/signaturable/signature_gettable.h"
+#include "api/paths.h"
+#include "utilities/json.h"
 
 /*  ==========================================================================  */
 /*  ================================  */

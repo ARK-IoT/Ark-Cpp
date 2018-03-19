@@ -3,7 +3,7 @@
 #ifndef MULTISIGNATURABLE_H
 #define MULTISIGNATURABLE_H
 
-#include "multisignature_gettable.h"
+#include "api/multisignaturable/multisignature_gettable.h"
 
 namespace ARK
 {

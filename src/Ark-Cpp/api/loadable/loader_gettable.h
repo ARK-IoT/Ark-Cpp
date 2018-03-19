@@ -3,8 +3,8 @@
 #ifndef LOADER_GETTABLE_H
 #define LOADER_GETTABLE_H
 
-#include "loader_respondable.h"
-#include "connector.h"
+#include "api/loadable/loader_respondable.h"
+#include "utilities/connector.h"
 
 namespace ARK
 {

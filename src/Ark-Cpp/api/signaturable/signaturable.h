@@ -1,9 +1,7 @@
-
-
 #ifndef SIGNATURABLE_H
 #define SIGNATURABLE_H
 
-#include "signature_gettable.h"
+#include "api/signaturable/signature_gettable.h"
 
 namespace ARK
 {

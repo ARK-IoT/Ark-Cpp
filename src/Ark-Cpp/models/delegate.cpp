@@ -1,4 +1,4 @@
-#include "delegate.h"
+#include "models/delegate.h"
 
 size_t ARK::Delegate::printTo(Print& p) const
 {

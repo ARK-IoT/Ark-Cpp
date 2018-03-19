@@ -3,10 +3,10 @@
 #ifndef transaction_h
 #define transaction_h
 
-#include "balance.h"
-#include "address.h"
-#include "publickey.h"
-#include "platform.h"
+#include "types/balance.h"
+#include "types/address.h"
+#include "types/publickey.h"
+#include "utilities/platform.h"
 
 namespace ARK {
 

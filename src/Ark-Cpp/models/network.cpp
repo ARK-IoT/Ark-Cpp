@@ -1,4 +1,4 @@
-#include "network.h"
+#include "models/network.h"
 
 #include <cstdio>
 

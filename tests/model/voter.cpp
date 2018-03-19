@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "voter.h"
+#include "models/voter.h"
 
 TEST( voter, construct_voter) {
     ARK::Voter voter(

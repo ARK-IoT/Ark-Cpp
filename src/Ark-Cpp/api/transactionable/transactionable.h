@@ -3,8 +3,8 @@
 #ifndef TRANSACTIONABLE_H
 #define TRANSACTIONABLE_H
 
-#include "transaction_respondable.h"
-#include "transaction_gettable.h"
+#include "api/transactionable/transaction_respondable.h"
+#include "api/transactionable/transaction_gettable.h"
 
 namespace ARK
 {

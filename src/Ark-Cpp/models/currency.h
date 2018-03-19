@@ -2,7 +2,7 @@
 #ifndef CURRENCY_H
 #define CURRENCY_H
 
-#include "platform.h"
+#include "utilities/platform.h"
 
 #include <cstddef>
 

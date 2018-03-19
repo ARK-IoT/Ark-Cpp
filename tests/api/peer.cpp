@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "api.h"
+#include "api/api.h"
 
 TEST(peer, test_peer) {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);

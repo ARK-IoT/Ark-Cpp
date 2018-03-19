@@ -1,4 +1,4 @@
-#include "balance.h"
+#include "types/balance.h"
 
 #include "gtest/gtest.h"
 

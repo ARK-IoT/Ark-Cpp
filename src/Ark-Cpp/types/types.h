@@ -9,10 +9,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include "address.h"
-#include "balance.h"
-#include "hash.h"
-#include "publickey.h"
-#include "signature.h"
+#include "types/address.h"
+#include "types/balance.h"
+#include "types/hash.h"
+#include "types/publickey.h"
+#include "types/signature.h"
 
 #endif

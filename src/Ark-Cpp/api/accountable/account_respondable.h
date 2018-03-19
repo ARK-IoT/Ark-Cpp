@@ -3,8 +3,8 @@
 #ifndef ACCOUNT_RESPONDABLE_H
 #define ACCOUNT_RESPONDABLE_H
 
-#include "balance.h"
-#include "platform.h"
+#include "types/balance.h"
+#include "utilities/platform.h"
 
 namespace ARK {
 namespace API {

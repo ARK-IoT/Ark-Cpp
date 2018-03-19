@@ -3,7 +3,7 @@
 #ifndef LOADER_RESPONDABLE_H
 #define LOADER_RESPONDABLE_H
 
-#include "platform.h"
+#include "utilities/platform.h"
 
 #include <cstring>
 

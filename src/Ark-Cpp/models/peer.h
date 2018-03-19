@@ -3,7 +3,7 @@
 #ifndef peer_h
 #define peer_h
 
-#include "platform.h"
+#include "utilities/platform.h"
 
 #include <cstring>
 #include <cstdio>

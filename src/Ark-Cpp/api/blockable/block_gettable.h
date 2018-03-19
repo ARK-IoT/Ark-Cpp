@@ -3,10 +3,10 @@
 #ifndef BLOCK_GETTABLE_H
 #define BLOCK_GETTABLE_H
 
-#include "block_respondable.h"
-#include "block.h"
-#include "connector.h"
-#include "fees.h"
+#include "api/blockable/block_respondable.h"
+#include "models/block.h"
+#include "utilities/connector.h"
+#include "models/fees.h"
 
 namespace ARK
 {

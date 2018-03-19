@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "block.h"
+#include "models/block.h"
 
 TEST(block, construct_block) {
     ARK::Block block(

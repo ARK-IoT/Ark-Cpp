@@ -1,5 +1,5 @@
-#include "delegate_respondable.h"
-#include "json.h"
+#include "api/delegatable/delegate_respondable.h"
+#include "utilities/json.h"
 
 #include <cstring>
 #include <cstdio>

@@ -11,7 +11,7 @@
 
 #include "../models/models.h"
 
-#include "currencies.h"
-#include "networks.h"
+#include "constants/currencies.h"
+#include "constants/networks.h"
 
 #endif

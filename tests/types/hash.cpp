@@ -1,4 +1,4 @@
-#include "hash.h"
+#include "types/hash.h"
 
 #include "gtest/gtest.h"
 

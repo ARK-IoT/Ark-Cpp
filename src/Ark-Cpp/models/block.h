@@ -3,12 +3,12 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include "balance.h"
-#include "hash.h"
-#include "publickey.h"
-#include "address.h"
-#include "signature.h"
-#include "platform.h"
+#include "types/balance.h"
+#include "types/hash.h"
+#include "types/publickey.h"
+#include "types/address.h"
+#include "types/signature.h"
+#include "utilities/platform.h"
 
 #include <cstring>
 #include <cstdio>

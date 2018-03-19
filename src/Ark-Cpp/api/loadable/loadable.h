@@ -3,8 +3,8 @@
 #ifndef LOADABLE_H
 #define LOADABLE_H
 
-#include "loader_respondable.h"
-#include "loader_gettable.h"
+#include "api/loadable/loader_respondable.h"
+#include "api/loadable/loader_gettable.h"
 
 namespace ARK
 {

@@ -3,11 +3,11 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-#include "address.h"
-#include "balance.h"
-#include "publickey.h"
-#include "signature.h"
-#include "platform.h"
+#include "types/address.h"
+#include "types/balance.h"
+#include "types/publickey.h"
+#include "types/signature.h"
+#include "utilities/platform.h"
 
 #include <cstring>
 #include <cstdio>

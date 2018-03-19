@@ -1,0 +1,26 @@
+{
+	"name": "Ark-Cpp",
+	"description": "Ark Ecosystem",
+	"keywords": "ark, blockchain, crypto, cryptocurrency",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Ark-IoT/Ark-Cpp",
+	},
+	"version": "0.0.0",
+	"frameworks": "arduino",
+	"platforms": "*",
+	"dependencies": [
+		{
+			"name": "HTTPClient",
+			"version": "~2.2.0"
+		},
+		{
+			"name": "ArduinoJson",
+			"version": "~5.13.1"
+		},
+		{
+			"name": "ArduinoUnit",
+			"version": "~2.2"
+		}
+	]
+}

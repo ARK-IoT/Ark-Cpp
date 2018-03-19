@@ -1,4 +1,4 @@
-#include "voter.h"
+#include "models/voter.h"
 
 size_t ARK::Voter::printTo(Print& p) const 
 {

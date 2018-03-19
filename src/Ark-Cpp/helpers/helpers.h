@@ -9,9 +9,8 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include "streamable.h"
-#include "subcount.h"
-#include "valueprintable.h"
-#include "bufferable.h"
+#include "helpers/streamable.h"
+#include "helpers/subcount.h"
+#include "helpers/valueprintable.h"
 
 #endif

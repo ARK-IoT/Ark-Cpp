@@ -3,8 +3,8 @@
 #ifndef MULTISIGNATURE_GETTABLE_H
 #define MULTISIGNATURE_GETTABLE_H
 
-#include "connector.h"
-#include "publickey.h"
+#include "utilities/connector.h"
+#include "types/publickey.h"
 
 namespace ARK
 {

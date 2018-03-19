@@ -3,11 +3,11 @@
 #ifndef DELEGATE_RESPONDABLE_H
 #define DELEGATE_RESPONDABLE_H
 
-#include "address.h"
-#include "publickey.h"
-#include "balance.h"
-#include "voter.h"
-#include "platform.h"
+#include "types/address.h"
+#include "types/publickey.h"
+#include "types/balance.h"
+#include "models/voter.h"
+#include "utilities/platform.h"
 
 #include <array>
 #include <memory>

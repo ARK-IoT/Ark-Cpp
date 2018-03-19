@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "peer.h"
+#include "models/peer.h"
 
 TEST(Peer, construct_peer) {
     ARK::Peer peer(

@@ -3,9 +3,9 @@
 #ifndef BLOCK_RESPONDABLE_H
 #define BLOCK_RESPONDABLE_H
 
-#include "balance.h"
-#include "hash.h"
-#include "platform.h"
+#include "types/balance.h"
+#include "types/hash.h"
+#include "utilities/platform.h"
 
 namespace ARK {
 namespace API {

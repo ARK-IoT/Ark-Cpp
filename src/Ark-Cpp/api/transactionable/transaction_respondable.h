@@ -3,8 +3,8 @@
 #ifndef TRANSACTION_RESPONDABLE_H
 #define TRANSACTION_RESPONDABLE_H
 
-#include "platform.h"
-#include "transaction.h"
+#include "utilities/platform.h"
+#include "models/transaction.h"
 
 #include <array>
 #include <cassert>

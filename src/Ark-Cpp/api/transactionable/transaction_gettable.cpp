@@ -1,10 +1,10 @@
-#include "transaction_gettable.h"
-#include "json.h"
-#include "paths.h"
-#include "hash.h"
-#include "connector.h"
-#include "helpers.h"
-#include "subcount.h"
+#include "api/transactionable/transaction_gettable.h"
+#include "utilities/json.h"
+#include "api/paths.h"
+#include "types/hash.h"
+#include "utilities/connector.h"
+#include "helpers/helpers.h"
+#include "helpers/subcount.h"
 
 #include <cstring>
 #include <memory>

@@ -1,15 +1,13 @@
-
-
 #ifndef ACCOUNT_GETTABLE_H
 #define ACCOUNT_GETTABLE_H
 
-#include "account_respondable.h"
-#include "account.h"
-#include "connector.h"
-#include "address.h"
-#include "balance.h"
-#include "publickey.h"
-#include "delegate.h"
+#include "api/accountable/account_respondable.h"
+#include "models/account.h"
+#include "utilities/connector.h"
+#include "types/address.h"
+#include "types/balance.h"
+#include "types/publickey.h"
+#include "models/delegate.h"
 
 namespace ARK
 {

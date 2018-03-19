@@ -3,9 +3,9 @@
 #ifndef PEER_GETTABLE_H
 #define PEER_GETTABLE_H
 
-#include "peer.h"
-#include "connector.h"
-#include "peer_respondable.h"
+#include "models/peer.h"
+#include "utilities/connector.h"
+#include "api/peerable/peer_respondable.h"
 
 namespace ARK
 {

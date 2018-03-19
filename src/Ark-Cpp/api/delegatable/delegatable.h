@@ -3,8 +3,8 @@
 #ifndef DELEGATABLE_H
 #define DELEGATABLE_H
 
-#include "delegate_respondable.h"
-#include "delegate_gettable.h"
+#include "api/delegatable/delegate_respondable.h"
+#include "api/delegatable/delegate_gettable.h"
 
 namespace ARK
 {

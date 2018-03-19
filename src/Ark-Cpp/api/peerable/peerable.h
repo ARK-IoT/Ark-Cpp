@@ -3,8 +3,8 @@
 #ifndef PEERABLE_H
 #define PEERABLE_H
 
-#include "peer_respondable.h"
-#include "peer_gettable.h"
+#include "api/peerable/peer_respondable.h"
+#include "api/peerable/peer_gettable.h"
 
 namespace ARK
 {

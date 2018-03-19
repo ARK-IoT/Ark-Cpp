@@ -1,7 +1,7 @@
-#include "block_gettable.h"
-#include "json.h"
-#include "paths.h"
-#include "connector.h"
+#include "api/blockable/block_gettable.h"
+#include "utilities/json.h"
+#include "api/paths.h"
+#include "utilities/connector.h"
 
 /*  ==========================================================================  */
 /*  ==============================  */
