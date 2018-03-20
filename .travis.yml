@@ -18,7 +18,6 @@ matrix:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         - BEFORE_INSTALL_SCRIPT="./travis/before_install_linux.sh"
         - INSTALL_SCRIPT="./travis/install_linux.sh"
-        - PLATFORMIO_CI_SRC="."
         
     - os: osx
       osx_image: xcode9.2
@@ -41,7 +40,7 @@ compiler:
  # - clang
 
 script:
-  - platformio ci --board=uno
+  - platformio ci --project-conf=./platformio.ini
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
   - cmake .
   - cmake --build .
