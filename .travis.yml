@@ -1,7 +1,4 @@
 language: cpp
-
-python:
-  - 3.6
   
 matrix:
   include:
@@ -14,6 +11,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
+            - python
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         - BEFORE_INSTALL_SCRIPT="./travis/before_install_linux.sh"
