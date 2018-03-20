@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.2.2)
 
+set(CMAKE_TOOLCHAIN_FILE "cmake/toolchain.cmake")
+
 set (HUNTER_ROOT .)
 
 include("cmake/HunterGate.cmake")
