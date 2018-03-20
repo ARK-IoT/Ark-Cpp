@@ -44,6 +44,8 @@ inline int substringCount(const String &str, const String &sub)
 #include <random>
 #include <iostream>
 #include <iomanip>
+#include <cstring>
+#include <stdexcept>
 
 inline int convert_to_int(const std::string& s) {
 	return std::stoi(s);
@@ -111,7 +113,7 @@ public:
 
 	size_t write(const char* str) {
 		if (str == nullptr) { return 0; }
-		return write((const uint8_t*)str, strlen(str));	
+		return write((const uint8_t*)str, std::strlen(str));	
 	}
 	
 	virtual size_t write(const uint8_t* buffer, size_t size) {
@@ -142,7 +144,7 @@ public:
 			break;
 
 		case BIN:
-			std::cout << std::bin << t;
+			std::cout << std::hex << t;
 			break;
 
 		case DEC:

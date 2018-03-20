@@ -29,7 +29,7 @@ const auto vote = delegate.vote();
 //ASSERT_STREQ("94799.95341862", vote.ark());
 //ASSERT_STREQ("9479995341862", vote.arktoshi());
 //ASSERT_EQ(40645, delegate.produced_blocks());
-ASSERT_EQ(3319, delegate.missed_blocks());
+ASSERT_NE(0, delegate.missed_blocks());
 ASSERT_NE(0, delegate.rate());
 ASSERT_NE(0.0, delegate.approval());
 //ASSERT_EQ(92.45f, (float)delegate.productivity());
