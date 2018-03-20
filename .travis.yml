@@ -4,7 +4,7 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      sudo: required
+      sudo: false
       addons:
         apt:
           sources:
@@ -27,16 +27,19 @@ matrix:
  
 before_install:
     - eval "${MATRIX_EVAL}"
-    - "chmod +x ${BEFORE_INSTALL_SCRIPT} && ${BEFORE_INSTALL_SCRIPT}"
+    #- "chmod +x ${BEFORE_INSTALL_SCRIPT} && ${BEFORE_INSTALL_SCRIPT}"
  
 install:
-    - "chmod +x ${INSTALL_SCRIPT} && ${INSTALL_SCRIPT}"
+  pip install -U platformio
+  platformio update
+   # - "chmod +x ${INSTALL_SCRIPT} && ${INSTALL_SCRIPT}"
 
 compiler: 
   - gcc
  # - clang
 
 script:
+  - platformio ci --lib="." --board=uno
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
   - cmake .
   - cmake --build .
