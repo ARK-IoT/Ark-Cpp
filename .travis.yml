@@ -40,7 +40,7 @@ compiler:
  # - clang
 
 script:
-  - platformio ci --project-conf=./platformio.ini .
+  - platformio ci --project-conf=./platformio.ini ./src
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
   - cmake .
   - cmake --build .
