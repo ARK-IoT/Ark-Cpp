@@ -1,6 +1,4 @@
-#include <Arduino.h>
-#include "tests.h"
-
+#include <ArduinoUnit.h>
 
 #ifdef UNIT_TEST
 

@@ -13,7 +13,7 @@ set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
 set(COVERAGE OFF CACHE BOOL "Coverage")
 
-include_directories(${PROJECT_SOURCE_DIR}/../src/Ark-Cpp)
+include_directories(${PROJECT_SOURCE_DIR}/../src)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
