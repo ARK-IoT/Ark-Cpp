@@ -29,9 +29,9 @@ before_install:
     #- "chmod +x ${BEFORE_INSTALL_SCRIPT} && ${BEFORE_INSTALL_SCRIPT}"
  
 install:
-  pip install --upgrade pip
-  pip install -U platformio
-  platformio update
+  - pip install --upgrade pip
+  - pip install -U platformio
+  - platformio update
    # - "chmod +x ${INSTALL_SCRIPT} && ${INSTALL_SCRIPT}"
 
 compiler: 
