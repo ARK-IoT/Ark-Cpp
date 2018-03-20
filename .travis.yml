@@ -22,7 +22,7 @@ matrix:
     - os: osx
       osx_image: xcode9.2
       env:
-        - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7 && brew upgrade python"
+        - MATRIX_EVAL="rm -rdf '/usr/local/include/c++' && brew install gcc && CC=gcc-7 && CXX=g++-7"
         - BEFORE_INSTALL_SCRIPT="./travis/before_install_osx.sh"
         - INSTALL_SCRIPT="./travis/install_osx.sh"
  
@@ -31,7 +31,7 @@ before_install:
     #- "chmod +x ${BEFORE_INSTALL_SCRIPT} && ${BEFORE_INSTALL_SCRIPT}"
  
 install:
-  - pip install -U platformio
+  - sudo pip install -U platformio
   - platformio update
   # install ArduinoJson (64), HttpClient (66)
   - platformio lib -g install 64 66
