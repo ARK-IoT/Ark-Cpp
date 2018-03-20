@@ -15,8 +15,8 @@ public:
 	HTTP() = default;
 
 	String get(const String& peer, int port, const String& request) override {
-		String url = peer + ":" + int_to_string(port) + "/" + request;
-		HttpClient http;
+		EthernetClient c;
+		HttpClient http(c);
 
 		// if (this->isReachable == false)
 		//  {
@@ -30,8 +30,7 @@ public:
 		// {
 		//   http.begin(request);
 		// };
-		String response;
-		int httpCode = http.get(request.c_str(), &response);
+		auto httpCode = http.get(peer.c_str(), port, request.c_str());
 
 		/*while (!http.connected())
 		{
@@ -49,7 +48,9 @@ public:
 			//http.end();
 
 			//return streamStr;
-			return response;
+
+			http.skipResponseHeaders();
+			return http.readString();
 		}
 		else
 		{
