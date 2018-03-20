@@ -41,7 +41,7 @@ compiler:
  # - clang
 
 script:
-  - platformio ci --lib="." --board=uno
+  - platformio ci --board=uno
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
   - cmake .
   - cmake --build .
