@@ -43,6 +43,7 @@ compiler:
 
 script:
   - platformio ci --project-conf=./platformio.ini ./src
+  - platformio ci --project-conf=./test/platformio.ini .
   #- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 .
   - cmake .
   - cmake --build .
