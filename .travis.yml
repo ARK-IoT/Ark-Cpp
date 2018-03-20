@@ -1,5 +1,8 @@
 language: cpp
 
+python:
+  - 3.6
+  
 matrix:
   include:
     - os: linux
