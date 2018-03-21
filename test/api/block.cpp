@@ -36,8 +36,8 @@ TEST(block, test_block) {
 	ASSERT_STREQ("2017-03-21T13:00:00.000Z", _arkManager.blockEpoch().c_str());
 
 	const auto height = _arkManager.blockHeight();
-	//ASSERT_STREQ("14137014127076786059", height.id());
-	//ASSERT_STREQ("16205859544616930904", height.height());
+	ASSERT_STRNE("0", height.id());
+	ASSERT_STRNE("0", height.height());
 
 	ASSERT_STREQ("578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", _arkManager.blockNethash().getValue());
 
@@ -62,13 +62,13 @@ TEST(block, test_block) {
 
 	/*  ==================================  */
 	const auto block_supply = _arkManager.blockSupply();
-	//ASSERT_STREQ("130356548.00000000", block_supply.ark());
-	//ASSERT_STREQ("13035654800000000", block_supply.arktoshi());
+	ASSERT_STRNE("0.0", block_supply.ark());
+	ASSERT_STRNE("0", block_supply.arktoshi());
 
 	
 	const auto block_status = _arkManager.blockStatus();
 	ASSERT_STREQ("2017-03-21T13:00:00.000Z", block_status.epoch());
-	//ASSERT_STREQ("2678286", block_status.height());
+	ASSERT_STRNE("0", block_status.height());
 	const auto& fee = block_status.fee();
 	ASSERT_STREQ(".10000000", fee.ark());
 	ASSERT_STREQ("10000000", fee.arktoshi());
@@ -78,6 +78,6 @@ TEST(block, test_block) {
 	ASSERT_STREQ("2.00000000", reward.ark());
 	ASSERT_STREQ("200000000", reward.arktoshi());
 	const auto& supply = block_status.supply();
-	//ASSERT_STREQ("130356610.00000000", supply.ark());
-	//ASSERT_STREQ("13035661000000000", supply.arktoshi());
+	ASSERT_STRNE("0.0", supply.ark());
+	ASSERT_STRNE("0", supply.arktoshi());
 }

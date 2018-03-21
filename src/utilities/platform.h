@@ -28,7 +28,7 @@ inline int substringCount(const String &str, const String &sub)
   if (sub.length() == 0)
     return 0;
   int count = 0;
-  for (size_t offset = str.indexOf(sub);
+  for (auto offset = str.indexOf(sub);
        offset != -1;
        offset = str.indexOf(sub, offset + sub.length()))
   {

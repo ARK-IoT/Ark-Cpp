@@ -30,29 +30,22 @@ class Connector
     : virtual HTTPConnectable
 {
 /*  ==================================  */
-  public:
-  
-/****************************************
-*  ARK::Utilities::Network::Connectable
-*  virtual HTTPConnectable
-*
-*  ARK::Utilities::Network::HTTP http; 
-*****************************************/
-
+  private:
     const ARK::Network* network;
-	  ARK::NetworkType netType;
+	ARK::NetworkType netType;
 
     char networkPeer[16];
     int networkPort;
 
+public:
     Connector();
     explicit Connector(const ARK::Network& network);
 	explicit Connector(ARK::NetworkType networktype);
 
-    Connector(const Connector&) = delete;
-    Connector& operator=(const Connector&) = delete;
-    Connector(Connector&&) = default;
-    Connector& operator=(Connector&&) = default;
+    Connector(const Connector& other);
+    Connector& operator=(const Connector& other);
+    Connector(Connector&& other);
+    Connector& operator=(Connector&& other);
 
     void connect(const ARK::Network& network);
     void connectCustom(const ARK::Network& network, const char* peer, int port);
@@ -64,8 +57,7 @@ class Connector
 
 
 /*  ==================================  */
-  private:
-  
+  private:  
     const char* randomPeer() const;
     void setNetworkPeer(const char* peer);
 /*  ==================================  */

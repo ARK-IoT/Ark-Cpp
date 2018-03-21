@@ -39,6 +39,8 @@ protected:
     HTTPInterface() = default;
 
 public:
+    virtual ~HTTPInterface() { }
+
     virtual String get(const String& peer, int port, const String& request) = 0;
 };
 /*  ==========================================================================  */

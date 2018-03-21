@@ -23,6 +23,8 @@ protected:
 	JSONInterface() { }
 
 public:
+    virtual ~JSONInterface() { }
+
     virtual String valueFor(const String& _key) = 0;
     virtual String valueIn(const String& _key, const String& _subkey) = 0;
     virtual String subvalueFor(const String& _key, int _pos) = 0;

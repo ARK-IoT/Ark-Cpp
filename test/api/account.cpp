@@ -9,10 +9,10 @@ ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
 Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 
 const auto account_balance = arkManager.accountBalance(darkAddress);
-//ASSERT_STREQ("94799.95341862", account_balance.confirmed().ark());
-//ASSERT_STREQ("9479995341862", account_balance.confirmed().arktoshi());
-//ASSERT_STREQ("94799.95341862", account_balance.unconfirmed().ark());
-//ASSERT_STREQ("9479995341862", account_balance.unconfirmed().arktoshi());
+ASSERT_STRNE("0.0", account_balance.confirmed().ark());
+ASSERT_STRNE("0", account_balance.confirmed().arktoshi());
+ASSERT_STRNE("0.0", account_balance.unconfirmed().ark());
+ASSERT_STRNE("0", account_balance.unconfirmed().arktoshi());
 
 ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", arkManager.accountPublickey(darkAddress).getValue());
 
@@ -26,23 +26,23 @@ ASSERT_STREQ("sleepdeficit", delegate.username());
 ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", delegate.address().getValue());
 ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", delegate.public_key().getValue());
 const auto vote = delegate.vote();
-//ASSERT_STREQ("94799.95341862", vote.ark());
-//ASSERT_STREQ("9479995341862", vote.arktoshi());
-//ASSERT_EQ(40645, delegate.produced_blocks());
+ASSERT_STRNE("0.0", vote.ark());
+ASSERT_STRNE("0", vote.arktoshi());
+ASSERT_NE(0, delegate.produced_blocks());
 ASSERT_NE(0, delegate.missed_blocks());
 ASSERT_NE(0, delegate.rate());
 ASSERT_NE(0.0, delegate.approval());
-//ASSERT_EQ(92.45f, (float)delegate.productivity());
+ASSERT_EQ(0.0, delegate.productivity());
 
 
 const auto account = arkManager.account(darkAddress);
 ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", account.address().getValue());
 auto balance = account.unconfirmed_balance();
-//ASSERT_STREQ("94803.95341862", balance.ark());
-//ASSERT_STREQ("9480395341862", balance.arktoshi());
+ASSERT_STRNE("0.0", balance.ark());
+ASSERT_STRNE("0", balance.arktoshi());
 balance = account.balance();
-//ASSERT_STREQ("94803.95341862", balance.ark());
-//ASSERT_STREQ("9480395341862", balance.arktoshi());
+ASSERT_STRNE("0.0", balance.ark());
+ASSERT_STRNE("0", balance.arktoshi());
 ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", account.public_key().getValue());
 ASSERT_EQ(1, account.unconfirmed_signature());
 ASSERT_EQ(1, account.second_signature());
