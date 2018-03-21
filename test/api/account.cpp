@@ -32,7 +32,7 @@ ASSERT_NE(0, delegate.produced_blocks());
 ASSERT_NE(0, delegate.missed_blocks());
 ASSERT_NE(0, delegate.rate());
 ASSERT_NE(0.0, delegate.approval());
-ASSERT_EQ(0.0, delegate.productivity());
+ASSERT_NE(0.0, delegate.productivity());
 
 
 const auto account = arkManager.account(darkAddress);
