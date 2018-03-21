@@ -114,6 +114,7 @@ public:
 
 	virtual size_t write(uint8_t i) {
 		std::cout << i;
+		return 1;
 	}
 
 	size_t write(const char* str) {
@@ -122,7 +123,7 @@ public:
 	}
 	
 	virtual size_t write(const uint8_t* buffer, size_t size) {
-		
+		return 0;
 	}
 	
 	virtual int availableForWrite() { return 0; }
