@@ -34,28 +34,28 @@ Connector::Connector(ARK::NetworkType networkType) {
 
 
 Connector::Connector(const Connector& other) : network(other.network), netType(other.netType), networkPort(other.networkPort) {
-    strncpy(networkPeer, other.networkPeer, sizeof(networkPeer[0]));
+    strncpy(networkPeer, other.networkPeer, 16);
 } 
 
 Connector& Connector::operator=(const Connector& other) {
     if (this != &other) {
         network = other.network;
         netType = other.netType;
-        strncpy(networkPeer, other.networkPeer, sizeof(networkPeer[0]));
+        strncpy(networkPeer, other.networkPeer, 16);
         networkPort = other.networkPort;
     }
     return *this;
 }
 
 Connector::Connector(Connector&& other) : network(other.network), netType(other.netType), networkPort(other.networkPort) {
-    strncpy(networkPeer, other.networkPeer, sizeof(networkPeer[0]));
+    strncpy(networkPeer, other.networkPeer, 16);
 }
 
 Connector& Connector::operator=(Connector&& other) {
     if (this != &other) {
         network = other.network;
         netType = other.netType;
-        strncpy(networkPeer, other.networkPeer, sizeof(networkPeer[0]));
+        strncpy(networkPeer, other.networkPeer, 16);
         networkPort = other.networkPort;
     }
     return *this;
