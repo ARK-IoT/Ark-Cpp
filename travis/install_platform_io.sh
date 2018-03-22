@@ -4,4 +4,4 @@ sudo pip install -U platformio
 platformio update
 
 # install ArduinoJson (64), HttpClient (66), ArduinoUnit (946) libraries
-platformio lib -g install 64 66 946@2.2
+platformio lib -g install 64 66 946
