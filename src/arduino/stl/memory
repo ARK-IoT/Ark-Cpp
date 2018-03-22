@@ -1,6 +1,8 @@
 #ifndef __MEMORY__
 #define __MEMORY__
 
+#include <stddef.h>
+
 namespace std {
 
 template <typename T>
