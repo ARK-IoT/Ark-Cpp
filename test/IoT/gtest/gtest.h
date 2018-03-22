@@ -1,7 +1,7 @@
 #ifndef __GTEST_H__
 #define __GTEST_H__
 
-#include <ArduinoUnit.h>
+#include <AUnit.h>
 
 #define TEST(category, name) test(category##__##name)
 
