@@ -11,7 +11,7 @@ uint8_t i = 0;
 uint8_t max_blinks = 5;
 
 void loop() {
-   TestRunner::run();
+   aunit::TestRunner::run();
 }
 
 #endif
