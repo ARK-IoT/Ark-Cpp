@@ -1,7 +1,7 @@
 #include "utilities/http.h"
 
 #include <HttpClient.h>
-//#include <Ethernet.h>
+#include <Ethernet.h>
 #include <EthernetClient.h>
 
 namespace ARK {
