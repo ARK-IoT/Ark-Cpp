@@ -5,10 +5,10 @@
 
 #define TEST(category, name) test(category##__##name)
 
-#define ASSERT_EQ assertEqual
-#define ASSERT_NE assertNotEqual
-#define ASSERT_STREQ assertEqual
-#define ASSERT_STRNE assertNotEqual
+#define ASSERT_EQ(e, a) assertEqual(static_cast<decltype(a)>(e), a)
+#define ASSERT_NE(e, a) assertNotEqual(static_cast<decltype(a)>(e), a)
+#define ASSERT_STREQ(e, a) assertEqual(static_cast<decltype(a)>(e), a)
+#define ASSERT_STRNE(e, a) assertNotEqual(static_cast<decltype(a)>(e), a)
 #define ASSERT_TRUE(x) assertNotEqual(static_cast<unsigned>(x), 0u)
 #define ASSERT_FALSE(x) assertEqual(static_cast<unsigned>(x), 0u)
 
