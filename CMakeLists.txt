@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.2.2)
 
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/toolchain.cmake")
 
-set(CMAKE_TOOLCHAIN_FILE "toolchain.cmake")
-
 set (HUNTER_ROOT .)
 
 include("${CMAKE_SOURCE_DIR}/cmake/HunterGate.cmake")
