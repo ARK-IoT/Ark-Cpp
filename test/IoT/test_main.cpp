@@ -1,6 +1,9 @@
 #ifdef UNIT_TEST
 
 #include <AUnit.h>
+
+#ifdef ESP8266
+
 #include <ESP8266WiFi.h>
 
 namespace {
@@ -8,13 +11,8 @@ namespace {
 char ssid[] = "your_ssid";     //  your network SSID (name)
 const char password[] = "your_password";  // your network password
 
-}
-
-void setup() {
-    Serial.begin(9600);
-	while (!Serial); // for the Arduino Leonardo/Micro only
-
-    Serial.println();
+void setup_network() {
+	Serial.println();
     Serial.println();
     Serial.print("Connecting to ");
     Serial.println(ssid);
@@ -34,6 +32,25 @@ void setup() {
     Serial.println("WiFi connected");
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
+}
+
+}
+
+#else
+
+namespace {
+
+void setup_network() { }
+
+}
+
+#endif
+
+void setup() {
+    Serial.begin(9600);
+	while (!Serial); // for the Arduino Leonardo/Micro only
+
+	setup_network();
 
     aunit::TestRunner::setTimeout(0);
 

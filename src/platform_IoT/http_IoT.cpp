@@ -1,7 +1,20 @@
 #include "utilities/http.h"
 
 #include <HttpClient.h>
+
+#ifdef ESP8266
+
 #include <WiFiClient.h>
+
+typedef WiFiClient NetworkClient;
+
+#else
+
+#include <EthernetClient.h>
+
+typedef EthernetClient NetworkClient;
+
+#endif
 
 namespace ARK {
 namespace Utilities {
@@ -14,7 +27,7 @@ public:
 	HTTP() = default;
 
 	String get(const String& peer, int port, const String& request) override {
-		WiFiClient c;
+		NetworkClient c;
 		HttpClient http(c);
 
 		auto error = http.get(peer.c_str(), port, request.c_str());
