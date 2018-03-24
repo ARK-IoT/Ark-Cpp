@@ -27,7 +27,7 @@ const NetworkType type = NetworkType::DEV;
 const ARK::Network model(
 	nethash,
 	"DARK",
-	"DѦ",
+	u8"DѦ",
 	"https://dexplorer.ark.io/",
 	30
 );
@@ -60,7 +60,7 @@ const char* nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd
 	const ARK::Network model(
 		nethash,
 		"ARK",
-		"Ѧ",
+		u8"Ѧ",
 		"https://explorer.ark.io/",
 		23
 	);

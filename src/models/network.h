@@ -32,7 +32,7 @@ class Network : public Printable {
 private:
     char nethash_[65];		//TODO: review sizes
     char token_[8];
-    char symbol_[4];
+    char symbol_[8];
     char explorer_[65];
     int version_;
 
