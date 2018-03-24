@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.2.2)
 
-set(CMAKE_TOOLCHAIN_FILE "cmake/toolchain.cmake")
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/toolchain.cmake")
 
 set (HUNTER_ROOT .)
 
-include("cmake/HunterGate.cmake")
+include("${CMAKE_SOURCE_DIR}/cmake/HunterGate.cmake")
 
 HunterGate(
 	URL "https://github.com/ruslo/hunter/archive/v0.20.14.tar.gz"
