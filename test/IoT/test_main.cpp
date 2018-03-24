@@ -36,14 +36,6 @@ void setup() {
     Serial.println(WiFi.localIP());
 
     aunit::TestRunner::setTimeout(0);
-	aunit::TestRunner::exclude("api_*");
-	aunit::TestRunner::include("api__test_account"); // TODO: inconsistent
-	aunit::TestRunner::include("api__test_block");
-	//aunit::TestRunner::include("api__test_delegate"); // does not work
-	aunit::TestRunner::include("api__test_loader");
-	aunit::TestRunner::include("api__test_peer");
-	aunit::TestRunner::include("api__test_signature");
-	aunit::TestRunner::include("api__test_transaction");
 
 	delay(1000);
 }

@@ -2,9 +2,13 @@
 
 #include "models/currency.h"
 
-TEST(model, construct_currency) {
-	static const auto ark_symbol = u8"Ѧ";
+namespace {
 
+const auto ark_symbol = u8"Ѧ";
+
+}
+
+TEST(model, construct_currency) {
     ARK::Model::Currency currency(
         "ARK",
         "ark",

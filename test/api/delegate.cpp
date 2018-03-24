@@ -2,10 +2,14 @@
 
 #include "api/api.h"
 
-TEST(api, test_delegate) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+namespace {
 
-	Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+const Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
+
+}
+
+TEST(api, test_delegates_count) {
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 
 	ASSERT_NE(0, _arkManager.delegatesCount());
 
@@ -18,9 +22,10 @@ TEST(api, test_delegate) {
 	ASSERT_STRNE("0", vote.arktoshi());
 	ASSERT_NE(0, search.produced_blocks());
 	ASSERT_NE(0, search.missed_blocks());
-	  
+}
 
-
+TEST(api, test_delegate_user) {
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 /*  ==================================  */
 //  String delegateVotersDescription = _arkManager.delegateVoters(darkPubkey).getValue();
 //    Serial.println("delegateVotersDescription: ");
@@ -40,8 +45,11 @@ TEST(api, test_delegate) {
 	ASSERT_NE(0, delegate.rate());
 	ASSERT_NE(0.0, delegate.approval());
 	ASSERT_NE(0.0, delegate.productivity());	
+}
 
-    delegate = _arkManager.delegate(darkPubkey.getValue());
+TEST(api, test_delegate_pub_key) {
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+    auto delegate = _arkManager.delegate(darkPubkey.getValue());
     ASSERT_STREQ("sleepdeficit", delegate.username());
 	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", delegate.address().getValue());
 	ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", delegate.public_key().getValue());
@@ -51,7 +59,9 @@ TEST(api, test_delegate) {
 	ASSERT_NE(0, delegate.rate());
 	ASSERT_NE(0.0, delegate.approval());
 	ASSERT_NE(0.0, delegate.productivity());	
-
+}
+TEST(api, test_delegate_fee) {
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 /*  ==================================  */
 /*    BROKEN: fix for large callbacks    */
 /*  Delegates callback is ~13,564 bytes  */
@@ -67,7 +77,10 @@ TEST(api, test_delegate) {
 	const auto delegateFee = _arkManager.delegateFee();
 	ASSERT_STREQ("25.00000000", delegateFee.ark());
 	ASSERT_STREQ("2500000000", delegateFee.arktoshi());
+}
 
+TEST(api, test_delegate_forged_by_account) {
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 	const auto forged_by_account = _arkManager.delegateForgedByAccount(darkPubkey);
 	ASSERT_STRNE("0.0", forged_by_account.fees().ark());
 	ASSERT_STRNE("0", forged_by_account.fees().arktoshi());
