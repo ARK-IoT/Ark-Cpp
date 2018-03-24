@@ -2,7 +2,7 @@
 
 #include "models/transaction.h"
 
-TEST(transaction, construct_transaction) {
+TEST(model, construct_transaction) {
     ARK::Transaction transaction(
         "f93b1b635eaaeea21b26ebf1e10f62dc8874add6592737a1540d28ec9432eaa9",
         "14671461178414977683",

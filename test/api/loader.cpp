@@ -2,7 +2,7 @@
 
 #include "api/api.h"
 
-TEST(loader, test_loader) {
+TEST(api, test_loader) {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 
 	const auto status = _arkManager.loaderStatus();

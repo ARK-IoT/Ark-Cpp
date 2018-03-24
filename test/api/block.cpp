@@ -2,7 +2,7 @@
 
 #include "api/api.h"
 
-TEST(block, test_block) {
+TEST(api, test_block) {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 
 	const auto block = _arkManager.block("4367122150875693402");

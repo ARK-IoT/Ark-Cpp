@@ -2,7 +2,7 @@
 
 #include "models/voter.h"
 
-TEST( voter, construct_voter) {
+TEST(model, construct_voter) {
     ARK::Voter voter(
         "sleepdeficit",
         "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",

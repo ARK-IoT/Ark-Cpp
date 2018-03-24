@@ -2,7 +2,7 @@
 
 #include "models/peer.h"
 
-TEST(Peer, construct_peer) {
+TEST(model, construct_peer) {
     ARK::Peer peer(
         "167.114.29.55",
         4002,

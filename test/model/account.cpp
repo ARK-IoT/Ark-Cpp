@@ -2,7 +2,7 @@
 
 #include "models/account.h"
 
-TEST(account, construct_account) {
+TEST(model, construct_account) {
     ARK::Account account(
         "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
         "100000000",//Balance("100000000"),

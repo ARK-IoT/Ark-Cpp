@@ -1,8 +1,7 @@
 #include "utilities/http.h"
 
 #include <HttpClient.h>
-#include <Ethernet.h>
-#include <EthernetClient.h>
+#include <WiFiClient.h>
 
 namespace ARK {
 namespace Utilities {
@@ -15,47 +14,28 @@ public:
 	HTTP() = default;
 
 	String get(const String& peer, int port, const String& request) override {
-		EthernetClient c;
+		WiFiClient c;
 		HttpClient http(c);
 
-		// if (this->isReachable == false)
-		//  {
-		//   http.setReuse(true);
-		//http.setTimeout(1000);
-		//Serial.println("Opening HTTP connection to " + peer + ":" + String(port));
-		//http.begin(peer, port, request);
-		//   this->isReachable = true;
-		// }
-		// else
-		// {
-		//   http.begin(request);
-		// };
-		auto httpCode = http.get(peer.c_str(), port, request.c_str());
+		auto error = http.get(peer.c_str(), port, request.c_str());
 
-		/*while (!http.connected())
-		{
-			delay(1000);
-			Serial.println("waiting for HTTP connection for " + request);
-		};*/
+		if (error != 0) {
+			// error
+			String errStr = String("HTTP Error") + String(error);
+			Serial.println(errStr);
+			return errStr;
+		}
+		auto httpCode = http.responseStatusCode();
 
-		//this->isReachable = (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected());
-
-		//if (this->isReachable)
-		if (httpCode > 0 && httpCode == 200 /*&& http.connected()*/)
-		{
-			//String streamStr = String(http.getStreamPtr()->readString());
-
-			//http.end();
-
-			//return streamStr;
-
+		if (httpCode > 0 /*&& httpCode == 200*/ /*&& http.connected()*/) {
 			http.skipResponseHeaders();
-			return http.readString();
+			String response = http.readString();
+			http.stop();
+			return response;
 		}
 		else
 		{
-			//http.end();
-
+			http.stop();
 			return "Error: Connection to Peer could not be established";
 		}
 	}

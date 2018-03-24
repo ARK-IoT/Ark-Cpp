@@ -2,7 +2,7 @@
 
 #include "api/api.h"
 
-TEST(peer, test_peer) {
+TEST(api, test_peer) {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 
 	const auto peer = _arkManager.peer("167.114.29.55", 4002);

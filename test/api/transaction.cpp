@@ -2,7 +2,7 @@
 
 #include "api/api.h"
 
-TEST(transaction, test_transaction) {
+TEST(api, test_transaction) {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 
 	const Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");

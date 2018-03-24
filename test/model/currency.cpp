@@ -2,7 +2,7 @@
 
 #include "models/currency.h"
 
-TEST( currency, construct_currency) {
+TEST(model, construct_currency) {
     ARK::Model::Currency currency(
         "ARK",
         "ark",

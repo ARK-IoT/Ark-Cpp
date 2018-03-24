@@ -2,7 +2,7 @@
 
 #include "api/api.h"
 
-TEST(account, test_account) {
+TEST(api, test_account) {
 
 ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
 

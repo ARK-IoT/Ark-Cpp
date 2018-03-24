@@ -2,7 +2,7 @@
 
 #include "models/delegate.h"
 
-TEST( delegate, constructo_delegate) {
+TEST(model, construct_delegate) {
     ARK::Delegate delegate(
         "sleepdeficit",
         "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",

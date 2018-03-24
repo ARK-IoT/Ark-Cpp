@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-TEST(balance, construct_balance) {
+TEST(types, construct_balance) {
     Balance balance("12984403000000000");
 	ASSERT_STREQ("129844030.00000000", balance.ark());
 	ASSERT_STREQ("12984403000000000", balance.arktoshi());

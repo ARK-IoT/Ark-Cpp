@@ -2,7 +2,7 @@
 
 #include "models/fees.h"
 
-TEST(Fees, construct_fees) {
+TEST(model, construct_fees) {
     ARK::Fees fees(
         "10000000",
         "100000000",

@@ -2,7 +2,7 @@
 
 #include "models/block.h"
 
-TEST(block, construct_block) {
+TEST(model, construct_block) {
     ARK::Block block(
         "5907849310697169543",
         0,
