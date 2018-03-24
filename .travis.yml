@@ -49,6 +49,18 @@ matrix:
         - INSTALL_SCRIPT="./travis/install_platform_io.sh"
         - BUILD_SCRIPT="./travis/script_platform_io.sh"
         
+    - os: linux
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        
     - os: osx
       osx_image: xcode9.2
       env:
