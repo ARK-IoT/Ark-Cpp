@@ -2,9 +2,17 @@
 
 #include <AUnit.h>
 
+#if (defined ESP8266 || defined ESP32)
+
 #ifdef ESP8266
 
 #include <ESP8266WiFi.h>
+
+#else
+
+#include <WiFi.h>
+
+#endif // ESP8266
 
 namespace {
 

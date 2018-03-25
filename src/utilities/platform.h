@@ -1,9 +1,15 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-#ifdef ARDUINO
+#if (defined ARDUINO || defined ESP8266 || defined ESP32)
 
 #include <Arduino.h>
+
+// undef the C macros to allow the C++ STL to take over
+// This is to have compatibility with various board implementations of the STL
+#undef min
+#undef max
+
 #include <WString.h>
 #include <Printable.h>
 #include <Print.h>
