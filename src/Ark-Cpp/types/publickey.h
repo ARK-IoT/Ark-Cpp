@@ -4,65 +4,31 @@
 #define PUBLICKEY_H
 
 /********************************************************************************
-*
-* publicKey: 
+*	Publickey: 
 *   "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456"
-*   
 *   66 Characters | Base64-encoded
-*
 ********************************************************************************/
 
-typedef char PUBLIC_KEY_VALUE[66];
+#define PUBLICKEY_CHARACTER_WIDTH 8
+#define PUBLICKEY_LENGTH 66		/* Actual Length of Address */
+#define PUBLICKEY_SIZE (PUBLICKEY_LENGTH * PUBLICKEY_CHARACTER_WIDTH)		/* Size: 528 (Length of Publickey * character width) */
 
 /*************************************************
 *
 **************************************************/
-struct publickey_t :
-		public ValuePrintable
+struct Publickey :
+		public Describable
 {
-
 	private:
-
-		static const auto PUBLICKEY_SIZE = 67;
-		char value_[PUBLICKEY_SIZE];
+		char value_[PUBLICKEY_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
 
 	public:
 
-		publickey_t() : value_() {};
+		Publickey();
 
-		publickey_t(const char* const base64String) : value_()
-		{  
-			if (strlen(base64String) < PUBLICKEY_SIZE - 1)
-			{
-				value_[0] = '\0';
-			}
-			else
-			{
-				strncpy(value_, base64String, sizeof(value_) / sizeof(value_[0]));
-			}
-		};
-
-		publickey_t(const publickey_t& other) : value_()
-		{
-			strcpy(value_, other.value_);
-		};
-
-		publickey_t& operator=(const publickey_t& other)
-		{
-			if (this != &other)
-			{
-				strcpy(value_, other.value_);
-			}
-			return *this;
-		};
-
-    const char* getValue() const { return value_; };
+		Publickey(const char* const pubkeyStr);
 
 };
-/*************************************************/
-
-/*************************************************/
-typedef publickey_t Publickey;
 /*************************************************/
 
 #endif

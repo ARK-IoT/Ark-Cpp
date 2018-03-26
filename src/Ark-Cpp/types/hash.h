@@ -4,41 +4,29 @@
 #define HASH_H
 
 /********************************************************************************
-*
 * hash: 
 *   "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23"
-*   
 *   64 Characters | HEX-encoded
-*
+*   Size 256
 ********************************************************************************/
 
-#define HASH_SIZE 65
+#define HASH_BIT_WIDTH 8
+#define HASH_BIT_LENGTH 32
+#define HASH_CHARACTER_WIDTH 4
+#define HASH_CHARACTER_LENGTH 64		/* Actual Length of Address */
+#define HASH_SIZE (HASH_CHARACTER_LENGTH * HASH_CHARACTER_WIDTH)		/* Size: 256 (Length of sha256 Hash * sha256 character width) */
 
 struct Hash :
-		public ValuePrintable
+		public Describable
 {
   private:
-    
-    static const auto HASH_LENGTH = HASH_SIZE / sizeof(char);
-    char value_[HASH_LENGTH];
+    char value_[HASH_CHARACTER_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
 
   public:
 
-    Hash() : value_() {}
+    Hash();
+    Hash(const char* const hashStr);
 
-    Hash(const char* const hashStr) : value_()
-    {
-      if (strlen(hashStr) < HASH_LENGTH - 1)
-      {
-        value_[0] = '\0';
-      }
-      else
-      {
-        strncpy(value_, hashStr, sizeof(value_) / sizeof(value_[0]));
-      };
-    };
-
-    const char* getValue() const { return value_; };
 };
 
 #endif

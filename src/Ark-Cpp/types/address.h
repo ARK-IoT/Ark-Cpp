@@ -9,46 +9,29 @@
 *   "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA"
 *   
 *   34 Characters | Base58-encoded
-*
+*		Size 272
+*		160-bit base58Encoded hash from a RIPEME160 hash
 ********************************************************************************/
 
-#define ADDRESS_SIZE 35
-
-/*************************************************
-*   address_t
-**************************************************/
-struct address_t :
-		public ValuePrintable
-{
-	private:
-
-		static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
-		char value_[ADDRESS_LENGTH];
-
-	public:
-
-		address_t() : value_() {};
-
-		address_t(const char* const addressString) : value_()
-		{
-			if (strlen(addressString) < ADDRESS_LENGTH - 1)
-			{
-        value_[0] = '\0';
-      }
-      else
-			{
-        strncpy(value_, addressString, sizeof(value_) / sizeof(value_[0]));
-      };
-		};
-
-	const char* getValue() const { return value_; };
-
-};
-/*************************************************/
+#define ADDRESS_CHARACTER_WIDTH 8
+#define ADDRESS_LENGTH 34		/* Actual Length of Address */
+#define ADDRESS_SIZE (ADDRESS_LENGTH * ADDRESS_CHARACTER_WIDTH)		/* Size: 272 (Length of Address * character width) */
 
 /*************************************************
 *   Address
 **************************************************/
-typedef address_t Address;
+struct Address
+		:  public Describable
+{
+	protected:
+		char value_[ADDRESS_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
+
+	public:
+
+		Address();
+		explicit Address(const char* const addressStr);
+
+};
+/*************************************************/
 
 #endif

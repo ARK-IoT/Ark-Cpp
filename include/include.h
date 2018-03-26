@@ -1,11 +1,20 @@
+/***************************************
+* include.h 
+* 
+* Ark-Cpp - for the Ark Ecosystem (ark.io)
+* https://github.com/Ark-IoT/Ark-Cpp
+*
+* sleepdeficit(simon@ark.io)
+* MIT | Copyright S. Downey 2017-2018
+***************************************/
 
+#ifndef INCLUDE_H
+#define INCLUDE_H
 
-#ifndef include_h
-#define include_h
-
-
+/***************************************
+* https://github.com/bblanchon/ArduinoJson
+***************************************/
 #include "ArduinoJson/ArduinoJson.h"
-/*  https://github.com/bblanchon/ArduinoJson */
-
+/**************************************/
 
 #endif

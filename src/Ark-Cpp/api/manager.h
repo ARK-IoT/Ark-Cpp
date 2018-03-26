@@ -21,9 +21,7 @@ class Manager :
     public Transactionable,
     virtual ARK::Utilities::Network::Connectable
 {
-
   public:
-
     /*************************************************
     *  ARK::API::Manager
     **************************************************/
