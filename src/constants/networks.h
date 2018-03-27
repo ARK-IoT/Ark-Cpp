@@ -6,15 +6,11 @@
 #include "utilities/platform.h"
 #include "models/network.h"
 
-namespace ARK
-{
-namespace Constants
-{
-namespace Networks
-{
+namespace ARK {
+namespace Constants {
+namespace Networks {
 
-namespace Devnet
-{
+namespace Devnet {
 
 	/*
 			ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
@@ -34,7 +30,7 @@ namespace Devnet
 			==============
 	*/
 
-	extern const char* nethash;
+	extern const char* const nethash;
 
 	extern const char* const seeds[6];
 

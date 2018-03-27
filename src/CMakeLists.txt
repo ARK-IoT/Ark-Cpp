@@ -29,6 +29,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/api/manager.cpp
+	${PROJECT_SOURCE_DIR}/constants/bip39_words.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/models/account.cpp
 	${PROJECT_SOURCE_DIR}/models/block.cpp
@@ -40,6 +41,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/transaction.cpp
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
+	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
 )
 
 set(PLATFORM_SRC 

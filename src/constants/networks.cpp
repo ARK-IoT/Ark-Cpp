@@ -10,7 +10,7 @@ namespace Networks
 namespace Devnet
 {
 
-const char* nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
+const char* const nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
 
 const char* const seeds[6] =
 {
