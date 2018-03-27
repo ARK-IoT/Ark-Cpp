@@ -1,3 +1,7 @@
+#include "utilities/platform.h"
+
+#ifndef USE_IOT
+
 #include "utilities/json.h"
 
 #include "nlohmann/json.hpp"
@@ -124,3 +128,5 @@ std::unique_ptr<JSONInterface> make_json_string(const String& json_str) {
 
 }
 }
+
+#endif

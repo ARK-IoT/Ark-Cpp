@@ -1,3 +1,7 @@
+#include "utilities/platform.h"
+
+#ifndef USE_IOT
+
 #include "utilities/http.h"
 
 #include "Poco/Net/HTTPClientSession.h"
@@ -53,3 +57,5 @@ std::unique_ptr<HTTPInterface> make_http() {
 }
 }
 }
+
+#endif

@@ -3,6 +3,12 @@
 
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
 
+#define USE_IOT
+
+#endif
+
+#ifdef USE_IOT
+
 #include <Arduino.h>
 
 // undef the C macros to allow the C++ STL to take over

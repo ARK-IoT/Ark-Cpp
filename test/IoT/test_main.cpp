@@ -1,4 +1,4 @@
-#ifdef UNIT_TEST
+#if (defined PLATFORMIO && defined UNIT_TEST)
 
 #include <AUnit.h>
 
