@@ -37,7 +37,7 @@ const char password[] = "your_password";  // your network password
 
 #
 
-### running the tests on an ESP8266 board
+### running the tests on an Arduino board
 
 **`cd` into this directory "*.../Ark-Cpp/test*"**  
 > ```cd test```
