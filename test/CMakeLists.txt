@@ -36,6 +36,7 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/types/address.cpp
 	${PROJECT_SOURCE_DIR}/types/balance.cpp
 	${PROJECT_SOURCE_DIR}/types/hash.cpp
+	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 	${PROJECT_SOURCE_DIR}/types/signature.cpp
 )

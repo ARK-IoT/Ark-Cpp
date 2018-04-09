@@ -12,9 +12,12 @@ private:
 
 	std::array<std::array<char, SECOND_PASSPHRASE_NUM_WORDS>, ARK::Constants::MAX_BIP39_WORD_LENGTH> _words;
 	bool _use_second_passphrase;
+	char _private_key[256];
 
 public:
 	Passphrase(bool generate_second_passphrase = false, uint8_t strength = 128);
+
+	Passphrase(const char* const word_list);
 	
 	Passphrase(const std::array<std::array<char, SINGLE_PASSPHRASE_NUM_WORDS>, ARK::Constants::MAX_BIP39_WORD_LENGTH>& words);
 
@@ -30,13 +33,18 @@ public:
 
 	const char* operator[](size_t index) const { return _words[index].data(); }
 
+	const char* private_key() const { return _private_key; }
+
 private:
 	template <size_t N> 
 	void copy_words(const std::array<std::array<char, N>, ARK::Constants::MAX_BIP39_WORD_LENGTH>& words) {
+		// TODO: validate words
 		for (auto i = 0u; i < N; ++i) {
 			std::copy(words[i].cbegin(), words[i].cend(), _words[i].begin());
 		}
 	}
+
+	void calculate_private_key();
 };
 
 #endif
