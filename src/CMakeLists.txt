@@ -12,7 +12,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
  
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(Poco CONFIG REQUIRED Foundation Net)
+find_package(Poco CONFIG REQUIRED Foundation Net Crypto)
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
@@ -54,5 +54,5 @@ add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
-target_link_libraries(Ark-Cpp-lib PUBLIC PocoCrypto)
+target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Crypto)
 
