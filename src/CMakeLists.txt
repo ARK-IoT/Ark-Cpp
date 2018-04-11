@@ -12,7 +12,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
  
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(PocoCpp CONFIG REQUIRED Foundation Net)
+find_package(Poco CONFIG REQUIRED Foundation Net)
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
