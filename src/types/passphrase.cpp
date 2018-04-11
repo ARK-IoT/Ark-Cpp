@@ -1,5 +1,4 @@
 #include "types/passphrase.h"
-#include "crypto/sha256.h"
 
 #include "Poco/PBKDF2Engine.h"
 #include "Poco/HMACEngine.h"
