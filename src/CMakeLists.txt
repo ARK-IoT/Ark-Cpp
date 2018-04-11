@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.2.2)
 project(Ark-Cpp-lib)
 
 hunter_add_package(nlohmann_json)
+
 hunter_add_package(PocoCpp)
 
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -11,7 +12,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
  
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(Poco REQUIRED Net CONFIG)
+find_package(PocoCpp CONFIG REQUIRED Foundation Net)
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp

@@ -208,7 +208,7 @@ private:
 
       for (byte i = 0; i < 32; i++)
       {
-        char tmp[2] = { "\0" };
+        char tmp[3] = { "\0" };
         if (hash[i] != 0)
         {
           sprintf(tmp, "%.2x",hash[i]);

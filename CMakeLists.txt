@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 3.2.2)
-
+set(HUNTER_STATUS_DEBUG ON)
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/toolchain.cmake")
-
-set (HUNTER_ROOT .)
 
 include("${CMAKE_SOURCE_DIR}/cmake/HunterGate.cmake")
 
 HunterGate(
-	URL "https://github.com/ruslo/hunter/archive/v0.20.14.tar.gz"
-	SHA1 "18cdbf5c47abdda437c73bf5437b7c3c65afe47c"
+	URL "https://github.com/ruslo/hunter/archive/v0.20.38.tar.gz"
+	SHA1 "efd84db1349e38974f53d4c4fc0b368a3b49f022"
 )
 
 project(Ark-Cpp)
