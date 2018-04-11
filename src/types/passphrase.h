@@ -4,6 +4,7 @@
 #include "constants/bip39_words.h"
 
 #include <array>
+#include <cstring>
 
 class Passphrase {
 public:
