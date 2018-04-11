@@ -55,4 +55,4 @@ add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Crypto)
-
+target_link_libraries(Ark-Cpp-lib PUBLIC crypt32)

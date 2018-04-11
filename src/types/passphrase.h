@@ -18,7 +18,7 @@ private:
 	char _words[SECOND_PASSPHRASE_NUM_WORDS * (ARK::Constants::MAX_BIP39_WORD_LENGTH + 1)];
 	char _phrase[SECOND_PASSPHRASE_NUM_WORDS * ARK::Constants::MAX_BIP39_WORD_LENGTH];
 	bool _use_second_passphrase;
-	uint8_t _private_key[64];
+	char _private_key[65];
 
 public:
 	Passphrase(bool generate_second_passphrase = false, uint8_t strength = 128);
@@ -39,7 +39,7 @@ public:
 
 	//const char* operator[](size_t index) const { return _words[index]; }
 
-	const uint8_t* private_key() const { return _private_key; }
+	const char* private_key() const { return _private_key; }
 
 private:
 	template <size_t N> 
