@@ -1,7 +1,40 @@
-#include "constants/bip39_words.h"
+#include "crypto/bip39.h"
+
+#include "Poco/PBKDF2Engine.h"
+#include "Poco/HMACEngine.h"
+#include "Poco/SHA1Engine.h"
+#include "Poco/Crypto/DigestEngine.h"
+#include "Poco/Crypto/ECDSADigestEngine.h"
+
 
 namespace ARK {
-namespace Constants {
+namespace Crypto {
+namespace BIP39 {
+
+namespace {
+
+class SHA512Engine : public Poco::Crypto::DigestEngine {
+public:
+    enum {
+        BLOCK_SIZE = 128,
+        DIGEST_SIZE = 64
+    };
+
+    SHA512Engine() : DigestEngine("SHA512") { }
+};
+
+class SHA256Engine : public Poco::Crypto::DigestEngine {
+public:
+	enum {
+		BLOCK_SIZE = 64,
+		DIGEST_SIZE = 32
+	};
+
+	SHA256Engine() : DigestEngine("SHA256") { }
+};
+
+
+}
 
 const char BIP39_WORDS[NUM_BIP39_WORDS][MAX_BIP39_WORD_LENGTH] = {
 	"abandon",
@@ -2054,5 +2087,21 @@ const char BIP39_WORDS[NUM_BIP39_WORDS][MAX_BIP39_WORD_LENGTH] = {
 	"zoo"
 };
 
+std::string generate_mnemonic() {
+	// TODO:
+
+	return "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
+}
+
+Account create_account(const char* const passphrase) {
+	//TODO: ensure normalized UTF8
+	SHA256Engine sha256;
+	sha256.update(passphrase);
+	const auto hash = sha256.digest();
+	
+	return Account();
+}
+
+}
 }
 }

@@ -51,6 +51,8 @@ private:
     Signature u_multisignatures_;
     
 public:
+	Account() = default;
+
     Account(
         const char* const a, 
         const char* const ub,
@@ -72,6 +74,21 @@ public:
 		multisignatures_(ms), 
 		u_multisignatures_(ums)
     { }
+
+	Account(
+		const char* const public_key, 
+		const char* const address
+	) :
+		address_(address), 
+		unconfirmedBalance_(), 
+		balance_(), 
+		publicKey_(public_key), 
+		unconfirmedSignature_(), 
+		secondSignature_(), 
+		secondPublicKey_(), 
+		multisignatures_(), 
+		u_multisignatures_()
+	{ }
 
 	const Address& address() const noexcept { return address_; }
 	const Balance& unconfirmed_balance() const noexcept { return unconfirmedBalance_; }

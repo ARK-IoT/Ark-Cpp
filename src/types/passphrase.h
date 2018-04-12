@@ -1,7 +1,7 @@
 #ifndef PASSPHRASE_H
 #define PASSPHRASE_H
 
-#include "constants/bip39_words.h"
+#include "crypto/bip39.h"
 
 #include <array>
 #include <cstring>
@@ -11,12 +11,12 @@ public:
 	static const auto SINGLE_PASSPHRASE_NUM_WORDS = 12u;
 	static const auto SECOND_PASSPHRASE_NUM_WORDS = 24u;
 
-	typedef std::array<std::array<char, ARK::Constants::MAX_BIP39_WORD_LENGTH>, SECOND_PASSPHRASE_NUM_WORDS> words_24_type;
-	typedef std::array<std::array<char, ARK::Constants::MAX_BIP39_WORD_LENGTH>, SINGLE_PASSPHRASE_NUM_WORDS> words_12_type;
+	typedef std::array<std::array<char, ARK::Crypto::BIP39::MAX_BIP39_WORD_LENGTH>, SECOND_PASSPHRASE_NUM_WORDS> words_24_type;
+	typedef std::array<std::array<char, ARK::Crypto::BIP39::MAX_BIP39_WORD_LENGTH>, SINGLE_PASSPHRASE_NUM_WORDS> words_12_type;
 
 private:
-	char _words[SECOND_PASSPHRASE_NUM_WORDS * (ARK::Constants::MAX_BIP39_WORD_LENGTH + 1)];
-	char _phrase[SECOND_PASSPHRASE_NUM_WORDS * ARK::Constants::MAX_BIP39_WORD_LENGTH];
+	char _words[SECOND_PASSPHRASE_NUM_WORDS * (ARK::Crypto::BIP39::MAX_BIP39_WORD_LENGTH + 1)];
+	char _phrase[SECOND_PASSPHRASE_NUM_WORDS * ARK::Crypto::BIP39::MAX_BIP39_WORD_LENGTH];
 	bool _use_second_passphrase;
 	char _private_key[65];
 
@@ -43,7 +43,7 @@ public:
 
 private:
 	template <size_t N> 
-	void copy_words(const std::array<std::array<char, ARK::Constants::MAX_BIP39_WORD_LENGTH>, N>& words) {
+	void copy_words(const std::array<std::array<char, ARK::Crypto::BIP39::MAX_BIP39_WORD_LENGTH>, N>& words) {
 		// TODO: validate words
 		for(const auto& word : words) {
 			std::strcat(_words, word.data());

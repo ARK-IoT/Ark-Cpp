@@ -30,7 +30,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/api/manager.cpp
-	${PROJECT_SOURCE_DIR}/constants/bip39_words.cpp
+	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/models/account.cpp
 	${PROJECT_SOURCE_DIR}/models/block.cpp
@@ -45,12 +45,22 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
 )
 
+set (POCO_SRC
+	${PROJECT_SOURCE_DIR}/poco/crypto/ECDSADigestEngine.cpp
+	${PROJECT_SOURCE_DIR}/poco/crypto/ECKey.cpp
+	${PROJECT_SOURCE_DIR}/poco/crypto/ECKeyImpl.cpp
+	${PROJECT_SOURCE_DIR}/poco/crypto/EVPPKey.cpp
+	${PROJECT_SOURCE_DIR}/poco/crypto/KeyPair.cpp
+	${PROJECT_SOURCE_DIR}/poco/crypto/KeyPairImpl.cpp
+	${PROJECT_SOURCE_DIR}/poco/crypto/X509Certificate.cpp
+)
+
 set(PLATFORM_SRC 
 	${PROJECT_SOURCE_DIR}/platform/json.cpp
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
 )
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${POCO_SRC})
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)

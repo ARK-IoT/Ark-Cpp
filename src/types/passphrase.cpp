@@ -1,35 +1,6 @@
 #include "types/passphrase.h"
 
-#include "Poco/PBKDF2Engine.h"
-#include "Poco/HMACEngine.h"
-#include "Poco/SHA1Engine.h"
-#include "Poco/Crypto/DigestEngine.h"
-#include "Poco/Crypto/ECDSADigestEngine.h"
-
-namespace {
-
-class SHA512Engine : public Poco::Crypto::DigestEngine {
-public:
-    enum {
-        BLOCK_SIZE = 128,
-        DIGEST_SIZE = 64
-    };
-
-    SHA512Engine() : DigestEngine("SHA512") { }
-};
-
-class SHA256Engine : public Poco::Crypto::DigestEngine {
-public:
-	enum {
-		BLOCK_SIZE = 64,
-		DIGEST_SIZE = 32
-	};
-
-	SHA256Engine() : DigestEngine("SHA256") { }
-};
-
-
-}
+#include "crypto/bip39.h"
 
 Passphrase::Passphrase(
 	bool generate_second_passphrase /* = false */, 
@@ -86,18 +57,18 @@ Passphrase::Passphrase(
 }
 
 void Passphrase::calculate_private_key() {
-	static const auto passphrase_prefix = "mnemonic";
-	static const auto password = "";
-	const auto salt = std::string(passphrase_prefix) + password;
-	SHA256Engine sha256;
+	//static const auto passphrase_prefix = "mnemonic";
+	//static const auto password = "";
+	//const auto salt = std::string(passphrase_prefix) + password;
+	//SHA256Engine sha256;
 	//sha256.update(_phrase);
-	sha256.update("bullet parade snow bacon mutual deposit brass floor staff list concert ask");
-	auto d = sha256.digest();
+	//sha256.update("bullet parade snow bacon mutual deposit brass floor staff list concert ask");
+	//auto d = sha256.digest();
 
 	//Poco::PBKDF2Engine<Poco::HMACEngine<SHA512Engine> > pbkdf2(salt, 2048, 64);
 	//pbkdf2.update(_phrase);
 	//auto d = pbkdf2.digest();
-	std::strncpy(_private_key, SHA256Engine::digestToHex(d).c_str(), 64);
+	//std::strncpy(_private_key, SHA256Engine::digestToHex(d).c_str(), 64);
 	//return pkcs5_pbkdf2_hmac_sha512(to_chunk(sentence), to_chunk(salt), hmac_iterations);
 
 

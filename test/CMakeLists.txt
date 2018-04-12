@@ -24,6 +24,7 @@ set (TEST_SRC
 #	${PROJECT_SOURCE_DIR}/api/peer.cpp
 #	${PROJECT_SOURCE_DIR}/api/signature.cpp
 #	${PROJECT_SOURCE_DIR}/api/transaction.cpp	
+	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
 #	${PROJECT_SOURCE_DIR}/model/account.cpp
 #	${PROJECT_SOURCE_DIR}/model/block.cpp
 #	${PROJECT_SOURCE_DIR}/model/currency.cpp
@@ -36,7 +37,6 @@ set (TEST_SRC
 #	${PROJECT_SOURCE_DIR}/types/address.cpp
 #	${PROJECT_SOURCE_DIR}/types/balance.cpp
 #	${PROJECT_SOURCE_DIR}/types/hash.cpp
-	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
 #	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 #	${PROJECT_SOURCE_DIR}/types/signature.cpp
 )
