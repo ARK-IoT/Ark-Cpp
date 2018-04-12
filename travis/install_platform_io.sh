@@ -2,7 +2,7 @@
 pip install --upgrade pip
 
 # install PlatformIO
-pip install -U platformio
+pip install --user platformio
 # update PlatformIO
 platformio update
 
