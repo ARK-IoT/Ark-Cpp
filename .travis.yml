@@ -45,7 +45,7 @@ matrix:
     - os: osx
       osx_image: xcode9.2
       env:
-        - MATRIX_EVAL=""
+        - MATRIX_EVAL="brew install python"
         - INSTALL_SCRIPT="./travis/install_platform_io.sh"
         - BUILD_SCRIPT="./travis/script_platform_io.sh"
         
