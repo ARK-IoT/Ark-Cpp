@@ -1,8 +1,6 @@
-# update pip
-pip install --upgrade pip
-
 # install PlatformIO
-pip install --user platformio
+pip install -U platformio
+
 # update PlatformIO
 platformio update
 
