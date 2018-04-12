@@ -12,13 +12,12 @@ namespace API
 namespace Helpers
 {
 
-/*  ==========================================================================  */
-
 struct Successable
 {
-public:
-  bool success;
+  public:
+    bool success;
 };
+
 };
 };
 };

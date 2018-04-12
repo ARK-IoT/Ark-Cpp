@@ -1,7 +1,7 @@
 
 
-#ifndef transport_h
-#define transport_h
+#ifndef TRANSPORT_H
+#define TRANSPORT_H
 
 namespace ARK
 {
@@ -23,9 +23,9 @@ namespace ARK
       int numberOfTransactions;
       char previousBlock[32];
       Publickey generatorPublicKey;
-      Signature blockSignature;
-  }; 
-  /*************************************************/
+			Signature blockSignature;
+}; 
+/*************************************************/
 
 };
 

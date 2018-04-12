@@ -2,25 +2,23 @@
   <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
-# Ark for Machines v0.6.1  
+# Ark for Machines v0.6.5  
 
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
-![version](https://img.shields.io/badge/version-v0.6.1-orange.svg?style=flat)
+![version](https://img.shields.io/badge/version-v0.6.5-orange.svg?style=flat)
+![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
 Travis: [![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=feature%2Fcmake)](https://travis-ci.org/ciband/Ark-Cpp)
 
 Appveyor: [![Build status](https://ci.appveyor.com/api/projects/status/guny8h1g0jqfog45/branch/feature/cmake?svg=true)](https://ci.appveyor.com/project/ciband/ark-cpp/branch/feature/cmake)
 
-
 Not production ready.  
 
 # Supported Boards
 - [X] ESP8266 https://www.adafruit.com/product/2821   // Development board
 - [ ] ESP32 https://www.adafruit.com/product/3405     // currently testing
-- [ ] Uno r3 https://www.adafruit.com/product/50      // currently testing
-
 
 
 #### What can this do?  
@@ -35,7 +33,7 @@ Create Signed transaction for broadcast to the Ark Ecosystem.
 # How to use this
 
 1) Define the network  
->  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;  
+>  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;  
 
 or  
 
@@ -82,7 +80,7 @@ or
 - [ ] Crypto
   - [ ] Test Crypto
     - [X] test sha256
-    - [ ] test bigint
+    - [X] test bigint
     - [ ] test secp256k1 ECDSA
     - [X] test ripemd160
     - [X] test base58
@@ -98,7 +96,7 @@ or
 
 - [ ] TODO
   - [ ] Documentation 
-  - [ ] Tests 
+  - [X] Tests 
   - [ ] Handle Large Callbacks 
   - [X] Remove 'String' objects in favor of 'const char*'
 

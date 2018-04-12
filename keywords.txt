@@ -25,7 +25,7 @@ ARK::Transaction	KEYWORD1
 ARK::Transport	KEYWORD1
 ARK::Voter	KEYWORD1
 
-ARK::API::Manager KEYWORD1
+API::Manager KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -50,13 +50,14 @@ ARK::Utilities::Network::Managable KEYWORD2
 # Constants (LITERAL1)
 #######################################
 
-ARK::Constants::Networks::Devnet	LITERAL1
+ARK::Constants::Networks::Model::Devnet	LITERAL1
+ARK::Constants::Networks::Model::Mainnet	LITERAL1
 ARK::Constants::Networks::Devnet::nethash	LITERAL1
 ARK::Constants::Networks::Devnet::seeds	LITERAL1
 ARK::Constants::Networks::Devnet::port	LITERAL1
-ARK::Constants::Networks::Devnet::model	LITERAL1
+ARK::Constants::Networks::Model::Devnet	LITERAL1
 ARK::Constants::Networks::Mainnet	LITERAL1
 ARK::Constants::Networks::Mainnet::nethash	LITERAL1
 ARK::Constants::Networks::Mainnet::seeds	LITERAL1
 ARK::Constants::Networks::Mainnet::port	LITERAL1
-ARK::Constants::Networks::Mainnet::model	LITERAL1
+ARK::Constants::Networks::Model::Mainnet	LITERAL1

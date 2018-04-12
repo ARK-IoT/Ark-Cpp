@@ -19,7 +19,7 @@ const char* password = "yourWiFiPassword";
 
 void checkAPI() {
   /*************************************************/
-  ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
+  ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);
   /*************************************************/
   
   Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");

@@ -1,15 +1,23 @@
 
 
-#ifndef VALUEABLE_H
-#define VALUEABLE_H
+#ifndef VALUABLE_H
+#define VALUABLE_H
+
+#ifdef ARDUINO
+#include "describable.h"
+#endif
 
 /*************************************************
-* Valueable
+*	Valuable
 **************************************************/
-struct Valueable
+struct Valuable
 {
-  private:
+  protected:
     char value_[];
+
+  public:
+    const char *getValue() const { return this->value_; };
+
 };
 /*************************************************/
 

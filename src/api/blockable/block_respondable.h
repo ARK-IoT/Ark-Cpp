@@ -7,92 +7,142 @@
 #include "types/hash.h"
 #include "utilities/platform.h"
 
-namespace ARK {
-namespace API {
-namespace Block {
-namespace Respondable {
+namespace ARK
+{
+namespace API
+{
+namespace Block
+{
+namespace Respondable
+{
+/*************************************************
+*	ARK::API::Block::Respondable::height_t 
+*
+*	@param: char height[64]
+*	@param:	char id[64]
+*
+*	@brief: Model for Height API Response
+**************************************************/
+struct height_t
+{
+	protected:
+		char height_[64];
+		char id_[64];
+};
+/*************************************************/
+
+
+/*************************************************
+*	ARK::API::Block::Respondable::Height 
+*
+*	@brief: Model for Height API Response
+**************************************************/
+struct Height :
+		public height_t,
+		Printable
+{
+	public:
+		/*************************************************
+		*	Constructor
+		**************************************************/
+		Height(
+				const char *const newHeight,
+				const char *const newID
+		);
+		/*************************************************/
+
+		/*************************************************
+		*	Accessors
+		**************************************************/
+		const char* height() const noexcept { return height_; }
+		const char* id() const noexcept { return id_; }
+	/*************************************************/
+
+		/*************************************************
+		*
+		**************************************************/
+		virtual size_t printTo(Print &p) const;
+		/*************************************************/
+
+};
+/*************************************************/
+
+/**************************************************************************************************/
+
+/*************************************************
+*	ARK::API::Block::Respondable::status_t 
+*
+*	@param: const char* epoch
+*	@param: const char* height
+*	@param: const Balance fee
+*	@param: int milestone
+*	@param: Hash nethash
+*	@param: const Balance reward
+*	@param: const Balance supply
+*
+*	@brief:	Model for Block Status API Response
+**************************************************/
+struct status_t
+{
+	protected:
+		char epoch_[64]; //TODO: check sizes
+		char height_[64];
+		Balance fee_;
+		int milestone_;
+		Hash nethash_;
+		Balance reward_;
+		Balance supply_;
+};
+/*************************************************/
 
 /*************************************************
 *	ARK::API::Block::Respondable::Status 
 *
-*		inherits:
-*			const char* epoch;
-*			const char* height;
-*			const Balance fee;
-*			int milestone;
-*			Hash nethash;
-*			const Balance reward;
-*			const Balance supply;
-*
-*   printTo(HardwareSerial &serial)
-*
-*   @brief: Constructor Model for Block Status API Response
+*	@brief: Constructor Model for Block Status API Response
 **************************************************/
-class Status : Printable
+struct Status :
+		public status_t,
+		Printable
 {
-private:
-    char epoch_[64];  //TODO: check sizes
-    char height_[64];
-    Balance fee_;
-    int milestone_;
-    Hash nethash_;
-    Balance reward_;
-    Balance supply_;
+	public:
+		/*************************************************
+		*	Constructor
+		**************************************************/
+		Status(
+				const char *const newEpoch,
+				const char *const newHeight,
+				const char *const newFee,
+				int 							newMilestone,
+				const char *const newNethash,
+				const char *const newReward,
+				const char *const newSupply
+		);
+		/*************************************************/
 
-public:
-    Status(
-        const char* const e, 
-        const char* const h,
-        const char* const f,
-        int m,
-        const char* const nh,
-        const char* const r,
-        const char* const s
-    ) : epoch_(), height_(), fee_(f), milestone_(m), nethash_(nh), reward_(r), supply_(s)
-    {
-        strncpy(epoch_, e, sizeof(epoch_) / sizeof(epoch_[0]));
-        strncpy(height_, h, sizeof(height_) / sizeof(height_[0]));
-    }
+		/*************************************************
+		*	Accessors
+		**************************************************/
+		const char* epoch() const noexcept { return epoch_; }
+		const char* height() const noexcept { return height_; }
+		const Balance& fee() const noexcept { return fee_; }
+		int milestone() const noexcept { return milestone_; }
+		const Hash& nethash() const noexcept { return nethash_; }
+		const Balance& reward() const noexcept { return reward_; }
+		const Balance& supply() const noexcept { return supply_; }
+		/*************************************************/
 
-	const char* epoch() const noexcept { return epoch_; }
-	const char* height() const noexcept { return height_; }
-	const Balance& fee() const noexcept { return fee_; }
-	int milestone() const noexcept { return milestone_; }
-	const Hash& nethash() const noexcept { return nethash_; }
-	const Balance& reward() const noexcept { return reward_; }
-	const Balance& supply() const noexcept { return supply_; }
-
-    size_t printTo(Print& p) const override;
+		/*************************************************
+		*
+		**************************************************/
+		virtual size_t printTo(Print &p) const;
+		/*************************************************/
+		
 };
-/*  ====================================  */
-/*  ================================================  */
+/*************************************************/
 
-
-/*  ==========================================================================  */
-/*  ====================================  */
-/*  ARK::API::Block::Respondable::Height  */
-/*  Definition  */
-class Height {
-private:
-    char height_[64]; // TODO: check sizes 
-    char id_[64];
-
-public:
-    Height(const char* const h, const char* const i) : height_(), id_() { 
-        strncpy(height_, h, sizeof(height_) / sizeof(height_[0]));
-        strncpy(id_, i, sizeof(id_) / sizeof(id_[0]));
-    }
-
-	const char* height() const noexcept { return height_; }
-	const char* id() const noexcept { return id_; }
-
-    void description(char* const buf, size_t size);
 };
-
-}
-}
-}
-}
-
+};
+};
+};
 
 #endif

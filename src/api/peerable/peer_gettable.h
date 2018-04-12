@@ -14,79 +14,51 @@ namespace API
 namespace Peer
 {
 /*************************************************
-*  PROTECTED: ARK::API::Peer::Gettable
+* PROTECTED: ARK::API::Peer::Gettable
 **************************************************/
 class Gettable
 {
   protected:
     /*************************************************
     * ARK::API::Peer::Gettable::peer
-    *   /api/peers/get?ip=167.114.29.55&port=4002
+    * /api/peers/get?ip=167.114.29.55&port=4002
     **************************************************/
     ARK::Peer peer(
         ARK::Utilities::Network::Connector& netConnector,
-        const char* const _ip,
-        int _port
+        const char* const ip,
+        int port
     );
+    /*************************************************/
 
-/*************************************************
-    *
-    *	{ 
-    *		"success":true,
-    *		"peer":
-    *		{
-    *			"ip": "String",
-    *			"port": int,
-    *			"version":  "String",
-    *			"errors": int,
-    *			"os": "String",
-    *			"height": String,
-    *			"status": "String",
-    *			"delay":  int
-    *		}
-    *	}
-    *
-    **************************************************/
-    ARK::Peer peerfromJSON(const char* const _jsonStr);
-    ARK::Peer peerfromJSON(const String& _jsonStr) {
-        return peerfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
+		/**************************************************************************************************/
 
-/*  ==========================================================================  */
-/*  ==========================================================================  */
-  /*    BROKEN: fix for large callbacks  */
-  /*    Peers callback is ~11,000 bytes  */
+    /*************************************************/
+    /*************************************************/
+  	/*  BROKEN: fix for large callbacks  */
+  	/*  Peers callback is ~11,000 bytes  */
     // ARK::API::PeerGettablePeersResponse peersfromJSON(String _jsonStr);
-    // ARK::API::PeerGettablePeersResponse peers(ARK::Utilities::Network::Connector _netConnector);
+    /*************************************************/
+    /*************************************************/
 
+		/**************************************************************************************************/
 
- /*************************************************
+    /*************************************************
     * ARK::API::PeerGettable::version
-    *   /api/peers/version
+    * /api/peers/version
     **************************************************/
-    ARK::API::Peer::Respondable::Version version(ARK::Utilities::Network::Connector& _netConnector);
+    ARK::API::Peer::Respondable::Version version(
+        ARK::Utilities::Network::Connector& netConnector
+    );
+    /*************************************************/
 
-/*************************************************
-    *
-    *	{
-    *		"success":true,
-    *		"version":  "String",
-    *		"build":  "String"
-    *	}
-    *
-    **************************************************/
-    ARK::API::Peer::Respondable::Version versionfromJSON(const char* const _jsonStr);
-    ARK::API::Peer::Respondable::Version versionfromJSON(const String& _jsonStr) {
-        return versionfromJSON(_jsonStr.c_str());
-    }
-/*  ==========================================================================  */
 };
-/*  ===================================  */
-/*  ==========================================================================  */
+/*************************************************/
+
 };
 };
 };
+
+#endif
 
 /**************************************************************************************************/
 /*************************************************/
@@ -152,5 +124,3 @@ class Gettable
 /*************************************************/
 /*************************************************/
 /**************************************************************************************************/
-
-#endif
