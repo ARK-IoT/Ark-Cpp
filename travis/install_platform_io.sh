@@ -1,5 +1,5 @@
 # install PlatformIO
-sudo pip install -U platformio
+sudo pip install -U --trusted-host https://pypi.python.org/ platformio
 # update PlatformIO
 platformio update
 
