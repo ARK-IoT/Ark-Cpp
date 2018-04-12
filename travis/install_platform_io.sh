@@ -1,5 +1,5 @@
 # install PlatformIO
-pip install -U platformio
+sudo pip install -U platformio
 
 # update PlatformIO
 platformio update
