@@ -23,21 +23,21 @@ namespace Poco {
 namespace Crypto {
 
 
-EVPPKey::EVPPKey(const std::string& ecCurveName)
+EVPPKey::EVPPKey(const std::string& ecCurveName): _pEVPPKey(0)
 {
 	newECKey(ecCurveName.c_str());
 	poco_check_ptr(_pEVPPKey);
 }
 
 
-EVPPKey::EVPPKey(const char* ecCurveName)
+EVPPKey::EVPPKey(const char* ecCurveName): _pEVPPKey(0)
 {
 	newECKey(ecCurveName);
 	poco_check_ptr(_pEVPPKey);
 }
 
 
-EVPPKey::EVPPKey(EVP_PKEY* pEVPPKey)
+EVPPKey::EVPPKey(EVP_PKEY* pEVPPKey): _pEVPPKey(0)
 {
 	duplicate(pEVPPKey, &_pEVPPKey);
 	poco_check_ptr(_pEVPPKey);
@@ -82,16 +82,9 @@ EVPPKey::EVPPKey(std::istream* pPublicKeyStream,
 }
 
 
-EVPPKey::EVPPKey(const EVPPKey& other): _pEVPPKey(0)
+EVPPKey::EVPPKey(const EVPPKey& other)
 {
 	duplicate(other._pEVPPKey, &_pEVPPKey);
-	poco_check_ptr(_pEVPPKey);
-}
-
-
-EVPPKey::EVPPKey(EVPPKey&& other): _pEVPPKey(other._pEVPPKey)
-{
-	other._pEVPPKey = nullptr;
 	poco_check_ptr(_pEVPPKey);
 }
 
@@ -99,7 +92,17 @@ EVPPKey::EVPPKey(EVPPKey&& other): _pEVPPKey(other._pEVPPKey)
 EVPPKey& EVPPKey::operator=(const EVPPKey& other)
 {
 	duplicate(other._pEVPPKey, &_pEVPPKey);
+	poco_check_ptr(_pEVPPKey);
 	return *this;
+}
+
+
+#ifdef POCO_ENABLE_CPP11
+
+EVPPKey::EVPPKey(EVPPKey&& other): _pEVPPKey(other._pEVPPKey)
+{
+	other._pEVPPKey = nullptr;
+	poco_check_ptr(_pEVPPKey);
 }
 
 
@@ -111,6 +114,7 @@ EVPPKey& EVPPKey::operator=(EVPPKey&& other)
 	return *this;
 }
 
+#endif // POCO_ENABLE_CPP11
 
 EVPPKey::~EVPPKey()
 {
@@ -118,9 +122,7 @@ EVPPKey::~EVPPKey()
 }
 
 
-void EVPPKey::save(const std::string& publicKeyFile,
-	const std::string& privateKeyFile,
-	const std::string& privateKeyPassphrase) const
+void EVPPKey::save(const std::string& publicKeyFile, const std::string& privateKeyFile, const std::string& privateKeyPassphrase) const
 {
 	if (!publicKeyFile.empty() && (publicKeyFile != privateKeyFile))
 	{
@@ -179,9 +181,7 @@ void EVPPKey::save(const std::string& publicKeyFile,
 }
 
 
-void EVPPKey::save(std::ostream* pPublicKeyStream,
-	std::ostream* pPrivateKeyStream,
-	const std::string& privateKeyPassphrase) const
+void EVPPKey::save(std::ostream* pPublicKeyStream, std::ostream* pPrivateKeyStream, const std::string& privateKeyPassphrase) const
 {
 	if (pPublicKeyStream && (pPublicKeyStream != pPrivateKeyStream))
 	{
@@ -224,8 +224,6 @@ void EVPPKey::save(std::ostream* pPublicKeyStream,
 
 EVP_PKEY* EVPPKey::duplicate(const EVP_PKEY* pFromKey, EVP_PKEY** pToKey)
 {
-	poco_check_ptr(pToKey);
-
 	if (!pFromKey) throw NullPointerException("EVPPKey::duplicate(): "
 		"provided key pointer is null.");
 
@@ -236,40 +234,41 @@ EVP_PKEY* EVPPKey::duplicate(const EVP_PKEY* pFromKey, EVP_PKEY** pToKey)
 	int keyType = type(pFromKey);
 	switch (keyType)
 	{
-	case EVP_PKEY_RSA:
-	{
-		RSA* pRSA = EVP_PKEY_get1_RSA(const_cast<EVP_PKEY*>(pFromKey));
-		if (pRSA)
+		case EVP_PKEY_RSA:
 		{
-			EVP_PKEY_set1_RSA(*pToKey, pRSA);
-			RSA_free(pRSA);
-		}
-		else throw OpenSSLException("EVPPKey::duplicate(): EVP_PKEY_get1_RSA()");
-		break;
-	}
-	case EVP_PKEY_EC:
-	{
-		EC_KEY* pEC = EVP_PKEY_get1_EC_KEY(const_cast<EVP_PKEY*>(pFromKey));
-		if (pEC)
-		{
-			EVP_PKEY_set1_EC_KEY(*pToKey, pEC);
-			EC_KEY_free(pEC);
-			int cmp = EVP_PKEY_cmp_parameters(*pToKey, pFromKey);
-			if (cmp < 0)
-				throw OpenSSLException("EVPPKey::duplicate(): EVP_PKEY_cmp_parameters()");
-			if (0 == cmp)
+			RSA* pRSA = EVP_PKEY_get1_RSA(const_cast<EVP_PKEY*>(pFromKey));
+			if (pRSA)
 			{
-				if(!EVP_PKEY_copy_parameters(*pToKey, pFromKey))
-					throw OpenSSLException("EVPPKey::duplicate(): EVP_PKEY_copy_parameters()");
+				EVP_PKEY_set1_RSA(*pToKey, pRSA);
+				RSA_free(pRSA);
 			}
+			else throw OpenSSLException("EVPPKey::duplicate(): EVP_PKEY_get1_RSA()");
+			break;
 		}
-		else throw OpenSSLException();
-		break;
+		case EVP_PKEY_EC:
+		{
+			EC_KEY* pEC = EVP_PKEY_get1_EC_KEY(const_cast<EVP_PKEY*>(pFromKey));
+			if (pEC)
+			{
+				EVP_PKEY_set1_EC_KEY(*pToKey, pEC);
+				EC_KEY_free(pEC);
+				int cmp = EVP_PKEY_cmp_parameters(*pToKey, pFromKey);
+				if (cmp < 0)
+					throw OpenSSLException("EVPPKey::duplicate(): EVP_PKEY_cmp_parameters()");
+				if (0 == cmp)
+				{
+					if(!EVP_PKEY_copy_parameters(*pToKey, pFromKey))
+						throw OpenSSLException("EVPPKey::duplicate(): EVP_PKEY_copy_parameters()");
+				}
+			}
+			else throw OpenSSLException();
+			break;
+		}
+		default:
+			throw NotImplementedException("EVPPKey:duplicate(); Key type: " +
+				NumberFormatter::format(keyType));
 	}
-	default:
-		throw NotImplementedException("EVPPKey:duplicate(); Key type: " +
-			NumberFormatter::format(keyType));
-	}
+
 	return *pToKey;
 }
 
