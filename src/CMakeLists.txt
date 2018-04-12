@@ -46,13 +46,13 @@ set(COMMON_SRC
 )
 
 set (POCO_SRC
-	${PROJECT_SOURCE_DIR}/poco/crypto/ECDSADigestEngine.cpp
-	${PROJECT_SOURCE_DIR}/poco/crypto/ECKey.cpp
-	${PROJECT_SOURCE_DIR}/poco/crypto/ECKeyImpl.cpp
-	${PROJECT_SOURCE_DIR}/poco/crypto/EVPPKey.cpp
-	${PROJECT_SOURCE_DIR}/poco/crypto/KeyPair.cpp
-	${PROJECT_SOURCE_DIR}/poco/crypto/KeyPairImpl.cpp
-	${PROJECT_SOURCE_DIR}/poco/crypto/X509Certificate.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECDSADigestEngine.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECKey.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECKeyImpl.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/EVPPKey.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/KeyPair.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/KeyPairImpl.cpp
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/X509Certificate.cpp
 )
 
 set(PLATFORM_SRC 
