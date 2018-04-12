@@ -2098,7 +2098,16 @@ Account create_account(const char* const passphrase) {
 	SHA256Engine sha256;
 	sha256.update(passphrase);
 	const auto hash = sha256.digest();
-	
+	/*
+	if(d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0){
+	throw new Error("seed cannot resolve to a compatible private key")
+	}
+	*/
+	uint8_t private_key[32];
+	std::memcpy(private_key, &hash[0], 32);
+	Poco::Crypto::ECKey eckey(passphrase);
+	Poco::Crypto::ECDSADigestEngine ecdsa(eckey, "SHA256");
+	auto d = ecdsa.digest();
 	return Account();
 }
 

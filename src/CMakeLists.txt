@@ -46,6 +46,7 @@ set(COMMON_SRC
 )
 
 set (POCO_SRC
+	${PROJECT_SOURCE_DIR}/Poco/Crypto/CryptoException.cpp
 	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECDSADigestEngine.cpp
 	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECKey.cpp
 	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECKeyImpl.cpp
