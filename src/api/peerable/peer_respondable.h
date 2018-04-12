@@ -7,78 +7,74 @@
 
 #include <cstring>
 
-namespace ARK {
-namespace API {
-namespace Peer {
-namespace Respondable {
+namespace ARK
+{
+namespace API
+{
+namespace Peer
+{
+namespace Respondable
+{
+/*************************************************
+*	ARK::API::Peer::Respondable::version_t
+*
+*	@param:	char version[32]
+*	@param:	char build[32]
+*
+*	@brief:	Type for Loader Status API Response
+**************************************************/
+struct version_t
+{
+	protected:
+		char version_[32];
+		char build_[32];
+};
+/*************************************************/
+
+/**************************************************************************************************/
 
 /*************************************************
-*		ARK::API::Peer::Respondable::Version
+*	ARK::API::Peer::Respondable::Version
 *
-*   @param:	char version{32], char build[32]
+*	@param:	char version{32]
+*	@param:	char build[32]
+*	@methods:	printTo(Print& p)
 *
-*   @methods:	printTo(Print& p)
-*
-*   @brief:	Model for Loader Status API Response
+*	@brief:	Model for Loader Status API Response
 **************************************************/
-class Version : public Printable {
-private:
-	char version_[64];  //TODO: review sizes
-	char build_[64];
+struct Version :
+		public version_t,
+		Printable
+{
+	public:
+		/*************************************************
+		*	Constructor
+		**************************************************/
+		Version(
+				const char* const newVersion,
+				const char* const newBuild
+		);
+		/*************************************************/
 
-public:
-	Version(const char* const v, const char* const b) : version_(), build_() {
-		strncpy(version_, v, sizeof(version_) / sizeof(version_[0]));
-		strncpy(build_, b, sizeof(build_) / sizeof(build_[0]));
-	}
+		/*************************************************
+		*	Accessors
+		**************************************************/
+		const char* version() const noexcept { return version_; }
+		const char* build() const noexcept { return build_; }
+		/*************************************************/
+		
+		/*************************************************
+		*
+		**************************************************/
+    virtual size_t printTo(Print& p) const;
+		/*************************************************/
 
-	const char* version() const noexcept { return version_; }
-	const char* build() const noexcept { return build_; }
-
-	size_t printTo(Print& p) const override;
 };
-/*  ========================  */
-/*  ==========================================================================  */
-
-
-/*  ==========================================================================  */
-/*  ==================================  */
-/*  ARK::API::Peer::Respondable::Peers  */
-//   struct Peers {
-//     public:
-//       // int count;
-//       ARK::Peer list[10];// = {{}};
-//       // PeersResponse(int);
-//       String description();
-//   };
-/*************************************************/
 /*************************************************/
 
-
-/*************************************************/
-/*************************************************/
-/*  ARK::API::Peer::Respondable::Peers  */
-/*  Description  */
-// String ARK::API::Peer::Respondable::Peers::description() {
-//   String resp;
-//   if (this->count > 0) {
-//     for (int i = 0; i < this->count; i++) {
-//       resp += "\npeer ";
-//       resp += i + 1;
-//       resp += ":\n";
-//       resp += this->list[i].description();
-//       resp += "\n";
-//     };
-//   };
-//   return resp;
-// }
-/*  ==================================  */
-/*  ==========================================================================  */
-
-
-}
-}
-}
-}
+};
+};
+};
+};
 
 #endif

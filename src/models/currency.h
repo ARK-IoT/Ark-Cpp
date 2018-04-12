@@ -6,29 +6,49 @@
 
 #include <cstddef>
 
-namespace ARK {
-namespace Model {
+namespace ARK
+{
+namespace Model
+{
+/*************************************************
+*
+**************************************************/
+struct Currency :
+    public Printable
+{
+  public:
+    char ticker_[5] = {'\0' }; //TODO: review sizes
+    char name_[20] = { '\0' };
+    char symbol_[4] = { '\0' };  //TODO:  single character, unicode???, multi-byte chars??? 
 
-/*  ================================================  */
-    struct Currency : public Printable {
-      public:
-        char ticker_[8]; //TODO: review sizes
-        char name_[32];
-        char symbol_[4];  //TODO:  single character, unicode???, multi-byte chars??? 
+		/*************************************************
+		*	Constructor
+		**************************************************/
+    Currency(
+        const char* const newTicker,
+        const char* const newName,
+        const char* const newSymbol
+    );
+    /*************************************************/
 
-
-		Currency(const char* const t, const char* const n, const char* const s);
-
+		/*************************************************
+		*	Accessors
+		**************************************************/
 		const char* ticker() const noexcept { return ticker_; }
 		const char* name() const noexcept { return name_; }
 		const char* symbol() const noexcept { return symbol_; }
+    /*************************************************/
 
-		size_t printTo(Print& p) const override;
-    };
-/*  ================================================  */
+		/*************************************************
+		*
+		**************************************************/
+		virtual size_t printTo(Print& p) const;
+		/*************************************************/
 
+};
+/*************************************************/
 
-  };
+};
 };
 
 #endif /* currency_h */

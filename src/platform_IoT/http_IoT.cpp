@@ -1,66 +1,190 @@
+
+
 #include "utilities/http.h"
 
-#include <HttpClient.h>
+#if defined ESP8266
 
-#if (defined ESP8266 || defined ESP32)
-
-#include <WiFiClient.h>
-
-typedef WiFiClient NetworkClient;
+#include <ESP8266HTTPClient.h>
+#include <ESP8266WiFi.h>
 
 #else
 
-#include <EthernetClient.h>
+#include <HttpClient.h>
+typedef WiFiClient NetworkClient;
 
+#include <EthernetClient.h>
 typedef EthernetClient NetworkClient;
 
 #endif
 
-namespace ARK {
-namespace Utilities {
-namespace Network {
+namespace ARK
+{
+namespace Utilities
+{
+namespace Network
+{
+namespace
+{
 
-namespace {
+/*************************************************
+*
+**************************************************/
+class HTTP :
+		public HTTPInterface
+{
+	public: 
+		// HTTP() = default;
 
-class HTTP : public HTTPInterface {
-public: 
-	HTTP() = default;
+/**************************************************************************************************/
+#ifdef ESP8266
 
-	String get(const String& peer, int port, const String& request) override {
-		NetworkClient c;
-		HttpClient http(c);
+		/*************************************************
+		*	ESP8266
+		**************************************************/
 
-		auto error = http.get(peer.c_str(), port, request.c_str());
+		HTTPClient http;
 
-		if (error != 0) {
-			// error
-			String errStr = String("HTTP Error") + String(error);
-			Serial.println(errStr);
-			return errStr;
-		}
-		auto httpCode = http.responseStatusCode();
-
-		if (httpCode > 0 /*&& httpCode == 200*/ /*&& http.connected()*/) {
-			http.skipResponseHeaders();
-			String response = http.readString();
-			http.stop();
-			return response;
-		}
-		else
+		HTTP()
 		{
-			http.stop();
-			return "Error: Connection to Peer could not be established";
+			http.setTimeout(2000);
 		}
-	}
+
+		void retryConnection(
+				const char *const peer,
+				int port,
+				const char *const request,
+				int &httpCode,
+				int &increment
+		)
+		{
+			Serial.print("Retrying peer connection.");
+				delay(1000);
+			http.end();
+				Serial.print(".");
+				delay(1000);
+			http.begin(peer, port, request);
+				Serial.println(".");
+				delay(1000);
+			httpCode = http.GET();
+			increment = 0;
+			delay(500);
+		}
+
+		const char *get(
+				const char *const peer,
+				int port,
+				const char *const request
+		) override
+		{
+			Serial.print("Opening HTTP connection to ");
+				Serial.print(peer);
+				Serial.print(":");
+				Serial.print(port);
+				Serial.println(request);
+
+			http.begin(peer, port, request);
+
+			int httpCode = http.GET();
+
+			int increment = 0;
+			while ( !http.connected() )
+			{
+				if (increment == 5)
+				{
+					retryConnection(peer, port, request, httpCode, increment);
+				}
+				delay(1000);
+				Serial.print("waiting for HTTP connection to: ");
+				Serial.println(request);
+				increment++;			
+			};
+
+			int httpSize = http.getSize();
+
+			int payloadSize = (httpSize > 0) ? (httpSize + 1) : (55);
+			char *payload = new char[payloadSize];
+
+			if (httpCode > 0 && httpCode == HTTP_CODE_OK && http.connected())
+			{
+				WiFiClient *stream = http.getStreamPtr();
+				while ( http.connected() && (httpSize > 0 || httpSize == -1) )
+				{
+					if ( stream->available() )
+					{
+						strcpy(payload, stream->readString().c_str());
+					}
+					delay(1);
+				};
+				return payload;
+			}
+			else
+			{
+				// Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+				http.end();
+				strcpy(payload, "Error: Connection to Peer could not be established");
+				strcat(payload, "\n[HTTP] GET... failed, error: %s\n");
+				strcat(payload, http.errorToString(httpCode).c_str());
+			};
+			return payload;
+		}
+		/*************************************************/
+
+#else	/**************************************************************************************************/
+
+		HTTP() = default;
+
+		/*************************************************
+		*
+		**************************************************/
+		const char *get(
+				const char *const peer,
+				int port,
+				const char *const request
+		) override
+		{
+			NetworkClient c;
+			HttpClient http(c);
+
+			auto error = http.get(peer, port, request);
+
+			if (error != 0) {
+				// error
+				String errStr = String("HTTP Error") + String(error);
+				Serial.println(errStr);
+				return errStr.c_str();
+			}
+
+			auto httpCode = http.responseStatusCode();
+
+			if (httpCode > 0 /*&& httpCode == 200*/ /*&& http.connected()*/) {
+				http.skipResponseHeaders();
+				String response = http.readString();
+				http.stop();
+				return response.c_str();
+			}
+			else
+			{
+				http.stop();
+				return "Error: Connection to Peer could not be established";
+			}
+		}
+		/*************************************************/
+
+#endif
+/**************************************************************************************************/
+
 };
 
 }
 
-// HTTP object factory
+/*************************************************
+*		HTTP object factory
+**************************************************/
 std::unique_ptr<HTTPInterface> make_http() {
 	return std::unique_ptr<HTTPInterface>(new HTTP());
 }
+/*************************************************/
 
-}
-}
-}
+};
+};
+};

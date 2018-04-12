@@ -3,38 +3,51 @@
 #ifndef ADDRESS_H
 #define ADDRESS_H
 
+#include "helpers/describable.h"
 #include <cstring>
 
-/********************************************************************************
-*
+/*******************************************************************************
 * address: 
-*   "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA"
+*	"DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA"
 *   
-*   34 Characters | Base58-encoded
-*
+*	34 Characters | Base58-encoded
+*	Size 272
+*	160-bit base58Encoded hash from a RIPEME160 hash
 ********************************************************************************/
 
-#define ADDRESS_SIZE 35
-
-class address_t {
-private:
-	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
-	char value_[ADDRESS_LENGTH];
-
-public:
-    address_t() : value_() { };
-
-	address_t(const char* const addressString) : value_()
-	{
-        strncpy(value_, addressString, ADDRESS_LENGTH);
-	}
-
-	const char* getValue() const { return value_; }
-};
+#define ADDRESS_CHARACTER_WIDTH 8
+#define ADDRESS_LENGTH 34		/* Actual Length of Address */
+#define ADDRESS_SIZE (ADDRESS_LENGTH * ADDRESS_CHARACTER_WIDTH)		/* Size: 272 (Length of Address * character width) */
 
 /*************************************************
-*   Address
+*	Address
 **************************************************/
-typedef address_t Address;
+struct Address :
+		public Describable
+{
+	protected:
+		char value_[ADDRESS_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
+
+	public:
+		/*************************************************
+		*	Constructor
+		**************************************************/
+		Address() : value_() {};
+		/*************************************************/
+
+		/*************************************************
+		*	Constructor
+		**************************************************/
+		explicit Address(const char* const addressStr) : value_()
+		{
+			if (strlen(addressStr) * ADDRESS_CHARACTER_WIDTH == ADDRESS_SIZE)
+			{
+				strncpy(value_, addressStr, ADDRESS_LENGTH);
+			}
+		};
+		/*************************************************/
+
+};
+/*************************************************/
 
 #endif

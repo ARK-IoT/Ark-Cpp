@@ -2,14 +2,14 @@
 
 #include "api/api.h"
 
-namespace {
-
-const Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
-
+namespace
+{
+	const Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
 }
 
-TEST(api, test_transaction) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+TEST(api, test_transaction)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 
 	const auto transaction = _arkManager.transaction(transactionID);
 	ASSERT_STREQ("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e", transaction.id());
@@ -26,7 +26,6 @@ TEST(api, test_transaction) {
 	ASSERT_STREQ("3045022100dc9590c6c6fce66a523481f13237d95518056387076de9a9534cb4a039fbede90220322e7f17b227f8fe9401460980b7b3c1baacf076b9020620ec5c4388673e7e12", transaction.signature());
 	ASSERT_STRNE("0", transaction.confirmations());
 
-
 	/*  ==================================  */
 	/*  ==================================  */
 	/*    BROKEN: fix for large callbacks  */
@@ -35,7 +34,6 @@ TEST(api, test_transaction) {
 	//    Serial.println("transactions: ");
 	//    Serial.println(transactions);
 	//    Serial.println("\n=====\n");
-	//    delay(50);
 	/*  ==================================  */
 	/*  ==================================  */
 
