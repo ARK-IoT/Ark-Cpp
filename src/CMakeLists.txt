@@ -9,7 +9,10 @@ hunter_add_package(PocoCpp)
 
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
-include_directories(${PROJECT_SOURCE_DIR})
+include_directories(
+	${PROJECT_SOURCE_DIR}
+	${PROJECT_SOURCE_DIR}/bitcoin
+)
  
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Poco CONFIG REQUIRED Foundation Net Crypto)
@@ -56,12 +59,23 @@ set (POCO_SRC
 	${PROJECT_SOURCE_DIR}/Poco/Crypto/X509Certificate.cpp
 )
 
+set (BITCOIN_SRC
+	${PROJECT_SOURCE_DIR}/bitcoin/base58.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/uint256.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/hash.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/ripemd160.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha256.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
+)
+
 set(PLATFORM_SRC 
 	${PROJECT_SOURCE_DIR}/platform/json.cpp
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
 )
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${POCO_SRC})
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${POCO_SRC} ${BITCOIN_SRC})
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)

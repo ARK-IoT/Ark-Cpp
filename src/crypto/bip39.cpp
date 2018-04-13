@@ -1,5 +1,8 @@
 #include "crypto/bip39.h"
 
+#include "bitcoin/base58.h"
+#include "bitcoin/uint256.h"
+
 #include "Poco/PBKDF2Engine.h"
 #include "Poco/HMACEngine.h"
 #include "Poco/SHA1Engine.h"
@@ -2096,6 +2099,7 @@ std::string generate_mnemonic() {
 Account create_account(const char* const passphrase) {
 	//TODO: ensure normalized UTF8
 	SHA256Engine sha256;
+	
 	sha256.update(passphrase);
 	const auto hash = sha256.digest();
 	/*
@@ -2115,7 +2119,7 @@ Account create_account(const char* const passphrase) {
 	for (auto b : hash) {
 		ss << std::to_string(b);
 	}
-	std::string seed = ss.str();//sha256.digestToHex(hash);
+	std::string seed = sha256.digestToHex(hash);
 	Poco::Crypto::ECKey key("secp256k1");
 	std::ostringstream s1;
 	std::ostringstream s2;
@@ -2123,7 +2127,8 @@ Account create_account(const char* const passphrase) {
 	auto private_key = s1.str();
 	auto public_key = s2.str();
 	Poco::Crypto::ECDSADigestEngine eng(key, "SHA256");
-	eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
+	//eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
+	eng.update(&hash[0], hash.size());
 	//eng.update(passphrase, static_cast<unsigned>(std::strlen(passphrase)));
 	const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
 	auto d = eng.digest();
