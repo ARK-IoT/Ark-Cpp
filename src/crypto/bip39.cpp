@@ -2103,11 +2103,34 @@ Account create_account(const char* const passphrase) {
 	throw new Error("seed cannot resolve to a compatible private key")
 	}
 	*/
-	uint8_t private_key[32];
-	std::memcpy(private_key, &hash[0], 32);
-	Poco::Crypto::ECKey eckey(passphrase);
-	Poco::Crypto::ECDSADigestEngine ecdsa(eckey, "SHA256");
-	auto d = ecdsa.digest();
+	//uint8_t private_key[32];
+	//std::memcpy(private_key, &hash[0], 32);
+	//Poco::Crypto::ECKey eckey(Poco::Crypto::EVPPKey("ECDSA"));
+	//auto public_key = eckey.digest();
+	//Poco::Crypto::ECDSADigestEngine ecdsa(eckey, "SHA256");
+	//auto d = ecdsa.digest();
+	//std::string curveName = "secp256k1";
+	//curveName = Poco::Crypto::ECKey::getCurveName(Poco::Crypto::ECKey::getCurveNID(curveName));
+	std::ostringstream ss;
+	for (auto b : hash) {
+		ss << std::to_string(b);
+	}
+	std::string seed = ss.str();//sha256.digestToHex(hash);
+	Poco::Crypto::ECKey key("secp256k1");
+	std::ostringstream s1;
+	std::ostringstream s2;
+	key.save(&s1, &s2, seed);
+	auto private_key = s1.str();
+	auto public_key = s2.str();
+	Poco::Crypto::ECDSADigestEngine eng(key, "SHA256");
+	eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
+	//eng.update(passphrase, static_cast<unsigned>(std::strlen(passphrase)));
+	const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
+	auto d = eng.digest();
+
+	
+	
+
 	return Account();
 }
 
