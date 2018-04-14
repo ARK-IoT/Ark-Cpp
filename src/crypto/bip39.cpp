@@ -2,6 +2,8 @@
 
 #include "bitcoin/base58.h"
 #include "bitcoin/uint256.h"
+//#include "bitcoin/key.h"
+//#include "bitcoin/pubkey.h"
 
 #include "Poco/PBKDF2Engine.h"
 #include "Poco/HMACEngine.h"
@@ -2115,22 +2117,28 @@ Account create_account(const char* const passphrase) {
 	//auto d = ecdsa.digest();
 	//std::string curveName = "secp256k1";
 	//curveName = Poco::Crypto::ECKey::getCurveName(Poco::Crypto::ECKey::getCurveNID(curveName));
-	std::ostringstream ss;
+	/*std::ostringstream ss;
 	for (auto b : hash) {
 		ss << std::to_string(b);
-	}
+	}*/
+	//uint256 d(hash);
+
 	std::string seed = sha256.digestToHex(hash);
-	Poco::Crypto::ECKey key("secp256k1");
+	//auto wif = EncodeBase58Check(hash);
+	Poco::Crypto::EVPPKey key("secp256k1");
 	std::ostringstream s1;
 	std::ostringstream s2;
-	key.save(&s1, &s2, seed);
-	auto private_key = s1.str();
-	auto public_key = s2.str();
-	Poco::Crypto::ECDSADigestEngine eng(key, "SHA256");
+	//key.save(&s1, &s2, seed);
+	key.save(&s1, &s2, passphrase);
+	//auto private_key = s1.str();
+	//auto public_key = s2.str();
+	Poco::Crypto::ECKey eckey(key);
+	Poco::Crypto::ECDSADigestEngine eng(eckey, "SHA256");
 	//eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
-	eng.update(&hash[0], hash.size());
+	//eng.update(&hash[0], hash.size());
 	//eng.update(passphrase, static_cast<unsigned>(std::strlen(passphrase)));
-	const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
+	eng.update(passphrase);
+	//const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
 	auto d = eng.digest();
 
 	

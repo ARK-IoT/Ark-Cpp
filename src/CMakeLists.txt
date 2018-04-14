@@ -12,6 +12,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/bitcoin
+	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1
 )
  
 find_package(nlohmann_json CONFIG REQUIRED)
@@ -75,7 +76,7 @@ set(PLATFORM_SRC
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
 )
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${POCO_SRC} ${BITCOIN_SRC})
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${POCO_SRC} ${BITCOIN_SRC} )
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
