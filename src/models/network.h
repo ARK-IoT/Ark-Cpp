@@ -75,10 +75,10 @@ public:
     struct network_t {
       const char* messagePrefix;
       bip32_t bip32;
-      long pubKeyHash;  // Addresses will begin with 'A'
-      long wif;         // Network prefix for wif generation
+      uint8_t pubKeyHash;  // Addresses will begin with 'A'
+      uint8_t wif;         // Network prefix for wif generation
     };
-  };
+  }
 /*  ================  */
 
 };

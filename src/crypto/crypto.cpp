@@ -1,7 +1,9 @@
-#include "crypto/bip39.h"
+#include "crypto/crypto.h"
+#include "constants/networks.h"
 
 #include "bitcoin/base58.h"
 #include "bitcoin/uint256.h"
+#include "bitcoin/crypto/ripemd160.h"
 //#include "bitcoin/key.h"
 //#include "bitcoin/pubkey.h"
 
@@ -11,10 +13,11 @@
 #include "Poco/Crypto/DigestEngine.h"
 #include "Poco/Crypto/ECDSADigestEngine.h"
 
+#include <vector>
+#include <string>
 
 namespace ARK {
 namespace Crypto {
-namespace BIP39 {
 
 namespace {
 
@@ -2096,9 +2099,32 @@ std::string generate_mnemonic() {
 	// TODO:
 
 	return "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
+	//return "tower sponsor engine cram define bone agree mountain sad find place rug";
 }
 
-Account create_account(const char* const passphrase) {
+std::string get_wif(uint8_t wif, const std::vector<uint8_t>& private_key, bool compressed /* = true */) {
+	std::vector<uint8_t> buf(compressed ? 34 : 33);
+	buf[0] = wif;
+	for (auto i = 1u; i < 33; ++i) {
+		buf[i] = private_key[i - 1];
+	}
+	if (compressed) { 
+		buf[33] = 0x01;
+	}
+	return EncodeBase58Check(buf);
+}
+
+std::string get_address(uint8_t network, const std::string& public_key) {	
+	CRIPEMD160 ripemd160;
+	auto pub_key_buf = SHA256Engine::digestFromHex(public_key);
+	ripemd160.Write(&pub_key_buf[0], pub_key_buf.size());
+	std::vector<uint8_t> seed(21);
+	seed[0] = network;
+	ripemd160.Finalize(&seed[1]);
+	return EncodeBase58Check(seed);
+}
+
+Account create_account(uint8_t network, const char* const passphrase) {
 	//TODO: ensure normalized UTF8
 	SHA256Engine sha256;
 	
@@ -2121,32 +2147,36 @@ Account create_account(const char* const passphrase) {
 	for (auto b : hash) {
 		ss << std::to_string(b);
 	}*/
-	//uint256 d(hash);
-
 	std::string seed = sha256.digestToHex(hash);
 	//auto wif = EncodeBase58Check(hash);
 	Poco::Crypto::EVPPKey key("secp256k1");
 	std::ostringstream s1;
 	std::ostringstream s2;
 	//key.save(&s1, &s2, seed);
-	key.save(&s1, &s2, passphrase);
+	//key.save(&s1, &s2, passphrase);
 	//auto private_key = s1.str();
 	//auto public_key = s2.str();
-	Poco::Crypto::ECKey eckey(key);
+	Poco::Crypto::ECKey eckey("secp256k1");//key);
 	Poco::Crypto::ECDSADigestEngine eng(eckey, "SHA256");
-	//eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
+	eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
 	//eng.update(&hash[0], hash.size());
 	//eng.update(passphrase, static_cast<unsigned>(std::strlen(passphrase)));
-	eng.update(passphrase);
-	//const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
-	auto d = eng.digest();
 
-	
-	
+	//eng.update(passphrase);
+	//const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
+	//auto d = eng.digest();
+	eckey.save(&s1, &s2);
+	auto private_key = s2.str();
+	auto first_line = private_key.find('\n');
+	private_key = private_key.substr(first_line + 1, private_key.find('\n', first_line + 1)); 
+	auto public_key = s1.str();
+	first_line = public_key.find('\n');
+	public_key = public_key.substr(first_line + 1, public_key.find('\n', first_line + 1)); 
+
+	auto wif = get_wif(0xba, hash, true);
 
 	return Account();
 }
 
-}
 }
 }

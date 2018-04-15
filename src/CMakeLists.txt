@@ -34,7 +34,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/api/manager.cpp
-	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
+	${PROJECT_SOURCE_DIR}/crypto/crypto.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/models/account.cpp
 	${PROJECT_SOURCE_DIR}/models/block.cpp

@@ -1,6 +1,6 @@
 #include "types/passphrase.h"
 
-#include "crypto/bip39.h"
+#include "crypto/crypto.h"
 
 Passphrase::Passphrase(
 	bool generate_second_passphrase /* = false */, 
