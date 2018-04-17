@@ -1,51 +1,12 @@
-
-
 #include "models/network.h"
 
 #include <cstdio>
 
-/*************************************************
-*	Default: Empty Constructor
-**************************************************/
-ARK::Network::Network()
-{
-	this->nethash_ = Hash();
-	this->version_ = 0;
-};
-/*************************************************/
-
-/*************************************************
-*	Constructor
-**************************************************/
-ARK::Network::Network(
-		const char *const newNethash,
-		const char *const newToken,
-		const char *const newSymbol,
-		const char *const newExplorer,
-		int 							newVersion
-)
-{
-	this->nethash_ = Hash(newNethash);
-	strcpy(this->token_, newToken);
-	for (unsigned int i = 0; i < strlen(newSymbol); i++)
-	{
-		( sizeof(newSymbol[i]) == sizeof(char) )
-				? ( this->symbol_[i] = newSymbol[i] )
-				: ( sprintf(this->symbol_, "%2c", newSymbol[i]) );
-	}
-	strcpy(this->explorer_, newExplorer);
-	this->version_ = newVersion;
-};
-/*************************************************/
-
-/*************************************************
-*
-**************************************************/
-size_t ARK::Network::printTo(Print &p) const
+size_t ARK::Network::printTo(Print& p) const
 {
 	size_t size = 0;
-
-	size += p.print("nethash: ");
+	
+	size += p.print("\nnethash: ");
 	size += p.print(this->nethash_);
 
 	size += p.print("\ntoken: ");
@@ -62,28 +23,20 @@ size_t ARK::Network::printTo(Print &p) const
 
 	return size;
 }
-/*************************************************/
-
-/*************************************************
-*	ARK::Network::Network::operator==
-*
-*	@brief:	Comparison of two Network Models for equality.
-**************************************************/
-bool ARK::Network::Network::operator==(const Network &rhs) const
-{
-	return (
-		strcmp(this->nethash_.getValue(), rhs.nethash().getValue()) == 0
-			&& strcmp(this->token_, rhs.token()) == 0 && strcmp(this->symbol_, rhs.symbol()) == 0
-			&& strcmp(this->explorer_, rhs.explorer()) == 0
-			&& this->version_ == rhs.version()
-	);
+/*  =====  */
+/*  Operator  */
+/*  ARK::Network == ARK::Network  */
+bool ARK::Network::Network::operator==(const Network& rhs) const {
+    return (strcmp(this->nethash_, rhs.nethash_) == 0
+        && strcmp(this->token_, rhs.token_) == 0
+        && strcmp(this->symbol_, rhs.symbol_) == 0
+        && strcmp(this->explorer_, rhs.explorer_) == 0
+        && this->version_ == rhs.version_);
 };
-/*************************************************/
+/*  =====  */
+/*  Operator  */
+/*  ARK::Network != ARK::Network  */
+bool ARK::Network::Network::operator!=(const Network& rhs) const { return !(*this == rhs); };
+/*  ============  */
+/*  ================================================  */
 
-/*************************************************
-*	ARK::Network::Network::operator!=
-*
-*	@brief:	Comparison of two Network Models for inequality.
-**************************************************/
-bool ARK::Network::Network::operator!=(const Network &rhs) const { return !(*this == rhs); };
-/*************************************************/

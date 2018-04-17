@@ -1,40 +1,24 @@
 #include "api/manager.h"
 
-namespace ARK
+/*  ==========================================================================  */
+/*  =================  */
+/*  ARK::API::Manager  */
+/*  Constructor */
+ARK::API::Manager::Manager()
 {
-namespace API
+  this->connect(ARK::Network());
+};
+/*  =================  */
+/*  Constructor */
+ARK::API::Manager::Manager(const ARK::Network& network)
 {
-
-/*************************************************
-*	Default: Empty Constructor
-**************************************************/
-Manager::Manager()
+  this->connect(network);
+};
+/*  =================  */
+/*  Method */
+void ARK::API::Manager::connect(const ARK::Network& network)
 {
-	this->connect(ARK::Network());
+  this->netConnector = ARK::Utilities::Network::Connector(network);
 };
-/*************************************************/
-
-/*************************************************
-*	Constructor
-**************************************************/
-Manager::Manager(
-		const ARK::Network& network
-)
-{
-	this->connect(network);
-};
-/*************************************************/
-
-/*************************************************
-*	@brief:	private:	ARK::API::Manager::connect
-**************************************************/
-void Manager::connect(
-		const ARK::Network& network
-)
-{
-	this->netConnector = ARK::Utilities::Network::Connector(network);
-};
-/*************************************************/
-
-};
-};
+/*  =================  */
+/*  ==========================================================================  */

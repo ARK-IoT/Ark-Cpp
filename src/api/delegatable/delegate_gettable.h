@@ -18,105 +18,216 @@ namespace Delegate
 **************************************************/
 class Gettable
 {
-protected:
-	/*************************************************
-	* ARK::API::Delegate::Gettable::count
-	*	/api/delegates/count
-	**************************************************/
-	int count(
-			ARK::Utilities::Network::Connector &netConnector
-	);
-	/*************************************************/
+  protected:
+/*************************************************
+		* ARK::API::Delegate::Gettable::count
+		*   /api/delegates/count
+		**************************************************/
+    int count(ARK::Utilities::Network::Connector& _netConnector);
 
-	/**************************************************************************************************/
+/*************************************************
+		*
+		*	{ 
+		*		"success":true,
+		*		"count":166
+		*	}
+		*
+		**************************************************/
+    int countfromJSON(const char* const _jsonStr);
+    int countfromJSON(const String& _jsonStr) {
+        return countfromJSON(_jsonStr.c_str());
+    }
 
-	/*************************************************
-	* ARK::API::Delegate::Gettable::search
-	*	/api/delegates/search?q=sleepdeficit
-	**************************************************/
-	ARK::API::Delegate::Respondable::Search search(
-			ARK::Utilities::Network::Connector &_netConnector,
-			const char *const username
-	);
-	/*************************************************/
+/*************************************************
+		* ARK::API::Delegate::Gettable::search
+		*   /api/delegates/search?q=sleepdeficit
+		**************************************************/
+    ARK::API::Delegate::Respondable::Search search(
+        ARK::Utilities::Network::Connector& _netConnector,
+        const char* const _username);
 
-	/**************************************************************************************************/
+/*************************************************
+		*
+		*	{ 
+		*		"success":true,
+		*		"delegates":
+		*		[
+		*			{ 
+		*				"username":"_username",
+		*				"address":"_arkAddress",
+		*				"publicKey":"_pubkey",
+		*				"vote":"0000000000000",
+		*				"producedblocks":0,
+		*				"missedblocks":0
+		*			}
+		*		]
+		*	}
+		*
+		**************************************************/
+    ARK::API::Delegate::Respondable::Search searchfromJSON(const char* const _jsonStr);
+    ARK::API::Delegate::Respondable::Search searchfromJSON(const String& _jsonStr) {
+        return searchfromJSON(_jsonStr.c_str());
+    }
 
-	/*************************************************
-	* ARK::API::Delegate::Gettable::voters
-	*	/api/delegates/voters?publicKey=_pubKey
-	**************************************************/
-	ARK::API::Delegate::Respondable::Voters voters(
-			ARK::Utilities::Network::Connector &netConnector,
-			const Publickey &publicKey
-	);
-	/*************************************************/
+/*************************************************
+		* ARK::API::Delegate::Gettable::voters
+		*   /api/delegates/voters?publicKey=_pubKey
+		**************************************************/
+    ARK::API::Delegate::Respondable::Voters voters(
+        ARK::Utilities::Network::Connector& _netConnector,
+        const Publickey& _publicKey);
 
-	/**************************************************************************************************/
+/*************************************************
+		*
+		*	{
+		*		"success":true,
+		*		"accounts":
+		*		[
+		*			{ 
+		*				"username": "const char*",
+		*				"address":  "Balance",
+		*				"publicKey":  "Publickey",
+		*				"balance":  "Balance"
+		*			},
+		*			{
+		*				"username": "const char*",
+		*				"address":  "Address",
+		*				"publicKey":  "Publickey",
+		*				"balance":  "Balance"
+		*			}
+		*		]
+		*	}
+		*
+		**************************************************/
+    ARK::API::Delegate::Respondable::Voters votersfromJSON(const char* const _jsonStr);
+    ARK::API::Delegate::Respondable::Voters votersfromJSON(const String& _jsonStr) {
+        return votersfromJSON(_jsonStr.c_str());
+    }
 
-	/*************************************************
+/*************************************************
 	* ARK::API::Delegate::Gettable::delegate
-	*	/api/delegates/get?username=sleepdeficit
-	*	/api/delegates/get?publicKey=_pubKey
+	*   /api/delegates/get?username=sleepdeficit
+	*		/api/delegates/get?publicKey=_pubKey
 	**************************************************/
-	ARK::Delegate delegate(
-			ARK::Utilities::Network::Connector &netConnector,
-			const char *const parameter
-	);
-	/*************************************************/
+    ARK::Delegate delegate(
+        ARK::Utilities::Network::Connector& _netConnector,
+        const char* const _parameter);
 
-	/**************************************************************************************************/
-
-	/*************************************************/
-	/*************************************************/
-	/*	BROKEN: fix for large callbacks    */
-	/*  Delegates callback is ~13,564 bytes  */
-	// String delegates(ARK::Utilities::Network::Connector _netConnector);
-	/*************************************************/
-	/*************************************************/
-
-	/**************************************************************************************************/
-
-	/*************************************************
-	* ARK::API::Delegate::Gettable::fee
-	*	/api/delegates/fee
+/*************************************************
+	*
+	*	{ 
+	*		"success":true,
+	*		"delegate":
+	*		{
+	*			"username": "sleepdeficit",
+	*			"address":  "Address",
+	*			"publicKey":  "Publickey",
+	*			"vote": "Balance",
+	*			"producedblocks": const char*,
+	*			"missedblocks": const char*,
+	*			"rate": int,
+	*			"approval": double,
+	*			"productivity": double
+	*		}
+	*	}
+	*
 	**************************************************/
-	Balance fee(
-			ARK::Utilities::Network::Connector &netConnector
-	);
-	/*************************************************/
+    ARK::Delegate delegatefromJSON(const char* const _jsonStr);
+    ARK::Delegate delegatefromJSON(const String& _jsonStr) {
+        return delegatefromJSON(_jsonStr.c_str());
+    }
+/*  ==========================================================================  */
 
-	/**************************************************************************************************/
+/*  ==========================================================================  */
+/*  ==========================================================================  */
+    /*    BROKEN: fix for large callbacks    */
+    /*  Delegates callback is ~13,564 bytes  */
+    // String delegates(ARK::Utilities::Network::Connector _netConnector);
+    // String delegatesfromJSON(String _jsonStr);
+/*  ==========================================================================  */
 
-	/*************************************************
-	* ARK::API::Delegate::Gettable::forgedByAccount
-	*	/api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey
-	**************************************************/
-	ARK::API::Delegate::Respondable::ForgedByAccount forgedByAccount(
-			ARK::Utilities::Network::Connector &netConnector,
-			const Publickey &generatorPublicKey
-	);
-	/*************************************************/
+/*************************************************
+		* ARK::API::Delegate::Gettable::fee
+		*   /api/delegates/fee
+		**************************************************/
+    Balance fee(ARK::Utilities::Network::Connector& _netConnector);
 
-	/**************************************************************************************************/
+/*************************************************
+		*
+		*	{
+		*		"success":true,
+		*		"fee":  Balance
+		*	}
+		*
+		**************************************************/
+    Balance feefromJSON(const char* const _jsonStr);
+    Balance feefromJSON(const String& _jsonStr) {
+        return feefromJSON(_jsonStr.c_str());
+    }
+  
+  /*************************************************
+		* ARK::API::Delegate::Gettable::forgedByAccount
+		*   /api/delegates/forging/getForgedByAccount?generatorPublicKey=_genPubkey
+		**************************************************/
+    ARK::API::Delegate::Respondable::ForgedByAccount forgedByAccount(
+        ARK::Utilities::Network::Connector& _netConnector,
+        const Publickey& _generatorPublicKey);
 
-	/*************************************************
-	* ARK::API::Delegate::Gettable::nextForgers
-	*	/api/delegates/getNextForgers
-	**************************************************/
-	ARK::API::Delegate::Respondable::NextForgers nextForgers(
-			ARK::Utilities::Network::Connector &netConnector
-	);
-	/*************************************************/
+/*************************************************
+		*
+		*	{
+		*		"success":true,
+		*		"fees": "Balance",
+		*		"rewards":  "Balance",
+		*		"forged": "Balance"
+		*	}
+		*
+		**************************************************/
+    ARK::API::Delegate::Respondable::ForgedByAccount forgedByAccountfromJSON(const char* const _jsonStr);
+    ARK::API::Delegate::Respondable::ForgedByAccount forgedByAccountfromJSON(const String& _jsonStr) {
+        return forgedByAccountfromJSON(_jsonStr.c_str());
+    }
+
+/*************************************************
+		* ARK::API::Delegate::Gettable::nextForgers
+		*   /api/delegates/getNextForgers
+		**************************************************/
+    ARK::API::Delegate::Respondable::NextForgers nextForgers(ARK::Utilities::Network::Connector& _netConnector);
+
+/*************************************************
+		*
+		*	{ 
+		*		"success":true,
+		*		"currentBlock":2307497,
+		*		"currentSlot":3189409,
+		*		"delegates":
+		*		[
+		*			"035ce69858a12a5ac31575c35c7c87a84a1b6a0455697d7015ea756a880aef05c0",
+		*			"0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456",
+		*			"028f0a25321cd9d3bf051b34a835cd5eee0125120c17654bc95790f8f2d970dc46",
+		*			"027d607ba6226b302357aa9b4bb75d0e44761780492f0b38b267d2962d242e6a52",
+		*			"02b7b740973db16cd9c6f0f6f2bc160d27cd2a855e172d887833141bec234eb80c",
+		*			"0212ba6565ea6900ecf1fc5eee172f74aff8b22963be5d0d60e7f773db0055cbd2",
+		*			"02524ea2e2e9bad0ecbe521756388bf65e0b09dd2877d96495fe60200a97b35ddb",
+		*			"02dc13fcb190bcfbe9e7ecfc6269635ed2c497a75bab471f2b15c1a99897da97b3",
+		*			"022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d",
+		*			"031f3dffe4d10f78d85806d6b46f9c9a116e1aa56e8c538da2e02a416ff654b1db"
+		*		]
+		*	}
+		*
+		**************************************************/
+    ARK::API::Delegate::Respondable::NextForgers nextForgersfromJSON(const char* const _jsonStr);
+    ARK::API::Delegate::Respondable::NextForgers nextForgersfromJSON(const String& _jsonStr) {
+        return nextForgersfromJSON(_jsonStr.c_str());
+    }
+/*  ==========================================================================  */
+  };
+/*  =====================================  */
+/*  ==========================================================================  */
 
 };
-/*************************************************/
-
 };
 };
-};
-
-#endif
 
 /**************************************************************************************************/
 /*************************************************/
@@ -132,9 +243,9 @@ protected:
 //   String uri = ARK::API::Paths::Delegate::delegates_s;
 //   String callback = _netConnector.cb(uri);
 
-// char uri[512] = { '\0' }; //TODO: review sizes
-// strcpy(uri, ARK::API::Paths::Delegate::delegates_s);
-// auto callback = netConnector.cb(uri);
+	// char uri[512] = { '\0' }; //TODO: review sizes
+    // strcpy(uri, ARK::API::Paths::Delegate::delegates_s);
+		  // auto callback = netConnector.cb(uri);
 
 //   return ARK::API::Delegate::Gettable::delegatesfromJSON(callback);
 // };
@@ -207,3 +318,5 @@ protected:
 /*************************************************/
 /*************************************************/
 /**************************************************************************************************/
+
+#endif

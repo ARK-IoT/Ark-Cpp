@@ -2,9 +2,8 @@
 
 #include "api/api.h"
 
-TEST(api, test_peer)
-{
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
+TEST(api, test_peer) {
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
 
 	const auto peer = _arkManager.peer("167.114.29.55", 4002);
 	ASSERT_STREQ("167.114.29.55", peer.ip());
@@ -16,14 +15,16 @@ TEST(api, test_peer)
 	ASSERT_STREQ("OK", peer.status());
 	ASSERT_NE(0, peer.delay());
 
+
 	/*  ==================================  */
 	/*  ==================================  */
-	/*	BROKEN: fix for large callbacks  */
-	/*	Peers callback is ~10,000 bytes  */
+	/*    BROKEN: fix for large callbacks  */
+	/*    Peers callback is ~10,000 bytes  */
 	//  String peersDescription = _arkManager.peers().getValue();
-	//	Serial.println("peersDescription: ");
-	//	Serial.println(peersDescription);
-	//	Serial.println("\n=====\n");
+	//    Serial.println("peersDescription: ");
+	//    Serial.println(peersDescription);
+	//    Serial.println("\n=====\n");
+	//    delay(50);
 	/*  ==================================  */
 	/*  ==================================  */
 
@@ -31,4 +32,5 @@ TEST(api, test_peer)
 	const auto version = _arkManager.peerVersion();
 	ASSERT_STREQ("1.1.1", version.version());
 	ASSERT_STREQ("", version.build());
+
 }
