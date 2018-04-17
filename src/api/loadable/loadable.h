@@ -11,11 +11,12 @@ namespace ARK
 namespace API
 {
 /*************************************************
-*	PUBLIC: ARK::API::Loadable
-*	public Loader::Gettable
-*	virtual ARK::Utilities::Network::Connectable
+* 	PUBLIC: ARK::API::Loadable
+*   	public Loader::Gettable
+*   	virtual ARK::Utilities::Network::Connectable
 *    
-*	API's Network Loader Model
+*		API's Network Loader Model
+* 
 **************************************************/
 class Loadable :
 		public Loader::Gettable,
@@ -23,48 +24,69 @@ class Loadable :
 {
 	public:
 		/*************************************************
-		*	/api/loader/autoconfigure 
+		*		/api/loader/status
 		*
-		*	@return:	ARK::Network
+		*		@uri:	/api/loader/status
+		*		@returnType:	ARK::API::Loader::Respondable::Status
 		*
-		*	@brief:	Returns an auto-configured network from a Networks NetHash from a Node via API. 
-		**************************************************/
-		ARK::Network loaderAutoconfigure()
-		{
-			return ARK::API::Loader::Gettable::autoconfigure(this->netConnector);
-		};
-		/*************************************************/
-
-		/**************************************************************************************************/
-
-		/*************************************************
-		*	/api/loader/status
+		*   @method:	loaderStatus()
 		*
-		*	@return:	ARK::API::Loader::Respondable::Status
+		*   @outs:	ARK::API::Loader::Gettable::status(this->netConnector)
 		*
-		*	@brief:	Gets Ark Network Status from a Node via API.
+		*   @description:
+		*			Gets Ark Network Status from a Node via API.
+		* 
 		**************************************************/
 		ARK::API::Loader::Respondable::Status loaderStatus()
 		{
 			return ARK::API::Loader::Gettable::status(this->netConnector);
 		};
-		/*************************************************/
+    /*************************************************/
 
-		/**************************************************************************************************/
+/**************************************************************************************************/
 
 		/*************************************************
-		*	/api/loader/status/sync
+		*		/api/loader/status/sync
 		*
-		*	@return:	ARK::API::Loader::Respondable::Sync
+		*		@uri:	/api/loader/status/sync
+		*		@returnType:	ARK::API::Loader::Respondable::Sync
 		*
-		*	@brief:	Gets Ark Network Sync Status from a Node via API. 
+		*   @method:	loaderSync()
+		*
+		*   @outs:	ARK::API::Loader::Gettable::sync(this->netConnector)
+		*
+		*   @description:
+		*			Gets Ark Network Sync Status from a Node via API. 
+		* 
 		**************************************************/
 		ARK::API::Loader::Respondable::Sync loaderSync()
 		{
 			return ARK::API::Loader::Gettable::sync(this->netConnector);
 		};
-		/*************************************************/
-		
+    /*************************************************/
+
+/**************************************************************************************************/
+
+		/*************************************************
+		*		/api/loader/autoconfigure 
+		*
+		*		@uri:	/api/loader/autoconfigure 
+		*		@returnType:	ARK::Network
+		*
+		*   @method:	loaderAutoconfigure()
+		*
+		*   @outs:	ARK::API::Loader::Gettable::autoconfigure(this->netConnector)
+		*
+		*   @description:
+		*			Returns an auto-configured network
+		*			from a Networks NetHash from a Node via API. 
+		* 
+		**************************************************/
+		ARK::Network loaderAutoconfigure()
+		{
+			return ARK::API::Loader::Gettable::autoconfigure(this->netConnector);
+		};
+    /*************************************************/
 };
 /*************************************************/
 

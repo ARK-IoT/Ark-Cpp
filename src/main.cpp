@@ -1,10 +1,10 @@
-
-
 #include "utilities/platform.h"
 
 #if (defined PLATFORMIO && !defined UNIT_TEST)
 
-void setup() {}
+void setup()
+{
+}
 
 void loop()
 {

@@ -6,88 +6,68 @@
 #include "types/balance.h"
 #include "utilities/platform.h"
 
-namespace ARK
-{
-namespace API
-{
-namespace Account
-{
-namespace Respondable
-{
+namespace ARK {
+namespace API {
+namespace Account {
+namespace Respondable {
+
 /*************************************************
-*	ARK::API::Account::Respondable::balances_t
+*	  ARK::API::Account::Respondable::balances_t
 *
-*	@param: Balance confirmed
-*	@param: Balance confirmed
+*   @param: Balance confirmed, Balance confirmed
 *
-*	@brief: Model for Balances API Response
+*   @brief: Model for Balances API Response
 **************************************************/
 struct balances_t
 {
-	protected:
-		Balance confirmed_;
-		Balance unconfirmed_;
+protected:
+	Balance confirmed_;
+	Balance unconfirmed_;
+
+	balances_t(const Balance& c, const Balance& u) : confirmed_(c), unconfirmed_(u) { }
 };
 /*************************************************/
 
 /**************************************************************************************************/
 
 /*************************************************
-*	ARK::API::Account::Respondable::Balances
+*		ARK::API::Account::Respondable::Balances
 *
-*	@brief: Constructed API Balances Response Object
+*   @brief: Constructed API Balances Response Object
 **************************************************/
-class Balances :
-    public Printable,
-		virtual balances_t
-{
-	public:
-		/*************************************************
-		*	ARK::API::Account::Respondable::Balances
-		**************************************************/
-		Balances();
-		/*************************************************/
+class Balances : public Printable, virtual balances_t {
 
-		/*************************************************
-		*	ARK::API::Account::Respondable::Balances(const char* const, const char* const)
-		*
-		*	@brief: Constructed API Balances Response Object
-		**************************************************/
-		Balances(
-				const char *const newConfirmed,
-				const char *const newUnconfirmed
-		);
-		/*************************************************/
+public:
+/*************************************************
+    *		ARK::API::Account::Respondable::Balances
+    *
+    *   @brief: Empty Initialization
+    **************************************************/
+	Balances() = default;
 
-		/*************************************************
-		*	ARK::API::Account::Respondable::Balances(const Balance& c, const Balance& u)
-		*
-		*	@brief: Constructed API Balances Response Object from Balances
-		**************************************************/
-		Balances(
-				const Balance& newConfirmed,
-				const Balance& newUnconfirmed
-		);
-		/*************************************************/
+/*************************************************
+    *		ARK::API::Account::Respondable::Balances(const Balance&, const Balance&)
+    *
+    *   @brief: Constructed API Balances Response Object
+    **************************************************/
+	Balances(const Balance& c, const Balance& u) : balances_t(c, u) { }
+	
+	const Balance& confirmed() const noexcept { return confirmed_; }
+	const Balance& unconfirmed() const noexcept { return unconfirmed_; }
 
-		/*************************************************
-		*	Accessors
-		**************************************************/
-		const Balance& confirmed() const noexcept { return confirmed_; }
-		const Balance& unconfirmed() const noexcept { return unconfirmed_; }
-		/*************************************************/
-
-		/*************************************************
-		*	@brief: Prints balances_t items
-		**************************************************/
-		virtual size_t printTo(Print &p) const;
-		/*************************************************/
-
+	/*************************************************
+    *   printTo(HardwareSerial &serial)
+    *
+    *   @brief: Prints balances_t items
+    **************************************************/
+    size_t printTo(Print& p) const override;
 };
+/*  ======================================  */
+/*  ==========================================================================  */
 
-};
-};
-};
-};
+}
+}
+}
+}
 
 #endif

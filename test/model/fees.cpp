@@ -2,15 +2,15 @@
 
 #include "models/fees.h"
 
-TEST(model, construct_fees)
-{
-	ARK::Fees fees(
-		"10000000",
-		"100000000",
-		"500000000",
-		"2500000000",
-		"500000000"
-	);
+TEST(model, construct_fees) {
+    ARK::Fees fees(
+        "10000000",
+        "100000000",
+        "500000000",
+        "2500000000",
+        "500000000"
+    );
+
 	ASSERT_STREQ("10000000", fees.send().arktoshi());
 	ASSERT_STREQ("100000000", fees.vote().arktoshi());
 	ASSERT_STREQ("500000000", fees.delegate().arktoshi());
