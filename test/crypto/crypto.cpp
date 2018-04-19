@@ -7,7 +7,7 @@
 
 
 TEST(crypto, create_account) {
-	ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "bullet parade snow bacon mutual deposit brass floor staff list concert ask");
+	//ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "bullet parade snow bacon mutual deposit brass floor staff list concert ask");
 
 
 	const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "tower sponsor engine cram define bone agree mountain sad find place rug");
@@ -37,13 +37,13 @@ TEST(crypto, generate_address) {
 }
 
 TEST(crypto, generate_wif) {
-	ARK::Crypto::SHA256Engine sha256;
+	/*//ARK::Crypto::SHA256Engine sha256;
 	
-	sha256.update("bullet parade snow bacon mutual deposit brass floor staff list concert ask");
-	const auto hash = sha256.digest();
+	//sha256.update("bullet parade snow bacon mutual deposit brass floor staff list concert ask");
+//	const auto hash = sha256.digest();
 	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, hash);
 	ASSERT_STREQ(
 		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
 		wif.c_str()
-	);
+	);*/
 }

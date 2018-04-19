@@ -11,6 +11,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
 include_directories(
 	${PROJECT_SOURCE_DIR}
+	${PROJECT_SOURCE_DIR}/uint128_t
 	${PROJECT_SOURCE_DIR}/bitcoin
 	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1
 )
@@ -64,11 +65,15 @@ set (BITCOIN_SRC
 	${PROJECT_SOURCE_DIR}/bitcoin/base58.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/uint256.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/hash.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/key.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/ripemd160.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha256.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
+	#${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
+	#${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
+	#${PROJECT_SOURCE_DIR}/bitcoin/support/cleanse.cpp
+	#${PROJECT_SOURCE_DIR}/bitcoin/support/lockedpool.cpp
+	#${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/secp256k1.c
 )
 
 set(PLATFORM_SRC 
