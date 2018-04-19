@@ -30,8 +30,8 @@
 #include <unordered_set>
 #include <vector>
 
-#include <boost/signals2/signal.hpp>
-#include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
+//#include <boost/signals2/signal.hpp>
+//#include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
 
 // Application startup time (used for uptime calculation)
 int64_t GetStartupTime();
@@ -40,7 +40,7 @@ static const bool DEFAULT_LOGTIMEMICROS = false;
 static const bool DEFAULT_LOGIPS        = false;
 static const bool DEFAULT_LOGTIMESTAMPS = true;
 extern const char * const DEFAULT_DEBUGLOGFILE;
-
+#if 0
 /** Signals for translation. */
 class CTranslationInterface
 {
@@ -48,6 +48,7 @@ public:
     /** Translate a message to the native language of the user. */
     boost::signals2::signal<std::string (const char* psz)> Translate;
 };
+#endif
 
 extern bool fPrintToConsole;
 extern bool fPrintToDebugLog;
@@ -56,13 +57,13 @@ extern bool fLogTimestamps;
 extern bool fLogTimeMicros;
 extern bool fLogIPs;
 extern std::atomic<bool> fReopenDebugLog;
-extern CTranslationInterface translationInterface;
+//extern CTranslationInterface translationInterface;
 
 extern const char * const BITCOIN_CONF_FILENAME;
 extern const char * const BITCOIN_PID_FILENAME;
 
 extern std::atomic<uint32_t> logCategories;
-
+#if 0
 /**
  * Translation function: Call Translate signal on UI interface, which returns a boost::optional result.
  * If no translation slot is registered, nothing is returned, and simply return the input.
@@ -72,7 +73,7 @@ inline std::string _(const char* psz)
     boost::optional<std::string> rv = translationInterface.Translate(psz);
     return rv ? (*rv) : psz;
 }
-
+#endif
 void SetupEnvironment();
 bool SetupNetworking();
 
@@ -177,29 +178,29 @@ void FileCommit(FILE *file);
 bool TruncateFile(FILE *file, unsigned int length);
 int RaiseFileDescriptorLimit(int nMinFD);
 void AllocateFileRange(FILE *file, unsigned int offset, unsigned int length);
-bool RenameOver(fs::path src, fs::path dest);
-bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only=false);
-bool DirIsWritable(const fs::path& directory);
+//bool RenameOver(fs::path src, fs::path dest);
+//bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only=false);
+//bool DirIsWritable(const fs::path& directory);
 
 /** Release all directory locks. This is used for unit testing only, at runtime
  * the global destructor will take care of the locks.
  */
 void ReleaseDirectoryLocks();
 
-bool TryCreateDirectories(const fs::path& p);
-fs::path GetDefaultDataDir();
-const fs::path &GetBlocksDir(bool fNetSpecific = true);
-const fs::path &GetDataDir(bool fNetSpecific = true);
+//bool TryCreateDirectories(const fs::path& p);
+//fs::path GetDefaultDataDir();
+//const fs::path &GetBlocksDir(bool fNetSpecific = true);
+//const fs::path &GetDataDir(bool fNetSpecific = true);
 void ClearDatadirCache();
-fs::path GetConfigFile(const std::string& confPath);
+//fs::path GetConfigFile(const std::string& confPath);
 #ifndef WIN32
 fs::path GetPidFile();
 void CreatePidFile(const fs::path &path, pid_t pid);
 #endif
 #ifdef WIN32
-fs::path GetSpecialFolderPath(int nFolder, bool fCreate = true);
+//fs::path GetSpecialFolderPath(int nFolder, bool fCreate = true);
 #endif
-fs::path GetDebugLogPath();
+//fs::path GetDebugLogPath();
 bool OpenDebugLog();
 void ShrinkDebugFile();
 void runCommand(const std::string& strCommand);
@@ -212,7 +213,7 @@ void runCommand(const std::string& strCommand);
  * @param net_specific Forwarded to GetDataDir().
  * @return The normalized path.
  */
-fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific = true);
+//fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific = true);
 
 inline bool IsSwitchChar(char c)
 {

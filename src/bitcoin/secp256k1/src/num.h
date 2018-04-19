@@ -6,7 +6,7 @@
 
 #ifndef SECP256K1_NUM_H
 #define SECP256K1_NUM_H
-
+#define USE_NUM_NONE
 #ifndef USE_NUM_NONE
 
 #if defined HAVE_CONFIG_H

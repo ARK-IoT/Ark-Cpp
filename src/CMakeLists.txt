@@ -14,6 +14,7 @@ include_directories(
 	${PROJECT_SOURCE_DIR}/uint128_t
 	${PROJECT_SOURCE_DIR}/bitcoin
 	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1
+	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/include
 )
  
 find_package(nlohmann_json CONFIG REQUIRED)
@@ -48,6 +49,8 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
 	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
+
+	${PROJECT_SOURCE_DIR}/uint128_t/uint128_t.cpp
 )
 
 set (POCO_SRC
@@ -66,14 +69,17 @@ set (BITCOIN_SRC
 	${PROJECT_SOURCE_DIR}/bitcoin/uint256.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/hash.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/key.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/pubkey.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/random.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/chacha20.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/ripemd160.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha256.cpp
-	#${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
-	#${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
-	#${PROJECT_SOURCE_DIR}/bitcoin/support/cleanse.cpp
-	#${PROJECT_SOURCE_DIR}/bitcoin/support/lockedpool.cpp
-	#${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/secp256k1.c
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/support/cleanse.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/support/lockedpool.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/src/secp256k1.cpp
 )
 
 set(PLATFORM_SRC 

@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 
 #include "crypto/crypto.h"
-#include "crypto/sha256.h"
-#include "bitcoin/uint256.h"
+//#include "crypto/sha256.h"
+//#include "bitcoin/uint256.h"
 #include "constants/networks.h"
 
 

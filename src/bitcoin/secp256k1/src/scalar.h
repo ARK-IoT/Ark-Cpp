@@ -12,7 +12,7 @@
 #if defined HAVE_CONFIG_H
 #include "libsecp256k1-config.h"
 #endif
-
+#define USE_SCALAR_4X64
 #if defined(EXHAUSTIVE_TEST_ORDER)
 #include "scalar_low.h"
 #elif defined(USE_SCALAR_4X64)

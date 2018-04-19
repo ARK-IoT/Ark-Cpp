@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <string>
-
+#if 0
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/detail/utf8_codecvt_facet.hpp>
@@ -20,5 +20,5 @@ namespace fsbridge {
     FILE *fopen(const fs::path& p, const char *mode);
     FILE *freopen(const fs::path& p, const char *mode, FILE *stream);
 };
-
+#endif
 #endif // BITCOIN_FS_H

@@ -12,7 +12,7 @@
 #endif
 
 #include "util.h"
-
+#define USE_FIELD_10X26
 #if defined(USE_FIELD_10X26)
 #include "field_10x26_impl.h"
 #elif defined(USE_FIELD_5X52)
@@ -224,6 +224,7 @@ static void secp256k1_fe_inv(secp256k1_fe *r, const secp256k1_fe *a) {
 }
 
 static void secp256k1_fe_inv_var(secp256k1_fe *r, const secp256k1_fe *a) {
+#define USE_FIELD_INV_BUILTIN
 #if defined(USE_FIELD_INV_BUILTIN)
     secp256k1_fe_inv(r, a);
 #elif defined(USE_FIELD_INV_NUM)
