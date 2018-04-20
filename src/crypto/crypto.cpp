@@ -1,5 +1,4 @@
 #include "crypto/crypto.h"
-//#include "crypto/sha256.h"
 #include "constants/networks.h"
 
 #include "bitcoin/base58.h"
@@ -8,29 +7,31 @@
 #include "bitcoin/crypto/ripemd160.h"
 #include "bitcoin/key.h"
 #include "bitcoin/pubkey.h"
-/*/
-#include "Poco/PBKDF2Engine.h"
-#include "Poco/HMACEngine.h"
-#include "Poco/SHA1Engine.h"
-#include "Poco/Crypto/DigestEngine.h"
-#include "Poco/Crypto/ECDSADigestEngine.h"
-*/
+#include "bitcoin/utilstrencodings.h"
+
 #include <vector>
 #include <string>
-/*
-class SHA256Engine : public Poco::Crypto::DigestEngine {
-public:
-	enum {
-		BLOCK_SIZE = 64,
-		DIGEST_SIZE = 32
-	};
+#include <random>
 
-	SHA256Engine() : DigestEngine("SHA256") { }
-};
-
-*/
 namespace ARK {
 namespace Crypto {
+
+namespace {
+
+class ECC_Startup {
+public:
+	ECC_Startup() {
+		ECC_Start();
+	}
+
+	~ECC_Startup() {
+		ECC_Stop();
+	}
+};
+
+const ECC_Startup START_ECC;
+
+}
 
 const char BIP39_WORDS[NUM_BIP39_WORDS][MAX_BIP39_WORD_LENGTH] = {
 	"abandon",
@@ -2083,18 +2084,31 @@ const char BIP39_WORDS[NUM_BIP39_WORDS][MAX_BIP39_WORD_LENGTH] = {
 	"zoo"
 };
 
-std::string generate_mnemonic() {
-	// TODO:
-
-	return "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
-	//return "tower sponsor engine cram define bone agree mountain sad find place rug";
+std::string generate_mnemonic(uint8_t num_words /* = 12 */) {
+	if (num_words != 12 && num_words != 24) {
+		// error
+	}
+	std::random_device rd;
+	std::uniform_int_distribution<size_t> dist(0, NUM_BIP39_WORDS - 1);
+	std::string passphrase;
+	for (auto i = 0; i < num_words; ) {
+		const auto word = BIP39_WORDS[dist(rd)];
+		if (passphrase.find(word) == std::string::npos) {
+			passphrase += word;
+			passphrase += ' ';
+			++i;
+		}
+	}
+	// drop trailing space
+	passphrase[passphrase.length() - 1] = '\0';
+	return passphrase;
 }
 
-std::string get_wif(uint8_t wif, const std::vector<uint8_t>& private_key, bool compressed /* = true */) {
+std::string get_wif(uint8_t wif, const uint8_t hash[CSHA256::OUTPUT_SIZE], bool compressed /* = true */) {
 	std::vector<uint8_t> buf(compressed ? 34 : 33);
 	buf[0] = wif;
 	for (auto i = 1u; i < 33; ++i) {
-		buf[i] = private_key[i - 1];
+		buf[i] = hash[i - 1];
 	}
 	if (compressed) { 
 		buf[33] = 0x01;
@@ -2102,18 +2116,12 @@ std::string get_wif(uint8_t wif, const std::vector<uint8_t>& private_key, bool c
 	return EncodeBase58Check(buf);
 }
 
-std::string get_address(uint8_t network, const std::string& public_key) {	
-	/*RIPEMD160 ripemd160;
-	auto pub_key_buf = Poco::DigestEngine::digestFromHex(public_key);
-	ripemd160.Write(&pub_key_buf[0], pub_key_buf.size());
-	std::vector<uint8_t> seed(21);
-	seed[0] = network;
-	ripemd160.Finalize(&seed[1]);
-	return EncodeBase58Check(seed);*/
-	return "";
+
+std::string get_address(uint8_t network, const std::string& public_key) {
+	return get_address(network, CPubKey(ParseHex(public_key)));
 }
 
-std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
+std::string get_address(uint8_t network, const CPubKey& public_key) {
 	CRIPEMD160 ripemd160;
 	ripemd160.Write(&public_key[0], public_key.size());
 	std::vector<uint8_t> seed(21);
@@ -2122,76 +2130,23 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 	return EncodeBase58Check(seed);
 }
 
+CKey get_keys(const uint8_t hash[CSHA256::OUTPUT_SIZE]) {
+	CKey key;
+	key.Set(hash, hash + CSHA256::OUTPUT_SIZE, true);
+	return key;
+}
+
 Account create_account(uint8_t network, const char* const passphrase) {
 	CSHA256 sha256;
 	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
 	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
 	sha256.Finalize(hash);
-	ECC_Start();
-	CKey key;
-	key.Set(hash, hash + CSHA256::OUTPUT_SIZE, true);
-	auto private_key = key.GetPrivKey();
-	auto public_key = key.GetPubKey();
-	ECC_Stop();
-	std::vector<uint8_t> key_buf(public_key.begin(), public_key.end());
-	auto addr = get_address(network, key_buf);
-#if 0
-	//TODO: ensure normalized UTF8
-	SHA256Engine sha256;
-	
-	sha256.update(passphrase);
-	const auto hash = sha256.digest();
-	/*
-	if(d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0){
-	throw new Error("seed cannot resolve to a compatible private key")
-	}
-	*/
-	//uint8_t private_key[32];
-	//std::memcpy(private_key, &hash[0], 32);
-	//Poco::Crypto::ECKey eckey(Poco::Crypto::EVPPKey("ECDSA"));
-	//auto public_key = eckey.digest();
-	//Poco::Crypto::ECDSADigestEngine ecdsa(eckey, "SHA256");
-	//auto d = ecdsa.digest();
-	//std::string curveName = "secp256k1";
-	//curveName = Poco::Crypto::ECKey::getCurveName(Poco::Crypto::ECKey::getCurveNID(curveName));
-	/*std::ostringstream ss;
-	for (auto b : hash) {
-		ss << std::to_string(b);
-	}*/
-	std::string seed = sha256.digestToHex(hash);
-	//auto wif = EncodeBase58Check(hash);
-	//Poco::Crypto::EVPPKey key("secp256k1");
-	std::ostringstream s1;
-	std::ostringstream s2;
-	//key.save(&s1, &s2, seed);
-	//key.save(&s1, &s2, passphrase);
-	//auto private_key = s1.str();
-	//auto public_key = s2.str();
-	Poco::Crypto::ECKey eckey("secp256k1");//key);
-	eckey.save(&s1, &s2, seed);
+	const auto key = get_keys(hash);
+	const auto private_key = key.GetPrivKey();
+	const auto public_key = key.GetPubKey();
+	const auto address = get_address(network, public_key);
 
-	//Poco::Crypto::ECDSADigestEngine eng(eckey, "SHA256");
-	//eng.update(seed.c_str(), static_cast<unsigned>(seed.length()));
-	//eng.update(&hash[0], hash.size());
-	
-	//eng.reset();
-	//eng.update(passphrase, static_cast<unsigned>(std::strlen(passphrase)));
-	//eckey.save(&s1, &s2);
-	//eng.update(passphrase);
-	//const Poco::Crypto::DigestEngine::Digest& sig = eng.signature();
-	//auto d = eng.digest();
-	//eckey.save(&s1, &s2);
-	//eckey.save(&s1, &s2);
-	auto private_key = s2.str();
-	auto first_line = private_key.find('\n');
-	private_key = private_key.substr(first_line + 1, private_key.find('\n', first_line + 1)); 
-	auto public_key = s1.str();
-	first_line = public_key.find('\n');
-	public_key = public_key.substr(first_line + 1, public_key.find('\n', first_line + 1)); 
-//	auto digest = eng.digest();
-//	auto wif = get_wif(0xba, d, true);
-#endif
-	return Account();
+	return Account(HexStr(public_key).c_str(), address.c_str());
 }
 
 }

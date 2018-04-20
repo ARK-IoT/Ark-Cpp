@@ -49,19 +49,10 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
 	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
-
-	${PROJECT_SOURCE_DIR}/uint128_t/uint128_t.cpp
 )
 
-set (POCO_SRC
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/CryptoException.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECDSADigestEngine.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECKey.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/ECKeyImpl.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/EVPPKey.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/KeyPair.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/KeyPairImpl.cpp
-	${PROJECT_SOURCE_DIR}/Poco/Crypto/X509Certificate.cpp
+set (UINT128_T_SRC
+	${PROJECT_SOURCE_DIR}/uint128_t/uint128_t.cpp
 )
 
 set (BITCOIN_SRC
@@ -89,7 +80,7 @@ set(PLATFORM_SRC
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
 )
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${POCO_SRC} ${BITCOIN_SRC} )
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${UINT128_T_SRC} ${BITCOIN_SRC} )
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)

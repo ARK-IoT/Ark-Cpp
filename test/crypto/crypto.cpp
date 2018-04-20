@@ -1,20 +1,42 @@
 #include "gtest/gtest.h"
 
 #include "crypto/crypto.h"
-//#include "crypto/sha256.h"
-//#include "bitcoin/uint256.h"
 #include "constants/networks.h"
 
+#include <string>
+#include <sstream>
+
+namespace {
+
+const auto passphrase = "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
+
+}
+
+TEST(crypto, generate_mnemonic) {
+	auto passphrase = ARK::Crypto::generate_mnemonic(24);
+	std::istringstream stream(passphrase);
+	std::set<std::string> words;
+	for (std::string word; stream; ) {
+		stream >> word;
+		ASSERT_TRUE(words.insert(std::move(word)).second);
+	}
+	ASSERT_EQ(24, words.size());
+
+	passphrase = ARK::Crypto::generate_mnemonic(12);
+	words.clear();
+	stream = std::istringstream(passphrase);
+	for (std::string word; stream; ) {
+		stream >> word;
+		ASSERT_TRUE(words.insert(std::move(word)).second);
+	}
+	ASSERT_EQ(12, words.size());
+}
 
 TEST(crypto, create_account) {
-	//ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "bullet parade snow bacon mutual deposit brass floor staff list concert ask");
-
-
-	const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "bullet parade snow bacon mutual deposit brass floor staff list concert ask");
-	//const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "tower sponsor engine cram define bone agree mountain sad find place rug");
+	const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, passphrase);
 	
-	ASSERT_STREQ("D8WEzKygD4BYDngjXyWC84om6GBvBMkVFY", account.address().getValue());
-	ASSERT_STREQ("0361eba308995231b03f005323fa71fc8dcda34564800fde41d166222d6811ebf6", account.public_key().getValue());
+	ASSERT_STREQ("DStZXkgpEjxbG355nQ26vnkp95p24U9tsV", account.address().getValue());
+	ASSERT_STREQ("029fdf41a7d69d8efc7b236c21b9509a23d862ea4ed8b13a56e31eee58dbfd97b4", account.public_key().getValue());
 }
 
 TEST(crypto, generate_address) {
@@ -38,13 +60,14 @@ TEST(crypto, generate_address) {
 }
 
 TEST(crypto, generate_wif) {
-	/*//ARK::Crypto::SHA256Engine sha256;
-	
-	//sha256.update("bullet parade snow bacon mutual deposit brass floor staff list concert ask");
-//	const auto hash = sha256.digest();
+	CSHA256 sha256;
+	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
+	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
+	sha256.Finalize(hash);
+	//const auto keys = ARK::Crypto::get_keys(hash);
 	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, hash);
 	ASSERT_STREQ(
 		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
 		wif.c_str()
-	);*/
+	);
 }
