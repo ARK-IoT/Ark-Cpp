@@ -47,7 +47,7 @@
 
 [[noreturn]] static void RandFailure()
 {
-    LogPrintf("Failed to read randomness, aborting\n");
+    //LogPrintf("Failed to read randomness, aborting\n");
     std::abort();
 }
 
@@ -163,11 +163,11 @@ static void RandAddSeedPerfmon()
     if (ret == ERROR_SUCCESS) {
         RAND_add(vData.data(), nSize, nSize / 100.0);
         memory_cleanse(vData.data(), nSize);
-        LogPrint(BCLog::RAND, "%s: %lu bytes\n", __func__, nSize);
+        //LogPrint(BCLog::RAND, "%s: %lu bytes\n", __func__, nSize);
     } else {
         static bool warned = false; // Warn only once
         if (!warned) {
-            LogPrintf("%s: Warning: RegQueryValueExA(HKEY_PERFORMANCE_DATA) failed with code %i\n", __func__, ret);
+            //LogPrintf("%s: Warning: RegQueryValueExA(HKEY_PERFORMANCE_DATA) failed with code %i\n", __func__, ret);
             warned = true;
         }
     }

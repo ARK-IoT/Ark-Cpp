@@ -72,6 +72,8 @@ set (BITCOIN_SRC
 	${PROJECT_SOURCE_DIR}/bitcoin/pubkey.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/random.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/utiltime.cpp
+	${PROJECT_SOURCE_DIR}/bitcoin/util.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/chacha20.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/ripemd160.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha256.cpp

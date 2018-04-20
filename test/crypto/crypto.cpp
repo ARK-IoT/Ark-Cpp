@@ -10,7 +10,8 @@ TEST(crypto, create_account) {
 	//ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "bullet parade snow bacon mutual deposit brass floor staff list concert ask");
 
 
-	const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "tower sponsor engine cram define bone agree mountain sad find place rug");
+	const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "bullet parade snow bacon mutual deposit brass floor staff list concert ask");
+	//const auto account = ARK::Crypto::create_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "tower sponsor engine cram define bone agree mountain sad find place rug");
 	
 	ASSERT_STREQ("D8WEzKygD4BYDngjXyWC84om6GBvBMkVFY", account.address().getValue());
 	ASSERT_STREQ("0361eba308995231b03f005323fa71fc8dcda34564800fde41d166222d6811ebf6", account.public_key().getValue());

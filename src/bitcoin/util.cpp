@@ -71,9 +71,9 @@
 #include <malloc.h>
 #endif
 
-#include <boost/interprocess/sync/file_lock.hpp>
-#include <boost/program_options/detail/config_file.hpp>
-#include <boost/thread.hpp>
+//#include <boost/interprocess/sync/file_lock.hpp>
+//#include <boost/program_options/detail/config_file.hpp>
+//#include <boost/thread.hpp>
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
 #include <openssl/conf.h>
@@ -94,7 +94,7 @@ bool fLogTimestamps = DEFAULT_LOGTIMESTAMPS;
 bool fLogTimeMicros = DEFAULT_LOGTIMEMICROS;
 bool fLogIPs = DEFAULT_LOGIPS;
 std::atomic<bool> fReopenDebugLog(false);
-CTranslationInterface translationInterface;
+//CTranslationInterface translationInterface;
 
 /** Log categories bitfield. */
 std::atomic<uint32_t> logCategories(0);
@@ -184,7 +184,7 @@ static void DebugPrintInit()
     mutexDebugLog = new std::mutex();
     vMsgsBeforeOpenLog = new std::list<std::string>;
 }
-
+#if 0
 fs::path GetDebugLogPath()
 {
     fs::path logfile(gArgs.GetArg("-debuglogfile", DEFAULT_DEBUGLOGFILE));
@@ -216,7 +216,7 @@ bool OpenDebugLog()
     vMsgsBeforeOpenLog = nullptr;
     return true;
 }
-
+#endif
 struct CLogCategoryDesc
 {
     uint32_t flag;
@@ -333,7 +333,7 @@ static std::string LogTimestampStr(const std::string &str, std::atomic_bool *fSt
 
     return strStamped;
 }
-
+#if 0
 int LogPrintStr(const std::string &str)
 {
     int ret = 0; // Returns total number of characters written
@@ -428,7 +428,7 @@ bool DirIsWritable(const fs::path& directory)
 
     return true;
 }
-
+#endif
 /**
  * Interpret a string argument as a boolean.
  *
@@ -813,7 +813,7 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
     LogPrintf("\n\n************************\n%s\n", message);
     fprintf(stderr, "\n\n************************\n%s\n", message.c_str());
 }
-
+#if 0
 fs::path GetDefaultDataDir()
 {
     // Windows < Vista: C:\Documents and Settings\Username\Application Data\Bitcoin
@@ -1022,7 +1022,7 @@ bool TryCreateDirectories(const fs::path& p)
     // create_directories didn't create the directory, it had to have existed already
     return false;
 }
-
+#endif
 void FileCommit(FILE *file)
 {
     fflush(file); // harmless if redundantly called
@@ -1116,7 +1116,7 @@ void AllocateFileRange(FILE *file, unsigned int offset, unsigned int length) {
     }
 #endif
 }
-
+#if 0
 void ShrinkDebugFile()
 {
     // Amount of debug.log to save at end when shrinking (must fit in memory)
@@ -1272,3 +1272,4 @@ int ScheduleBatchPriority(void)
     return 1;
 #endif
 }
+#endif

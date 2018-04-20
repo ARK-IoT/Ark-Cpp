@@ -10,8 +10,8 @@
 #include <utiltime.h>
 
 #include <atomic>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/thread.hpp>
+//#include <boost/date_time/posix_time/posix_time.hpp>
+//#include <boost/thread.hpp>
 #include <ctime>
 #include <tinyformat.h>
 
@@ -36,13 +36,14 @@ int64_t GetMockTime()
 {
     return nMockTime.load(std::memory_order_relaxed);
 }
-
+#if 0
 int64_t GetTimeMillis()
 {
+	/*
     int64_t now = (boost::posix_time::microsec_clock::universal_time() -
                    boost::posix_time::ptime(boost::gregorian::date(1970,1,1))).total_milliseconds();
     assert(now > 0);
-    return now;
+    return now;*/
 }
 
 int64_t GetTimeMicros()
@@ -96,3 +97,4 @@ std::string FormatISO8601Time(int64_t nTime) {
     gmtime_r(&time_val, &ts);
     return strprintf("%02i:%02i:%02iZ", ts.tm_hour, ts.tm_min, ts.tm_sec);
 }
+#endif

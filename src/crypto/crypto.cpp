@@ -2103,7 +2103,7 @@ std::string get_wif(uint8_t wif, const std::vector<uint8_t>& private_key, bool c
 }
 
 std::string get_address(uint8_t network, const std::string& public_key) {	
-	/*CRIPEMD160 ripemd160;
+	/*RIPEMD160 ripemd160;
 	auto pub_key_buf = Poco::DigestEngine::digestFromHex(public_key);
 	ripemd160.Write(&pub_key_buf[0], pub_key_buf.size());
 	std::vector<uint8_t> seed(21);
@@ -2113,17 +2113,28 @@ std::string get_address(uint8_t network, const std::string& public_key) {
 	return "";
 }
 
+std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
+	CRIPEMD160 ripemd160;
+	ripemd160.Write(&public_key[0], public_key.size());
+	std::vector<uint8_t> seed(21);
+	seed[0] = network;
+	ripemd160.Finalize(&seed[1]);
+	return EncodeBase58Check(seed);
+}
+
 Account create_account(uint8_t network, const char* const passphrase) {
 	CSHA256 sha256;
 	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
 	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
 	sha256.Finalize(hash);
-
+	ECC_Start();
 	CKey key;
 	key.Set(hash, hash + CSHA256::OUTPUT_SIZE, true);
 	auto private_key = key.GetPrivKey();
 	auto public_key = key.GetPubKey();
-
+	ECC_Stop();
+	std::vector<uint8_t> key_buf(public_key.begin(), public_key.end());
+	auto addr = get_address(network, key_buf);
 #if 0
 	//TODO: ensure normalized UTF8
 	SHA256Engine sha256;
