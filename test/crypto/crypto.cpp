@@ -18,6 +18,7 @@ TEST(crypto, generate_mnemonic) {
 	std::set<std::string> words;
 	for (std::string word; stream; ) {
 		stream >> word;
+		if (word.empty()) { continue; }
 		ASSERT_TRUE(words.insert(std::move(word)).second);
 	}
 	ASSERT_EQ(24, words.size());
@@ -27,6 +28,7 @@ TEST(crypto, generate_mnemonic) {
 	stream = std::istringstream(passphrase);
 	for (std::string word; stream; ) {
 		stream >> word;
+		if (word.empty()) { continue; }
 		ASSERT_TRUE(words.insert(std::move(word)).second);
 	}
 	ASSERT_EQ(12, words.size());

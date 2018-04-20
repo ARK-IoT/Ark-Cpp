@@ -2095,12 +2095,12 @@ std::string generate_mnemonic(uint8_t num_words /* = 12 */) {
 		const auto word = BIP39_WORDS[dist(rd)];
 		if (passphrase.find(word) == std::string::npos) {
 			passphrase += word;
-			passphrase += ' ';
+			if (i != num_words - 1) {
+				passphrase += ' ';
+			}
 			++i;
 		}
 	}
-	// drop trailing space
-	passphrase[passphrase.length() - 1] = '\0';
 	return passphrase;
 }
 
