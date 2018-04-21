@@ -248,7 +248,8 @@ bool CKey::Load(const CPrivKey &privkey, const CPubKey &vchPubKey, bool fSkipChe
 bool CKey::Derive(CKey& keyChild, ChainCode &ccChild, unsigned int nChild, const ChainCode& cc) const {
     assert(IsValid());
     assert(IsCompressed());
-    std::vector<unsigned char, secure_allocator<unsigned char>> vout(64);
+    //std::vector<unsigned char, secure_allocator<unsigned char>> vout(64);
+	std::vector<unsigned char> vout(64);
     if ((nChild >> 31) == 0) {
         CPubKey pubkey = GetPubKey();
         assert(pubkey.size() == CPubKey::COMPRESSED_PUBLIC_KEY_SIZE);
@@ -275,7 +276,8 @@ bool CExtKey::Derive(CExtKey &out, unsigned int _nChild) const {
 
 void CExtKey::SetMaster(const unsigned char *seed, unsigned int nSeedLen) {
     static const unsigned char hashkey[] = {'B','i','t','c','o','i','n',' ','s','e','e','d'};
-    std::vector<unsigned char, secure_allocator<unsigned char>> vout(64);
+    //std::vector<unsigned char, secure_allocator<unsigned char>> vout(64);
+	std::vector<unsigned char> vout(64);
     CHMAC_SHA512(hashkey, sizeof(hashkey)).Write(seed, nSeedLen).Finalize(vout.data());
     key.Set(vout.data(), vout.data() + 32, true);
     memcpy(chaincode.begin(), vout.data() + 32, 32);
@@ -328,7 +330,8 @@ void ECC_Start() {
 
     {
         // Pass in a random blinding seed to the secp256k1 context.
-        std::vector<unsigned char, secure_allocator<unsigned char>> vseed(32);
+        //std::vector<unsigned char, secure_allocator<unsigned char>> vseed(32);
+		std::vector<unsigned char> vseed(32);
         GetRandBytes(vseed.data(), 32);
         bool ret = secp256k1_context_randomize(ctx, vseed.data());
         assert(ret);

@@ -9,7 +9,7 @@
 #include <crypto/ripemd160.h>
 #include <crypto/sha256.h>
 #include <prevector.h>
-#include <serialize.h>
+//#include <serialize.h>
 #include <uint256.h>
 #include <version.h>
 
@@ -137,13 +137,6 @@ public:
         ctx.Finalize((unsigned char*)&result);
         return result;
     }
-
-    template<typename T>
-    CHashWriter& operator<<(const T& obj) {
-        // Serialize to this stream
-        ::Serialize(*this, obj);
-        return (*this);
-    }
 };
 
 /** Reads data from an underlying stream, while hashing the read data. */
@@ -171,24 +164,8 @@ public:
             nSize -= now;
         }
     }
-
-    template<typename T>
-    CHashVerifier<Source>& operator>>(T&& obj)
-    {
-        // Unserialize from this stream
-        ::Unserialize(*this, obj);
-        return (*this);
-    }
 };
 
-/** Compute the 256-bit hash of an object's serialization. */
-template<typename T>
-uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL_VERSION)
-{
-    CHashWriter ss(nType, nVersion);
-    ss << obj;
-    return ss.GetHash();
-}
 
 unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char>& vDataToHash);
 

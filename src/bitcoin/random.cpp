@@ -11,11 +11,14 @@
 #include <compat.h> // for Windows API
 #include <wincrypt.h>
 #endif
-#include <util.h>             // for LogPrint()
+
+#include <utiltime.h>
 #include <utilstrencodings.h> // for GetTime()
 
 #include <stdlib.h>
 #include <chrono>
+#include <thread>
+#include <algorithm>
 #include <thread>
 
 #ifndef WIN32
@@ -42,8 +45,14 @@
 #include <cpuid.h>
 #endif
 
-#include <openssl/err.h>
 #include <openssl/rand.h>
+
+#ifdef ARDUINO
+#include <Crypto/Crypto.h>
+#include <TransistorNoiseSource.h>
+#include <RNG.h>
+
+#endif
 
 [[noreturn]] static void RandFailure()
 {
@@ -84,6 +93,15 @@ static void RDRandInit()
         rdrand_supported = true;
     }
     hwrand_initialized.store(true);
+}
+#elif defined(ARDUINO)
+static void RDRandInit() {
+	// Noise source to seed the random number generator.
+	static TransistorNoiseSource noise(0);  // use noise from pin 0
+	// Initialize the random number generator.
+	RNG.begin("ARK");
+	// Add the noise source to the list of sources known to RNG.
+	RNG.addNoiseSource(noise);
 }
 #else
 static void RDRandInit() {}
@@ -157,7 +175,7 @@ static void RandAddSeedPerfmon()
         ret = RegQueryValueExA(HKEY_PERFORMANCE_DATA, "Global", nullptr, nullptr, vData.data(), &nSize);
         if (ret != ERROR_MORE_DATA || vData.size() >= nMaxSize)
             break;
-        vData.resize(std::max((vData.size() * 3) / 2, nMaxSize)); // Grow size of buffer exponentially
+        vData.resize((std::max)((vData.size() * 3) / 2, nMaxSize)); // Grow size of buffer exponentially
     }
     RegCloseKey(HKEY_PERFORMANCE_DATA);
     if (ret == ERROR_SUCCESS) {
@@ -180,20 +198,29 @@ static void RandAddSeedPerfmon()
  */
 void GetDevURandom(unsigned char *ent32)
 {
-    int f = open("/dev/urandom", O_RDONLY);
-    if (f == -1) {
-        RandFailure();
-    }
-    int have = 0;
-    do {
-        ssize_t n = read(f, ent32 + have, NUM_OS_RANDOM_BYTES - have);
-        if (n <= 0 || n + have > NUM_OS_RANDOM_BYTES) {
-            close(f);
-            RandFailure();
-        }
-        have += n;
-    } while (have < NUM_OS_RANDOM_BYTES);
-    close(f);
+	#ifdef ARDUINO
+		
+		// Generate output whenever 32 bytes of entropy have been accumulated.
+		// The first time through, we wait for 48 bytes for a full entropy pool.
+		if (RNG.available(NUM_OS_RANDOM_BYTES)) {
+			RNG.rand(ent32, NUM_OS_RANDOM_BYTES);
+		}
+	#else
+		int f = open("/dev/urandom", O_RDONLY);
+		if (f == -1) {
+			RandFailure();
+		}
+		int have = 0;
+		do {
+			ssize_t n = read(f, ent32 + have, NUM_OS_RANDOM_BYTES - have);
+			if (n <= 0 || n + have > NUM_OS_RANDOM_BYTES) {
+				close(f);
+				RandFailure();
+			}
+			have += n;
+		} while (have < NUM_OS_RANDOM_BYTES);
+		close(f);
+	#endif
 }
 #endif
 
@@ -277,7 +304,7 @@ void GetRandBytes(unsigned char* buf, int num)
 }
 
 static void AddDataToRng(void* data, size_t len);
-
+/*
 void RandAddSeedSleep()
 {
     int64_t nPerfCounter1 = GetPerformanceCounter();
@@ -291,9 +318,9 @@ void RandAddSeedSleep()
     memory_cleanse(&nPerfCounter1, sizeof(nPerfCounter1));
     memory_cleanse(&nPerfCounter2, sizeof(nPerfCounter2));
 }
+*/
 
-
-static std::mutex cs_rng_state;
+//static std::mutex cs_rng_state;
 static unsigned char rng_state[32] = {0};
 static uint64_t rng_counter = 0;
 
@@ -303,7 +330,7 @@ static void AddDataToRng(void* data, size_t len) {
     hasher.Write((const unsigned char*)data, len);
     unsigned char buf[64];
     {
-        std::unique_lock<std::mutex> lock(cs_rng_state);
+        //std::unique_lock<std::mutex> lock(cs_rng_state);
         hasher.Write(rng_state, sizeof(rng_state));
         hasher.Write((const unsigned char*)&rng_counter, sizeof(rng_counter));
         ++rng_counter;
@@ -335,7 +362,7 @@ void GetStrongRandBytes(unsigned char* out, int num)
 
     // Combine with and update state
     {
-        std::unique_lock<std::mutex> lock(cs_rng_state);
+        //std::unique_lock<std::mutex> lock(cs_rng_state);
         hasher.Write(rng_state, sizeof(rng_state));
         hasher.Write((const unsigned char*)&rng_counter, sizeof(rng_counter));
         ++rng_counter;
@@ -405,50 +432,6 @@ std::vector<unsigned char> FastRandomContext::randbytes(size_t len)
 FastRandomContext::FastRandomContext(const uint256& seed) : requires_seed(false), bytebuf_size(0), bitbuf_size(0)
 {
     rng.SetKey(seed.begin(), 32);
-}
-
-bool Random_SanityCheck()
-{
-    uint64_t start = GetPerformanceCounter();
-
-    /* This does not measure the quality of randomness, but it does test that
-     * OSRandom() overwrites all 32 bytes of the output given a maximum
-     * number of tries.
-     */
-    static const ssize_t MAX_TRIES = 1024;
-    uint8_t data[NUM_OS_RANDOM_BYTES];
-    bool overwritten[NUM_OS_RANDOM_BYTES] = {}; /* Tracks which bytes have been overwritten at least once */
-    int num_overwritten;
-    int tries = 0;
-    /* Loop until all bytes have been overwritten at least once, or max number tries reached */
-    do {
-        memset(data, 0, NUM_OS_RANDOM_BYTES);
-        GetOSRand(data);
-        for (int x=0; x < NUM_OS_RANDOM_BYTES; ++x) {
-            overwritten[x] |= (data[x] != 0);
-        }
-
-        num_overwritten = 0;
-        for (int x=0; x < NUM_OS_RANDOM_BYTES; ++x) {
-            if (overwritten[x]) {
-                num_overwritten += 1;
-            }
-        }
-
-        tries += 1;
-    } while (num_overwritten < NUM_OS_RANDOM_BYTES && tries < MAX_TRIES);
-    if (num_overwritten != NUM_OS_RANDOM_BYTES) return false; /* If this failed, bailed out after too many tries */
-
-    // Check that GetPerformanceCounter increases at least during a GetOSRand() call + 1ms sleep.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    uint64_t stop = GetPerformanceCounter();
-    if (stop == start) return false;
-
-    // We called GetPerformanceCounter. Use it as entropy.
-    RAND_add((const unsigned char*)&start, sizeof(start), 1);
-    RAND_add((const unsigned char*)&stop, sizeof(stop), 1);
-
-    return true;
 }
 
 FastRandomContext::FastRandomContext(bool fDeterministic) : requires_seed(!fDeterministic), bytebuf_size(0), bitbuf_size(0)

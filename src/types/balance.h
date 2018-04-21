@@ -42,8 +42,8 @@ public:
 	{
 		bool isNumeric = true;
 
-		for (auto i = 0u; i < strlen(balanceStr); ++i) {
-			if (!isdigit(balanceStr[i])) {
+		for (auto i = 0u; i < std::strlen(balanceStr); ++i) {
+			if (!std::isdigit(balanceStr[i])) {
 				isNumeric = false;
 				break;
 			}
@@ -54,27 +54,27 @@ public:
 	}
 
 	Balance(const Balance& other) : arktoshi_(), ark_() {
-		strcpy(arktoshi_, other.arktoshi_);
-		strcpy(ark_, other.ark_);
+		std::strcpy(arktoshi_, other.arktoshi_);
+		std::strcpy(ark_, other.ark_);
 	}
 	Balance& operator=(const Balance& other) {
 		if (this != &other) {
-			strcpy(arktoshi_, other.arktoshi_);
-			strcpy(ark_, other.ark_);
+			std::strcpy(arktoshi_, other.arktoshi_);
+			std::strcpy(ark_, other.ark_);
 		}
 		return *this;
 	}
 
 	Balance(Balance&& other) : arktoshi_(), ark_() {
-		strcpy(arktoshi_, other.arktoshi_);
-		strcpy(ark_, other.ark_);
+		std::strcpy(arktoshi_, other.arktoshi_);
+		std::strcpy(ark_, other.ark_);
 		other.arktoshi_[0] = '\0';
 		other.ark_[0] = '\0';
 	}
 	Balance& operator=(Balance&& other) {
 		if (this != &other) {
-			strcpy(arktoshi_, other.arktoshi_);
-			strcpy(ark_, other.ark_);
+			std::strcpy(arktoshi_, other.arktoshi_);
+			std::strcpy(ark_, other.ark_);
 			other.arktoshi_[0] = '\0';
 			other.ark_[0] = '\0';
 		}
@@ -86,12 +86,12 @@ public:
     const char* arktoshi() const { return arktoshi_; }
 
     void setArktoshi(const char* const balanceStr) {
-        strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
+        std::strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
     }
 
   void setArk(const char* const balanceStr)
   {
-    const auto length = strlen(balanceStr);
+    const auto length = std::strlen(balanceStr);
     if (length < DECIMAL_PLACES) {
         ark_[0] = '.';
         const auto num_zero_pad = DECIMAL_PLACES - length;
@@ -118,7 +118,7 @@ public:
 
   void setBalance(const char* const _balanceStr)
   {
-    if (strcmp(_balanceStr, "0") == 0)
+    if (std::strcmp(_balanceStr, "0") == 0)
     {
       this->arktoshi_[0] = '0';
       this->ark_[0] = '0';

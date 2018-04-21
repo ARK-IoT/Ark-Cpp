@@ -1,6 +1,8 @@
 #ifdef UNIT_TEST
 
 #include <AUnit.h>
+#include <Crypo.h>
+#include <RNG.h>
 
 #if (defined ESP8266 || defined ESP32)
 
@@ -66,7 +68,9 @@ void setup() {
 }
 
 void loop() {
-   aunit::TestRunner::run();
+	// Perform regular housekeeping on the random number generator.
+    RNG.loop();
+	aunit::TestRunner::run();
 }
 
 #endif

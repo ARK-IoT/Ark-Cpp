@@ -64,14 +64,12 @@ set (BITCOIN_SRC
 	${PROJECT_SOURCE_DIR}/bitcoin/random.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utiltime.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/util.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/chacha20.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/ripemd160.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha256.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/support/cleanse.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/support/lockedpool.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/src/secp256k1.cpp
 )
 

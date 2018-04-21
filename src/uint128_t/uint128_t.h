@@ -34,13 +34,9 @@ to do a general rewrite of this class.
 #ifndef __UINT128_T__
 #define __UINT128_T__
 
+#include "utilities/platform.h"
+
 #include <cstdint>
-#include <iostream>
-#include <stdexcept>
-// Visual Studio
-#ifdef _MSC_VER
-#include <string>
-#endif
 #include <type_traits>
 #include <utility>
 

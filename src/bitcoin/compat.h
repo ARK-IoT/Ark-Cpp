@@ -42,7 +42,7 @@
 #include <windows.h>
 #include <ws2tcpip.h>
 #include <stdint.h>
-#else
+#elif UNIX
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/select.h>
@@ -91,13 +91,5 @@ typedef int32_t ssize_t;
 #endif
 #endif
 #endif
-
-bool static inline IsSelectableSocket(const SOCKET& s) {
-#ifdef WIN32
-    return true;
-#else
-    return (s < FD_SETSIZE);
-#endif
-}
 
 #endif // BITCOIN_COMPAT_H
