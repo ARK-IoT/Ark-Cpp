@@ -365,7 +365,7 @@ uint64_t GetRand(uint64_t nMax)
 
 int GetRandInt(int nMax)
 {
-    return GetRand(nMax);
+    return static_cast<int>(GetRand(nMax));
 }
 
 uint256 GetRandHash()

@@ -48,10 +48,10 @@ private:
     ChaCha20 rng;
 
     unsigned char bytebuf[64];
-    int bytebuf_size;
+    uint64_t bytebuf_size;
 
     uint64_t bitbuf;
-    int bitbuf_size;
+    uint64_t bitbuf_size;
 
     void RandomSeed();
 
@@ -86,7 +86,7 @@ public:
     }
 
     /** Generate a random (bits)-bit integer. */
-    uint64_t randbits(int bits) {
+    uint64_t randbits(uint64_t bits) {
         if (bits == 0) {
             return 0;
         } else if (bits > 32) {
@@ -104,9 +104,9 @@ public:
     uint64_t randrange(uint64_t range)
     {
         --range;
-        int bits = CountBits(range);
+        auto bits = CountBits(range);
         while (true) {
-            uint64_t ret = randbits(bits);
+            auto ret = randbits(bits);
             if (ret <= range) return ret;
         }
     }
@@ -115,7 +115,7 @@ public:
     std::vector<unsigned char> randbytes(size_t len);
 
     /** Generate a random 32-bit integer. */
-    uint32_t rand32() { return randbits(32); }
+    uint32_t rand32() { return static_cast<uint32_t>(randbits(32)); }
 
     /** generate a random uint256. */
     uint256 rand256();

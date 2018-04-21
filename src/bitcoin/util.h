@@ -29,9 +29,6 @@
 #include <unordered_set>
 #include <vector>
 
-//#include <boost/signals2/signal.hpp>
-//#include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
-
 // Application startup time (used for uptime calculation)
 int64_t GetStartupTime();
 
@@ -39,15 +36,6 @@ static const bool DEFAULT_LOGTIMEMICROS = false;
 static const bool DEFAULT_LOGIPS        = false;
 static const bool DEFAULT_LOGTIMESTAMPS = true;
 extern const char * const DEFAULT_DEBUGLOGFILE;
-#if 0
-/** Signals for translation. */
-class CTranslationInterface
-{
-public:
-    /** Translate a message to the native language of the user. */
-    boost::signals2::signal<std::string (const char* psz)> Translate;
-};
-#endif
 
 extern bool fPrintToConsole;
 extern bool fPrintToDebugLog;
@@ -62,17 +50,7 @@ extern const char * const BITCOIN_CONF_FILENAME;
 extern const char * const BITCOIN_PID_FILENAME;
 
 extern std::atomic<uint32_t> logCategories;
-#if 0
-/**
- * Translation function: Call Translate signal on UI interface, which returns a boost::optional result.
- * If no translation slot is registered, nothing is returned, and simply return the input.
- */
-inline std::string _(const char* psz)
-{
-    boost::optional<std::string> rv = translationInterface.Translate(psz);
-    return rv ? (*rv) : psz;
-}
-#endif
+
 void SetupEnvironment();
 bool SetupNetworking();
 
