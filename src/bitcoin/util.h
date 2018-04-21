@@ -15,7 +15,6 @@
 #endif
 
 #include <compat.h>
-#include <fs.h>
 #include <sync.h>
 #include <tinyformat.h>
 #include <utiltime.h>
