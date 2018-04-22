@@ -1,7 +1,7 @@
 #ifndef PASSPHRASE_H
 #define PASSPHRASE_H
 
-#include "crypto/crypto.h"
+#include "crypto/ark_crypto.h"
 
 #include <array>
 #include <cstring>

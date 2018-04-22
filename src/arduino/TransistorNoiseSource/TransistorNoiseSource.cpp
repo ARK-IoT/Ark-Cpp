@@ -22,7 +22,7 @@
 
 #include "TransistorNoiseSource.h"
 #include "RNG.h"
-#include "Crypto/Crypto.h"
+#include "Crypto.h"
 #include <Arduino.h>
 
 /**
@@ -247,7 +247,8 @@ void TransistorNoiseSource::stir()
  */
 void TransistorNoiseSource::restart()
 {
-	std::memset(buffer, 0, sizeof(buffer));
+	//std::memset(buffer, 0, sizeof(buffer));
+	clean(buffer);
     prevBit = 0;
     posn = 0;
     bitNum = 0;

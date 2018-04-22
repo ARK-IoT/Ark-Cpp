@@ -1,5 +1,5 @@
-#ifndef CRYPTO_H
-#define CRYPTO_H
+#ifndef ARK_CRYPTO_H
+#define ARK_CRYPTO_H
 
 #include "models/account.h"
 

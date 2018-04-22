@@ -188,12 +188,12 @@ static int secp256k1_ecdsa_sig_serialize(unsigned char *sig, size_t *size, const
     }
     *size = 6 + lenS + lenR;
     sig[0] = 0x30;
-    sig[1] = 4 + lenS + lenR;
+    sig[1] = static_cast<unsigned char>(4 + lenS + lenR);
     sig[2] = 0x02;
-    sig[3] = lenR;
+    sig[3] = static_cast<unsigned char>(lenR);
     memcpy(sig+4, rp, lenR);
     sig[4+lenR] = 0x02;
-    sig[5+lenR] = lenS;
+    sig[5+lenR] = static_cast<unsigned char>(lenS);
     memcpy(sig+lenR+6, sp, lenS);
     return 1;
 }

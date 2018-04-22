@@ -48,7 +48,8 @@
 #include <openssl/rand.h>
 
 #ifdef ARDUINO
-#include <Crypto/Crypto.h>
+
+#include <Crypto.h>
 #include <TransistorNoiseSource.h>
 #include <RNG.h>
 
@@ -152,7 +153,7 @@ void RandAddSeed()
     memory_cleanse((void*)&nCounter, sizeof(nCounter));
 }
 
-static void RandAddSeedPerfmon()
+static void RandAddSeedPerfmon()  
 {
     RandAddSeed();
 
@@ -192,42 +193,41 @@ static void RandAddSeedPerfmon()
 #endif
 }
 
-#ifndef WIN32
+#if !(defined WIN32) && !(defined ARDUINO)
 /** Fallback: get 32 bytes of system entropy from /dev/urandom. The most
  * compatible way to get cryptographic randomness on UNIX-ish platforms.
  */
 void GetDevURandom(unsigned char *ent32)
 {
-	#ifdef ARDUINO
-		
-		// Generate output whenever 32 bytes of entropy have been accumulated.
-		// The first time through, we wait for 48 bytes for a full entropy pool.
-		if (RNG.available(NUM_OS_RANDOM_BYTES)) {
-			RNG.rand(ent32, NUM_OS_RANDOM_BYTES);
-		}
-	#else
-		int f = open("/dev/urandom", O_RDONLY);
-		if (f == -1) {
+	// Generate output whenever 32 bytes of entropy have been accumulated.
+	// The first time through, we wait for 48 bytes for a full entropy pool.
+	int f = open("/dev/urandom", O_RDONLY);
+	if (f == -1) {
+		RandFailure();
+	}
+	int have = 0;
+	do {
+		ssize_t n = read(f, ent32 + have, NUM_OS_RANDOM_BYTES - have);
+		if (n <= 0 || n + have > NUM_OS_RANDOM_BYTES) {
+			close(f);
 			RandFailure();
 		}
-		int have = 0;
-		do {
-			ssize_t n = read(f, ent32 + have, NUM_OS_RANDOM_BYTES - have);
-			if (n <= 0 || n + have > NUM_OS_RANDOM_BYTES) {
-				close(f);
-				RandFailure();
-			}
-			have += n;
-		} while (have < NUM_OS_RANDOM_BYTES);
-		close(f);
-	#endif
+		have += n;
+	} while (have < NUM_OS_RANDOM_BYTES);
+	close(f);
 }
 #endif
 
 /** Get 32 bytes of system entropy. */
 void GetOSRand(unsigned char *ent32)
 {
-#if defined(WIN32)
+#ifdef ARDUINO		
+		// Generate output whenever 32 bytes of entropy have been accumulated.
+		// The first time through, we wait for 48 bytes for a full entropy pool.
+		if (RNG.available(NUM_OS_RANDOM_BYTES)) {
+			RNG.rand(ent32, NUM_OS_RANDOM_BYTES);
+		}
+#elif defined(WIN32)
     HCRYPTPROV hProvider;
     int ret = CryptAcquireContextW(&hProvider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
     if (!ret) {

@@ -5,12 +5,21 @@
 
 #include <Arduino.h>
 
+#if (defined ARDUINO)
+#include <WString.h>
+#else
+#undef String
+#include <string>
+#define String std::string
+#endif
+
+
 // undef the C macros to allow the C++ STL to take over
 // This is to have compatibility with various board implementations of the STL
 #undef min
 #undef max
 
-#include <WString.h>
+
 #include <Printable.h>
 #include <Print.h>
 

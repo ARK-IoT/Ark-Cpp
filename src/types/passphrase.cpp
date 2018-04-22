@@ -1,6 +1,6 @@
 #include "types/passphrase.h"
 
-#include "crypto/crypto.h"
+#include "crypto/ark_crypto.h"
 
 Passphrase::Passphrase(
 	bool generate_second_passphrase /* = false */, 

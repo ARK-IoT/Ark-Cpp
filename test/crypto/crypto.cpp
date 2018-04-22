@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "crypto/crypto.h"
+#include "crypto/ark_crypto.h"
 #include "constants/networks.h"
 
 #include <string>

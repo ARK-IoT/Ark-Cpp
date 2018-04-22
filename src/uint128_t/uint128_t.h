@@ -39,8 +39,18 @@ to do a general rewrite of this class.
 #include <cstdint>
 #include <type_traits>
 #include <utility>
+#include <ostream>
 
-class uint128_t{
+class uint128_t;
+
+// Give uint128_t type traits
+namespace std {  // This is probably not a good idea
+    template <> struct is_arithmetic <uint128_t> : std::true_type {};
+    template <> struct is_integral   <uint128_t> : std::true_type {};
+    template <> struct is_unsigned   <uint128_t> : std::true_type {};
+};
+
+class uint128_t {
     private:
         uint64_t UPPER, LOWER;
 
@@ -211,13 +221,15 @@ class uint128_t{
         // Arithmetic Operators
         uint128_t operator+(const uint128_t & rhs) const;
 
-        template <typename T> uint128_t operator+(const T & rhs) const{
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t>::type operator+(const T & rhs) const {
             return uint128_t(UPPER + ((LOWER + (uint64_t) rhs) < LOWER), LOWER + (uint64_t) rhs);
         }
 
         uint128_t & operator+=(const uint128_t & rhs);
 
-        template <typename T> uint128_t & operator+=(const T & rhs){
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t&>::type operator+=(const T & rhs){
             UPPER = UPPER + ((LOWER + rhs) < LOWER);
             LOWER = LOWER + rhs;
             return *this;
@@ -225,26 +237,30 @@ class uint128_t{
 
         uint128_t operator-(const uint128_t & rhs) const;
 
-        template <typename T> uint128_t operator-(const T & rhs) const{
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t>::type operator-(const T & rhs) const{
             return uint128_t((uint64_t) (UPPER - ((LOWER - rhs) > LOWER)), (uint64_t) (LOWER - rhs));
         }
 
         uint128_t & operator-=(const uint128_t & rhs);
 
-        template <typename T> uint128_t & operator-=(const T & rhs){
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t&>::type operator-=(const T & rhs){
             *this = *this - rhs;
             return *this;
         }
 
         uint128_t operator*(const uint128_t & rhs) const;
 
-        template <typename T> uint128_t operator*(const T & rhs) const{
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t>::type operator*(const T & rhs) const{
             return *this * uint128_t(rhs);
         }
 
         uint128_t & operator*=(const uint128_t & rhs);
 
-        template <typename T> uint128_t & operator*=(const T & rhs){
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t&>::type operator*=(const T & rhs){
             *this = *this * uint128_t(rhs);
             return *this;
         }
@@ -255,26 +271,30 @@ class uint128_t{
     public:
         uint128_t operator/(const uint128_t & rhs) const;
 
-        template <typename T> uint128_t operator/(const T & rhs) const{
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t>::type operator/(const T & rhs) const{
             return *this / uint128_t(rhs);
         }
 
         uint128_t & operator/=(const uint128_t & rhs);
 
-        template <typename T> uint128_t & operator/=(const T & rhs){
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t&>::type operator/=(const T & rhs){
             *this = *this / uint128_t(rhs);
             return *this;
         }
 
         uint128_t operator%(const uint128_t & rhs) const;
 
-        template <typename T> uint128_t operator%(const T & rhs) const{
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t>::type operator%(const T & rhs) const{
             return *this % uint128_t(rhs);
         }
 
         uint128_t & operator%=(const uint128_t & rhs);
 
-        template <typename T> uint128_t & operator%=(const T & rhs){
+        template <typename T> 
+		typename std::enable_if<std::is_integral<T>::value, uint128_t&>::type operator%=(const T & rhs){
             *this = *this % uint128_t(rhs);
             return *this;
         }
@@ -301,14 +321,7 @@ class uint128_t{
         uint8_t bits() const;
 
         // Get string representation of value
-        std::string str(uint8_t base = 10, const unsigned int & len = 0) const;
-};
-
-// Give uint128_t type traits
-namespace std {  // This is probably not a good idea
-    template <> struct is_arithmetic <uint128_t> : std::true_type {};
-    template <> struct is_integral   <uint128_t> : std::true_type {};
-    template <> struct is_unsigned   <uint128_t> : std::true_type {};
+        String str(uint8_t base = 10, const unsigned int & len = 0) const;
 };
 
 // useful values

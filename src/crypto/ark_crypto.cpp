@@ -1,4 +1,4 @@
-#include "crypto/crypto.h"
+#include "crypto/ark_crypto.h"
 #include "constants/networks.h"
 
 #include "bitcoin/base58.h"
