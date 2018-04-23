@@ -20,6 +20,7 @@
 #include <thread>
 #include <algorithm>
 #include <thread>
+#include <atomic>
 
 #ifndef WIN32
 #include <sys/time.h>
