@@ -3,48 +3,32 @@
 #ifndef PUBLICKEY_H
 #define PUBLICKEY_H
 
-#include <cstring>
-
 /********************************************************************************
-*
-* publicKey: 
+*	Publickey: 
 *   "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456"
-*   
 *   66 Characters | Base64-encoded
-*
 ********************************************************************************/
 
-    struct publickey_t {
-    private:
-        static const auto PUBLICKEY_SIZE = 67;
+#define PUBLICKEY_CHARACTER_WIDTH 8
+#define PUBLICKEY_LENGTH 66		/* Actual Length of Address */
+#define PUBLICKEY_SIZE (PUBLICKEY_LENGTH * PUBLICKEY_CHARACTER_WIDTH)		/* Size: 528 (Length of Publickey * character width) */
 
-        char value_[PUBLICKEY_SIZE];
+/*************************************************
+*
+**************************************************/
+struct Publickey :
+		public Describable
+{
+	private:
+		char value_[PUBLICKEY_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
 
-    public:
-        publickey_t() : value_() { };
+	public:
 
-        publickey_t(const char* const _base64String) : value_() {      
-          strncpy(value_, _base64String, sizeof(value_) / sizeof(value_[0]));
-        };
+		Publickey();
 
-        publickey_t(const publickey_t& other) : value_() {
-            strcpy(value_, other.value_);
-        }
-        publickey_t& operator=(const publickey_t& other) {
-            if (this != &other) {
-                strcpy(value_, other.value_);
-            }
-            return *this;
-        }
+		Publickey(const char* const pubkeyStr);
 
-        const char* getValue() const { return value_; }     
-    };
-
-    typedef publickey_t Publickey;
-
-
-//   };
-// };
-
+};
+/*************************************************/
 
 #endif

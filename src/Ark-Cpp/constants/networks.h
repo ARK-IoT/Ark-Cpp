@@ -3,12 +3,6 @@
 #ifndef NETWORKS_H
 #define NETWORKS_H
 
-<<<<<<< HEAD
-#include "platform.h"
-#include "network.h"
-
-=======
->>>>>>> master
 namespace ARK
 {
 namespace Constants
@@ -16,18 +10,11 @@ namespace Constants
 namespace Networks
 {
 
-<<<<<<< HEAD
-namespace Devnet
-{
-
-	/*
-=======
 
 namespace Devnet
 {
 
 /*
->>>>>>> master
 			ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
 			ARK::API::Manager mngr(devnet);
 					Serial.println(mngr.network.nethash);
@@ -45,26 +32,6 @@ namespace Devnet
 			==============
 	*/
 
-<<<<<<< HEAD
-	extern const char* nethash;
-
-	extern const char* const seeds[6];
-
-	extern const int port;
-
-    extern const NetworkType type;
-
-	/*	String randomPeer = ARK::Constants::Networks::Devnet::randomPeer();	*/
-	inline const char* randomPeer()
-	{
-		return seeds[random(0, 5)];
-	};
-
-	extern const ARK::Network model;
-}
-
-
-=======
 const auto nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
 const char *const seeds[6] = {
 		"167.114.29.32", "167.114.29.33",
@@ -76,16 +43,11 @@ const auto port = 4002;
 const auto type = NetworkType::DEV;
 
 };
->>>>>>> master
 
 namespace Mainnet
 {
 
-<<<<<<< HEAD
-	/*	TEST
-=======
 /*	TEST
->>>>>>> master
 		ARK::Network mainnet = ARK::Constants::Networks::Mainnet::model;
 		ARK::API::Manager mngr(mainnet);
 		Serial.println(mngr.network.nethash);
@@ -103,39 +65,6 @@ namespace Mainnet
 		==============
 	*/
 
-<<<<<<< HEAD
-	extern const char* nethash;
-	extern const char* const seeds[46];
-
-	extern const int port;
-
-    extern const NetworkType type;
-
-	/*	String randomPeer = ARK::Constants::Networks::Mainnet::randomPeer();	*/
-	inline const char* randomPeer()
-	{
-		return seeds[random(0, 45)];
-	};
-
-	extern const ARK::Network model;
-}
-
-namespace Network_ADV
-{
-
-	extern const ARK::Network_ADV::network_t devnet;
-
-	extern const ARK::Network_ADV::network_t main;
-
-	extern const ARK::Network_ADV::network_t testnet;
-
-	extern const ARK::Network_ADV::network_t bitcoin;
-};
-
-};
-}
-}
-=======
 const auto nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988";
 const char *const seeds[46] =
 		{
@@ -239,5 +168,4 @@ ARK::Network_ADV::network_t bitcoin{
 };
 };
 
->>>>>>> master
 #endif
