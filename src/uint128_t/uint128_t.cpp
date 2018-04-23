@@ -381,12 +381,12 @@ uint8_t uint128_t::bits() const{
     return out;
 }
 
-String uint128_t::str(uint8_t base, const unsigned int & len) const{
+std::string uint128_t::str(uint8_t base, const unsigned int & len) const{
     if ((base < 2) || (base > 16)){
         //throw std::invalid_argument("Base must be in the range [2, 16]");
 		assert("Base must be in the range [2, 16]");
     }
-    String out;
+    std::string out;
     if (!(*this)){
         out = "0";
     }
@@ -394,21 +394,13 @@ String uint128_t::str(uint8_t base, const unsigned int & len) const{
         std::pair <uint128_t, uint128_t> qr(*this, uint128_0);
         do{
             qr = divmod(qr.first, base);
-			String temp = " ";
+			std::string temp = " ";
 			temp[0] = "0123456789abcdef"[(uint8_t) qr.second];
-#ifdef ARDUINO
-            out = temp.operator+(out);
-#else
 			out = temp + out;
-#endif
         } while (qr.first);
     }
     if (out.length() < len){
-#ifdef ARDUINO
-        out = String(len - out.length(), '0').operator+(out);
-#else
-		out = String(len - out.length(), '0') + out;
-#endif
+		out = std::string(len - out.length(), '0') + out;
     }
     return out;
 }

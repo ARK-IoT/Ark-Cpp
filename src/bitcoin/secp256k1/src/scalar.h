@@ -50,10 +50,6 @@ static void secp256k1_scalar_cadd_bit(secp256k1_scalar *r, unsigned int bit, int
 /** Multiply two scalars (modulo the group order). */
 static void secp256k1_scalar_mul(secp256k1_scalar *r, const secp256k1_scalar *a, const secp256k1_scalar *b);
 
-/** Shift a scalar right by some amount strictly between 0 and 16, returning
- *  the low bits that were shifted off */
-static int secp256k1_scalar_shr_int(secp256k1_scalar *r, int n);
-
 /** Compute the square of a scalar (modulo the group order). */
 static void secp256k1_scalar_sqr(secp256k1_scalar *r, const secp256k1_scalar *a);
 
@@ -77,10 +73,6 @@ static int secp256k1_scalar_is_even(const secp256k1_scalar *a);
 
 /** Check whether a scalar is higher than the group order divided by 2. */
 static int secp256k1_scalar_is_high(const secp256k1_scalar *a);
-
-/** Conditionally negate a number, in constant time.
- * Returns -1 if the number was negated, 1 otherwise */
-static int secp256k1_scalar_cond_negate(secp256k1_scalar *a, int flag);
 
 #ifndef USE_NUM_NONE
 /** Convert a scalar to a number. */

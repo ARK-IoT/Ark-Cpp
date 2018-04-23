@@ -34,12 +34,11 @@ to do a general rewrite of this class.
 #ifndef __UINT128_T__
 #define __UINT128_T__
 
-#include "utilities/platform.h"
-
 #include <cstdint>
 #include <type_traits>
 #include <utility>
 #include <ostream>
+#include <string>
 
 class uint128_t;
 
@@ -60,7 +59,8 @@ class uint128_t {
         uint128_t(const uint128_t & rhs);
         uint128_t(uint128_t && rhs);
 
-        template <typename T> uint128_t(const T & rhs)
+        template <typename T> 
+		uint128_t(const T & rhs)
             : UPPER(0), LOWER(rhs)
         {
             static_assert(std::is_integral <T>::value, "Input argument type must be an integer.");
@@ -321,7 +321,7 @@ class uint128_t {
         uint8_t bits() const;
 
         // Get string representation of value
-        String str(uint8_t base = 10, const unsigned int & len = 0) const;
+        std::string str(uint8_t base = 10, const unsigned int & len = 0) const;
 };
 
 // useful values

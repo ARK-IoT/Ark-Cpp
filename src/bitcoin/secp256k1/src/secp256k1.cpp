@@ -12,7 +12,6 @@
 #include "scalar_impl.h"
 #include "group_impl.h"
 #include "ecmult_impl.h"
-#include "ecmult_const_impl.h"
 #include "ecmult_gen_impl.h"
 #include "ecdsa_impl.h"
 #include "eckey_impl.h"

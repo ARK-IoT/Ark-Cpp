@@ -80,23 +80,10 @@ static int secp256k1_scalar_is_high(const secp256k1_scalar *a) {
     return *a > EXHAUSTIVE_TEST_ORDER / 2;
 }
 
-static int secp256k1_scalar_cond_negate(secp256k1_scalar *r, int flag) {
-    if (flag) secp256k1_scalar_negate(r, r);
-    return flag ? -1 : 1;
-}
-
 static void secp256k1_scalar_mul(secp256k1_scalar *r, const secp256k1_scalar *a, const secp256k1_scalar *b) {
     *r = (*a * *b) % EXHAUSTIVE_TEST_ORDER;
 }
 
-static int secp256k1_scalar_shr_int(secp256k1_scalar *r, int n) {
-    int ret;
-    VERIFY_CHECK(n > 0);
-    VERIFY_CHECK(n < 16);
-    ret = *r & ((1 << n) - 1);
-    *r >>= n;
-    return ret;
-}
 
 static void secp256k1_scalar_sqr(secp256k1_scalar *r, const secp256k1_scalar *a) {
     *r = (*a * *a) % EXHAUSTIVE_TEST_ORDER;
