@@ -9,10 +9,13 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+<<<<<<< HEAD
+=======
 #include <Arduino.h>
 
 #include "../helpers/helpers.h"
 
+>>>>>>> master
 #include "address.h"
 #include "balance.h"
 #include "hash.h"

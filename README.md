@@ -2,13 +2,26 @@
   <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
+<<<<<<< HEAD
+# Ark for Machines v0.6.1  
+
+![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
+![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
+![version](https://img.shields.io/badge/version-v0.6.1-orange.svg?style=flat)
+=======
 # Ark for Machines v0.6.3  
 
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
 ![version](https://img.shields.io/badge/version-v0.6.3-orange.svg?style=flat)
 ![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
+>>>>>>> master
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
+
+Travis: [![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=feature%2Fcmake)](https://travis-ci.org/ciband/Ark-Cpp)
+
+Appveyor: [![Build status](https://ci.appveyor.com/api/projects/status/guny8h1g0jqfog45/branch/feature/cmake?svg=true)](https://ci.appveyor.com/project/ciband/ark-cpp/branch/feature/cmake)
+
 
 Not production ready.  
 

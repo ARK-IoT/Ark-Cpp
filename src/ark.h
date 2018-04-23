@@ -9,6 +9,9 @@
 #ifndef ARK_H
 #define ARK_H
 
+<<<<<<< HEAD
+#include "Ark-Cpp.h"
+=======
 #ifdef __cplusplus
 
 #include <Arduino.h>
@@ -31,5 +34,6 @@ typedef ARK::Voter Voter;
 #error C++ compiler required. expected file extensions: ".cc" ".cpp"
 
 #endif
+>>>>>>> master
 
 #endif

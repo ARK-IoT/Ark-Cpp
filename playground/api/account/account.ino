@@ -8,6 +8,13 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * account: 
 ********************************************************************************/
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
 /*************************************************/
 // #ifdef DEBUG_ESP_PORT
@@ -19,8 +26,12 @@ const char* password = "yourWiFiPassword";
 
 void checkAPI() {
   /*************************************************/
+<<<<<<< HEAD
+  ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
+=======
   ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
   ARK::API::Manager arkManager(devnet);
+>>>>>>> master
   /*************************************************/
   
   Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
