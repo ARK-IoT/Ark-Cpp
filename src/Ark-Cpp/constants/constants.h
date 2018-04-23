@@ -1,6 +1,9 @@
 /***************************************
+<<<<<<< HEAD
+=======
 * constants.h 
 * 
+>>>>>>> master
 * Ark-Cpp - for the Ark Ecosystem (ark.io)
 * https://github.com/Ark-IoT/Ark-Cpp
 *
