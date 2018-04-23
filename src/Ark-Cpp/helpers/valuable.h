@@ -6,12 +6,6 @@
 /*************************************************
 * Valueable
 **************************************************/
-<<<<<<< HEAD
-struct Valueable
-{
-  private:
-    char value_[];
-=======
 class Valuable
 {
 protected:
@@ -25,7 +19,6 @@ public:
 	// Valuable &operator=(const Valuable &other);
 
 	const char *getValue() const;
->>>>>>> master
 };
 /*************************************************/
 

@@ -9,16 +9,18 @@
 #ifndef api_h
 #define api_h
 
+#include <Arduino.h>
+
 #include "paths.h"
 
-#include "accountable/accountable.h"
-#include "blockable/blockable.h"
-#include "delegatable/delegatable.h"
-#include "loadable/loadable.h"
-#include "multisignaturable/multisignaturable.h"
-#include "peerable/peerable.h"
-#include "signaturable/signaturable.h"
-#include "transactionable/transactionable.h"
+#include "accountable/accountable.hpp"
+#include "blockable/blockable.hpp"
+#include "delegatable/delegatable.hpp"
+#include "loadable/loadable.hpp"
+#include "multisignaturable/multisignaturable.hpp"
+#include "peerable/peerable.hpp"
+#include "signaturable/signaturable.hpp"
+#include "transactionable/transactionable.hpp"
 
 #include "manager.h"
 

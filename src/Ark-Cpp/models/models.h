@@ -9,14 +9,6 @@
 #ifndef MODELS_H
 #define MODELS_H
 
-<<<<<<< HEAD
-#include "account.h"
-#include "block.h"
-#include "currency.h"
-#include "delegate.h"
-#include "fees.h"
-#include "network.h"
-=======
 #include "../types/types.h"
 
 #include "account.h"
@@ -25,7 +17,6 @@
 #include "delegate.h"
 #include "fees.h"
 #include "network.hpp"
->>>>>>> master
 #include "peer.h"
 #include "transaction.h"
 #include "transport.h"
