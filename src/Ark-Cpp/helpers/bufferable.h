@@ -9,6 +9,7 @@
 **************************************************/
 struct bufferable_t
 {
+<<<<<<< HEAD
 	protected:
 		char * buffer_;
 
@@ -62,13 +63,36 @@ struct bufferable_t
 /*************************************************/
 
 
+=======
+protected:
+	char *buffer_;
+
+public:
+	bufferable_t();
+	bufferable_t(bufferable_t &&other);
+
+	bufferable_t &operator=(bufferable_t other);
+	bufferable_t &operator=(const char *const newBuffer);
+
+	const char *get() const;
+};
+/*************************************************/
+
+>>>>>>> master
 /*************************************************
 *		Bufferable
 *		@brief:	Inheritible buffer
 **************************************************/
+<<<<<<< HEAD
 class Bufferable {
 	public:
 		bufferable_t buffer;
+=======
+class Bufferable
+{
+public:
+	bufferable_t buffer;
+>>>>>>> master
 };
 /*************************************************/
 

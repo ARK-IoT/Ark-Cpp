@@ -9,9 +9,19 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
+<<<<<<< HEAD
 #include "streamable.h"
 #include "subcount.h"
 #include "valueprintable.h"
 #include "bufferable.h"
+=======
+#include <Arduino.h>
+
+#include "subcount.h"
+#include "streamable.hpp"
+#include "valuable.h"
+#include "bufferable.h"
+#include "describable.h"
+>>>>>>> master
 
 #endif

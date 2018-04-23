@@ -5,9 +5,8 @@
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
-
 /********************************************************************************
-* block: 
+* loader: 
 ********************************************************************************/
 /*************************************************/
 //  #ifdef DEBUG_ESP_PORT
@@ -17,10 +16,21 @@ const char* password = "yourWiFiPassword";
 //  #endif
 /*************************************************/
 
+/*************************************************/
+//  #ifdef DEBUG_ESP_PORT
+//  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+//  #else
+//  #define DEBUG_MSG(...)
+//  #endif
+/*************************************************/
 
 void checkAPI() {
   /*************************************************/
+<<<<<<< HEAD
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+=======
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
+>>>>>>> master
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 

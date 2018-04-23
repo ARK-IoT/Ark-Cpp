@@ -1,13 +1,12 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
-
 /********************************************************************************
-* block: 
+* delegate: 
 ********************************************************************************/
 /*************************************************/
 // #ifdef DEBUG_ESP_PORT
@@ -17,10 +16,21 @@ const char* password = "yourWiFiPassword";
 // #endif
 /*************************************************/
 
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
 void checkAPI() {
   /*************************************************/
+<<<<<<< HEAD
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+=======
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
+>>>>>>> master
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
@@ -126,8 +136,13 @@ void check()
   ESP.deepSleep(4294967000);
 }
 /*************************************************/
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> master
 /*************************************************/
 void setup()
 {

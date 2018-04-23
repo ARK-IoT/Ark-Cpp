@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
@@ -204,5 +205,20 @@ public:
 };
 
 #endif
+=======
+
+
+#ifndef PLATFORM_HPP
+#define PLATFORM_HPP
+
+/*************************************************
+* ESP8266 
+**************************************************/
+#if defined(ESP8266) 
+  #include <ESP8266WiFi.h>
+  #include <ESP8266HTTPClient.h>
+#endif
+/*************************************************/
+>>>>>>> master
 
 #endif

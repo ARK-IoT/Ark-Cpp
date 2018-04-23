@@ -1,5 +1,5 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -8,6 +8,10 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * signature: 
 ********************************************************************************/
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 /*************************************************/
 //  #ifdef DEBUG_ESP_PORT
 //  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
@@ -19,6 +23,7 @@ const char* password = "yourWiFiPassword";
 void checkAPI()
 {
   /*************************************************/
+<<<<<<< HEAD
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager _arkManager(devnet);
   /*************************************************/
@@ -28,6 +33,17 @@ Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9
   /*************************************************/
   Balance signaturesFee = _arkManager.signaturesFee();
     Serial.println("signaturesFee: ");
+=======
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
+  ARK::API::Manager arkManager(devnet);
+  /*************************************************/
+
+  Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456" );
+
+  /*************************************************/
+  Balance signaturesFee = arkManager.signaturesFee();
+    Serial.print("signaturesFee: ");
+>>>>>>> master
     Serial.println(signaturesFee.ark());
     Serial.println();
     delay(50);
@@ -35,8 +51,13 @@ Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9
 
 
   /*************************************************/
+<<<<<<< HEAD
   auto multisignaturesPending = _arkManager.multisignaturesPending(darkPubkey);
     Serial.println("multisignaturesPending: ");
+=======
+  auto multisignaturesPending = arkManager.multisignaturesPending(darkPubkey);
+    Serial.print("multisignaturesPending: ");
+>>>>>>> master
     Serial.println(multisignaturesPending);
     Serial.println("\n=====\n");
     delay(50);
@@ -46,7 +67,11 @@ Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9
   /*************************************************/
   /*************************************************/
   /*  Only on Mainnet?  */
+<<<<<<< HEAD
   //  String multisignaturesAccounts = _arkManager.multisignaturesAccounts(darkHash);
+=======
+  //  String multisignaturesAccounts = arkManager.multisignaturesAccounts(darkHash);
+>>>>>>> master
   //    Serial.println("multisignaturesAccounts: ");
   //    Serial.println(multisignaturesAccounts);
   //    Serial.println("\n=====\n");

@@ -1,5 +1,5 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -16,14 +16,29 @@ const char* password = "yourWiFiPassword";
 //  #endif
 /*************************************************/
 
+/*************************************************/
+//  #ifdef DEBUG_ESP_PORT
+//  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+//  #else
+//  #define DEBUG_MSG(...)
+//  #endif
+/*************************************************/
 
 void checkAPI() {
   /*************************************************/
+<<<<<<< HEAD
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
 Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
+=======
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
+  ARK::API::Manager arkManager(devnet);
+  /*************************************************/
+
+  Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
+>>>>>>> master
 
   /*************************************************/
 	auto transactionFromID = arkManager.transaction(transactionID);
@@ -54,8 +69,13 @@ Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babec
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> master
   /*************************************************/
 	auto transactionsUnconfirmed = arkManager.transactionsUnconfirmed();
     Serial.println("transactionsUnconfirmed: ");
@@ -88,8 +108,13 @@ void check()
   ESP.deepSleep(4294967000);
 }
 /*************************************************/
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> master
 /*************************************************/
 void setup()
 {
