@@ -24,6 +24,7 @@
 
 #ifndef WIN32
 #include <sys/time.h>
+#include <fcntl.h>
 #endif
 
 #ifdef HAVE_SYS_GETRANDOM
