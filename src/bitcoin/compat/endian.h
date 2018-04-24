@@ -13,10 +13,6 @@
 
 #include <stdint.h>
 
-#ifndef _MSC_VER
-#include <endian.h>
-#endif
-
 #if defined(HAVE_ENDIAN_H)
 #include <endian.h>
 #elif defined(HAVE_SYS_ENDIAN_H)
