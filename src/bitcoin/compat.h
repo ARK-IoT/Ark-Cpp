@@ -6,10 +6,6 @@
 #ifndef BITCOIN_COMPAT_H
 #define BITCOIN_COMPAT_H
 
-#if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
-#endif
-
 #include <type_traits>
 
 // GCC 4.8 is missing some C++11 type_traits,
