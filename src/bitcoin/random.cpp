@@ -25,7 +25,7 @@
 #ifndef WIN32
 #include <sys/time.h>
 #include <fcntl.h>
-#define HAVE_GETENTROPY_RAND
+#include <unistd.h>
 #endif
 
 #ifdef HAVE_SYS_GETRANDOM
