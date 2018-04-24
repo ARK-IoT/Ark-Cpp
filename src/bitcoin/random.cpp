@@ -25,6 +25,7 @@
 #ifndef WIN32
 #include <sys/time.h>
 #include <fcntl.h>
+#define HAVE_GETENTROPY_RAND
 #endif
 
 #ifdef HAVE_SYS_GETRANDOM
@@ -92,7 +93,6 @@ static void RDRandInit()
 {
     uint32_t eax, ebx, ecx, edx;
     if (__get_cpuid(1, &eax, &ebx, &ecx, &edx) && (ecx & CPUID_F1_ECX_RDRAND)) {
-        LogPrintf("Using RdRand as an additional entropy source\n");
         rdrand_supported = true;
     }
     hwrand_initialized.store(true);
