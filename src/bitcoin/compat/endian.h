@@ -15,6 +15,10 @@
 #include <sys/endian.h>
 #endif
 
+#ifdef UNIX
+#define HAVE_DECL_HTOBE16 1
+#endif
+
 #if defined(WORDS_BIGENDIAN)
 
 #if HAVE_DECL_HTOBE16 == 0
