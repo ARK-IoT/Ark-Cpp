@@ -7,8 +7,8 @@
 #ifndef BITCOIN_KEY_H
 #define BITCOIN_KEY_H
 
-#include <pubkey.h>
-#include <uint256.h>
+#include <bitcoin/pubkey.h>
+#include <bitcoin/uint256.h>
 
 #include <stdexcept>
 #include <vector>

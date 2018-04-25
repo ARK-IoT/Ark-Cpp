@@ -3,17 +3,17 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <random.h>
+#include <bitcoin/random.h>
 
-#include <crypto/sha512.h>
-#include <support/cleanse.h>
+#include <bitcoin/crypto/sha512.h>
+#include <bitcoin/support/cleanse.h>
 #ifdef WIN32
-#include <compat.h> // for Windows API
+#include <bitcoin/compat.h> // for Windows API
 #include <wincrypt.h>
 #endif
 
-#include <utiltime.h>
-#include <utilstrencodings.h> // for GetTime()
+#include <bitcoin/utiltime.h>
+#include <bitcoin/utilstrencodings.h> // for GetTime()
 
 #include <stdlib.h>
 #include <chrono>
@@ -48,13 +48,17 @@
 #include <cpuid.h>
 #endif
 
-#include <openssl/rand.h>
-
 #ifdef ARDUINO
 
 #include <Crypto.h>
-#include <TransistorNoiseSource.h>
+#include <arduino/TransistorNoiseSource/TransistorNoiseSource.h>
 #include <RNG.h>
+
+#include <arduino/openssl/rand.h>
+
+#else
+
+#include <openssl/rand.h>
 
 #endif
 

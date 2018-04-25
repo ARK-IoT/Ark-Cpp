@@ -5,8 +5,8 @@
 // Based on the public domain implementation 'merged' by D. J. Bernstein
 // See https://cr.yp.to/chacha.html.
 
-#include "bitcoin/crypto/common.h"
-#include <crypto/chacha20.h>
+#include <bitcoin/crypto/common.h>
+#include <bitcoin/crypto/chacha20.h>
 
 #include <string.h>
 
@@ -67,8 +67,8 @@ void ChaCha20::SetIV(uint64_t iv)
 
 void ChaCha20::Seek(uint64_t pos)
 {
-    input[12] = pos;
-    input[13] = pos >> 32;
+    input[12] = static_cast<uint32_t>(pos);
+    input[13] = static_cast<uint32_t>(pos >> 32);
 }
 
 void ChaCha20::Output(unsigned char* c, size_t bytes)

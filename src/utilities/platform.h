@@ -192,7 +192,8 @@ public:
 		return static_cast<size_t>(end - start);
 	}
     size_t print(const Printable& p) {
-		throw std::runtime_error("not implemented");
+		//throw std::runtime_error("not implemented");
+		return 0;
 	}
 
 	template <typename T>

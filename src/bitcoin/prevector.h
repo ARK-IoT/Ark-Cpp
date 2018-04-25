@@ -14,7 +14,7 @@
 #include <iterator>
 #include <type_traits>
 
-#include <compat.h>
+#include <bitcoin/compat.h>
 
 #pragma pack(push, 1)
 /** Implements a drop-in replacement for std::vector<T> which stores up to N

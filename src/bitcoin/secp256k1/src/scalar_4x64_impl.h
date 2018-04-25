@@ -7,7 +7,7 @@
 #ifndef SECP256K1_SCALAR_REPR_IMPL_H
 #define SECP256K1_SCALAR_REPR_IMPL_H
 
-#include "uint128_t.h"
+#include "uint128_t/uint128_t.h"
 
 
 /* Limbs of the secp256k1 order. */

@@ -8,10 +8,9 @@
 
 #include <bitcoin/crypto/ripemd160.h>
 #include <bitcoin/crypto/sha256.h>
-#include <prevector.h>
-//#include <serialize.h>
-#include <uint256.h>
-#include <version.h>
+#include <bitcoin/prevector.h>
+#include <bitcoin/uint256.h>
+#include <bitcoin/version.h>
 
 #include <vector>
 

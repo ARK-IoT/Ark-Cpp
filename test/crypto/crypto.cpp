@@ -4,6 +4,7 @@
 #include "constants/networks.h"
 
 #include <string>
+#include <set>
 #include <sstream>
 
 namespace {
@@ -25,7 +26,8 @@ TEST(crypto, generate_mnemonic) {
 
 	passphrase = ARK::Crypto::generate_mnemonic(12);
 	words.clear();
-	stream = std::istringstream(passphrase);
+	stream.str(passphrase);
+	stream.clear();
 	for (std::string word; stream; ) {
 		stream >> word;
 		if (word.empty()) { continue; }

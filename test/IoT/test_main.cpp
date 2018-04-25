@@ -1,7 +1,7 @@
 #ifdef UNIT_TEST
 
 #include <AUnit.h>
-#include <Crypo.h>
+#include <Crypto.h>
 #include <RNG.h>
 
 #if (defined ESP8266 || defined ESP32)
