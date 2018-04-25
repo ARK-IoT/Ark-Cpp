@@ -16,7 +16,7 @@
 #endif
 
 #ifdef UNIX
-#define HAVE_DECL_HTOBE16 1
+#define HAVE_DECL_HTOBE16 defined(htobe16)
 #endif
 
 #if defined(WORDS_BIGENDIAN)
