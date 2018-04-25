@@ -61,8 +61,8 @@ ChaCha20::ChaCha20(const unsigned char* k, size_t keylen)
 
 void ChaCha20::SetIV(uint64_t iv)
 {
-    input[14] = iv;
-    input[15] = iv >> 32;
+    input[14] = static_cast<uint32_t>(iv);
+    input[15] = static_cast<uint32_t>(iv >> 32);
 }
 
 void ChaCha20::Seek(uint64_t pos)
