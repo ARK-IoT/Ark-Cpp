@@ -64,12 +64,8 @@ TEST(crypto, generate_address) {
 }
 
 TEST(crypto, generate_wif) {
-	CSHA256 sha256;
-	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
-	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
-	sha256.Finalize(hash);
-	//const auto keys = ARK::Crypto::get_keys(hash);
-	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, hash);
+	const auto keys = ARK::Crypto::get_keys(passphrase);
+	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, keys.GetPrivKey());
 	ASSERT_STREQ(
 		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
 		wif.c_str()

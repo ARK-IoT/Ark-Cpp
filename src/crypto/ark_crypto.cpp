@@ -2104,11 +2104,11 @@ std::string generate_mnemonic(uint8_t num_words /* = 12 */) {
 	return passphrase;
 }
 
-std::string get_wif(uint8_t wif, const uint8_t hash[CSHA256::OUTPUT_SIZE], bool compressed /* = true */) {
+std::string get_wif(uint8_t wif, const CPrivKey& key, bool compressed /* = true */) {
 	std::vector<uint8_t> buf(compressed ? 34 : 33);
 	buf[0] = wif;
 	for (auto i = 1u; i < 33; ++i) {
-		buf[i] = hash[i - 1];
+		buf[i] = key[i - 1];
 	}
 	if (compressed) { 
 		buf[33] = 0x01;
@@ -2130,18 +2130,18 @@ std::string get_address(uint8_t network, const CPubKey& public_key) {
 	return EncodeBase58Check(seed);
 }
 
-CKey get_keys(const uint8_t hash[CSHA256::OUTPUT_SIZE]) {
-	CKey key;
-	key.Set(hash, hash + CSHA256::OUTPUT_SIZE, true);
-	return key;
-}
-
-Account create_account(uint8_t network, const char* const passphrase) {
+CKey get_keys(const char* const passphrase, bool compressed /* = true */) {
 	CSHA256 sha256;
 	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
 	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
 	sha256.Finalize(hash);
-	const auto key = get_keys(hash);
+	CKey key;
+	key.Set(hash, hash + CSHA256::OUTPUT_SIZE, compressed);
+	return key;
+}
+
+Account create_account(uint8_t network, const char* const passphrase) {
+	const auto key = get_keys(passphrase);
 	const auto private_key = key.GetPrivKey();
 	const auto public_key = key.GetPubKey();
 	const auto address = get_address(network, public_key);
