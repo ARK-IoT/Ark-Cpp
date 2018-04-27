@@ -18,8 +18,8 @@
 
 namespace {
 
-char ssid[] = "your_ssid";     //  your network SSID (name)
-const char password[] = "your_password";  // your network password
+char ssid[] = "johnson";     //  your network SSID (name)
+const char password[] = "johnson_wifi!";  // your network password
 
 void setup_network() {
 	Serial.println();
@@ -59,18 +59,18 @@ void setup_network() { }
 void setup() {
     Serial.begin(9600);
 	while (!Serial); // for the Arduino Leonardo/Micro only
-
+	delay(100);
 	setup_network();
 
-    aunit::TestRunner::setTimeout(0);
+    //aunit::TestRunner::setTimeout(0);
 
-	delay(1000);
+	//delay(1000);
 }
 
 void loop() {
 	// Perform regular housekeeping on the random number generator.
-    RNG.loop();
-	aunit::TestRunner::run();
+    //RNG.loop();
+	//aunit::TestRunner::run();
 }
 
 #endif

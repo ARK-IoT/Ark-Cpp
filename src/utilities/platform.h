@@ -3,6 +3,8 @@
 
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
 
+#define USE_IOT
+
 #include <Arduino.h>
 
 #if (defined ARDUINO)
