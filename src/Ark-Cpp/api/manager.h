@@ -3,16 +3,6 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
-#include "accountable.h"
-#include "blockable.h"
-#include "delegatable.h"
-#include "loadable.h"
-#include "multisignaturable.h"
-#include "peerable.h"
-#include "signaturable.h"
-#include "transactionable.h"
-#include "connector.h"
-
 namespace ARK
 {
 namespace API
@@ -31,30 +21,33 @@ class Manager :
     public Transactionable,
     virtual ARK::Utilities::Network::Connectable
 {
-
   public:
- /*************************************************
+    /*************************************************
     *  ARK::API::Manager
     **************************************************/
-    Manager();
+    Manager() { this->connect(ARK::Network()); };
+    /*************************************************/
 
-/*************************************************
+    /*************************************************
     *  ARK::API::Manager
     **************************************************/
-    explicit Manager(const ARK::Network& network);
+    explicit Manager(const ARK::Network& network) { this->connect(network); };
+    /*************************************************/
 
   private:
-/*************************************************
+
+    /*************************************************
     *  ARK::API::Manager::connect
     **************************************************/
-    void connect(const ARK::Network& network);
+    void connect(const ARK::Network& network)
+    {
+      this->netConnector = ARK::Utilities::Network::Connector(network);
+    };
+    /*************************************************/
+};
+/*************************************************/
 
 };
-/*  =================  */
-/*  ==========================================================================  */
-
 };
-};
-
 
 #endif

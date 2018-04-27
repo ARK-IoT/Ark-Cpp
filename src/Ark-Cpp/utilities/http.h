@@ -5,29 +5,22 @@
 
 #include "platform.h"
 
-#include <memory>
-#include <string>
-
 namespace ARK
 {
 namespace Utilities
 {
 namespace Network
 {
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::Connectable 
-*   Inheritable HTTPConnectable object
+*   Forward Declaration for inheritance
 **************************************************/
-  class HTTPConnectable;
-/*  ==========================================================================  */
+class HTTPConnectable;
+/*************************************************/
 
+/**************************************************************************************************/
 
-
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::HTTP 
 *   Currently using ESP8266 libs
 *
@@ -35,36 +28,32 @@ namespace Network
 *   entry point for integrating the HTTPClient
 *   library for different boards/chipsets
 **************************************************/
-class HTTPInterface {
-protected: 
-    HTTPInterface() = default;
-
+class HTTP
+{
 public:
-    virtual String get(const String& peer, int port, const String& request) = 0;
+	HTTP();
+
+	void printConnection(const char *peer, int port);
+	void printDelay(const char *request);
+
+	const char *get(const char *const peer, int port, const char *const request);
+
 };
-/*  ==========================================================================  */
+/*************************************************/
 
-// HTTP object factory
-std::unique_ptr<HTTPInterface> make_http();
+};
+};
+};
 
-}
-}
-}
-
-
-
-/*  ==========================================================================  */
-/**************************************************
+/*************************************************
 * ARK::Utilities::Network::Connectable 
 *   Inheritable HTTPConnectable object
 **************************************************/
 class ARK::Utilities::Network::HTTPConnectable
 {
 public:
-	std::unique_ptr<ARK::Utilities::Network::HTTPInterface> http;
-
-	HTTPConnectable() : http(make_http()) { }
+	ARK::Utilities::Network::HTTP http;
 };
-/*  ==========================================================================  */
+/*************************************************/
 
 #endif

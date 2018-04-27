@@ -9,12 +9,14 @@
 #ifndef MODELS_H
 #define MODELS_H
 
+#include "../types/types.h"
+
 #include "account.h"
 #include "block.h"
-#include "currency.h"
+#include "currency.hpp"
 #include "delegate.h"
 #include "fees.h"
-#include "network.h"
+#include "network.hpp"
 #include "peer.h"
 #include "transaction.h"
 #include "transport.h"

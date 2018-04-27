@@ -1,15 +1,16 @@
 
 
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
 /********************************************************************************
-* block: 
+* peer: 
 ********************************************************************************/
+
 /*************************************************/
 //  #ifdef DEBUG_ESP_PORT
 //  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
@@ -18,17 +19,16 @@ const char* password = "yourWiFiPassword";
 //  #endif
 /*************************************************/
 
-
 void checkAPI()
 {
   /*************************************************/
-  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
    /*************************************************/
   auto peer = arkManager.peer("167.114.29.55", 4002);
-    Serial.println("peerDescription: ");
+    Serial.println("peer: ");
     Serial.println(peer);
     Serial.println("\n=====\n");
     delay(50);
@@ -48,7 +48,7 @@ void checkAPI()
 
   /*************************************************/
   auto peerVersion = arkManager.peerVersion();
-    Serial.println("peerVersionDescription: ");
+    Serial.println("peerVersion: ");
     Serial.println(peerVersion);
     Serial.println("\n=====\n");
     delay(50);
