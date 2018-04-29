@@ -59,3 +59,5 @@ std::unique_ptr<HTTPInterface> make_http() {
 }
 
 #endif
+
+#endif

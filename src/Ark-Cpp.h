@@ -6,19 +6,13 @@
 * MIT | Copyright S. Downey 2017-2018
 ***************************************/
 
-#ifndef ARK_CPP_H
-#define ARK_CPP_H
+#ifndef ARK_CPP_HPP
+#define ARK_CPP_HPP
 
-#ifdef __cplusplus
-
-#include <Ark-Cpp.hpp>
-
-using namespace ARK;
-
-#else
-
-#error C++ compiler required. expected file extensions: ".cc" ".cpp"
-
-#endif
+#include "types/types.h"
+#include "models/models.h"
+#include "constants/constants.h"
+#include "utilities/utilities.h"
+#include "api/api.h"
 
 #endif
