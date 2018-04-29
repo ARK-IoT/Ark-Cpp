@@ -10,10 +10,11 @@
 ![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
-Not production ready.  
+Travis: [![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=master)](https://travis-ci.org/ciband/Ark-Cpp)
 
-For advanced usage, be sure to check out our Cross-platform feature branch  
-https://github.com/ark-iot/ark-cpp/tree/feature/cmake_platform_io
+Appveyor: [![Build status](https://ci.appveyor.com/api/projects/status/guny8h1g0jqfog45/branch/master?svg=true)](https://ci.appveyor.com/project/ciband/ark-cpp/branch/master)
+
+Not production ready.  
 
 # Supported Boards
 - [X] ESP8266 https://www.adafruit.com/product/2821   // Development board
