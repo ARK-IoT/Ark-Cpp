@@ -10,7 +10,7 @@
 #define UTILITIES_H
 
 #include "http.h"
-#include "connector.hpp"
+#include "connector.h"
 #include "json.h"
 
 #endif

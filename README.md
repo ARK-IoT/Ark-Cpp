@@ -32,7 +32,7 @@ Create Signed transaction for broadcast to the Ark Ecosystem.
 # How to use this
 
 1) Define the network  
->  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;  
+>  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;  
 
 or  
 

@@ -12,7 +12,7 @@
 #ifdef __cplusplus
 
 #include <Arduino.h>
-#include "Ark-Cpp.hpp"
+#include "Ark-Cpp.h"
 
 using namespace ARK;
 
