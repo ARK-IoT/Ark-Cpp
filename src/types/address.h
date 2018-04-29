@@ -3,35 +3,32 @@
 #ifndef ADDRESS_H
 #define ADDRESS_H
 
-/*******************************************************************************
+#include <cstring>
+
+/********************************************************************************
 *
 * address: 
 *   "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA"
 *   
 *   34 Characters | Base58-encoded
-*		Size 272
-*		160-bit base58Encoded hash from a RIPEME160 hash
+*
 ********************************************************************************/
 
-#define ADDRESS_CHARACTER_WIDTH 8
-#define ADDRESS_LENGTH 34		/* Actual Length of Address */
-#define ADDRESS_SIZE (ADDRESS_LENGTH * ADDRESS_CHARACTER_WIDTH)		/* Size: 272 (Length of Address * character width) */
+class Address {
+private:
+	static const auto ADDRESS_SIZE = 34 + 1;  // +1 for nul terminiator
+	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
+	char value_[ADDRESS_LENGTH];
 
-/*************************************************
-*   Address
-**************************************************/
-struct Address
-		:  public Describable
-{
-	protected:
-		char value_[ADDRESS_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
+public:
+    Address() : value_() { };
 
-	public:
+	explicit Address(const char* const addressString) : value_()
+	{
+        strncpy(value_, addressString, ADDRESS_LENGTH);
+	}
 
-		Address();
-		explicit Address(const char* const addressStr);
-
+	const char* getValue() const { return value_; }
 };
-/*************************************************/
 
 #endif
