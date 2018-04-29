@@ -1,70 +1,70 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
 /********************************************************************************
-* transaction: 
+* account: 
 ********************************************************************************/
-/*************************************************/
-//  #ifdef DEBUG_ESP_PORT
-//  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
-//  #else
-//  #define DEBUG_MSG(...)
-//  #endif
-/*************************************************/
 
+/*************************************************/
+// #ifdef DEBUG_ESP_PORT
+// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+// #else
+// #define DEBUG_MSG(...)
+// #endif
+/*************************************************/
 
 void checkAPI() {
   /*************************************************/
   ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
-
-Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
+  
+  Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 
   /*************************************************/
-	auto transactionFromID = arkManager.transaction(transactionID);
-    Serial.println("transactionFromID: ");
-    Serial.println(transactionFromID);
+  auto balances = arkManager.accountBalance(darkAddress);
+    Serial.println("balanceDescription: ");
+    Serial.println(balances);
+    Serial.println("\n=====\n");
+    delay(50); 
+  /*************************************************/
+
+  /*************************************************/
+  auto publicKey = arkManager.accountPublickey(darkAddress);
+    Serial.println("publicKey: ");
+    Serial.println(publicKey.getValue());
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
 
-
   /*************************************************/
-  /*************************************************/
-/*    BROKEN: fix for large callbacks  */
-/*    Peers callback is ~28,908 bytes  */
-//  String transactions = _arkManager.transactions();
-//    Serial.println("transactions: ");
-//    Serial.println(transactions);
-//    Serial.println("\n=====\n");
-//    delay(50);
-  /*************************************************/
-  /*************************************************/
-
-
-  /*************************************************/
-	auto transactionUnconfirmedFromId = arkManager.transactionUnconfirmed(transactionID);
-    Serial.println("transactionUnconfirmedFromId: ");
-    Serial.println(transactionUnconfirmedFromId);
+  Balance delegatesFee = arkManager.accountDelegatesFee(darkAddress);
+    Serial.println("delegatesFee: ");
+    Serial.println(delegatesFee.ark());
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
-
-
+  
   /*************************************************/
-	auto transactionsUnconfirmed = arkManager.transactionsUnconfirmed();
-    Serial.println("transactionsUnconfirmed: ");
-    Serial.println(transactionsUnconfirmed);
+  ARK::Delegate delegate = arkManager.accountDelegates(darkAddress);
+    Serial.println("delegate: ");
+    Serial.println(delegate);
     Serial.println("\n=====\n");
-    delay(50);
+  delay(50);
   /*************************************************/
 
+  /*************************************************/
+  auto account = arkManager.account(darkAddress);
+    Serial.println("account: ");
+    Serial.println(account);
+    Serial.println("\n=====\n");
+  /*************************************************/
 }
+/*************************************************/
 
 
 /*************************************************/
@@ -84,7 +84,7 @@ void reportFreeHeap()
 void check()
 {
   checkAPI();
-  reportFreeHeap();
+	reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
 /*************************************************/
@@ -98,15 +98,15 @@ void setup()
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(500);
-		Serial.print(".");
-	}
-	Serial.println();
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
 
-	Serial.print("Connected, IP address: ");
-	Serial.println(WiFi.localIP());
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
   check();
 }
 
