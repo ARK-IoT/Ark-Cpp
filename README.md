@@ -10,9 +10,9 @@
 ![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
-Travis: [![Build Status](https://travis-ci.org/ciband/Ark-Cpp.svg?branch=master)](https://travis-ci.org/ciband/Ark-Cpp)
+Travis: [![Build Status](https://travis-ci.org/sleepdefic1t/Ark-Cpp.svg?branch=master)](https://travis-ci.org/sleepdefic1t/Ark-Cpp)  
 
-Appveyor: [![Build status](https://ci.appveyor.com/api/projects/status/guny8h1g0jqfog45/branch/master?svg=true)](https://ci.appveyor.com/project/ciband/ark-cpp/branch/master)
+AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/8d3rbn6vuqghsk82?svg=true)](https://ci.appveyor.com/project/sleepdefic1t/ark-cpp)
 
 Not production ready.  
 
