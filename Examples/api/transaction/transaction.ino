@@ -1,5 +1,5 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
@@ -8,6 +8,7 @@ const char* password = "yourWiFiPassword";
 /********************************************************************************
 * transaction: 
 ********************************************************************************/
+
 /*************************************************/
 //  #ifdef DEBUG_ESP_PORT
 //  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
@@ -16,14 +17,13 @@ const char* password = "yourWiFiPassword";
 //  #endif
 /*************************************************/
 
-
 void checkAPI() {
   /*************************************************/
-  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
-Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
+  Hash transactionID("4e68a917d06382ce335656eef5560a537fc806ecadf3972c5221b86babecc63e");
 
   /*************************************************/
 	auto transactionFromID = arkManager.transaction(transactionID);

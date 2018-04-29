@@ -3,15 +3,15 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
-#include "accountable/accountable.h"
-#include "blockable/blockable.h"
-#include "delegatable/delegatable.h"
-#include "loadable/loadable.h"
-#include "multisignaturable/multisignaturable.h"
-#include "peerable/peerable.h"
-#include "signaturable/signaturable.h"
-#include "transactionable/transactionable.h"
-#include "utilities/connector.h"
+#include "accountable.h"
+#include "blockable.h"
+#include "delegatable.h"
+#include "loadable.h"
+#include "multisignaturable.h"
+#include "peerable.h"
+#include "signaturable.h"
+#include "transactionable.h"
+#include "connector.h"
 
 namespace ARK
 {
@@ -31,30 +31,33 @@ class Manager :
     public Transactionable,
     virtual ARK::Utilities::Network::Connectable
 {
-
   public:
- /*************************************************
+    /*************************************************
     *  ARK::API::Manager
     **************************************************/
-    Manager();
+    Manager() { this->connect(ARK::Network()); };
+    /*************************************************/
 
-/*************************************************
+    /*************************************************
     *  ARK::API::Manager
     **************************************************/
-    explicit Manager(const ARK::Network& network);
+    explicit Manager(const ARK::Network& network) { this->connect(network); };
+    /*************************************************/
 
   private:
-/*************************************************
+
+    /*************************************************
     *  ARK::API::Manager::connect
     **************************************************/
-    void connect(const ARK::Network& network);
+    void connect(const ARK::Network& network)
+    {
+      this->netConnector = ARK::Utilities::Network::Connector(network);
+    };
+    /*************************************************/
+};
+/*************************************************/
 
 };
-/*  =================  */
-/*  ==========================================================================  */
-
 };
-};
-
 
 #endif

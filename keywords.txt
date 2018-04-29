@@ -6,7 +6,16 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-ARK KEYWORD1
+ARK	KEYWORD1
+
+API	KEYWORD1
+Utilities	KEYWORD1
+Network	KEYWORD1
+Constants	KEYWORD1
+
+Networks	KEYWORD1
+Model	KEYWORD1
+
 Address	KEYWORD1
 Balance	KEYWORD1
 Base64	KEYWORD1
@@ -14,49 +23,44 @@ Hash	KEYWORD1
 Publickey	KEYWORD1
 Signature	KEYWORD1
 
-ARK::Account	KEYWORD1
-ARK::Block	KEYWORD1
-ARK::Delegate	KEYWORD1
-ARK::Fees	KEYWORD1
-ARK::Loader	KEYWORD1
-ARK::Network	KEYWORD1
-ARK::Peer	KEYWORD1
-ARK::Transaction	KEYWORD1
-ARK::Transport	KEYWORD1
-ARK::Voter	KEYWORD1
+Account	KEYWORD1
+Block	KEYWORD1
+Delegate	KEYWORD1
+Fees	KEYWORD1
+Loader	KEYWORD1
+Peer	KEYWORD1
+Transaction	KEYWORD1
+Transport	KEYWORD1
+Voter	KEYWORD1
 
-ARK::API::Manager KEYWORD1
+Manager	KEYWORD1
+
+Connector	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-ARK::Utilities::Network::Connector	KEYWORD1
+Accountable	KEYWORD2
+Blockable	KEYWORD2
+Delegatable	KEYWORD2
+Loadable	KEYWORD2
+MultiSignaturable	KEYWORD2
+Networkable	KEYWORD2
+Peerable	KEYWORD2
+Signaturable	KEYWORD2
+Transactionable	KEYWORD2
+Transportable	KEYWORD2
 
-ARK::API::Accountable KEYWORD2
-ARK::API::Blockable KEYWORD2
-ARK::API::Delegatable KEYWORD2
-ARK::API::Loadable KEYWORD2
-ARK::API::MultiSignaturable KEYWORD2
-ARK::API::Networkable KEYWORD2
-ARK::API::Peerable KEYWORD2
-ARK::API::Signaturable KEYWORD2
-ARK::API::Transactionable KEYWORD2
-ARK::API::Transportable KEYWORD2
-
-ARK::Utilities::Network::Managable KEYWORD2
+Managable	KEYWORD2
 
 ######################################
 # Constants (LITERAL1)
 #######################################
 
-ARK::Constants::Networks::Devnet	LITERAL1
-ARK::Constants::Networks::Devnet::nethash	LITERAL1
-ARK::Constants::Networks::Devnet::seeds	LITERAL1
-ARK::Constants::Networks::Devnet::port	LITERAL1
-ARK::Constants::Networks::Devnet::model	LITERAL1
-ARK::Constants::Networks::Mainnet	LITERAL1
-ARK::Constants::Networks::Mainnet::nethash	LITERAL1
-ARK::Constants::Networks::Mainnet::seeds	LITERAL1
-ARK::Constants::Networks::Mainnet::port	LITERAL1
-ARK::Constants::Networks::Mainnet::model	LITERAL1
+Devnet	LITERAL1
+Mainnet	LITERAL1
+nethash	LITERAL1
+seeds	LITERAL1
+port	LITERAL1
+model	LITERAL1

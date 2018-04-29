@@ -9,6 +9,27 @@
 #ifndef ARK_H
 #define ARK_H
 
-#include "Ark-Cpp.h"
+#ifdef __cplusplus
+
+#include <Arduino.h>
+#include "Ark-Cpp.hpp"
+
+using namespace ARK;
+
+
+typedef ARK::Account Account;
+typedef ARK::Block Block;
+typedef ARK::Delegate Delegate;
+typedef ARK::Fees Fees;
+typedef ARK::Network Network;
+typedef ARK::Peer Peer;
+typedef ARK::Transaction Transaction;
+typedef ARK::Voter Voter;
+
+#else
+
+#error C++ compiler required. expected file extensions: ".cc" ".cpp"
+
+#endif
 
 #endif

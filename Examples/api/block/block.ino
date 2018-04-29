@@ -1,14 +1,14 @@
 #include <ark.h>
-//#include <yourWiFiLibrary.h>
+#include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
 
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
-
 /********************************************************************************
 * block: 
 ********************************************************************************/
+
 /*************************************************/
 // #ifdef DEBUG_ESP_PORT
 // #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
@@ -17,10 +17,9 @@ const char* password = "yourWiFiPassword";
 // #endif
 /*************************************************/
 
-
 void checkAPI() {
   /*************************************************/
-  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
