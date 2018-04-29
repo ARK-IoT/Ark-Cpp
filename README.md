@@ -7,12 +7,11 @@
 ![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
 ![version](https://img.shields.io/badge/version-v0.6.3-orange.svg?style=flat)
-![build](https://img.shields.io/badge/build-passing-159C40.svg?style=flat) 
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
 
 Travis: [![Build Status](https://travis-ci.org/sleepdefic1t/Ark-Cpp.svg?branch=master)](https://travis-ci.org/sleepdefic1t/Ark-Cpp)  
 
-AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/8d3rbn6vuqghsk82?svg=true)](https://ci.appveyor.com/project/sleepdefic1t/ark-cpp)
+[![Build status](https://ci.appveyor.com/api/projects/status/axh3d985qa1xas4i?svg=true)](https://ci.appveyor.com/project/sleepdefic1t/ark-cpp)
 
 Not production ready.  
 
