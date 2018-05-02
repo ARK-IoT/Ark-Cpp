@@ -14,21 +14,25 @@
 #ifdef USE_ECMULT_STATIC_PRECOMPUTATION
 #include "ecmult_static_context.h"
 #endif
+
+#include "utilities/platform.h"
+
 static void secp256k1_ecmult_gen_context_init(secp256k1_ecmult_gen_context *ctx) {
     ctx->prec = NULL;
 }
 
 static void secp256k1_ecmult_gen_context_build(secp256k1_ecmult_gen_context *ctx, const secp256k1_callback* cb) {
 #ifndef USE_ECMULT_STATIC_PRECOMPUTATION
-    secp256k1_ge prec[1024];
-    secp256k1_gej gj;
-    secp256k1_gej nums_gej;
+	secp256k1_ge prec[1024] = {};
+	secp256k1_gej gj;
+	secp256k1_gej nums_gej;
     int i, j;
 #endif
 
     if (ctx->prec != NULL) {
         return;
     }
+	
 #ifndef USE_ECMULT_STATIC_PRECOMPUTATION
     ctx->prec = (secp256k1_ge_storage (*)[64][16])checked_malloc(cb, sizeof(*ctx->prec));
 

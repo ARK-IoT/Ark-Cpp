@@ -33,7 +33,7 @@ const ECC_Startup START_ECC;
 
 }
 
-const char BIP39_WORDS[NUM_BIP39_WORDS][MAX_BIP39_WORD_LENGTH] = {
+const char BIP39_WORDS[NUM_BIP39_WORDS][MAX_BIP39_WORD_LENGTH] PROGMEM = {
 	"abandon",
 	"ability",
 	"able",
@@ -2092,7 +2092,11 @@ std::string generate_mnemonic(uint8_t num_words /* = 12 */) {
 	std::uniform_int_distribution<size_t> dist(0, NUM_BIP39_WORDS - 1);
 	std::string passphrase;
 	for (auto i = 0; i < num_words; ) {
+#ifdef USE_IOT
+		const auto word = pgm_read_word(&(BIP39_WORDS[dist(rd)]));
+#else
 		const auto word = BIP39_WORDS[dist(rd)];
+#endif
 		if (passphrase.find(word) == std::string::npos) {
 			passphrase += word;
 			if (i != num_words - 1) {

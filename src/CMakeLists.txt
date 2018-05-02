@@ -76,6 +76,7 @@ set (BITCOIN_SRC
 set(PLATFORM_SRC 
 	${PROJECT_SOURCE_DIR}/platform/json.cpp
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
+	${PROJECT_SOURCE_DIR}/platform/secp256k1.cpp
 )
 
 add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${UINT128_T_SRC} ${BITCOIN_SRC} )

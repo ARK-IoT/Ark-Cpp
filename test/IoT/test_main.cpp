@@ -1,8 +1,8 @@
-#ifdef UNIT_TEST
+#if 0//def UNIT_TEST
 
-#include <AUnit.h>
-#include <Crypto.h>
-#include <RNG.h>
+//#include <AUnit.h>
+//#include <Crypto.h>
+//#include <RNG.h>
 
 #if (defined ESP8266 || defined ESP32)
 
@@ -57,9 +57,10 @@ void setup_network() { }
 #endif
 
 void setup() {
-    Serial.begin(9600);
-	while (!Serial); // for the Arduino Leonardo/Micro only
-	delay(100);
+    Serial.begin(115200);
+	Serial.println("setup");
+	//while (!Serial); // for the Arduino Leonardo/Micro only
+	//delay(100);
 	setup_network();
 
     //aunit::TestRunner::setTimeout(0);
@@ -68,9 +69,22 @@ void setup() {
 }
 
 void loop() {
+	Serial.println("loop");
+	delay(1000);
 	// Perform regular housekeeping on the random number generator.
     //RNG.loop();
 	//aunit::TestRunner::run();
 }
 
 #endif
+
+#include <arduino.h>
+
+void setup() {
+	Serial.begin(115200);
+	Serial.println("setup");
+}
+void loop() {
+	Serial.println("loop");
+	delay(1000);
+}

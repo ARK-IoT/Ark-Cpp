@@ -6,6 +6,7 @@
 #define USE_IOT
 
 #include <Arduino.h>
+#include <pgmspace.h>
 
 #if (defined ARDUINO)
 #include <WString.h>
@@ -59,6 +60,8 @@ inline int substringCount(const String &str, const String &sub)
 }
 
 #else
+
+#define PROGMEM
 
 #define String std::string
 
