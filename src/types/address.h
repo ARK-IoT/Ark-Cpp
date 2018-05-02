@@ -14,27 +14,21 @@
 *
 ********************************************************************************/
 
-#define ADDRESS_SIZE 35
-
-class address_t {
+class Address {
 private:
+	static const auto ADDRESS_SIZE = 34 + 1;  // +1 for nul terminiator
 	static const auto ADDRESS_LENGTH = ADDRESS_SIZE / sizeof(char);
 	char value_[ADDRESS_LENGTH];
 
 public:
-    address_t() : value_() { };
+    Address() : value_() { };
 
-	address_t(const char* const addressString) : value_()
+	explicit Address(const char* const addressString) : value_()
 	{
         strncpy(value_, addressString, ADDRESS_LENGTH);
 	}
 
 	const char* getValue() const { return value_; }
 };
-
-/*************************************************
-*   Address
-**************************************************/
-typedef address_t Address;
 
 #endif

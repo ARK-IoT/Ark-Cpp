@@ -9,6 +9,7 @@
 
 #include "uint128_t/uint128_t.h"
 
+#include <cstdint>
 
 /* Limbs of the secp256k1 order. */
 #define SECP256K1_N_0 ((uint64_t)0xBFD25E8CD0364141ULL)
@@ -129,11 +130,39 @@ static void secp256k1_scalar_set_b32(secp256k1_scalar *r, const unsigned char *b
     }
 }
 
-static void secp256k1_scalar_get_b32(unsigned char *bin, const secp256k1_scalar* a) {
-    bin[0] = a->d[3] >> 56; bin[1] = a->d[3] >> 48; bin[2] = a->d[3] >> 40; bin[3] = a->d[3] >> 32; bin[4] = a->d[3] >> 24; bin[5] = a->d[3] >> 16; bin[6] = a->d[3] >> 8; bin[7] = a->d[3];
-    bin[8] = a->d[2] >> 56; bin[9] = a->d[2] >> 48; bin[10] = a->d[2] >> 40; bin[11] = a->d[2] >> 32; bin[12] = a->d[2] >> 24; bin[13] = a->d[2] >> 16; bin[14] = a->d[2] >> 8; bin[15] = a->d[2];
-    bin[16] = a->d[1] >> 56; bin[17] = a->d[1] >> 48; bin[18] = a->d[1] >> 40; bin[19] = a->d[1] >> 32; bin[20] = a->d[1] >> 24; bin[21] = a->d[1] >> 16; bin[22] = a->d[1] >> 8; bin[23] = a->d[1];
-    bin[24] = a->d[0] >> 56; bin[25] = a->d[0] >> 48; bin[26] = a->d[0] >> 40; bin[27] = a->d[0] >> 32; bin[28] = a->d[0] >> 24; bin[29] = a->d[0] >> 16; bin[30] = a->d[0] >> 8; bin[31] = a->d[0];
+static void secp256k1_scalar_get_b32(uint8_t *bin, const secp256k1_scalar* a) {
+    bin[0] = static_cast<uint8_t>(a->d[3] >> 56); 
+	bin[1] = static_cast<uint8_t>(a->d[3] >> 48); 
+	bin[2] = static_cast<uint8_t>(a->d[3] >> 40); 
+	bin[3] = static_cast<uint8_t>(a->d[3] >> 32); 
+	bin[4] = static_cast<uint8_t>(a->d[3] >> 24); 
+	bin[5] = static_cast<uint8_t>(a->d[3] >> 16); 
+	bin[6] = static_cast<uint8_t>(a->d[3] >> 8); 
+	bin[7] = static_cast<uint8_t>(a->d[3]);
+    bin[8] = static_cast<uint8_t>(a->d[2] >> 56); 
+	bin[9] = static_cast<uint8_t>(a->d[2] >> 48); 
+	bin[10] = static_cast<uint8_t>(a->d[2] >> 40); 
+	bin[11] = static_cast<uint8_t>(a->d[2] >> 32); 
+	bin[12] = static_cast<uint8_t>(a->d[2] >> 24); 
+	bin[13] = static_cast<uint8_t>(a->d[2] >> 16); 
+	bin[14] = static_cast<uint8_t>(a->d[2] >> 8); 
+	bin[15] = static_cast<uint8_t>(a->d[2]);
+    bin[16] = static_cast<uint8_t>(a->d[1] >> 56); 
+	bin[17] = static_cast<uint8_t>(a->d[1] >> 48); 
+	bin[18] = static_cast<uint8_t>(a->d[1] >> 40); 
+	bin[19] = static_cast<uint8_t>(a->d[1] >> 32); 
+	bin[20] = static_cast<uint8_t>(a->d[1] >> 24); 
+	bin[21] = static_cast<uint8_t>(a->d[1] >> 16); 
+	bin[22] = static_cast<uint8_t>(a->d[1] >> 8); 
+	bin[23] = static_cast<uint8_t>(a->d[1]);
+    bin[24] = static_cast<uint8_t>(a->d[0] >> 56); 
+	bin[25] = static_cast<uint8_t>(a->d[0] >> 48); 
+	bin[26] = static_cast<uint8_t>(a->d[0] >> 40); 
+	bin[27] = static_cast<uint8_t>(a->d[0] >> 32); 
+	bin[28] = static_cast<uint8_t>(a->d[0] >> 24); 
+	bin[29] = static_cast<uint8_t>(a->d[0] >> 16); 
+	bin[30] = static_cast<uint8_t>(a->d[0] >> 8); 
+	bin[31] = static_cast<uint8_t>(a->d[0]);
 }
 
 SECP256K1_INLINE static int secp256k1_scalar_is_zero(const secp256k1_scalar *a) {

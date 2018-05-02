@@ -6,10 +6,19 @@
 /*************************************************
 * Valueable
 **************************************************/
-struct Valueable
+class Valuable
 {
-  private:
-    char value_[];
+protected:
+	char value_[];
+
+public:
+	// Valuable();
+
+	// Valuable(Valuable&& other);
+	// Valuable & operator=(Valuable &&other);
+	// Valuable &operator=(const Valuable &other);
+
+	const char *getValue() const;
 };
 /*************************************************/
 

@@ -5,10 +5,10 @@
 const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
-
 /********************************************************************************
-* block: 
+* loader: 
 ********************************************************************************/
+
 /*************************************************/
 //  #ifdef DEBUG_ESP_PORT
 //  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
@@ -16,7 +16,6 @@ const char* password = "yourWiFiPassword";
 //  #define DEBUG_MSG(...)
 //  #endif
 /*************************************************/
-
 
 void checkAPI() {
   /*************************************************/

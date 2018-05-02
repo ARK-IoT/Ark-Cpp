@@ -1,4 +1,5 @@
-#if 0//def UNIT_TEST
+#if 0
+//#if (defined PLATFORMIO && defined UNIT_TEST)
 
 //#include <AUnit.h>
 //#include <Crypto.h>

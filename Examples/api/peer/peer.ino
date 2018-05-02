@@ -1,3 +1,5 @@
+
+
 #include <ark.h>
 #include <yourWiFiLibrary.h>
 /*  example: #include <ESP8266WiFi.h> */
@@ -6,61 +8,50 @@ const char* ssid = "yourSSID";
 const char* password = "yourWiFiPassword";
 
 /********************************************************************************
-* account: 
+* peer: 
 ********************************************************************************/
+
 /*************************************************/
-// #ifdef DEBUG_ESP_PORT
-// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
-// #else
-// #define DEBUG_MSG(...)
-// #endif
+//  #ifdef DEBUG_ESP_PORT
+//  #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+//  #else
+//  #define DEBUG_MSG(...)
+//  #endif
 /*************************************************/
 
-
-void checkAPI() {
+void checkAPI()
+{
   /*************************************************/
-  ARK::API::Manager arkManager(ARK::Constants::Networks::Devnet::model);
-  /*************************************************/
-  
-  Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-
-  /*************************************************/
-  auto balances = arkManager.accountBalance(darkAddress);
-    Serial.println("balanceDescription: ");
-    Serial.println(balances);
-    Serial.println("\n=====\n");
-    delay(50); 
+  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+  ARK::API::Manager arkManager(devnet);
   /*************************************************/
 
-  /*************************************************/
-  auto publicKey = arkManager.accountPublickey(darkAddress);
-    Serial.println("publicKey: ");
-    Serial.println(publicKey);
+   /*************************************************/
+  auto peer = arkManager.peer("167.114.29.55", 4002);
+    Serial.println("peer: ");
+    Serial.println(peer);
     Serial.println("\n=====\n");
     delay(50);
   /*************************************************/
 
   /*************************************************/
-  Balance delegatesFee = arkManager.accountDelegatesFee(darkAddress);
-    Serial.println("delegatesFee: ");
-    Serial.println(delegatesFee.ark());
-    Serial.println("\n=====\n");
-    delay(50);
   /*************************************************/
-  
+/*    BROKEN: fix for large callbacks  */
+/*    Peers callback is ~10,000 bytes  */
+//  String peersDescription = _arkManager.peers().description();
+//    Serial.println("peersDescription: ");
+//    Serial.println(peersDescription);
+//    Serial.println("\n=====\n");
+//    delay(50);
   /*************************************************/
-  ARK::Delegate delegate = arkManager.accountDelegates(darkAddress);
-    Serial.println("delegate: ");
-    Serial.println(delegate);
-    Serial.println("\n=====\n");
-  delay(50);
   /*************************************************/
 
   /*************************************************/
-  auto account = arkManager.account(darkAddress);
-    Serial.println("account: ");
-    Serial.println(account);
+  auto peerVersion = arkManager.peerVersion();
+    Serial.println("peerVersion: ");
+    Serial.println(peerVersion);
     Serial.println("\n=====\n");
+    delay(50);
   /*************************************************/
 }
 /*************************************************/
@@ -80,10 +71,9 @@ void reportFreeHeap()
 
 
 /*************************************************/
-void check()
-{
+void check() {
   checkAPI();
-	reportFreeHeap();
+    reportFreeHeap();
   ESP.deepSleep(4294967000);
 }
 /*************************************************/
