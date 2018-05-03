@@ -11,7 +11,7 @@
 bool CPubKey::Verify(const uint256 &hash, const std::vector<unsigned char>& vchSig) const {
     if (!IsValid())
         return false;
-    return ec_verify(hash, vchSig);
+    return ec_verify(hash, vchSig, *this);
 }
 
 

@@ -13,6 +13,6 @@ int ec_privkey_export_der(unsigned char *privkey, size_t *privkeylen, const unsi
 
 CPubKey get_pub_key(const CKey& privkey);
 
-bool ec_verify(const uint256 &hash, const std::vector<unsigned char>& vchSig);
+//bool ec_verify(const uint256 &hash, const std::vector<unsigned char>& vchSig, const CPubKey& pubKey);
 
 #endif

@@ -3,6 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include "utilities/platform.h"
+
 #include <bitcoin/random.h>
 
 #include <bitcoin/crypto/sha512.h>
@@ -49,7 +51,6 @@
 #endif
 
 #ifdef ARDUINO
-
 #include <uECC.h>
 #include <arduino/openssl/rand.h>
 
@@ -222,9 +223,7 @@ void GetOSRand(unsigned char *ent32)
 #ifdef ARDUINO		
 		// Generate output whenever 32 bytes of entropy have been accumulated.
 		// The first time through, we wait for 48 bytes for a full entropy pool.
-		if (RNG.available(NUM_OS_RANDOM_BYTES)) {
-			RNG.rand(ent32, NUM_OS_RANDOM_BYTES);
-		}
+		RNG(ent32, NUM_OS_RANDOM_BYTES);
 #elif defined(WIN32)
     HCRYPTPROV hProvider;
     int ret = CryptAcquireContextW(&hProvider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);

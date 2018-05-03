@@ -323,11 +323,11 @@ CPubKey get_pub_key(const CKey& privkey) {
 	assert(result.IsValid());
 	return result;
 }
-
-bool ec_verify(const uint256 &hash, const std::vector<unsigned char>& vchSig) {
+#if 0
+bool ec_verify(const uint256 &hash, const std::vector<unsigned char>& vchSig, const CPubKey& pubKey) {
 	secp256k1_pubkey pubkey;
     secp256k1_ecdsa_signature sig;
-    if (!secp256k1_ec_pubkey_parse(secp256k1_context_verify, &pubkey, &(*this)[0], size())) {
+    if (!secp256k1_ec_pubkey_parse(secp256k1_context_verify, &pubkey, &pubKey[0], pubKey.size())) {
         return false;
     }
     if (!ecdsa_signature_parse_der_lax(secp256k1_context_verify, &sig, vchSig.data(), vchSig.size())) {
@@ -338,7 +338,7 @@ bool ec_verify(const uint256 &hash, const std::vector<unsigned char>& vchSig) {
     secp256k1_ecdsa_signature_normalize(secp256k1_context_verify, &sig, &sig);
     return secp256k1_ecdsa_verify(secp256k1_context_verify, &sig, hash.begin(), &pubkey);
 }
-
+#endif
 void ECC_Start() {
 	assert(secp256k1_context_sign == nullptr);
 
