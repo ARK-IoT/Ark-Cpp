@@ -50,10 +50,7 @@
 
 #ifdef ARDUINO
 
-#include <Crypto.h>
-#include <arduino/TransistorNoiseSource/TransistorNoiseSource.h>
-#include <RNG.h>
-
+#include <uECC.h>
 #include <arduino/openssl/rand.h>
 
 #else
@@ -103,12 +100,7 @@ static void RDRandInit()
 }
 #elif defined(ARDUINO)
 static void RDRandInit() {
-	// Noise source to seed the random number generator.
-	static TransistorNoiseSource noise(0);  // use noise from pin 0
-	// Initialize the random number generator.
-	RNG.begin("ARK");
-	// Add the noise source to the list of sources known to RNG.
-	RNG.addNoiseSource(noise);
+	uECC_set_rng(&RNG);
 }
 #else
 static void RDRandInit() {}

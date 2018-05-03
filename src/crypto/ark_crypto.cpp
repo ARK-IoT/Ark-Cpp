@@ -8,10 +8,13 @@
 #include "bitcoin/key.h"
 #include "bitcoin/pubkey.h"
 #include "bitcoin/utilstrencodings.h"
+#include "bitcoin/random.h"
 
 #include <vector>
 #include <string>
 #include <random>
+
+
 
 namespace ARK {
 namespace Crypto {
@@ -21,6 +24,7 @@ namespace {
 class ECC_Startup {
 public:
 	ECC_Startup() {
+		RandomInit();
 		ECC_Start();
 	}
 
