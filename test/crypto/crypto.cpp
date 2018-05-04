@@ -64,10 +64,12 @@ TEST(crypto, generate_address) {
 }
 
 TEST(crypto, generate_wif) {
-	//const auto keys = ARK::Crypto::get_keys(passphrase);
-	//const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, keys.GetPrivKey());
-	//ASSERT_STREQ(
-	//	"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
-	//	wif.c_str()
-	//);
+	std::vector<uint8_t> priv_key(32);
+	std::vector<uint8_t> pub_key(33);
+	ARK::Crypto::get_keys(passphrase, priv_key, pub_key);
+	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key);
+	ASSERT_STREQ(
+		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
+		wif.c_str()
+	);
 }

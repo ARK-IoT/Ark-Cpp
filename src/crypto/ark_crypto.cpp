@@ -21,21 +21,14 @@ namespace Crypto {
 
 namespace {
 
-	int RNG(uint8_t *dest, unsigned size) {
-		GetStrongRandBytes(dest, size);
-		return 1;
-	}
-
 class ECC_Startup {
 public:
 	ECC_Startup() {
 		RandomInit();
-		//ECC_Start();
 		uECC_set_rng(&RNG);
 	}
 
 	~ECC_Startup() {
-		//ECC_Stop();
 	}
 };
 

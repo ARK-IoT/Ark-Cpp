@@ -47,6 +47,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/transaction.cpp
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
+	${PROJECT_SOURCE_DIR}/utilities/platform.cpp
 	${PROJECT_SOURCE_DIR}/types/passphrase.cpp
 )
 
