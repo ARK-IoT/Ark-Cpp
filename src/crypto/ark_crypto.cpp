@@ -6,7 +6,7 @@
 #include "bitcoin/crypto/sha256.h"
 #include "bitcoin/crypto/ripemd160.h"
 #include "bitcoin/utilstrencodings.h"
-#include "bitcoin/random.h"
+//#include "bitcoin/random.h"
 
 #include "uECC.h"
 
