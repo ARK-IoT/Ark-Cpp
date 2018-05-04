@@ -16,7 +16,7 @@
 #undef min
 #undef max
 
-#include "string.h"
+#include <string>
 #include <cstring>
 #include <WString.h>
 #include <Printable.h>
