@@ -61,7 +61,7 @@ ARK::API::Loader::Respondable::Status ARK::API::Loader::Gettable::status(
 	auto parser = ARK::Utilities::make_json_string(callback);
 	return {
 		parser->valueFor("loaded").c_str(),
-		convert_to_int(parser->valueFor("now").c_str()),
+		convert_to_int(parser->valueFor("now")),
 		convert_to_int(parser->valueFor("blocksCount").c_str())
 	};
 }
@@ -89,7 +89,7 @@ ARK::API::Loader::Respondable::Sync ARK::API::Loader::Gettable::sync(
 	auto parser = ARK::Utilities::make_json_string(callback);
 	return {
 		parser->valueFor("syncing").c_str(),
-		convert_to_int(parser->valueFor("blocks").c_str()),
+		convert_to_int(parser->valueFor("blocks")),
 		parser->valueFor("height").c_str(),
 		parser->valueFor("id").c_str()
 	};
