@@ -16,9 +16,8 @@
 *   }
 *
 ********************************************************************************/
-
-void constructPeer() {
-
+void constructPeer()
+{
   ARK::Peer peer(
     "167.114.29.55",
     4002,
@@ -29,35 +28,14 @@ void constructPeer() {
     "OK",
     9
   );
-
   Serial.println("Offline Instantiated Peer Description\n"); 
   Serial.println(peer); 
-
 };
 
-
-/*  ==========================================================================  */
-extern "C" {
-#include "user_interface.h"
-}
-void reportFreeHeap() {
-  Serial.print("\n\nsystem_get_free_heap_size: ");
-  Serial.print(system_get_free_heap_size());
-  Serial.println("\n\n");
-};
-/*  ==========================================================================  */
-
-
-void check() {
-  constructPeer();
-    reportFreeHeap();
-  ESP.deepSleep(4294967000);
-}
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-  check();
+  constructPeer();
 }
 
 void loop() {}

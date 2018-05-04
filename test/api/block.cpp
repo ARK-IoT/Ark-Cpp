@@ -2,9 +2,9 @@
 
 #include "api/api.h"
 
-TEST(api, test_block) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
-
+TEST(api, test_block)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto block = _arkManager.block("4367122150875693402");
 	ASSERT_STREQ("4367122150875693402", block.id());
 	ASSERT_EQ(0, block.version());
@@ -24,42 +24,48 @@ TEST(api, test_block) {
 	ASSERT_STRNE("", block.confirmations());
 	ASSERT_STREQ("200000000", block.total_forged().arktoshi());
 
-
 	/*  ==================================  */
 	/* needs stream->string size fix for large callbacks */
 	//  String blocks = _arkManager.blocks();
-	//    Serial.println(blocks);
-	//    Serial.println();
-	//    delay(50);
+	//	Serial.println(blocks);
+	//	Serial.println();
 	/*  ==================================  */
 }
 
-TEST(api, test_block_epoch) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
-	ASSERT_STREQ("2017-03-21T13:00:00.000Z", _arkManager.blockEpoch().c_str());
+TEST(api, test_block_epoch)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
+	char epoch[24 + 1];
+	_arkManager.blockEpoch(epoch);
+	const char* epochResponse = epoch;
+	ASSERT_STREQ("2017-03-21T13:00:00.000Z", epochResponse);
 }
 
-TEST(api, test_block_height) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+TEST(api, test_block_height)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto height = _arkManager.blockHeight();
 	ASSERT_STRNE("0", height.id());
 	ASSERT_STRNE("0", height.height());
 }
 
-TEST(api, test_block_net_hash) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+TEST(api, test_block_net_hash)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	ASSERT_STREQ("578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23", _arkManager.blockNethash().getValue());
 }
 
-TEST(api, test_block_fee) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+TEST(api, test_block_fee)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto block_fee = _arkManager.blockFee();
 	ASSERT_STREQ(".10000000", block_fee.ark());
 	ASSERT_STREQ("10000000", block_fee.arktoshi());
 }
 
-TEST(api, test_block_fees) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+TEST(api, test_block_fees)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto fees = _arkManager.blockFees();
 	ASSERT_STREQ("10000000", fees.send().arktoshi());
 	ASSERT_STREQ("100000000", fees.vote().arktoshi());
@@ -68,28 +74,31 @@ TEST(api, test_block_fees) {
 	ASSERT_STREQ("500000000", fees.multi_signature().arktoshi());
 }
 
-TEST(api, test_block_milestone) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
-	ASSERT_STRNE("0", _arkManager.blockMilestone().c_str());
+TEST(api, test_block_milestone)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
+	ASSERT_STRNE("0", _arkManager.blockMilestone());
 }
 
-TEST(api, test_block_reward) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
+TEST(api, test_block_reward)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto block_reward = _arkManager.blockReward();
 	ASSERT_STREQ("2.00000000", block_reward.ark());
 	ASSERT_STREQ("200000000", block_reward.arktoshi());
 }
 
-TEST(api, test_block_supply) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);
-	/*  ==================================  */
+TEST(api, test_block_supply)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto block_supply = _arkManager.blockSupply();
 	ASSERT_STRNE("0.0", block_supply.ark());
 	ASSERT_STRNE("0", block_supply.arktoshi());
 }
 
-TEST(api, test_block_status) {
-	ARK::API::Manager _arkManager(ARK::Constants::Networks::Devnet::model);	
+TEST(api, test_block_status)
+{
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);	
 	const auto block_status = _arkManager.blockStatus();
 	ASSERT_STREQ("2017-03-21T13:00:00.000Z", block_status.epoch());
 	ASSERT_STRNE("0", block_status.height());

@@ -3,40 +3,84 @@
 #ifndef JSON_H
 #define JSON_H
 
-#include "platform.h"
-
+#include "utilities/platform.h"
+#include <cstring>
 #include <memory>
 
-namespace ARK {
-namespace Utilities {
-
-/*  ==========================================================================  */
+namespace ARK
+{
+namespace Utilities
+{
 /**************************************************
 * ARK::Utilities::JSONInterface 
 *
 * The purpose of this class is to serve as an
-*   entry point for integrating and simplifying
-*   integration of a JSON library
+*	entry point for integrating and simplifying
+*	integration of a JSON library
 **************************************************/
-class JSONInterface {
-protected:
-	JSONInterface() { }
+class JSONInterface
+{
+	protected:
+		/**************************************************
+		*	Constructor
+		**************************************************/
+		JSONInterface() { }
+		/*************************************************/
 
-public:
-    virtual ~JSONInterface() { }
+	public:
+		/**************************************************
+		*	Deconstructor
+		**************************************************/
+		virtual ~JSONInterface() { }
+		/*************************************************/
 
-    virtual String valueFor(const String& _key) = 0;
-    virtual String valueIn(const String& _key, const String& _subkey) = 0;
-    virtual String subvalueFor(const String& _key, int _pos) = 0;
-    virtual String subvalueIn(const String& _key, const String& _subkey) = 0;
-    virtual String subarrayValueIn(const String& _key, int _pos, const String& _subkey) = 0;
+		/**************************************************
+		*	valueFor
+		**************************************************/
+		virtual std::string valueFor(
+				const char *const key
+		) = 0;
+		/*************************************************/
+
+		/**************************************************
+		*	valueIn
+		**************************************************/
+		virtual std::string valueIn(
+				const char *const key,
+				const char *const subkey
+		) = 0;
+		/*************************************************/
+
+		/**************************************************
+		*	subvalueFor
+		**************************************************/
+		virtual std::string subvalueFor(
+				const char *const key,
+				int pos
+		) = 0;
+		/*************************************************/
+
+		/**************************************************
+		*	subarrayValueIn
+		**************************************************/
+		virtual std::string subarrayValueIn(
+				const char *const key,
+				int pos,
+				const char *const subkey
+		) = 0;
+		/*************************************************/
 };
-/*  ==========================================================================  */
+/*************************************************/
 
-// JSON object factory
-std::unique_ptr<JSONInterface> make_json_string(const String& str);
+/**************************************************************************************************/
 
-}
-}
+/**************************************************
+*	JSON object factory
+**************************************************/
+std::unique_ptr<JSONInterface> make_json_string(std::string str);
+/*************************************************/
+
+};
+};
 
 #endif

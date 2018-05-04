@@ -9,17 +9,9 @@ const char* password = "yourWiFiPassword";
 * account: 
 ********************************************************************************/
 
-/*************************************************/
-// #ifdef DEBUG_ESP_PORT
-// #define DEBUG_MSG(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
-// #else
-// #define DEBUG_MSG(...)
-// #endif
-/*************************************************/
-
 void checkAPI() {
   /*************************************************/
-  ARK::Network devnet = ARK::Constants::Networks::Devnet::model;
+  ARK::Network devnet = ARK::Constants::Networks::Model::Devnet;
   ARK::API::Manager arkManager(devnet);
   /*************************************************/
   
@@ -66,35 +58,10 @@ void checkAPI() {
 }
 /*************************************************/
 
-
-/*************************************************/
-extern "C" {
-#include "user_interface.h"
-}
-void reportFreeHeap()
-{
-  Serial.print("\n\nsystem_get_free_heap_size: ");
-  Serial.print(system_get_free_heap_size());
-  Serial.println("\n\n");
-};
-/*************************************************/
-
-
-/*************************************************/
-void check()
-{
-  checkAPI();
-	reportFreeHeap();
-  ESP.deepSleep(4294967000);
-}
-/*************************************************/
-
-
 /*************************************************/
 void setup()
 {
   Serial.begin(115200);
-  reportFreeHeap();
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -107,7 +74,7 @@ void setup()
 
   Serial.print("Connected, IP address: ");
   Serial.println(WiFi.localIP());
-  check();
+  checkAPI();
 }
 
 void loop() {}
