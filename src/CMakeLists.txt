@@ -13,8 +13,6 @@ include_directories(
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/uint128_t
 	${PROJECT_SOURCE_DIR}/bitcoin
-	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1
-	${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/include
 	${PROJECT_SOURCE_DIR}/uECC
 )
  
@@ -60,8 +58,6 @@ set (BITCOIN_SRC
 	${PROJECT_SOURCE_DIR}/bitcoin/base58.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/uint256.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/hash.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/key.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/pubkey.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/random.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/utiltime.cpp
@@ -71,7 +67,6 @@ set (BITCOIN_SRC
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
 	${PROJECT_SOURCE_DIR}/bitcoin/support/cleanse.cpp
-	#${PROJECT_SOURCE_DIR}/bitcoin/secp256k1/src/secp256k1.cpp
 )
 
 set (uECC_SRC
@@ -81,7 +76,6 @@ set (uECC_SRC
 set(PLATFORM_SRC 
 	${PROJECT_SOURCE_DIR}/platform/json.cpp
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
-	#${PROJECT_SOURCE_DIR}/platform/secp256k1.cpp
 )
 
 add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${UINT128_T_SRC} ${BITCOIN_SRC} ${uECC_SRC})

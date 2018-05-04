@@ -1,9 +1,6 @@
-#if 0
-//#if (defined PLATFORMIO && defined UNIT_TEST)
+#if (defined PLATFORMIO && defined UNIT_TEST)
 
-//#include <AUnit.h>
-//#include <Crypto.h>
-//#include <RNG.h>
+#include <AUnit.h>
 
 #if (defined ESP8266 || defined ESP32)
 
@@ -59,33 +56,17 @@ void setup_network() { }
 
 void setup() {
     Serial.begin(115200);
-	Serial.println("setup");
-	//while (!Serial); // for the Arduino Leonardo/Micro only
-	//delay(100);
+	while (!Serial); // for the Arduino Leonardo/Micro only
+	delay(100);
 	setup_network();
 
-    //aunit::TestRunner::setTimeout(0);
+    aunit::TestRunner::setTimeout(0);
 
-	//delay(1000);
+	delay(1000);
 }
 
 void loop() {
-	Serial.println("loop");
-	delay(1000);
-	// Perform regular housekeeping on the random number generator.
-    //RNG.loop();
-	//aunit::TestRunner::run();
+	aunit::TestRunner::run();
 }
 
 #endif
-
-#include <arduino.h>
-
-void setup() {
-	Serial.begin(115200);
-	Serial.println("setup");
-}
-void loop() {
-	Serial.println("loop");
-	delay(1000);
-}

@@ -163,7 +163,7 @@ Outputs:
 
 Returns 1 if the key pair was generated successfully, 0 if an error occurred.
 */
-int uECC_make_key(uint8_t *public_key, uint8_t *private_key, uECC_Curve curve, const uint8_t * const seed);
+int uECC_make_key(uint8_t *public_key, uint8_t *private_key, uECC_Curve curve);
 
 /* uECC_shared_secret() function.
 Compute a shared secret given your secret key and someone else's public key.

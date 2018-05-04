@@ -1003,8 +1003,7 @@ uECC_VLI_API int uECC_generate_random_int(uECC_word_t *random,
 
 int uECC_make_key(uint8_t *public_key,
                   uint8_t *private_key,
-                  uECC_Curve curve,
-				  const uint8_t * const seed /* = NULL */) {
+                  uECC_Curve curve) {
 #if uECC_VLI_NATIVE_LITTLE_ENDIAN
     uECC_word_t *_private = (uECC_word_t *)private_key;
     uECC_word_t *_public = (uECC_word_t *)public_key;
@@ -1016,12 +1015,8 @@ int uECC_make_key(uint8_t *public_key,
 
 	
     for (tries = 0; tries < uECC_RNG_MAX_TRIES; ++tries) {
-		if (seed != NULL) {
-			memcpy(_private, seed, sizeof(_private));
-		} else {
-			if (!uECC_generate_random_int(_private, curve->n, BITS_TO_WORDS(curve->num_n_bits))) {
-				return 0;
-			}
+		if (!uECC_generate_random_int(_private, curve->n, BITS_TO_WORDS(curve->num_n_bits))) {
+			return 0;
 		}
 
         if (EccPoint_compute_public_key(_public, _private, curve)) {
