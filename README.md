@@ -12,9 +12,9 @@
 ![environment](https://img.shields.io/badge/environment-macOS-blue.svg?style=flat)  
 ![environment](https://img.shields.io/badge/environment-windows-blue.svg?style=flat)  
 
-Travis: [![Build Status](https://travis-ci.org/sleepdefic1t/Ark-Cpp.svg?branch=master)](https://travis-ci.org/sleepdefic1t/Ark-Cpp)  
+[![Build Status](https://travis-ci.org/sleepdefic1t/Ark-Cpp.svg?branch=master)](https://travis-ci.org/sleepdefic1t/Ark-Cpp)  
 
-AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/8d3rbn6vuqghsk82?svg=true)](https://ci.appveyor.com/project/sleepdefic1t/ark-cpp)
+[![Build status](https://ci.appveyor.com/api/projects/status/axh3d985qa1xas4i?svg=true)](https://ci.appveyor.com/project/sleepdefic1t/ark-cpp)
 
 Not production ready.  
 
