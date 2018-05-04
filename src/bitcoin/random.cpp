@@ -50,16 +50,6 @@
 #include <cpuid.h>
 #endif
 
-#ifdef ARDUINO
-#include <uECC.h>
-#include <arduino/openssl/rand.h>
-
-#else
-
-#include <openssl/rand.h>
-
-#endif
-
 [[noreturn]] static void RandFailure()
 {
     //LogPrintf("Failed to read randomness, aborting\n");
@@ -85,27 +75,6 @@ static inline int64_t GetPerformanceCounter()
     return std::chrono::high_resolution_clock::now().time_since_epoch().count();
 #endif
 }
-
-
-#if defined(__x86_64__) || defined(__amd64__) || defined(__i386__)
-static std::atomic<bool> hwrand_initialized{false};
-static bool rdrand_supported = false;
-static constexpr uint32_t CPUID_F1_ECX_RDRAND = 0x40000000;
-static void RDRandInit()
-{
-    uint32_t eax, ebx, ecx, edx;
-    if (__get_cpuid(1, &eax, &ebx, &ecx, &edx) && (ecx & CPUID_F1_ECX_RDRAND)) {
-        rdrand_supported = true;
-    }
-    hwrand_initialized.store(true);
-}
-#elif defined(ARDUINO)
-static void RDRandInit() {
-	uECC_set_rng(&RNG);
-}
-#else
-static void RDRandInit() {}
-#endif
 
 static bool GetHWRand(unsigned char* ent32) {
 #if defined(__x86_64__) || defined(__amd64__) || defined(__i386__)
@@ -143,7 +112,7 @@ static bool GetHWRand(unsigned char* ent32) {
 #endif
     return false;
 }
-
+#if 0
 void RandAddSeed()
 {
     // Seed with CPU performance counter
@@ -191,6 +160,7 @@ static void RandAddSeedPerfmon()
     }
 #endif
 }
+#endif
 
 #if !(defined WIN32) && !(defined ARDUINO)
 /** Fallback: get 32 bytes of system entropy from /dev/urandom. The most
@@ -292,20 +262,20 @@ void GetOSRand(unsigned char *ent32)
     GetDevURandom(ent32);
 #endif
 }
-
+/*
 void GetRandBytes(unsigned char* buf, int num)
 {
     if (RAND_bytes(buf, num) != 1) {
         RandFailure();
     }
-}
+}*/
 
 
 //static std::mutex cs_rng_state;
 static unsigned char rng_state[32] = {0};
 static uint64_t rng_counter = 0;
 
-
+#if 0
 void GetStrongRandBytes(unsigned char* out, int num)
 {
     assert(num <= 32);
@@ -340,7 +310,8 @@ void GetStrongRandBytes(unsigned char* out, int num)
     memcpy(out, buf, num);
     memory_cleanse(buf, 64);
 }
-
+#endif
+#if 0
 uint64_t GetRand(uint64_t nMax)
 {
     if (nMax == 0)
@@ -367,7 +338,8 @@ uint256 GetRandHash()
     GetRandBytes((unsigned char*)&hash, sizeof(hash));
     return hash;
 }
-
+#endif
+#if 0
 void FastRandomContext::RandomSeed()
 {
     uint256 seed = GetRandHash();
@@ -413,3 +385,4 @@ void RandomInit()
 {
     RDRandInit();
 }
+#endif

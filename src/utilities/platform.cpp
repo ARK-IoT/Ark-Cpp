@@ -32,10 +32,10 @@ int RNG(uint8_t *dest, unsigned size) {
 
 #else
 
-#include <bitcoin/random.h>
+//#include <bitcoin/random.h>
 
 int RNG(uint8_t *dest, unsigned size) {
-	GetStrongRandBytes(dest, size);
+	//GetStrongRandBytes(dest, size);
 	return 1;
 }
 

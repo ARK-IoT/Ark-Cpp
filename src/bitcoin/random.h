@@ -42,6 +42,7 @@ void GetStrongRandBytes(unsigned char* buf, int num);
  * is completely deterministic and insecure after that.
  * This class is not thread-safe.
  */
+#if 0
 class FastRandomContext {
 private:
     bool requires_seed;
@@ -52,7 +53,7 @@ private:
 
     uint64_t bitbuf;
     uint64_t bitbuf_size;
-
+#if 0
     void RandomSeed();
 
     void FillByteBuffer()
@@ -63,7 +64,7 @@ private:
         rng.Output(bytebuf, sizeof(bytebuf));
         bytebuf_size = sizeof(bytebuf);
     }
-
+#endif
     void FillBitBuffer()
     {
         bitbuf = rand64();
@@ -129,7 +130,7 @@ public:
     static constexpr uint64_t max() { return std::numeric_limits<uint64_t>::max(); }
     inline uint64_t operator()() { return rand64(); }
 };
-
+#endif
 /* Number of random bytes returned by GetOSRand.
  * When changing this constant make sure to change all call sites, and make
  * sure that the underlying OS APIs for all platforms support the number.

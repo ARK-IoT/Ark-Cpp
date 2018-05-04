@@ -24,8 +24,8 @@ namespace {
 class ECC_Startup {
 public:
 	ECC_Startup() {
-		RandomInit();
-		uECC_set_rng(&RNG);
+		//RandomInit();
+		//uECC_set_rng(&RNG);
 	}
 
 	~ECC_Startup() {
