@@ -16,9 +16,8 @@
 *   }
 *
 ********************************************************************************/
-
-void constructDelegate() {
-
+void constructDelegate()
+{
   ARK::Delegate delegate(
     "sleepdeficit",
     "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
@@ -30,35 +29,14 @@ void constructDelegate() {
     0.06,
     91.88
   );
-
   Serial.println("Offline Instantiated Delegate Description\n"); 
   Serial.println(delegate); 
-
 };
 
-
-/*  ==========================================================================  */
-extern "C" {
-#include "user_interface.h"
-}
-void reportFreeHeap() {
-  Serial.print("\n\nsystem_get_free_heap_size: ");
-  Serial.print(system_get_free_heap_size());
-  Serial.println("\n\n");
-};
-/*  ==========================================================================  */
-
-
-void check() {
-  constructDelegate();
-    reportFreeHeap();
-  ESP.deepSleep(4294967000);
-}
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-  check();
+  constructDelegate();
 }
 
 void loop() {}

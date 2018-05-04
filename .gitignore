@@ -25,3 +25,4 @@
 .vscode/launch.json
 /test/.vscode
 /test/lib/readme.txt
+.DS_Store

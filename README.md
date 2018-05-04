@@ -2,14 +2,17 @@
   <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
-# Ark for Machines v0.6.3  
+# Ark for Machines v0.6.8 
 
-![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat) 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
-![version](https://img.shields.io/badge/version-v0.6.3-orange.svg?style=flat)
+![version](https://img.shields.io/badge/version-v0.6.8-orange.svg?style=flat)
 ![License: MIT](https://img.shields.io/badge/license-MIT-BE90D4.svg?style=flat)  
+![environment](https://img.shields.io/badge/environment-arduino-15909C.svg?style=flat)  
+![environment](https://img.shields.io/badge/environment-linux-FF7F50.svg?style=flat)  
+![environment](https://img.shields.io/badge/environment-macOS-blue.svg?style=flat)  
+![environment](https://img.shields.io/badge/environment-windows-blue.svg?style=flat)  
 
-Travis: [![Build Status](https://travis-ci.org/sleepdefic1t/Ark-Cpp.svg?branch=master)](https://travis-ci.org/sleepdefic1t/Ark-Cpp)  
+[![Build Status](https://travis-ci.org/sleepdefic1t/Ark-Cpp.svg?branch=master)](https://travis-ci.org/sleepdefic1t/Ark-Cpp)  
 
 [![Build status](https://ci.appveyor.com/api/projects/status/axh3d985qa1xas4i?svg=true)](https://ci.appveyor.com/project/sleepdefic1t/ark-cpp)
 
@@ -17,7 +20,7 @@ Not production ready.
 
 # Supported Boards
 - [X] ESP8266 https://www.adafruit.com/product/2821   // Development board
-- [ ] ESP32 https://www.adafruit.com/product/3405     // currently testing
+- [X] ESP32 https://www.adafruit.com/product/3405
 
 
 #### What can this do?  

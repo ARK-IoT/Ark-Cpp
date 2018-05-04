@@ -19,9 +19,8 @@
 *    }
 *
 ********************************************************************************/
-
-void constructAccount() {
-
+void constructAccount()
+{
   ARK::Account account(
     "DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
     "100000000",//Balance("100000000"),
@@ -33,35 +32,14 @@ void constructAccount() {
     "", //Signature(),
     "" //Signature()
   );
-
   Serial.println("Offline Instantiated Account Description\n"); 
   Serial.println(account); 
-
 };
 
-
-/*  ==========================================================================  */
-extern "C" {
-#include "user_interface.h"
-}
-void reportFreeHeap() {
-  Serial.print("\n\nsystem_get_free_heap_size: ");
-  Serial.print(system_get_free_heap_size());
-  Serial.println("\n\n");
-};
-/*  ==========================================================================  */
-
-
-void check() {
-  constructAccount();
-    reportFreeHeap();
-  ESP.deepSleep(4294967000);
-}
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-  check();
+  constructAccount();
 }
 
 void loop() {}
