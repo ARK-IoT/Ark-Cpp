@@ -22,14 +22,14 @@
 #include <Printable.h>
 #include <Print.h>
 
-inline int convert_to_int(const char *const s)
+inline int convert_to_int(const std::string& s)
 {
-	return atoi(s);
+	return atoi(s.c_str());
 }
 
-inline float convert_to_float(const char *const s)
+inline float convert_to_float(const std::string& s)
 {
-	return atof(s);
+	return atof(s.c_str());
 }
 
 /*************************************************
