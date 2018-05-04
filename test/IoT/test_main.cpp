@@ -14,12 +14,13 @@
 
 #endif // ESP8266
 
-namespace {
+namespace
+{
+char ssid[] = "your_ssid";     //  your network SSID (name)
+const char password[] = "your_password";  // your network password
 
-char ssid[] = "johnson";     //  your network SSID (name)
-const char password[] = "johnson_wifi!";  // your network password
-
-void setup_network() {
+void setup_network()
+{
 	Serial.println();
     Serial.println();
     Serial.print("Connecting to ");
@@ -46,10 +47,9 @@ void setup_network() {
 
 #else
 
-namespace {
-
-void setup_network() { }
-
+namespace
+{
+void setup_network() {}
 }
 
 #endif
@@ -59,9 +59,7 @@ void setup() {
 	while (!Serial); // for the Arduino Leonardo/Micro only
 	delay(100);
 	setup_network();
-
-    aunit::TestRunner::setTimeout(0);
-
+  aunit::TestRunner::setTimeout(0);
 	delay(1000);
 }
 

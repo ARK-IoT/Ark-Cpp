@@ -5,57 +5,66 @@
 
 #include "utilities/platform.h"
 #include "models/transaction.h"
-
 #include <array>
 #include <cassert>
 
-namespace ARK {
-namespace API {
-namespace Transaction {
-namespace Respondable  {
-
+namespace ARK
+{
+namespace API
+{
+namespace Transaction
+{
+namespace Respondable
+{
 /*************************************************
-*	  ARK::API::Transaction::Respondable::Unconfirmed
+*	ARK::API::Transaction::Respondable::Unconfirmed
 *
-*   @param: bool loaded, int now, char blocksCount[64];
+*	@param: bool loaded
+*	@param:	int now
+*	@param:	char blocksCont[64]
 *
-*   @methods:	printTo(HardwareSerial &serial)
-*
-*   @brief: Model for Loader Status API Response
+*	@brief: Model for Loader Status API Response
 **************************************************/
-class Unconfirmed : public Printable {
-  private:
-	std::array<ARK::Transaction, 5> transactions_;
-    size_t count_;
-	
+struct Unconfirmed :
+		public Printable
+{
+	private:
+		int count_;
+		std::array<ARK::Transaction, 5> transactions_;
 
-  public:
-    Unconfirmed(const ARK::Transaction* const tx, size_t count) : count_(count) {
-	assert(count <= transactions_.size());
-      for (auto i = 0u; i < count_; ++i)
-      {
-        this->transactions_[i] = tx[i];
-      }
-    }
+	public:
+		/*************************************************
+		*	Constructor
+		**************************************************/
+		Unconfirmed(
+				const ARK::Transaction *const newTX,
+				int newCount
+		);
+		/*************************************************/
+		
+		/*************************************************
+		*	Accessors
+		**************************************************/
+		const std::array<ARK::Transaction, 5>& transactions() const noexcept { return transactions_; }
+		int count() const noexcept { return count_; }
+		/*************************************************/
 
-	const std::array<ARK::Transaction, 5>& transactions() const noexcept { return transactions_; }
-	size_t count() const noexcept { return count_; }
-
-    /*************************************************
-    *	  ARK::API::Transaction::Respondable::Unconfirmed 
-    *
-    *   @methods:	printTo(HardwareSerial &serial)
-    *
-    *   @brief: Prints API Transaction Unconfirmed Response to Serial
-    **************************************************/
-    size_t printTo(Print& p) const override;
+		/*************************************************
+		*	ARK::API::Transaction::Respondable::Unconfirmed 
+		*
+		*	@param:	Print &p
+		*
+		*	@brief: Prints API Transaction Unconfirmed Response to Serial
+		**************************************************/
+		virtual size_t printTo(Print &p) const;
+		/*************************************************/
 
 };
 /*************************************************/
 
-}
-}
-}
-}
+};
+};
+};
+};
 
 #endif

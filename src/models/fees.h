@@ -1,44 +1,59 @@
 
 
-#ifndef fees_h
-#define fees_h
+#ifndef FEES_H
+#define FEES_H
 
-#include "types/balance.h"
 #include "utilities/platform.h"
+#include "types/balance.h"
+#include <cstring>
 
-namespace ARK {
+namespace ARK
+{
+/*************************************************
+* ARK::Fees
+*	/api/blocks/getFees
+**************************************************/
+struct Fees :
+		public Printable
+{
+	protected:
+		Balance send_;
+		Balance vote_;
+		Balance delegate_;
+		Balance secondsignature_;
+		Balance multisignature_;
 
-/*  ================================================  */
-/*  =========  */
-/*  ARK::Fees  */
-/*  /api/blocks/getFees */
-class Fees : public Printable {
-private:
-    Balance send_;
-    Balance vote_;
-    Balance delegate_;
-    Balance secondsignature_;
-    Balance multisignature_;
+	public:
+		/*************************************************
+		* Constructor
+		**************************************************/
+		Fees(
+			const char *const newSend,
+			const char *const newVote,
+			const char *const newDelegate,
+			const char *const newSS,
+			const char *const newMS
+		);
+		/*************************************************/
 
-public:
-    Fees(
-        const char* const s,
-        const char* const v,
-        const char* const d,
-        const char* const ss,
-        const char* const ms
-    ) : send_(s), vote_(v), delegate_(d), secondsignature_(ss), multisignature_(ms) { }
+		/*************************************************
+		* Accessors
+		**************************************************/
+		const Balance& send() const noexcept { return send_; }
+		const Balance& vote() const noexcept { return vote_; }
+		const Balance& delegate() const noexcept { return delegate_; }
+		const Balance& second_signature() const noexcept { return secondsignature_; }
+		const Balance& multi_signature() const noexcept { return multisignature_; }
+		/*************************************************/
 
-	const Balance& send() const noexcept { return send_; }
-	const Balance& vote() const noexcept { return vote_; }
-	const Balance& delegate() const noexcept { return delegate_; }
-	const Balance& second_signature() const noexcept { return secondsignature_; }
-	const Balance& multi_signature() const noexcept { return multisignature_; }
+		/*************************************************
+		*
+		**************************************************/
+		virtual size_t printTo(Print &p) const;
+		/*************************************************/
 
-    size_t printTo(Print& p) const override;
 };
-/*  =========  */
-/*  ================================================  */
+/*************************************************/
 
 };
 

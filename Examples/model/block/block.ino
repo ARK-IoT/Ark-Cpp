@@ -23,9 +23,8 @@
 *   }
 *
 ********************************************************************************/
-
-void constructBlock() {
-
+void constructBlock()
+{
   ARK::Block block(
     "5907849310697169543",
     0,
@@ -44,35 +43,14 @@ void constructBlock() {
     "3",
     "200000000"
   );
-
   Serial.println("Offline Instantiated Block Description\n"); 
   Serial.println(block); 
-
 };
 
-
-/*  ==========================================================================  */
-extern "C" {
-#include "user_interface.h"
-}
-void reportFreeHeap() {
-  Serial.print("\n\nsystem_get_free_heap_size: ");
-  Serial.print(system_get_free_heap_size());
-  Serial.println("\n\n");
-};
-/*  ==========================================================================  */
-
-
-void check() {
-  constructBlock();
-    reportFreeHeap();
-  ESP.deepSleep(4294967000);
-}
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-  check();
+  constructBlock();
 }
 
 void loop() {}
