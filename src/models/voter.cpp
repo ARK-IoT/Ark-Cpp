@@ -1,5 +1,16 @@
 #include "models/voter.h"
 
+
+ARK::Voter::Voter(
+		const char* const u, 
+		const char* const a, 
+		const char* const pk,
+		const char* const b
+) : username_(), address_(a), publicKey_(pk), balance_(b)
+{
+	strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
+}
+
 size_t ARK::Voter::printTo(Print& p) const 
 {
 	size_t size = 0;
