@@ -10,6 +10,8 @@
 #include "bitcoin/utilstrencodings.h"
 #include "bitcoin/random.h"
 
+#include "uECC.h"
+
 #include <vector>
 #include <string>
 #include <random>
@@ -21,15 +23,21 @@ namespace Crypto {
 
 namespace {
 
+	int RNG(uint8_t *dest, unsigned size) {
+		GetStrongRandBytes(dest, size);
+		return 1;
+	}
+
 class ECC_Startup {
 public:
 	ECC_Startup() {
 		RandomInit();
-		ECC_Start();
+		//ECC_Start();
+		uECC_set_rng(&RNG);
 	}
 
 	~ECC_Startup() {
-		ECC_Stop();
+		//ECC_Stop();
 	}
 };
 
@@ -2138,23 +2146,28 @@ std::string get_address(uint8_t network, const CPubKey& public_key) {
 	return EncodeBase58Check(seed);
 }
 
-CKey get_keys(const char* const passphrase, bool compressed /* = true */) {
+void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
 	CSHA256 sha256;
 	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
 	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
 	sha256.Finalize(hash);
+
+	const struct uECC_Curve_t * curve = uECC_secp256k1();
+	uECC_make_key(&pub_key[0], &priv_key[0], curve, hash);
+	/*
 	CKey key;
 	key.Set(hash, hash + CSHA256::OUTPUT_SIZE, compressed);
-	return key;
+	return key;*/
 }
 
 Account create_account(uint8_t network, const char* const passphrase) {
-	const auto key = get_keys(passphrase);
-	const auto private_key = key.GetPrivKey();
-	const auto public_key = key.GetPubKey();
-	const auto address = get_address(network, public_key);
+	std::vector<uint8_t> priv_key(32);
+	std::vector<uint8_t> pub_key(32);
+	get_keys(passphrase, priv_key, pub_key);
+	CPubKey pk(pub_key);
+	const auto address = get_address(network, pk);
 
-	return Account(HexStr(public_key).c_str(), address.c_str());
+	return Account(HexStr(pk).c_str(), address.c_str());
 }
 
 }
