@@ -76,9 +76,9 @@ struct Account :
 		publicKey_(public_key), 
 		unconfirmedSignature_(), 
 		secondSignature_(), 
-		secondPublicKey_(), 
+		secondPublicKey_()/*, 
 		multisignatures_(), 
-		u_multisignatures_()
+		u_multisignatures_()*/
 	{ }
 		/*************************************************/
 
