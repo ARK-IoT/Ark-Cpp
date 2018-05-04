@@ -63,4 +63,3 @@ Mainnet	LITERAL1
 nethash	LITERAL1
 seeds	LITERAL1
 port	LITERAL1
-model	LITERAL1
