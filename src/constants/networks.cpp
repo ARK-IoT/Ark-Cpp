@@ -69,7 +69,7 @@ namespace Model
 	{
 		Devnet::nethash.getValue(),
 		"DARK",
-		"DѦ",
+		u8"DѦ",
 		"https://dexplorer.ark.io/",
 		30
 	};
@@ -78,7 +78,7 @@ namespace Model
 	{
 		Mainnet::nethash.getValue(),
 		"ARK",
-		"Ѧ",
+		u8"Ѧ",
 		"https://explorer.ark.io/",
 		23
 	};
