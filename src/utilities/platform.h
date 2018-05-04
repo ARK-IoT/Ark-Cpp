@@ -16,46 +16,41 @@
 #undef min
 #undef max
 
+#include "string.h"
+#include <cstring>
 #include <WString.h>
 #include <Printable.h>
 #include <Print.h>
 
-inline int convert_to_int(const String& s) {
-	return s.toInt();
+inline int convert_to_int(const char *const s)
+{
+	return atoi(s);
 }
 
-inline float convert_to_float(const String& s) {
-	return s.toFloat();
+inline float convert_to_float(const char *const s)
+{
+	return atof(s);
 }
 
-namespace ARK
-{
-namespace API
-{
-namespace Helpers
-{
-
-inline int substringCount(const String &str, const String &sub)
-{
-  if (sub.length() == 0)
-    return 0;
-  int count = 0;
-  for (auto offset = str.indexOf(sub);
-       offset != -1;
-       offset = str.indexOf(sub, offset + sub.length()))
-  {
-    ++count;
-  }
-  return count;
+/*************************************************
+* substringCount(const char *str, const char* substr)
+*
+*		Returns number of times a substring(subStr)
+*   appears in a provided string(str)
+**************************************************/
+inline int substringCount(const char* str, const char* subStr) {
+	if (strlen(subStr) == 0) { return -1; }
+	int count = 0;
+	for (const auto* s = str; (s = strstr(s, subStr)); ++s) {
+		++count;
+	}
+	return count;
 }
-
-}
-}
-}
+/*************************************************/
 
 #else
 
-#define String std::string
+// #define String std::string
 
 #include <string>
 #include <random>
@@ -79,13 +74,6 @@ inline int random(IntType min, IntType max) {
 	return distribution(generator);
 }
 
-namespace ARK
-{
-namespace API
-{
-namespace Helpers
-{
-
 inline int substringCount(const std::string &str, const std::string &sub)
 {
   if (sub.length() == 0)
@@ -98,10 +86,6 @@ inline int substringCount(const std::string &str, const std::string &sub)
     ++count;
   }
   return count;
-}
-
-}
-}
 }
 
 class Print;
