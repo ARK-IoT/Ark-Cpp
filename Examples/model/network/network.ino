@@ -13,9 +13,8 @@
 *   }
 *
 ********************************************************************************/
-
-void constructNetwork() {
-
+void constructNetwork()
+{
   ARK::Network network(
     "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23",
     "DARK",
@@ -23,35 +22,14 @@ void constructNetwork() {
     "http://dexplorer.ark.io",
     30
   );
-
   Serial.println("Offline Instantiated Network Description\n"); 
   Serial.println(network); 
-
 };
 
-
-/*  ==========================================================================  */
-extern "C" {
-#include "user_interface.h"
-}
-void reportFreeHeap() {
-  Serial.print("\n\nsystem_get_free_heap_size: ");
-  Serial.print(system_get_free_heap_size());
-  Serial.println("\n\n");
-};
-/*  ==========================================================================  */
-
-
-void check() {
-  constructNetwork();
-    reportFreeHeap();
-  ESP.deepSleep(4294967000);
-}
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-    reportFreeHeap();
-  check();
+  constructNetwork();
 }
 
 void loop() {}
