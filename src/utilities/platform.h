@@ -5,11 +5,17 @@
 
 #define USE_IOT
 
+#include <Arduino.h>
+#include <pgmspace.h>
+
+#if (defined ARDUINO)
+#include <WString.h>
+#else
+#undef String
+#include <string>
+#define String std::string
 #endif
 
-#ifdef USE_IOT
-
-#include <Arduino.h>
 
 // undef the C macros to allow the C++ STL to take over
 // This is to have compatibility with various board implementations of the STL
@@ -50,7 +56,7 @@ inline int substringCount(const char* str, const char* subStr) {
 
 #else
 
-// #define String std::string
+#define PROGMEM
 
 #include <string>
 #include <random>
@@ -173,7 +179,8 @@ public:
 		return static_cast<size_t>(end - start);
 	}
     size_t print(const Printable& p) {
-		throw std::runtime_error("not implemented");
+		//throw std::runtime_error("not implemented");
+		return 0;
 	}
 
 	template <typename T>
@@ -206,5 +213,7 @@ public:
 };
 
 #endif
+
+int RNG(uint8_t *dest, unsigned size);
 
 #endif

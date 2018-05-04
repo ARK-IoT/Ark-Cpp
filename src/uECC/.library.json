@@ -1,0 +1,46 @@
+{
+    "description": "uECC", 
+    "repository": {
+        "url": "https://github.com/kmackay/micro-ecc", 
+        "type": "git"
+    }, 
+    "platforms": [
+        "atmelavr", 
+        "atmelsam", 
+        "espressif8266", 
+        "intel_arc32", 
+        "microchippic32", 
+        "nordicnrf51", 
+        "teensy", 
+        "timsp430"
+    ], 
+    "export": {
+        "exclude": [
+            "extras", 
+            "docs", 
+            "tests", 
+            "test", 
+            "*.doxyfile", 
+            "*.pdf"
+        ], 
+        "include": null
+    }, 
+    "authors": [
+        {
+            "maintainer": true, 
+            "name": "Kenneth MacKay", 
+            "url": null, 
+            "email": null
+        }
+    ], 
+    "keywords": [
+        "other"
+    ], 
+    "id": 1665, 
+    "name": "micro-ecc", 
+    "frameworks": [
+        "arduino"
+    ], 
+    "version": "1.0.0", 
+    "homepage": null
+}
