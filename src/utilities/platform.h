@@ -214,6 +214,4 @@ public:
 
 #endif
 
-int RNG(uint8_t *dest, unsigned size);
-
 #endif
