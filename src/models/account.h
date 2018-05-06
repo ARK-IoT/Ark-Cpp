@@ -65,6 +65,21 @@ struct Account :
 				// Hash              newMultisignatures[], //	FIXME
 				// Hash							newU_Multisignatures[] //	FIXME
 		);
+    
+    Account(
+		const char* const public_key, 
+		const char* const address
+	) :
+		address_(address), 
+		unconfirmedBalance_(), 
+		balance_(), 
+		publicKey_(public_key), 
+		unconfirmedSignature_(), 
+		secondSignature_(), 
+		secondPublicKey_()/*, 
+		multisignatures_(), 
+		u_multisignatures_()*/
+	{ }
 		/*************************************************/
 
 		/*************************************************

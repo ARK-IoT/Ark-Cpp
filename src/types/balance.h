@@ -128,7 +128,6 @@ class Balance
 				this->setArk(_balanceStr);
 			}
 		};
-
 };
 
 #endif
