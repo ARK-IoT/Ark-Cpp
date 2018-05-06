@@ -114,7 +114,6 @@ struct bip32_t
 	long pub;	// base58 will have a prefix 'apub'
 	long priv; // base58Priv will have a prefix 'apriv'
 };
-
 /*************************************************/
 
 /*************************************************
