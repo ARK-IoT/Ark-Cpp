@@ -4,36 +4,12 @@
 #include "constants/networks.h"
 
 #include <string>
-#include <set>
-#include <sstream>
+#include <vector>
 
 namespace {
 
 const auto passphrase = "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
 
-}
-
-TEST(crypto, generate_mnemonic) {
-	auto passphrase = ARK::Crypto::generate_mnemonic(24);
-	std::istringstream stream(passphrase);
-	std::set<std::string> words;
-	for (std::string word; stream; ) {
-		stream >> word;
-		if (word.empty()) { continue; }
-		ASSERT_TRUE(words.insert(std::move(word)).second);
-	}
-	ASSERT_EQ(24, words.size());
-
-	passphrase = ARK::Crypto::generate_mnemonic(12);
-	words.clear();
-	stream.str(passphrase);
-	stream.clear();
-	for (std::string word; stream; ) {
-		stream >> word;
-		if (word.empty()) { continue; }
-		ASSERT_TRUE(words.insert(std::move(word)).second);
-	}
-	ASSERT_EQ(12, words.size());
 }
 
 TEST(crypto, create_account) {
@@ -56,7 +32,7 @@ TEST(crypto, generate_address) {
 		ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::main.pubKeyHash, "02579b22787db8a7cb838729ad21bb0471e472027904df3d674ef074006a9a22c0").c_str()
 	);
 
-	// test net
+	// test net ??
 	//ASSERT_STREQ(
 	//	"",
 	//	ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::testnet.pubKeyHash, "").c_str()

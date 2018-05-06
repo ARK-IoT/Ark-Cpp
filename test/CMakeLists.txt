@@ -25,6 +25,7 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/api/peer.cpp
 	${PROJECT_SOURCE_DIR}/api/signature.cpp
 	${PROJECT_SOURCE_DIR}/api/transaction.cpp	
+	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
 	${PROJECT_SOURCE_DIR}/crypto/crypto.cpp
 	${PROJECT_SOURCE_DIR}/model/account.cpp
 	${PROJECT_SOURCE_DIR}/model/block.cpp

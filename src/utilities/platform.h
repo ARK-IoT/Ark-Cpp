@@ -57,6 +57,7 @@ inline int substringCount(const char* str, const char* subStr) {
 #else
 
 #define PROGMEM
+#define PGM_P const char*
 
 #include <string>
 #include <random>

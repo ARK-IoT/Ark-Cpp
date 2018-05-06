@@ -22,6 +22,7 @@ if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNOMINMAX)
 elseif (UNIX)
 	set (CMAKE_CXX_FLAGS "-std=c++11")
+	add_definitions(-DHAVE_SYS_ENDIAN_H)
 endif()
 
  
