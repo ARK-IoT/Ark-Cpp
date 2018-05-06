@@ -34,22 +34,6 @@ ARK::Network::Network(
 **************************************************/
 size_t ARK::Network::printTo(Print &p) const
 {
-	strcpy(this->token_, newToken);
-	for (unsigned int i = 0; i < strlen(newSymbol); i++)
-	{
-		( sizeof(newSymbol[i]) == sizeof(char) )
-				? ( this->symbol_[i] = newSymbol[i] )
-				: ( sprintf(this->symbol_, "%2c", newSymbol[i]) );
-	}
-	strcpy(this->explorer_, newExplorer);
-};
-/*************************************************/
-
-/*************************************************
-*
-**************************************************/
-size_t ARK::Network::printTo(Print &p) const
-{
 	size_t size = 0;
 
 	size += p.print("nethash: ");
