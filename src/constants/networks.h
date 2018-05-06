@@ -7,12 +7,9 @@
 #include "models/network.h"
 #include "types/types.h"
 
-namespace ARK
-{
-namespace Constants
-{
-namespace Networks
-{
+namespace ARK {
+namespace Constants {
+namespace Networks {
 
 namespace Devnet
 {
@@ -26,6 +23,7 @@ namespace Devnet
 	30
 */
 	extern const Hash nethash;
+
 	extern const char* const seeds[6];
 	extern const int port;
 	extern const ARK::NetworkType type;
