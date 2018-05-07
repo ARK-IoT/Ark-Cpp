@@ -28,3 +28,12 @@ TEST(model, construct_account)
 // 	ASSERT_STREQ("", account.multi_signatures().getValue());
 // 	ASSERT_STREQ("", account.u_multi_signatures().getValue());
 }
+
+TEST(model, make_account) {
+	const auto passphrase = "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
+
+	auto account = ARK::make_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, passphrase);
+
+	ASSERT_STREQ("DStZXkgpEjxbG355nQ26vnkp95p24U9tsV", account.address().getValue());
+	ASSERT_STREQ("029fdf41a7d69d8efc7b236c21b9509a23d862ea4ed8b13a56e31eee58dbfd97b4", account.public_key().getValue());
+}

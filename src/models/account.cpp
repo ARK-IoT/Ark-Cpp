@@ -1,28 +1,29 @@
-
-
 #include "models/account.h"
+#include "crypto/ark_crypto.h"
+
+namespace ARK {
 
 /*************************************************
-*	Constructor
+*	Constructs account from blockchain information
 **************************************************/
-ARK::Account::Account(
-		const char *const newAddress,
-		const char *const newUnconfirmedBalance,
-		const char *const newBalance,
-		const char *const newPublickey,
-		int 							newUnconfirmedSignature,
-		int 							newSecondSignature,
-		const char *const newSecondPublickey//,
-		// Hash							newMultisignatures[],		//	FIXME
-		// Hash							newU_Multisignatures[]	//	FIXME
+Account::Account(
+	const char *const newAddress,
+	const char *const newUnconfirmedBalance,
+	const char *const newBalance,
+	const char *const newPublickey,
+	int 							newUnconfirmedSignature,
+	int 							newSecondSignature,
+	const char *const newSecondPublickey//,
+	// Hash							newMultisignatures[],		//	FIXME
+	// Hash							newU_Multisignatures[]	//	FIXME
 ) :
-		address_(Address(newAddress)),
-		unconfirmedBalance_(Balance(newUnconfirmedBalance)),
-		balance_(Balance(newBalance)),
-		publicKey_(Publickey(newPublickey)),
-		unconfirmedSignature_(newUnconfirmedSignature),
-		secondSignature_(newSecondSignature),
-		secondPublicKey_(Publickey(newSecondPublickey)) {}
+	address_(Address(newAddress)),
+	unconfirmedBalance_(Balance(newUnconfirmedBalance)),
+	balance_(Balance(newBalance)),
+	publicKey_(Publickey(newPublickey)),
+	unconfirmedSignature_(newUnconfirmedSignature),
+	secondSignature_(newSecondSignature),
+	secondPublicKey_(Publickey(newSecondPublickey)) {}
 	// int msigSize = round(newMultisignatures.size() / sizeof(Hash));
 	// this->multisignatures_ = new Hash[msigSize];
 	// for (unsigned int i = 0; i <= msigSize; i++)
@@ -39,9 +40,28 @@ ARK::Account::Account(
 /*************************************************/
 
 /*************************************************
+*	Constructs account from public_key and address
+**************************************************/
+Account::Account(
+	const char* const public_key,
+	const char* const address
+) :
+	address_(address),
+	unconfirmedBalance_(),
+	balance_(),
+	publicKey_(public_key),
+	unconfirmedSignature_(),
+	secondSignature_(),
+	secondPublicKey_()/*,
+					  multisignatures_(),
+					  u_multisignatures_()*/
+{ }
+/*************************************************/
+
+/*************************************************
 *
 **************************************************/
-size_t ARK::Account::printTo(Print& p) const
+size_t Account::printTo(Print& p) const
 {
 	size_t size = 0;
 		size += p.print("address: ");
@@ -80,3 +100,18 @@ size_t ARK::Account::printTo(Print& p) const
 	return size;
 }
 /*************************************************/
+
+/*************************************************
+* Creates an account from the network id and passphrase
+* Network id defaults to mainnet
+* Passphrase defaults to a new randomly generated mnemonic
+**************************************************/
+Account make_account(
+	uint8_t network /* = ARK::Constants::Networks::Network_ADV::main.pubKeyHash */,
+	const std::string& passphrase /* = ARK::Crypto::BIP39::generate_mnemonic() */
+) {
+	return ARK::Crypto::create_account(network, passphrase.c_str());
+}
+/*************************************************/
+
+}
