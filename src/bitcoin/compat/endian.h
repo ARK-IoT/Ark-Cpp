@@ -7,16 +7,12 @@
 
 #include <bitcoin/compat/byteswap.h>
 
-#include <stdint.h>
+#include <cstdint>
 
 #if defined(HAVE_ENDIAN_H)
 #include <endian.h>
 #elif defined(HAVE_SYS_ENDIAN_H)
 #include <sys/endian.h>
-#endif
-
-#ifdef UNIX
-#define HAVE_DECL_HTOBE16 defined(htobe16)
 #endif
 
 #if defined(WORDS_BIGENDIAN)
