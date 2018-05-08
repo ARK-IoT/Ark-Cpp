@@ -110,6 +110,11 @@
 #	define __PDP_ENDIAN    PDP_ENDIAN
 
 #else
+
+#include <bitcoin/compat/byteswap.h>
+
+#include <cstdint>
+
 // Assume arduino or something else, define our own ???
 #if defined(WORDS_BIGENDIAN)
 
