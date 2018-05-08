@@ -2,6 +2,7 @@
 
 #include "crypto/ark_crypto.h"
 #include "constants/networks.h"
+#include "bitcoin/utilstrencodings.h"
 
 #include <string>
 #include <vector>
@@ -39,13 +40,25 @@ TEST(crypto, generate_address) {
 	//);
 }
 
+#if 1
 TEST(crypto, generate_wif) {
 	std::vector<uint8_t> priv_key(32);
 	std::vector<uint8_t> pub_key(33);
 	ARK::Crypto::get_keys(passphrase, priv_key, pub_key);
-	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key);
+	const auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, false);
 	ASSERT_STREQ(
 		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
 		wif.c_str()
 	);
 }
+#else
+// sample bitcoin data from bitcoin wiki on WIF generation
+TEST(crypto, generate_wif) {
+	std::vector<uint8_t> priv_key = ParseHex("0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D");
+	const auto wif = ARK::Crypto::get_wif(0x80, priv_key, false);
+	ASSERT_STREQ(
+		"5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ",
+		wif.c_str()
+	);
+}
+#endif

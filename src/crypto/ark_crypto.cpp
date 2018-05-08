@@ -24,9 +24,9 @@ std::string get_wif(uint8_t wif, const std::vector<uint8_t>& key, bool compresse
 	if (compressed) { 
 		buf[33] = 0x01;
 	}
+
 	return EncodeBase58Check(buf);
 }
-
 
 std::string get_address(uint8_t network, const std::string& public_key) {
 	return get_address(network, ParseHex(public_key));
