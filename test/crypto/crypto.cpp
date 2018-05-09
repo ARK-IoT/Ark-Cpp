@@ -69,8 +69,8 @@ TEST(crypto, generate_wif) {
 	ASSERT_STREQ(
 		"SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK",
 		wif.c_str()
-	);
-
+	);*/
+/*
 	priv_key = ParseHex("48968302285117906840285529799176770990048954789747953886390402978935544927851");
 	priv_key.resize(32);
 	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
@@ -89,9 +89,9 @@ TEST(crypto, generate_wif) {
 
 	//priv_key = ParseHex("000102030405060708090a0b0c0d0e0f");
 	static const auto s = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
-	priv_key.clear();
+	priv_key = std::vector<uint8_t>(32);
 	std::memcpy(&priv_key[0], s, priv_key.size());
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, false);
+	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, true);
 	ASSERT_STREQ(
 		"L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1",
 		wif.c_str()
