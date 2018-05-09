@@ -17,7 +17,7 @@ include_directories(
 )
  
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(Poco CONFIG REQUIRED Foundation Net Crypto)
+find_package(Poco CONFIG REQUIRED Foundation Net)
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
@@ -75,7 +75,7 @@ add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${BITCOIN_SRC} ${uE
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
-target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Crypto)
+
 if (MSVC)
 	target_link_libraries(Ark-Cpp-lib PUBLIC crypt32)
 endif()
