@@ -63,8 +63,22 @@ TEST(crypto, generate_wif) {
 		wif.c_str()
 	);
 
-/*
-	priv_key = ParseHex("19898843618908353587043383062236220484949425084007183071220218307100305431102");
+	/*
+	From ark-client:  should pass but doesn't.
+	const auto p = "rural shell desert cake couch car adapt aunt project faculty agree census";
+	priv_key = std::vector<uint8_t>(32);
+	std::vector<uint8_t> pub_key(33);
+	ARK::Crypto::get_keys(p, priv_key, pub_key);
+	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
+	ASSERT_STREQ(
+		"SHcSK2KAbzPB91UQaCk2keMsZti86H5bmD19JN6WsD6WpPXZXNEW",
+		wif.c_str()
+	);
+	*/
+	/*
+	//priv_key = ParseHex("19898843618908353587043383062236220484949425084007183071220218307100305431102");
+	static const auto u = uint256S("19898843618908353587043383062236220484949425084007183071220218307100305431102", 10);
+	priv_key = std::vector<uint8_t>(u.begin(), u.end());
 	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
 	ASSERT_STREQ(
 		"SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK",
@@ -87,7 +101,6 @@ TEST(crypto, generate_wif) {
 		wif.c_str()
 	);*/
 
-	//priv_key = ParseHex("000102030405060708090a0b0c0d0e0f");
 	static const auto s = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
 	priv_key = std::vector<uint8_t>(32);
 	std::memcpy(&priv_key[0], s, priv_key.size());
