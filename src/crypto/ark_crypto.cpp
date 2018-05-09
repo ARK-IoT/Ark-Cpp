@@ -11,11 +11,13 @@
 
 #include <vector>
 #include <string>
+#include <cassert>
 
 namespace ARK {
 namespace Crypto {
 
 std::string get_wif(uint8_t wif, const std::vector<uint8_t>& key, bool compressed /* = true */) {
+	assert(key.size() == 32); // "private key must be 32 bytes"
 	std::vector<uint8_t> buf(compressed ? 34 : 33);
 	buf[0] = wif;
 	for (auto i = 1u; i < 33; ++i) {
