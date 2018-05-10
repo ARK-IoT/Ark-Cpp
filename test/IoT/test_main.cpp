@@ -55,16 +55,13 @@ void setup_network() {}
 #endif
 
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(9600);
 	while (!Serial); // for the Arduino Leonardo/Micro only
-	delay(100);
 	setup_network();
   aunit::TestRunner::setTimeout(0);
 	delay(1000);
 }
 
-void loop() {
-	aunit::TestRunner::run();
-}
+void loop(){ aunit::TestRunner::run(); }
 
 #endif
