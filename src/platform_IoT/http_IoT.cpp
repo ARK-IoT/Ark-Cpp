@@ -1,20 +1,16 @@
+#include "utilities/platform.h"
 
+#if (defined ESP32 || defined ESP8266)
 
-// #include "utilities/platform.h"
 #include "utilities/http.h"
-#include <HttpClient.h>
 
-#if (defined ESP8266 || defined ESP32)
+#ifdef ESP8266
 
-#include <WiFiClient.h>
-
-typedef WiFiClient NetworkClient;
+#include <ESP8266HTTPClient.h>
 
 #else
 
-#include <EthernetClient.h>
-
-typedef EthernetClient NetworkClient;
+#include <HTTPClient.h>
 
 #endif
 
@@ -39,19 +35,19 @@ class HTTP :
 		**************************************************/
 		HTTP() = default;
 		/*************************************************/
-
+#if 0
 		/*************************************************
 		*
 		**************************************************/
-		int tryConnection(
-				HttpClient &client,
+		bool tryConnection(
+				HTTPClient &client,
 				const char *const peer,
 				int port,
 				const char *const request
 		)
 		{
 			client.stop();
-			auto error = client.get(peer, port, request);
+			auto error = client.begin(peer, port, request);
 			return error;
 		}
 		/*************************************************/
@@ -60,7 +56,7 @@ class HTTP :
 		*
 		**************************************************/
 		int checkConnection(
-				HttpClient &client,
+				HTTPClient &client,
 				const char *const peer,
 				int port,
 				const char *const request
@@ -87,7 +83,7 @@ class HTTP :
 			return error;
 		}
 		/*************************************************/
-
+#endif
 		/*************************************************
 		*
 		**************************************************/
@@ -97,9 +93,16 @@ class HTTP :
 				const char *const request
 		)
 		{
-			NetworkClient c;
-			HttpClient http(c);
-			auto check = checkConnection(http, peer, port, request);
+			HTTPClient http;
+			http.begin(peer, port, request);
+			auto code = http.GET();
+			if (code != HTTP_CODE_OK) {
+				//error
+				Serial.println("bad GET");
+			}
+			auto payload = http.getString();
+			return payload.c_str();
+			/*auto check = checkConnection(http, peer, port, request);
 			while ( check < 0 )
 			{	
 				check = checkConnection(http, peer, port, request);
@@ -113,7 +116,7 @@ class HTTP :
 				payload = http.readString().c_str();
 			}
 			http.stop();
-			return payload;
+			return payload;*/
 		};
 		/*************************************************/
 
@@ -132,3 +135,5 @@ std::unique_ptr<HTTPInterface> make_http() {
 };
 };
 };
+
+#endif
