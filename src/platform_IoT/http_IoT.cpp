@@ -35,55 +35,7 @@ class HTTP :
 		**************************************************/
 		HTTP() = default;
 		/*************************************************/
-#if 0
-		/*************************************************
-		*
-		**************************************************/
-		bool tryConnection(
-				HTTPClient &client,
-				const char *const peer,
-				int port,
-				const char *const request
-		)
-		{
-			client.stop();
-			auto error = client.begin(peer, port, request);
-			return error;
-		}
-		/*************************************************/
 
-		/*************************************************
-		*
-		**************************************************/
-		int checkConnection(
-				HTTPClient &client,
-				const char *const peer,
-				int port,
-				const char *const request
-		)
-		{
-			auto error = tryConnection(client, peer, port, request);
-			if (error < 0)
-			{
-				Serial.println("Error: Connection to Peer could not be established");
-				return error;
-			};
-			error = client.responseStatusCode();
-			if (error < 0)
-			{
-				Serial.println("Getting response failed");
-				return error;
-			};
-			error = client.skipResponseHeaders();
-			if (error < 0)
-			{
-				Serial.println("Failed to skip response headers");
-				return error;
-			};
-			return error;
-		}
-		/*************************************************/
-#endif
 		/*************************************************
 		*
 		**************************************************/
@@ -94,29 +46,34 @@ class HTTP :
 		)
 		{
 			HTTPClient http;
-			http.begin(peer, port, request);
+			if (!http.begin(peer, port, request)) {
+				// error
+				Serial.println("bad HTTP begin");
+			}
 			auto code = http.GET();
 			if (code != HTTP_CODE_OK) {
 				//error
-				Serial.println("bad GET");
+				Serial.println("bad HTTP GET");
 			}
-			auto payload = http.getString();
-			return payload.c_str();
-			/*auto check = checkConnection(http, peer, port, request);
-			while ( check < 0 )
-			{	
-				check = checkConnection(http, peer, port, request);
-				Serial.print("Retrying connection."); delay(200);
-				Serial.print("."); delay(200);
-				Serial.print(".\n"); delay(200);
-			};
-			std::string payload;
-			while (	http.connected() || http.available() )
-			{
-				payload = http.readString().c_str();
+			
+			const auto content_length = http.getSize();
+			// get tcp stream
+			auto stream = http.getStreamPtr();
+			auto bytes_read = 0;
+			std::string payload(content_length, '\0');
+			// read all data from server
+			while(http.connected() && (content_length > 0 || content_length == -1) && bytes_read < content_length) {
+			    // get available data size
+			    auto size = stream->available();
+
+			    if(size) {
+				// read up to 128 byte
+				bytes_read += stream->readBytes(&payload[0], size);			
+				}
+			    }
+			    delay(1);
 			}
-			http.stop();
-			return payload;*/
+			return payload;
 		};
 		/*************************************************/
 
