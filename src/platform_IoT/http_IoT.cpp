@@ -69,12 +69,11 @@ class HTTP :
 			    if(size) {
 				// read up to 128 byte
 				bytes_read += stream->readBytes(&payload[0], size);			
-				}
 			    }
 			    delay(1);
 			}
 			return payload;
-		};
+		}
 		/*************************************************/
 
 };
