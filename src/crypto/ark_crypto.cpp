@@ -48,11 +48,22 @@ void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std:
 	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
 	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
 	sha256.Finalize(hash);
+	std::memcpy(&priv_key[0], hash, priv_key.size());
+	get_public_key(priv_key, pub_key, compressed);
+}
 
+void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
 	const struct uECC_Curve_t * curve = uECC_secp256k1();
 	uint8_t pub[64] = {};
-	uECC_compute_public_key(hash, pub, curve);
-	uECC_compress(pub, &pub_key[0], curve);
+	uECC_compute_public_key(&priv_key[0], pub, curve);
+	if (compressed) {
+		assert(pub_key.size() == 33);
+		uECC_compress(pub, &pub_key[0], curve);
+	}
+	else {
+		assert(pub_key.size() == 64);
+		std::memcpy(&pub_key[0], pub, sizeof(pub));
+	}
 }
 
 Account create_account(uint8_t network, const char* const passphrase) {
