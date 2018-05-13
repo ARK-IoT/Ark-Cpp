@@ -62,7 +62,7 @@ void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& 
 	}
 	else {
 		assert(pub_key.size() == 64);
-		std::memcpy(&pub_key[0], pub, sizeof(pub));
+		std::memcpy(&pub_key[0], pub, 64);
 	}
 }
 
