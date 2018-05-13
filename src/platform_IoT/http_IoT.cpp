@@ -62,20 +62,18 @@ class HTTP :
 			auto bytes_read = 0;
 			std::string payload(content_length, '\0');
 			// read all data from server
-			while(http.connected() && (content_length > 0 || content_length == -1) && bytes_read < content_length) {
-			    // get available data size
-			    auto size = stream->available();
-
-			    if(size) {
-				// read up to 128 byte
-				bytes_read += stream->readBytes(&payload[0], size);			
-			    }
-			    delay(1);
+			while (http.connected() && (content_length > 0 || content_length == -1) && bytes_read < content_length) {
+				// get available data size
+				auto size = stream->available();
+				if (size) {
+					// read up to 128 byte
+					bytes_read += stream->readBytes(&payload[0], size);			
+				}
+				delay(1);
 			}
 			return payload;
 		}
 		/*************************************************/
-
 };
 
 }
@@ -88,8 +86,8 @@ std::unique_ptr<HTTPInterface> make_http() {
 }
 /*************************************************/
 
-};
-};
-};
+}
+}
+}
 
 #endif
