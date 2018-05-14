@@ -95,7 +95,7 @@ namespace Network_ADV
 			0x4358394	//<-hex dec: 70615956
 		},
 		0x1E, //<-hex dec: 30,
-		0xBB	//<-hex dec: 187
+		0xaa	//<-hex dec: 187
 	};
 
 	const ARK::Network_ADV::network_t main
@@ -106,6 +106,8 @@ namespace Network_ADV
 			0x2bf4530	// base58Priv will have a prefix 'apriv'
 		},
 		0x17, // Addresses will begin with 'A'
+		// 0xaa works based on available test data but don't know if it is right
+		// should it be 0xbb, or 0xef????
 		0xaa	// Network prefix for wif generation
 	};
 

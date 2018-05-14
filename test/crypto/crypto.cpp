@@ -103,22 +103,6 @@ TEST(crypto, generate_wif) {
 		"6hTYzRJRsKyVvTnu7YWs9WvegPh5WiFrmf3JUTwPzQ8vtvPwoBG",
 		wif.c_str()
 	);
-
-	#if 0
-	//From ark - client:  should pass but doesn't.
-		//const auto p = "rural shell desert cake couch car adapt aunt project faculty agree census";
-		const auto p = "bike sustain face funny virus federal tip during sing trend banana bulb";
-	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
-	std::vector<uint8_t> pub_key(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
-	ARK::Crypto::get_keys(p, priv_key, pub_key);
-	auto prv_s = HexStr(priv_key);
-	auto pub_s = HexStr(pub_key);
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
-	ASSERT_STREQ(
-		"SHcSK2KAbzPB91UQaCk2keMsZti86H5bmD19JN6WsD6WpPXZXNEW",
-		wif.c_str()
-	);
-	#endif
 	
 	//priv_key = ParseDec("19898843618908353587043383062236220484949425084007183071220218307100305431102");
 	priv_key = ParseHex("2BFE58AB6D9FD575BDC3A624E4825DD2B375D64AC033FBC46EA79DBAB4F69A3E");
