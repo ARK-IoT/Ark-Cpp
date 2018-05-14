@@ -1,4 +1,5 @@
 #include "crypto/ark_crypto.h"
+#include "utilities/platform.h"
 #include "constants/networks.h"
 
 #include "bitcoin/base58.h"
@@ -17,7 +18,7 @@ namespace ARK {
 namespace Crypto {
 
 std::string get_wif(uint8_t wif, const std::vector<uint8_t>& key, bool compressed /* = true */) {
-	assert(key.size() == 32); // "private key must be 32 bytes"
+	assert(key.size() == PRIVATE_KEY_SIZE); // "private key must be 32 bytes"
 	std::vector<uint8_t> buf(compressed ? 34 : 33);
 	buf[0] = wif;
 	for (auto i = 1u; i < 33; ++i) {
@@ -55,20 +56,25 @@ void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std:
 void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
 	const struct uECC_Curve_t * curve = uECC_secp256k1();
 	uint8_t pub[64] = {};
-	uECC_compute_public_key(&priv_key[0], pub, curve);
+	// TODO: using the current uECC implementation, a private key value of "1" will return a false negative.  
+	// It appears to be not supported given the following issue: https://github.com/kmackay/micro-ecc/issues/128
+	assert(uECC_compute_public_key(&priv_key[0], pub, curve) != 0);
 	if (compressed) {
-		assert(pub_key.size() == 33);
+		assert(pub_key.size() == COMPRESSED_PUBLIC_KEY_SIZE);
 		uECC_compress(pub, &pub_key[0], curve);
 	}
 	else {
-		assert(pub_key.size() == 64);
-		std::memcpy(&pub_key[0], pub, 64);
+		assert(pub_key.size() == PUBLIC_KEY_SIZE);
+		// Add the 0x04 prefix since the framework doesn't do it for us
+		// see: https://github.com/kmackay/micro-ecc#point-representation
+		pub_key[0] = 0x04;
+		std::memcpy(&pub_key[1], pub, PUBLIC_KEY_SIZE - 1);
 	}
 }
 
 Account create_account(uint8_t network, const char* const passphrase) {
-	std::vector<uint8_t> priv_key(32);
-	std::vector<uint8_t> pub_key(33);
+	std::vector<uint8_t> priv_key(PRIVATE_KEY_SIZE);
+	std::vector<uint8_t> pub_key(COMPRESSED_PUBLIC_KEY_SIZE);
 	get_keys(passphrase, priv_key, pub_key);
 	const auto address = get_address(network, pub_key);
 

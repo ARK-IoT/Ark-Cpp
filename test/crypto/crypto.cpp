@@ -42,28 +42,30 @@ TEST(crypto, generate_address) {
 }
 
 TEST(crypto, get_public_key) {
-	std::vector<uint8_t> priv_key = ParseHex("0000000000000000000000000000000000000000000000000000000000000001");
-	std::vector<uint8_t> pub_key(33);
+	// TODO?:  test for n=1 is not supported with currenty ECC implementation.
+	// see https://github.com/kmackay/micro-ecc/issues/128
+	/*std::vector<uint8_t> priv_key = ParseHex("0000000000000000000000000000000000000000000000000000000000000001");
+	std::vector<uint8_t> pub_key(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_public_key(priv_key, pub_key, true);
 	auto pub_str = HexStr(pub_key);
-	/*ASSERT_STREQ(
+	ASSERT_STREQ(
 		"0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
 		pub_str.c_str()
-	);*/
+	);
 
-	pub_key = std::vector<uint8_t>(64);
+	pub_key = std::vector<uint8_t>(ARK::Crypto::PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_public_key(priv_key, pub_key, false);
 	pub_str = HexStr(pub_key);
-	/*ASSERT_STREQ(
+	ASSERT_STREQ(
 		"0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8",
 		pub_str.c_str()
 	);*/
 
 	//priv_key = ParseDec("19898843618908353587043383062236220484949425084007183071220218307100305431102");
-	priv_key = ParseHex("2BFE58AB6D9FD575BDC3A624E4825DD2B375D64AC033FBC46EA79DBAB4F69A3E");
-	pub_key = std::vector<uint8_t>(33);
+	auto priv_key = ParseHex("2BFE58AB6D9FD575BDC3A624E4825DD2B375D64AC033FBC46EA79DBAB4F69A3E");
+	auto pub_key = std::vector<uint8_t>(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_public_key(priv_key, pub_key, true);
-	pub_str = HexStr(pub_key);
+	auto pub_str = HexStr(pub_key);
 	ASSERT_STREQ(
 		"02b80011a883a0fd621ad46dfc405df1e74bf075cbaf700fd4aebef6e96f848340",
 		pub_str.c_str()
@@ -71,7 +73,7 @@ TEST(crypto, get_public_key) {
 
 	//priv_key = ParseDec("48968302285117906840285529799176770990048954789747953886390402978935544927851");
 	priv_key = ParseHex("6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B");
-	pub_key = std::vector<uint8_t>(33);
+	pub_key = std::vector<uint8_t>(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_public_key(priv_key, pub_key, true);
 	pub_str = HexStr(pub_key);
 	ASSERT_STREQ(
@@ -79,9 +81,7 @@ TEST(crypto, get_public_key) {
 		pub_str.c_str()
 	);
 
-	//priv_key = ParseDec("48968302285117906840285529799176770990048954789747953886390402978935544927851");
-	//priv_key = ParseHex("6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B");
-	pub_key = std::vector<uint8_t>(64);
+	pub_key = std::vector<uint8_t>(ARK::Crypto::PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_public_key(priv_key, pub_key, false);
 	pub_str = HexStr(pub_key);
 	ASSERT_STREQ(
@@ -108,8 +108,8 @@ TEST(crypto, generate_wif) {
 	//From ark - client:  should pass but doesn't.
 		//const auto p = "rural shell desert cake couch car adapt aunt project faculty agree census";
 		const auto p = "bike sustain face funny virus federal tip during sing trend banana bulb";
-	priv_key = std::vector<uint8_t>(32);
-	std::vector<uint8_t> pub_key(33);
+	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
+	std::vector<uint8_t> pub_key(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_keys(p, priv_key, pub_key);
 	auto prv_s = HexStr(priv_key);
 	auto pub_s = HexStr(pub_key);
@@ -145,7 +145,7 @@ TEST(crypto, generate_wif) {
 	);
 
 	static const auto s = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
-	priv_key = std::vector<uint8_t>(32);
+	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
 	std::memcpy(&priv_key[0], s, priv_key.size());
 	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, true);
 	ASSERT_STREQ(
