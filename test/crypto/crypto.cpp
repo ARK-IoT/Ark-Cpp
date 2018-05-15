@@ -41,6 +41,17 @@ TEST(crypto, generate_address) {
 	//);
 }
 
+TEST(crypto, get_private_key) {
+	auto phrase = "seven age job canoe call lonely case same bounce giggle pluck mouse";
+	std::vector<uint8_t> priv_key(ARK::Crypto::PRIVATE_KEY_SIZE);
+	ARK::Crypto::get_private_key(phrase, priv_key);
+	auto priv_key_str = HexStr(priv_key);
+	ASSERT_STREQ(
+		"391c39c785128986b8959d40aeb9698071d68ebd07967b8f7d3ed8a35d4433c6",
+		priv_key_str.c_str()
+	);
+}
+
 TEST(crypto, get_public_key) {
 	// TODO?:  test for n=1 is not supported with currenty ECC implementation.
 	// see https://github.com/kmackay/micro-ecc/issues/128
@@ -128,12 +139,20 @@ TEST(crypto, generate_wif) {
 		wif.c_str()
 	);
 
-	static const auto s = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
+	static const auto priv_key_str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
 	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
-	std::memcpy(&priv_key[0], s, priv_key.size());
+	std::memcpy(&priv_key[0], priv_key_str, priv_key.size());
 	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, true);
 	ASSERT_STREQ(
 		"L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1",
+		wif.c_str()
+	);
+
+	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
+	ARK::Crypto::get_private_key(passphrase, priv_key);
+	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, true);
+	ASSERT_STREQ(
+		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
 		wif.c_str()
 	);
 }

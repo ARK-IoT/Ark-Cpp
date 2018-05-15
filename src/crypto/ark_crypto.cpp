@@ -45,12 +45,16 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 }
 
 void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
+	get_private_key(passphrase, priv_key);
+	get_public_key(priv_key, pub_key, compressed);
+}
+
+void get_private_key(const char* const passphrase, std::vector<uint8_t>& priv_key) {
 	CSHA256 sha256;
 	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
 	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
 	sha256.Finalize(hash);
 	std::memcpy(&priv_key[0], hash, priv_key.size());
-	get_public_key(priv_key, pub_key, compressed);
 }
 
 void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
