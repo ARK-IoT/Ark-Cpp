@@ -101,15 +101,15 @@ TEST(crypto, get_public_key) {
 	);
 }
 
-TEST(crypto, generate_wif) {
+TEST(crypto, to_wif) {
 	std::vector<uint8_t> priv_key = ParseHex("0000000000000000000000000000000000000000000000000000000000000001");
-	auto wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
+	auto wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
 	ASSERT_STREQ(
 		"S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz",
 		wif.c_str()
 	);
 
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, false);
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, false);
 	ASSERT_STREQ(
 		"6hTYzRJRsKyVvTnu7YWs9WvegPh5WiFrmf3JUTwPzQ8vtvPwoBG",
 		wif.c_str()
@@ -117,7 +117,7 @@ TEST(crypto, generate_wif) {
 	
 	//priv_key = ParseDec("19898843618908353587043383062236220484949425084007183071220218307100305431102");
 	priv_key = ParseHex("2BFE58AB6D9FD575BDC3A624E4825DD2B375D64AC033FBC46EA79DBAB4F69A3E");
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
 	ASSERT_STREQ(
 		"SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK",
 		wif.c_str()
@@ -125,7 +125,7 @@ TEST(crypto, generate_wif) {
 
 	//priv_key = ParseDec("48968302285117906840285529799176770990048954789747953886390402978935544927851");
 	priv_key = ParseHex("6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B");
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, true);
 	ASSERT_STREQ(
 		"SDCe8styqokHi4pSe5jVRiYVV63Mef2TGsE1D4HhtGAL1DytHLtd",
 		wif.c_str()
@@ -133,7 +133,7 @@ TEST(crypto, generate_wif) {
 
 	//priv_key = ParseDec("48968302285117906840285529799176770990048954789747953886390402978935544927851");
 	priv_key = ParseHex("6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B");
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, false);
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, false);
 	ASSERT_STREQ(
 		"6iHEQ5jbB9n9meZxCaFAAE39ii1zEyCCquca8GFCyvjSc1UFLp2",
 		wif.c_str()
@@ -142,7 +142,7 @@ TEST(crypto, generate_wif) {
 	static const auto priv_key_str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
 	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
 	std::memcpy(&priv_key[0], priv_key_str, priv_key.size());
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, true);
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, true);
 	ASSERT_STREQ(
 		"L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1",
 		wif.c_str()
@@ -150,9 +150,75 @@ TEST(crypto, generate_wif) {
 
 	priv_key = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
 	ARK::Crypto::get_private_key(passphrase, priv_key);
-	wif = ARK::Crypto::get_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, true);
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, true);
 	ASSERT_STREQ(
 		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
 		wif.c_str()
 	);
+}
+
+TEST(crypto, from_wif) {
+	std::vector<uint8_t> priv_key;
+	uint8_t version;
+	bool compressed;	
+	ARK::Crypto::from_wif("S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz", version, priv_key, compressed);
+	ASSERT_STREQ(
+		"0000000000000000000000000000000000000000000000000000000000000001",
+		HexStr(priv_key).c_str()
+	);
+	ASSERT_TRUE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+
+	ARK::Crypto::from_wif("6hTYzRJRsKyVvTnu7YWs9WvegPh5WiFrmf3JUTwPzQ8vtvPwoBG", version, priv_key, compressed);
+	ASSERT_STREQ(
+		"0000000000000000000000000000000000000000000000000000000000000001",
+		HexStr(priv_key).c_str()
+	);
+	ASSERT_FALSE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+
+
+	ARK::Crypto::from_wif("SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK", version, priv_key, compressed);
+	ASSERT_STREQ(
+		"2BFE58AB6D9FD575BDC3A624E4825DD2B375D64AC033FBC46EA79DBAB4F69A3E",  // DEC: "19898843618908353587043383062236220484949425084007183071220218307100305431102"
+		HexStr(priv_key).c_str()
+	);
+	ASSERT_TRUE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+
+
+	ARK::Crypto::from_wif("SDCe8styqokHi4pSe5jVRiYVV63Mef2TGsE1D4HhtGAL1DytHLtd", version, priv_key, compressed);
+	ASSERT_STREQ(
+		"6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B",  // DEC: "48968302285117906840285529799176770990048954789747953886390402978935544927851"
+		HexStr(priv_key).c_str()
+	);
+	ASSERT_TRUE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+
+	ARK::Crypto::from_wif("6iHEQ5jbB9n9meZxCaFAAE39ii1zEyCCquca8GFCyvjSc1UFLp2", version, priv_key, compressed);
+	ASSERT_STREQ(
+		"6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B",  // DEC: "48968302285117906840285529799176770990048954789747953886390402978935544927851"
+		HexStr(priv_key).c_str()
+	);
+	ASSERT_FALSE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+
+/*
+	ARK::Crypto::from_wif("L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1", version, priv_key, compressed);
+	ASSERT_STREQ(
+		"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",  
+		HexStr(priv_key)
+	);
+	ASSERT_TRUE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+*/
+	std::vector<uint8_t> expected_priv_key(ARK::Crypto::PRIVATE_KEY_SIZE);
+	ARK::Crypto::get_private_key(passphrase, expected_priv_key);
+	ARK::Crypto::from_wif("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", version, priv_key, compressed);
+	ASSERT_EQ(
+		expected_priv_key,  
+		priv_key
+	);
+	ASSERT_TRUE(compressed);
+	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
 }

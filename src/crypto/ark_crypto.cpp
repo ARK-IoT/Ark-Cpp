@@ -17,10 +17,10 @@
 namespace ARK {
 namespace Crypto {
 
-std::string get_wif(uint8_t wif, const std::vector<uint8_t>& key, bool compressed /* = true */) {
+std::string to_wif(uint8_t version, const std::vector<uint8_t>& key, bool compressed /* = true */) {
 	assert(key.size() == PRIVATE_KEY_SIZE); // "private key must be 32 bytes"
 	std::vector<uint8_t> buf(compressed ? 34 : 33);
-	buf[0] = wif;
+	buf[0] = version;
 	for (auto i = 1u; i < 33; ++i) {
 		buf[i] = key[i - 1];
 	}
@@ -29,6 +29,32 @@ std::string get_wif(uint8_t wif, const std::vector<uint8_t>& key, bool compresse
 	}
 
 	return EncodeBase58Check(buf);
+}
+
+void from_wif(const std::string& wif, uint8_t& version, std::vector<uint8_t>& priv_key, bool& compressed) {
+	std::vector<uint8_t> buf;
+	DecodeBase58Check(wif, buf);
+	// Uncompressed
+	if (buf.size() == 33) {
+		auto iter = buf.cbegin();
+		version = *iter;
+		++iter;
+		priv_key.clear();
+		std::copy(iter, buf.cend(), priv_key.begin());
+		compressed = false;
+		return;
+	}
+	
+	// Compressed
+	assert(buf.size() == 34);
+	assert(buf[33] == 0x01);
+	
+	auto iter = buf.cbegin();
+	version = *iter;
+	++iter;
+	priv_key.clear();
+	std::copy(iter, buf.cend(), priv_key.begin());
+	compressed = true;
 }
 
 std::string get_address(uint8_t network, const std::string& public_key) {
