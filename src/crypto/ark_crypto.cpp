@@ -36,11 +36,9 @@ void from_wif(const std::string& wif, uint8_t& version, std::vector<uint8_t>& pr
 	DecodeBase58Check(wif, buf);
 	// Uncompressed
 	if (buf.size() == 33) {
-		auto iter = buf.cbegin();
-		version = *iter;
-		++iter;
+		version = buf[0];
 		priv_key.clear();
-		std::copy(iter, buf.cend(), priv_key.begin());
+		std::copy(buf.cbegin() + 1, buf.cend(), std::back_inserter(priv_key));
 		compressed = false;
 		return;
 	}
@@ -49,11 +47,9 @@ void from_wif(const std::string& wif, uint8_t& version, std::vector<uint8_t>& pr
 	assert(buf.size() == 34);
 	assert(buf[33] == 0x01);
 	
-	auto iter = buf.cbegin();
-	version = *iter;
-	++iter;
+	version = buf[0];
 	priv_key.clear();
-	std::copy(iter, buf.cend(), priv_key.begin());
+	std::copy(buf.cbegin() + 1, buf.cend() - 1, std::back_inserter(priv_key));
 	compressed = true;
 }
 
