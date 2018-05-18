@@ -18,13 +18,13 @@ include_directories(${PROJECT_SOURCE_DIR}/../src/bitcoin)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
-	#${PROJECT_SOURCE_DIR}/api/account.cpp
-	#${PROJECT_SOURCE_DIR}/api/block.cpp
-	#${PROJECT_SOURCE_DIR}/api/delegate.cpp
-	#${PROJECT_SOURCE_DIR}/api/loader.cpp
-	#${PROJECT_SOURCE_DIR}/api/peer.cpp
-	#${PROJECT_SOURCE_DIR}/api/signature.cpp
-	#${PROJECT_SOURCE_DIR}/api/transaction.cpp	
+	${PROJECT_SOURCE_DIR}/api/account.cpp
+	${PROJECT_SOURCE_DIR}/api/block.cpp
+	${PROJECT_SOURCE_DIR}/api/delegate.cpp
+	${PROJECT_SOURCE_DIR}/api/loader.cpp
+	${PROJECT_SOURCE_DIR}/api/peer.cpp
+	${PROJECT_SOURCE_DIR}/api/signature.cpp
+	${PROJECT_SOURCE_DIR}/api/transaction.cpp	
 	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
 	${PROJECT_SOURCE_DIR}/crypto/crypto.cpp
 	${PROJECT_SOURCE_DIR}/model/account.cpp
