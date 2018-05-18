@@ -53,10 +53,6 @@ void from_wif(const std::string& wif, uint8_t& version, std::vector<uint8_t>& pr
 	compressed = true;
 }
 
-std::string get_address(uint8_t network, const std::string& public_key) {
-	return get_address(network, ParseHex(public_key));
-}
-
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
 	CRIPEMD160 ripemd160;
 	ripemd160.Write(&public_key[0], public_key.size());

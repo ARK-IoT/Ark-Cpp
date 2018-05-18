@@ -20,7 +20,6 @@ std::string to_wif(uint8_t version, const std::vector<uint8_t>& priv_key, bool c
 void from_wif(const std::string& wif, uint8_t& version, std::vector<uint8_t>& priv_key, bool& compressed);
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key);
-std::string get_address(uint8_t network, const std::string& public_key);
 
 Account create_account(uint8_t network, const char* const passphrase);
 

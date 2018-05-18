@@ -25,19 +25,19 @@ TEST(crypto, generate_address) {
 	// dev net
 	ASSERT_STREQ(
 		"D8WEzKygD4BYDngjXyWC84om6GBvBMkVFY", 
-		ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, "0361eba308995231b03f005323fa71fc8dcda34564800fde41d166222d6811ebf6").c_str()
+		ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, ParseHex("0361eba308995231b03f005323fa71fc8dcda34564800fde41d166222d6811ebf6")).c_str()
 	);
 
 	// main net
 	ASSERT_STREQ(
 		"AQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH",
-		ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::main.pubKeyHash, "02579b22787db8a7cb838729ad21bb0471e472027904df3d674ef074006a9a22c0").c_str()
+		ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::main.pubKeyHash, ParseHex("02579b22787db8a7cb838729ad21bb0471e472027904df3d674ef074006a9a22c0")).c_str()
 	);
 
 	// test net ??
 	//ASSERT_STREQ(
 	//	"",
-	//	ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::testnet.pubKeyHash, "").c_str()
+	//	ARK::Crypto::get_address(ARK::Constants::Networks::Network_ADV::testnet.pubKeyHash, ParseHex("")).c_str()
 	//);
 }
 
