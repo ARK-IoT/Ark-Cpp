@@ -10,7 +10,7 @@ namespace ARK {
 namespace Crypto {
 
 const auto PUBLIC_KEY_SIZE = 65u;
-const auto COMPRESSED_PUBLIC_KEY_SIZE = 33;
+const auto COMPRESSED_PUBLIC_KEY_SIZE = 33u;
 const auto PRIVATE_KEY_SIZE = 32u;
 
 void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed = true);
