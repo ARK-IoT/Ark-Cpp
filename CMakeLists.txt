@@ -18,6 +18,12 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
  
 set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR})
 
+# clone submodules
+execute_process(
+	COMMAND git submodule update --init
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 if (MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNOMINMAX)
 elseif (UNIX)
