@@ -9,6 +9,8 @@ environment:
   
 build_script:
 - cmd: >-
+    git submodule update --init --recursive
+
     cmake -G "Visual Studio 15 2017"
 
     cmake --build . --config %CONFIGURATION%
