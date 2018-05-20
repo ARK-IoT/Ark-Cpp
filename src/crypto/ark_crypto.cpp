@@ -80,7 +80,8 @@ void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& 
 	uint8_t pub[64] = {};
 	// TODO: using the current uECC implementation, a private key value of "1" will return a false negative.  
 	// It appears to be not supported given the following issue: https://github.com/kmackay/micro-ecc/issues/128
-	assert(uECC_compute_public_key(&priv_key[0], pub, curve) != 0);
+	auto ret = uECC_compute_public_key(&priv_key[0], pub, curve);  // Don't check the return inline with the assert.  MSVC optimizer does bad things.
+	assert(ret != 0);
 	if (compressed) {
 		assert(pub_key.size() == COMPRESSED_PUBLIC_KEY_SIZE);
 		uECC_compress(pub, &pub_key[0], curve);
