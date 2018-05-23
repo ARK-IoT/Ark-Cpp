@@ -2,11 +2,10 @@
 #include "utilities/platform.h"
 #include "constants/networks.h"
 
-#include "bitcoin/base58.h"
-#include "bitcoin/uint256.h"
-#include "bitcoin/crypto/sha256.h"
-#include "bitcoin/crypto/ripemd160.h"
-#include "bitcoin/utilstrencodings.h"
+#include "Base58Check.hpp"
+#include "Uint256.hpp"
+#include "Sha256.hpp"
+#include "Ripemd160.hpp"
 
 #include "uECC.h"
 
@@ -17,8 +16,9 @@
 namespace ARK {
 namespace Crypto {
 
-std::string to_wif(uint8_t version, const std::vector<uint8_t>& key, bool compressed /* = true */) {
-	assert(key.size() == PRIVATE_KEY_SIZE); // "private key must be 32 bytes"
+std::string to_wif(uint8_t version, const uint8_t key[PRIVATE_KEY_SIZE], bool compressed /* = true */) {
+	//assert(key.size() == PRIVATE_KEY_SIZE); // "private key must be 32 bytes"
+#if 0
 	std::vector<uint8_t> buf(compressed ? 34 : 33);
 	buf[0] = version;
 	for (auto i = 1u; i < 33; ++i) {
@@ -27,39 +27,27 @@ std::string to_wif(uint8_t version, const std::vector<uint8_t>& key, bool compre
 	if (compressed) { 
 		buf[33] = 0x01;
 	}
+#endif
 
-	return EncodeBase58Check(buf);
+	std::string s(53, '\0');
+	
+	Base58Check::privateKeyToBase58Check(version, compressed, Uint256(HexStr(key, key + PRIVATE_KEY_SIZE).c_str()), &s[0]);
+	return s;
 }
 
-void from_wif(const std::string& wif, uint8_t& version, std::vector<uint8_t>& priv_key, bool& compressed) {
-	std::vector<uint8_t> buf;
-	DecodeBase58Check(wif, buf);
-	// Uncompressed
-	if (buf.size() == 33) {
-		version = buf[0];
-		priv_key.clear();
-		std::copy(buf.cbegin() + 1, buf.cend(), std::back_inserter(priv_key));
-		compressed = false;
-		return;
-	}
-	
-	// Compressed
-	assert(buf.size() == 34);
-	assert(buf[33] == 0x01);
-	
-	version = buf[0];
-	priv_key.clear();
-	std::copy(buf.cbegin() + 1, buf.cend() - 1, std::back_inserter(priv_key));
-	compressed = true;
+void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE_KEY_SIZE], bool& compressed) {
+	Uint256 bi;
+	auto ret = Base58Check::privateKeyFromBase58Check(wif.c_str(), bi, version, compressed);
+	assert(ret);
+	bi.getBigEndianBytes(priv_key);
 }
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
-	CRIPEMD160 ripemd160;
-	ripemd160.Write(&public_key[0], public_key.size());
-	std::vector<uint8_t> seed(21);
-	seed[0] = network;
-	ripemd160.Finalize(&seed[1]);
-	return EncodeBase58Check(seed);
+	std::vector<uint8_t> seed(Ripemd160::HASH_LEN);
+	Ripemd160::getHash(&public_key[0], public_key.size(), &seed[0]);
+	std::string s(35, '\0');
+	Base58Check::pubkeyHashToBase58Check(network, &seed[0], &s[0]);
+	return s;
 }
 
 void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
@@ -68,11 +56,8 @@ void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std:
 }
 
 void get_private_key(const char* const passphrase, std::vector<uint8_t>& priv_key) {
-	CSHA256 sha256;
-	sha256.Write(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
-	uint8_t hash[CSHA256::OUTPUT_SIZE] = {};
-	sha256.Finalize(hash);
-	std::memcpy(&priv_key[0], hash, priv_key.size());
+	auto hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
+	std::memcpy(&priv_key[0], hash.value, priv_key.size());
 }
 
 void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
@@ -105,4 +90,54 @@ Account create_account(uint8_t network, const char* const passphrase) {
 }
 
 }
+}
+
+
+const signed char p_util_hexdigit[256] =
+{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+0,1,2,3,4,5,6,7,8,9,-1,-1,-1,-1,-1,-1,
+-1,0xa,0xb,0xc,0xd,0xe,0xf,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,0xa,0xb,0xc,0xd,0xe,0xf,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, };
+
+signed char HexDigit(char c)
+{
+	return p_util_hexdigit[(unsigned char)c];
+}
+
+std::vector<unsigned char> ParseHex(const char* psz)
+{
+	// convert hex dump to vector
+	std::vector<unsigned char> vch;
+	while (true)
+	{
+		while (isspace(*psz))
+			psz++;
+		signed char c = HexDigit(*psz++);
+		if (c == (signed char)-1)
+			break;
+		unsigned char n = (c << 4);
+		c = HexDigit(*psz++);
+		if (c == (signed char)-1)
+			break;
+		n |= c;
+		vch.push_back(n);
+	}
+	return vch;
+}
+
+std::vector<unsigned char> ParseHex(const std::string& str)
+{
+	return ParseHex(str.c_str());
 }

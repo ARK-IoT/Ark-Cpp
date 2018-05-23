@@ -1,8 +1,8 @@
 #include "bip39/bip39.h"
+#include "utilities/platform.h"
 
 #include "bip39/en.h"
 
-#include <random>
 #include <cassert>
 
 namespace ARK {
@@ -28,12 +28,10 @@ std::string generate_mnemonic(language lang /* = language::en */, uint8_t num_wo
 	if (num_words != 12 && num_words != 24) {
 		// error??
 	}
-	std::random_device rd;
-	std::uniform_int_distribution<size_t> dist(0, NUM_BIP39_WORDS - 1);
 	std::string passphrase;
 	const auto words = get_string_table(lang);
 	for (auto i = 0; i < num_words; ) {
-		const auto word = words[dist(rd)];
+		const auto word = words[generate_random_number(0, NUM_BIP39_WORDS - 1)];
 		if (passphrase.find(word) == std::string::npos) {
 			passphrase += word;
 			if (i != num_words - 1) {

@@ -46,8 +46,8 @@ namespace Mainnet
 const char *randomPeer(ARK::NetworkType netType)
 {
 	switch (netType) {
-		case DEV: return ARK::Constants::Networks::Devnet::seeds[random(0, 5)];		break;
-		case MAIN: return ARK::Constants::Networks::Devnet::seeds[random(0, 45)];	break;
+		case DEV: return ARK::Constants::Networks::Devnet::seeds[generate_random_number(0, 5)];		break;
+		case MAIN: return ARK::Constants::Networks::Devnet::seeds[generate_random_number(0, 45)];	break;
 		case CUSTOM: return "Error: method yet not available for custom networks";break;
 		default: return "Error: Nethash Invalid";		break;
 	}

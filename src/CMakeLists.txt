@@ -12,7 +12,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/uint128_t
-	${PROJECT_SOURCE_DIR}/bitcoin
+	${PROJECT_SOURCE_DIR}/bcl/cpp
 	${PROJECT_SOURCE_DIR}/uECC
 )
  
@@ -50,16 +50,13 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
 )
 
-set (BITCOIN_SRC
-	${PROJECT_SOURCE_DIR}/bitcoin/base58.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/uint256.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/hash.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/utilstrencodings.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/chacha20.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/ripemd160.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha256.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/sha512.cpp
-	${PROJECT_SOURCE_DIR}/bitcoin/crypto/hmac_sha512.cpp
+set (BCL_SRC
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Base58Check.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Ripemd160.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256Hash.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Uint256.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Utils.cpp
 )
 
 set (uECC_SRC
@@ -71,7 +68,7 @@ set(PLATFORM_SRC
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
 )
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${BITCOIN_SRC} ${uECC_SRC})
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${BCL_SRC} ${uECC_SRC})
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)

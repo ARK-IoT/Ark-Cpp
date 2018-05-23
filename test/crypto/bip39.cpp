@@ -4,8 +4,8 @@
 
 #include <string>
 #include <set>
-#include <sstream>
-
+//#include <sstream>
+/*
 TEST(crypto_bip39, generate_mnemonic) {
 	auto passphrase = ARK::Crypto::BIP39::generate_mnemonic(ARK::Crypto::BIP39::language::en, 24);
 	std::istringstream stream(passphrase);
@@ -28,3 +28,4 @@ TEST(crypto_bip39, generate_mnemonic) {
 	}
 	ASSERT_EQ(12, words.size());
 }
+*/
