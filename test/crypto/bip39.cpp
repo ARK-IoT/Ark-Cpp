@@ -9,7 +9,9 @@
 TEST(crypto_bip39, generate_mnemonic) {
 	auto passphrase = ARK::Crypto::BIP39::generate_mnemonic(ARK::Crypto::BIP39::language::en, 24);
 	std::set<std::string> words;
-	auto pch = strtok(passphrase.c_str(), ' ');
+	char s[256] = {};
+	strncpy(s, passphrase.c_str(), sizeof(s));
+	auto pch = strtok(s, ' ');
 	while (pch != nullptr) {
 		std::string word(pch);
 		ASSERT_TRUE(words.insert(std::move(word)).second);
@@ -20,8 +22,8 @@ TEST(crypto_bip39, generate_mnemonic) {
 
 	passphrase = ARK::Crypto::BIP39::generate_mnemonic(ARK::Crypto::BIP39::language::en, 12);
 	words.clear();
-	
-	pch = strtok(passphrase.c_str(), ' ');
+	strncpy(s, passphrase.c_str(), sizeof(s));
+	pch = strtok(s, ' ');
 	while (pch != nullptr) {
 		std::string word(pch);
 		ASSERT_TRUE(words.insert(std::move(word)).second);
