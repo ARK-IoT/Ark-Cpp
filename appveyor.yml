@@ -2,10 +2,6 @@ version: 0.0.{build}
 
 image: Visual Studio 2017
 
-#platform:
-#  - x86
-#  - x64
-
 environment:
 
   matrix:
