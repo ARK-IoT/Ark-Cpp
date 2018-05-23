@@ -2,9 +2,9 @@ version: 0.0.{build}
 
 image: Visual Studio 2017
 
-platform:
-  - x86
-  - x64
+#platform:
+#  - x86
+#  - x64
 
 environment:
 
@@ -14,10 +14,7 @@ environment:
   
 build_script:
 - cmd: >-
-    IF "%PLATFORM%" == "x86" (SET MSVS_PLATFORM="")
-    IF "%PLATFORM%" == "x64" (SET MSVS_PLATFORM=" Win64")
-
-    cmake -G "Visual Studio 15 2017%PLATFORM%"
+    cmake -G "Visual Studio 15 2017"
 
     cmake --build . --config %CONFIGURATION%
     
