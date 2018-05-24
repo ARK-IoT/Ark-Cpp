@@ -2,7 +2,6 @@
 
 #include "bip39/bip39.h"
 
-#include <string>
 #include <cstring>
 #include <set>
 
@@ -13,8 +12,7 @@ TEST(crypto_bip39, generate_mnemonic) {
 	strncpy(s, passphrase.c_str(), sizeof(s));
 	auto pch = strtok(s, " ");
 	while (pch != nullptr) {
-		std::string word(pch);
-		ASSERT_TRUE(words.insert(std::move(word)).second);
+		ASSERT_TRUE(words.insert(pch).second);
 		pch = strtok(nullptr, " ");
 	}
 	
@@ -25,8 +23,7 @@ TEST(crypto_bip39, generate_mnemonic) {
 	strncpy(s, passphrase.c_str(), sizeof(s));
 	pch = strtok(s, " ");
 	while (pch != nullptr) {
-		std::string word(pch);
-		ASSERT_TRUE(words.insert(std::move(word)).second);
+		ASSERT_TRUE(words.insert(pch).second);
 		pch = strtok(nullptr, " ");
 	}
 	
