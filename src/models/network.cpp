@@ -3,16 +3,6 @@
 #include "models/network.h"
 
 /*************************************************
-*	Default: Empty Constructor
-**************************************************/
-ARK::Network::Network()
-{
-	this->nethash_ = Hash();
-	this->version_ = 0;
-};
-/*************************************************/
-
-/*************************************************
 *	Constructor
 **************************************************/
 ARK::Network::Network(
@@ -22,8 +12,11 @@ ARK::Network::Network(
 		const char *const newExplorer,
 		int 							newVersion
 )	:
-		nethash_(Hash(newNethash)),
-		version_(newVersion)
+	nethash_(newNethash),
+	token_(),
+	symbol_(),
+	explorer_(),
+	version_(newVersion)
 {
 	strcpy(this->token_, newToken);
 	for (unsigned int i = 0; i < strlen(newSymbol); i++)

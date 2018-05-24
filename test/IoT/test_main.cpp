@@ -16,6 +16,7 @@
 
 namespace
 {
+
 char ssid[] = "your_ssid";     //  your network SSID (name)
 const char password[] = "your_password";  // your network password
 
@@ -55,13 +56,16 @@ void setup_network() {}
 #endif
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
 	while (!Serial); // for the Arduino Leonardo/Micro only
+	delay(100);
 	setup_network();
-  aunit::TestRunner::setTimeout(0);
+	aunit::TestRunner::setTimeout(0);
 	delay(1000);
 }
 
-void loop(){ aunit::TestRunner::run(); }
+void loop() {
+	aunit::TestRunner::run();
+}
 
 #endif

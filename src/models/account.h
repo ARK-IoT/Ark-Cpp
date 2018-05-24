@@ -1,9 +1,9 @@
-
-
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
 #include "utilities/platform.h"
+#include "bip39/bip39.h"
+#include "constants/networks.h"
 #include "types/address.h"
 #include "types/balance.h"
 #include "types/hash.h"
@@ -65,6 +65,11 @@ struct Account :
 				// Hash              newMultisignatures[], //	FIXME
 				// Hash							newU_Multisignatures[] //	FIXME
 		);
+    
+		Account(
+			const char* const public_key,
+			const char* const address
+		);
 		/*************************************************/
 
 		/*************************************************
@@ -90,7 +95,16 @@ struct Account :
 };
 /*************************************************/
 
-};
+/*************************************************
+* Creates an account from the network id and passphrase
+* Network id defaults to mainnet
+* Passphrase defaults to a new randomly generated mnemonic
+**************************************************/
+Account make_account(
+	uint8_t network = ARK::Constants::Networks::Network_ADV::main.pubKeyHash,
+	const std::string& passphrase = ARK::Crypto::BIP39::generate_mnemonic()
+);
 
+}
 
 #endif

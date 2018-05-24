@@ -14,6 +14,7 @@ set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 set(COVERAGE OFF CACHE BOOL "Coverage")
 
 include_directories(${PROJECT_SOURCE_DIR}/../src)
+include_directories(${PROJECT_SOURCE_DIR}/../src/bcl/cpp)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
@@ -24,6 +25,8 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/api/peer.cpp
 	${PROJECT_SOURCE_DIR}/api/signature.cpp
 	${PROJECT_SOURCE_DIR}/api/transaction.cpp	
+	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
+	${PROJECT_SOURCE_DIR}/crypto/crypto.cpp
 	${PROJECT_SOURCE_DIR}/model/account.cpp
 	${PROJECT_SOURCE_DIR}/model/block.cpp
 	${PROJECT_SOURCE_DIR}/model/currency.cpp

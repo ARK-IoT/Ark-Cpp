@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/sleepdefic1t/ark-cpp/blob/master/ark_cpp_logo.png"/>
+  <img src="https://github.com/Ark-IoT/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
 # Ark for Machines v0.6.8 
@@ -14,7 +14,7 @@
 
 [![Build Status](https://travis-ci.org/Ark-IoT/Ark-Cpp.svg?branch=master)](https://travis-ci.org/Ark-IoT/Ark-Cpp)  
 
-[![Build status](https://ci.appveyor.com/api/projects/status/dtbx7xmu6m8fpdb7?svg=true)](https://ci.appveyor.com/project/Ark-Iot/ark-cpp)
+[![Build status](https://ci.appveyor.com/api/projects/status/dtbx7xmu6m8fpdb7?svg=true)](https://ci.appveyor.com/project/Ark-IoT/ark-cpp)
 
 Not production ready.  
 

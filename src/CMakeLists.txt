@@ -4,14 +4,20 @@ cmake_minimum_required(VERSION 3.2.2)
 project(Ark-Cpp-lib)
 
 hunter_add_package(nlohmann_json)
+
 hunter_add_package(PocoCpp)
 
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
-include_directories(${PROJECT_SOURCE_DIR})
+include_directories(
+	${PROJECT_SOURCE_DIR}
+	${PROJECT_SOURCE_DIR}/uint128_t
+	${PROJECT_SOURCE_DIR}/bcl/cpp
+	${PROJECT_SOURCE_DIR}/uECC
+)
  
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(Poco REQUIRED Net CONFIG)
+find_package(Poco CONFIG REQUIRED Foundation Net)
 
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/api/accountable/account_gettable.cpp
@@ -29,6 +35,8 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_gettable.cpp
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/api/manager.cpp
+	${PROJECT_SOURCE_DIR}/crypto/ark_crypto.cpp
+	${PROJECT_SOURCE_DIR}/bip39/bip39.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/models/account.cpp
 	${PROJECT_SOURCE_DIR}/models/block.cpp
@@ -40,6 +48,20 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/transaction.cpp
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
+	${PROJECT_SOURCE_DIR}/utilities/platform.cpp
+)
+
+set (BCL_SRC
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Base58Check.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Ripemd160.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256Hash.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Uint256.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Utils.cpp
+)
+
+set (uECC_SRC
+	${PROJECT_SOURCE_DIR}/uECC/uECC.c
 )
 
 set(PLATFORM_SRC 
@@ -47,8 +69,11 @@ set(PLATFORM_SRC
 	${PROJECT_SOURCE_DIR}/platform/http.cpp
 )
 
-add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC})
+add_library(Ark-Cpp-lib STATIC ${COMMON_SRC} ${PLATFORM_SRC} ${BCL_SRC} ${uECC_SRC})
 
 target_link_libraries(Ark-Cpp-lib PUBLIC nlohmann_json)
 target_link_libraries(Ark-Cpp-lib PUBLIC Poco::Net)
 
+if (MSVC)
+	target_link_libraries(Ark-Cpp-lib PUBLIC crypt32)
+endif()

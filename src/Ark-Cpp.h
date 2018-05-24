@@ -14,5 +14,7 @@
 #include "constants/constants.h"
 #include "utilities/utilities.h"
 #include "api/api.h"
+#include "bip39/bip39.h"
+#include "crypto/ark_crypto.h"
 
 #endif

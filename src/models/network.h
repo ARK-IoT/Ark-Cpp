@@ -40,16 +40,16 @@ struct Network :
 {
 	protected:
 		Hash	nethash_;
-		char	token_[5];// = { '\0' };
-		char	symbol_[5] = { '\0' };
-		char	explorer_[40];// = { '\0' };
+		char	token_[5];
+		char	symbol_[5];
+		char	explorer_[40];
 		int 	version_;
 
 	public:
 		/*************************************************
 		*	Default: Empty Constructor
 		**************************************************/
-		Network();
+		Network() = default;
 		/*************************************************/
 
 		/*************************************************
@@ -60,14 +60,14 @@ struct Network :
 				const char *const newToken,
 				const char *const newSymbol,
 				const char *const newExplorer,
-				int 							newVersion
+				int newVersion
 		);
 		/*************************************************/
 
 		/*************************************************
 		*	Accessors
 		**************************************************/
-		Hash nethash() const noexcept { return nethash_; }
+		const Hash& nethash() const noexcept { return nethash_; }
 		const char* token() const noexcept { return token_; }
 		const char* symbol() const noexcept { return symbol_; }
 		const char* explorer() const noexcept { return explorer_; }
@@ -114,6 +114,7 @@ struct bip32_t
 	long pub;	// base58 will have a prefix 'apub'
 	long priv; // base58Priv will have a prefix 'apriv'
 };
+
 /*************************************************/
 
 /*************************************************
@@ -123,14 +124,14 @@ struct network_t
 {
 	const char *messagePrefix;
 	bip32_t bip32;
-	long pubKeyHash; // Addresses will begin with 'A'
-	long wif;				 // Network prefix for wif generation
+	uint8_t pubKeyHash;	// Addresses will begin with 'A'
+	uint8_t wif;		// Network prefix for wif generation
 };
 /*************************************************/
 
-};
+}
 /*************************************************/
 
-};
+}
 
 #endif

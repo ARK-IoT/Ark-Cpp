@@ -5,11 +5,18 @@
 
 #define USE_IOT
 
+#include <Arduino.h>
+#include <pgmspace.h>
+
+
+#if (defined ARDUINO)
+#include <WString.h>
+#else
+#undef String
+#include <string>
+#define String std::string
 #endif
 
-#ifdef USE_IOT
-
-#include <Arduino.h>
 
 // undef the C macros to allow the C++ STL to take over
 // This is to have compatibility with various board implementations of the STL
@@ -48,9 +55,14 @@ inline int substringCount(const char* str, const char* subStr) {
 }
 /*************************************************/
 
+inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* static_seed */ = false) {
+	return random(min, max);
+}
+
 #else
 
-// #define String std::string
+#define PROGMEM
+#define PGM_P const char*
 
 #include <string>
 #include <random>
@@ -67,12 +79,7 @@ inline float convert_to_float(const std::string& s) {
 	return std::stof(s);
 }
 
-template <typename IntType>
-inline int random(IntType min, IntType max) {
-	std::default_random_engine generator;
-	std::uniform_int_distribution<IntType> distribution(min, max);
-	return distribution(generator);
-}
+uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed = false);
 
 inline int substringCount(const std::string &str, const std::string &sub)
 {
@@ -173,7 +180,8 @@ public:
 		return static_cast<size_t>(end - start);
 	}
     size_t print(const Printable& p) {
-		throw std::runtime_error("not implemented");
+		//throw std::runtime_error("not implemented");
+		return 0;
 	}
 
 	template <typename T>
