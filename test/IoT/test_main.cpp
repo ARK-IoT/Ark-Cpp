@@ -16,10 +16,9 @@
 
 namespace
 {
-//char ssid[] = "your_ssid";     //  your network SSID (name)
-//const char password[] = "your_password";  // your network password
-char ssid[] = "johnson";     //  your network SSID (name)
-const char password[] = "johnson_wifi!";  // your network password
+
+char ssid[] = "your_ssid";     //  your network SSID (name)
+const char password[] = "your_password";  // your network password
 
 void setup_network()
 {
