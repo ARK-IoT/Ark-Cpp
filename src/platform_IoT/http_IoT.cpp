@@ -1,20 +1,16 @@
+#include "utilities/platform.h"
 
+#if (defined ESP32 || defined ESP8266)
 
-// #include "utilities/platform.h"
 #include "utilities/http.h"
-#include <HttpClient.h>
 
-#if (defined ESP8266 || defined ESP32)
+#ifdef ESP8266
 
-#include <WiFiClient.h>
-
-typedef WiFiClient NetworkClient;
+#include <ESP8266HTTPClient.h>
 
 #else
 
-#include <EthernetClient.h>
-
-typedef EthernetClient NetworkClient;
+#include <HTTPClient.h>
 
 #endif
 
@@ -43,80 +39,41 @@ class HTTP :
 		/*************************************************
 		*
 		**************************************************/
-		int tryConnection(
-				HttpClient &client,
-				const char *const peer,
-				int port,
-				const char *const request
-		)
-		{
-			client.stop();
-			auto error = client.get(peer, port, request);
-			return error;
-		}
-		/*************************************************/
-
-		/*************************************************
-		*
-		**************************************************/
-		int checkConnection(
-				HttpClient &client,
-				const char *const peer,
-				int port,
-				const char *const request
-		)
-		{
-			auto error = tryConnection(client, peer, port, request);
-			if (error < 0)
-			{
-				Serial.println("Error: Connection to Peer could not be established");
-				return error;
-			};
-			error = client.responseStatusCode();
-			if (error < 0)
-			{
-				Serial.println("Getting response failed");
-				return error;
-			};
-			error = client.skipResponseHeaders();
-			if (error < 0)
-			{
-				Serial.println("Failed to skip response headers");
-				return error;
-			};
-			return error;
-		}
-		/*************************************************/
-
-		/*************************************************
-		*
-		**************************************************/
 		std::string get(
 				const char *const peer,
 				int port,
 				const char *const request
 		)
 		{
-			NetworkClient c;
-			HttpClient http(c);
-			auto check = checkConnection(http, peer, port, request);
-			while ( check < 0 )
-			{	
-				check = checkConnection(http, peer, port, request);
-				Serial.print("Retrying connection."); delay(200);
-				Serial.print("."); delay(200);
-				Serial.print(".\n"); delay(200);
-			};
-			std::string payload;
-			while (	http.connected() || http.available() )
-			{
-				payload = http.readString().c_str();
+			HTTPClient http;
+			if (!http.begin(peer, port, request)) {
+				// error
+				Serial.println("bad HTTP begin");
 			}
-			http.stop();
+			auto code = http.GET();
+			if (code != HTTP_CODE_OK) {
+				//error
+				Serial.println("bad HTTP GET");
+			}
+			
+			const auto content_length = http.getSize();
+			// get tcp stream
+			auto stream = http.getStreamPtr();
+			auto bytes_read = 0;
+			std::string payload(content_length, '\0');
+			// read all data from server
+			while (http.connected() && (content_length > 0 || content_length == -1) && bytes_read < content_length) {
+				// get available data size
+				auto size = stream->available();
+				if (size) {
+					// read up to 128 byte
+					bytes_read += stream->readBytes(&payload[0], size);			
+				}
+				delay(1);
+			}
 			return payload;
-		};
+		}
 		/*************************************************/
-
 };
 
 }
@@ -129,6 +86,8 @@ std::unique_ptr<HTTPInterface> make_http() {
 }
 /*************************************************/
 
-};
-};
-};
+}
+}
+}
+
+#endif
