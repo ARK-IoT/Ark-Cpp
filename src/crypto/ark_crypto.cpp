@@ -2,13 +2,8 @@
 #include "utilities/platform.h"
 #include "constants/networks.h"
 
-#include "bcl/Base58Check.hpp"
-#include "bcl/Uint256.hpp"
-#include "bcl/Sha256.hpp"
-#include "bcl/Ripemd160.hpp"
-
 #include "bcl/Utils.hpp"
-#include "bcl/base58Check.hpp"
+#include "bcl/Base58Check.hpp"
 #include "bcl/CurvePoint.hpp"
 #include "bcl/Ecdsa.hpp"
 #include "bcl/FieldInt.hpp"
