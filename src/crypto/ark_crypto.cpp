@@ -7,6 +7,18 @@
 #include "bcl/Sha256.hpp"
 #include "bcl/Ripemd160.hpp"
 
+#include "bcl/Utils.hpp"
+#include "bcl/base58Check.hpp"
+#include "bcl/CurvePoint.hpp"
+#include "bcl/Ecdsa.hpp"
+#include "bcl/FieldInt.hpp"
+#include "bcl/Ripemd160.hpp"
+#include "bcl/Sha256Hash.hpp"
+#include "bcl/Sha256.hpp"
+#include "bcl/Sha512.hpp"
+#include "bcl/Uint256.hpp"
+
+
 #include "uECC.h"
 
 #include <vector>
