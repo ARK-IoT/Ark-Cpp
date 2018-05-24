@@ -41,9 +41,9 @@ TEST(crypto, generate_address) {
 
 TEST(crypto, get_private_key) {
 	auto phrase = "seven age job canoe call lonely case same bounce giggle pluck mouse";
-	std::vector<uint8_t> priv_key(ARK::Crypto::PRIVATE_KEY_SIZE);
+	uint8_t priv_key[ARK::Crypto::PRIVATE_KEY_SIZE] = {};
 	ARK::Crypto::get_private_key(phrase, priv_key);
-	auto priv_key_str = HexStr(priv_key);
+	auto priv_key_str = HexStr(priv_key, priv_key + ARK::Crypto::PRIVATE_KEY_SIZE);
 	ASSERT_STREQ(
 		"391c39c785128986b8959d40aeb9698071d68ebd07967b8f7d3ed8a35d4433c6",
 		priv_key_str.c_str()
@@ -73,7 +73,7 @@ TEST(crypto, get_public_key) {
 	//priv_key = ParseDec("19898843618908353587043383062236220484949425084007183071220218307100305431102");
 	auto priv_key = ParseHex("2BFE58AB6D9FD575BDC3A624E4825DD2B375D64AC033FBC46EA79DBAB4F69A3E");
 	auto pub_key = std::vector<uint8_t>(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
-	ARK::Crypto::get_public_key(priv_key, pub_key, true);
+	ARK::Crypto::get_public_key(&priv_key[0], pub_key, true);
 	auto pub_str = HexStr(pub_key);
 	ASSERT_STREQ(
 		"02b80011a883a0fd621ad46dfc405df1e74bf075cbaf700fd4aebef6e96f848340",
@@ -83,7 +83,7 @@ TEST(crypto, get_public_key) {
 	//priv_key = ParseDec("48968302285117906840285529799176770990048954789747953886390402978935544927851");
 	priv_key = ParseHex("6C4313B03F2E7324D75E642F0AB81B734B724E13FEC930F309E222470236D66B");
 	pub_key = std::vector<uint8_t>(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
-	ARK::Crypto::get_public_key(priv_key, pub_key, true);
+	ARK::Crypto::get_public_key(&priv_key[0], pub_key, true);
 	pub_str = HexStr(pub_key);
 	ASSERT_STREQ(
 		"024289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34",
@@ -91,7 +91,7 @@ TEST(crypto, get_public_key) {
 	);
 
 	pub_key = std::vector<uint8_t>(ARK::Crypto::PUBLIC_KEY_SIZE);
-	ARK::Crypto::get_public_key(priv_key, pub_key, false);
+	ARK::Crypto::get_public_key(&priv_key[0], pub_key, false);
 	pub_str = HexStr(pub_key);
 	ASSERT_STREQ(
 		"044289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34cec320a0565fb7caf11b1ca2f445f9b7b012dda5718b3cface369ee3a034ded6",
@@ -135,9 +135,7 @@ TEST(crypto, to_wif) {
 		wif.c_str()
 	);
 
-	priv_key_vect = std::vector<uint8_t>(ARK::Crypto::PRIVATE_KEY_SIZE);
-	ARK::Crypto::get_private_key(passphrase, priv_key_vect);
-	std::memcpy(priv_key, &priv_key_vect[0], sizeof(priv_key));
+	ARK::Crypto::get_private_key(passphrase, priv_key);
 	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, true);
 	ASSERT_STREQ(
 		"SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB",
@@ -174,11 +172,15 @@ TEST(crypto, from_wif) {
 	ASSERT_TRUE(compressed);
 	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
 
-	std::vector<uint8_t> expected_priv_key(ARK::Crypto::PRIVATE_KEY_SIZE);
+	uint8_t expected_priv_key[ARK::Crypto::PRIVATE_KEY_SIZE] = {};
 	ARK::Crypto::get_private_key(passphrase, expected_priv_key);
 	ARK::Crypto::from_wif("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", version, priv_key, compressed);
-	auto b = std::memcmp(expected_priv_key.data(), priv_key, sizeof(priv_key)) == 0;
+	auto b = std::memcmp(expected_priv_key, priv_key, sizeof(priv_key)) == 0;
 	ASSERT_TRUE(b);
 	ASSERT_TRUE(compressed);
 	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
+}
+
+TEST(crypto, sign) {
+
 }

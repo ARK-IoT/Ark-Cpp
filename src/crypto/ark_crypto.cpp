@@ -17,20 +17,7 @@ namespace ARK {
 namespace Crypto {
 
 std::string to_wif(uint8_t version, const uint8_t key[PRIVATE_KEY_SIZE], bool compressed /* = true */) {
-	//assert(key.size() == PRIVATE_KEY_SIZE); // "private key must be 32 bytes"
-#if 0
-	std::vector<uint8_t> buf(compressed ? 34 : 33);
-	buf[0] = version;
-	for (auto i = 1u; i < 33; ++i) {
-		buf[i] = key[i - 1];
-	}
-	if (compressed) { 
-		buf[33] = 0x01;
-	}
-#endif
-
 	std::string s(53, '\0');
-	
 	Base58Check::privateKeyToBase58Check(version, compressed, Uint256(HexStr(key, key + PRIVATE_KEY_SIZE).c_str()), &s[0]);
 	return s;
 }
@@ -42,6 +29,14 @@ void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE
 	bi.getBigEndianBytes(priv_key);
 }
 
+Signature sign(const Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE]) {
+	const struct uECC_Curve_t * curve = uECC_secp256k1();
+	auto hash_bytes = ParseHex(hash.getValue());
+	uint8_t sig[71] = {};
+	auto ret = uECC_sign(priv_key, &hash_bytes[0], hash_bytes.size(), sig, curve);
+	return Signature(HexStr(sig, sig + 71).c_str());
+}
+
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
 	std::vector<uint8_t> seed(Ripemd160::HASH_LEN);
 	Ripemd160::getHash(&public_key[0], public_key.size(), &seed[0]);
@@ -50,17 +45,17 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 	return s;
 }
 
-void get_keys(const char* const passphrase, std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
+void get_keys(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
 	get_private_key(passphrase, priv_key);
 	get_public_key(priv_key, pub_key, compressed);
 }
 
-void get_private_key(const char* const passphrase, std::vector<uint8_t>& priv_key) {
+void get_private_key(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE]) {
 	auto hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(passphrase), std::strlen(passphrase));
-	std::memcpy(&priv_key[0], hash.value, priv_key.size());
+	std::memcpy(&priv_key[0], hash.value, PRIVATE_KEY_SIZE);
 }
 
-void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
+void get_public_key(const uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
 	const struct uECC_Curve_t * curve = uECC_secp256k1();
 	uint8_t pub[64] = {};
 	// TODO: using the current uECC implementation, a private key value of "1" will return a false negative.  
@@ -81,7 +76,7 @@ void get_public_key(const std::vector<uint8_t>& priv_key, std::vector<uint8_t>& 
 }
 
 Account create_account(uint8_t network, const char* const passphrase) {
-	std::vector<uint8_t> priv_key(PRIVATE_KEY_SIZE);
+	uint8_t priv_key[PRIVATE_KEY_SIZE] = {};
 	std::vector<uint8_t> pub_key(COMPRESSED_PUBLIC_KEY_SIZE);
 	get_keys(passphrase, priv_key, pub_key);
 	const auto address = get_address(network, pub_key);
