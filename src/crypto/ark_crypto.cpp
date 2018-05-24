@@ -2,10 +2,10 @@
 #include "utilities/platform.h"
 #include "constants/networks.h"
 
-#include "Base58Check.hpp"
-#include "Uint256.hpp"
-#include "Sha256.hpp"
-#include "Ripemd160.hpp"
+#include "bcl/Base58Check.hpp"
+#include "bcl/Uint256.hpp"
+#include "bcl/Sha256.hpp"
+#include "bcl/Ripemd160.hpp"
 
 #include "uECC.h"
 
