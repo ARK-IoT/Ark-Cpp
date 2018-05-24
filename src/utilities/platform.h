@@ -8,8 +8,6 @@
 #include <Arduino.h>
 #include <pgmspace.h>
 
-#include <cstdlib>
-#include <ctime>
 
 #if (defined ARDUINO)
 #include <WString.h>
@@ -58,8 +56,7 @@ inline int substringCount(const char* str, const char* subStr) {
 /*************************************************/
 
 inline uint32_t generate_random_number(uint32_t min, uint32_t max) {
-	srand(time(NULL)); // Seed the time
-	return rand() % (max - min + 1) + min; // Generate the number
+	return random(min, max);
 }
 
 #else
@@ -83,9 +80,9 @@ inline float convert_to_float(const std::string& s) {
 }
 
 inline uint32_t generate_random_number(uint32_t min, uint32_t max) {
-	std::default_random_engine generator;
+	static std::random_device rd;
 	std::uniform_int_distribution<uint32_t> distribution(min, max);
-	return distribution(generator);
+	return distribution(rd);
 }
 
 inline int substringCount(const std::string &str, const std::string &sub)

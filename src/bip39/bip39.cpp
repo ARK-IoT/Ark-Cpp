@@ -25,9 +25,7 @@ PGM_P* get_string_table(language lang) {
 
 
 std::string generate_mnemonic(language lang /* = language::en */, uint8_t num_words /* = 12 */) {
-	if (num_words != 12 && num_words != 24) {
-		// error??
-	}
+	assert(num_words == 12 || num_words == 24);
 	std::string passphrase;
 	const auto words = get_string_table(lang);
 	for (auto i = 0; i < num_words; ) {
