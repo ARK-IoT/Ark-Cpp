@@ -1,5 +1,8 @@
 #include "utilities/platform.h"
 
+
+#if !defined USE_IOT
+
 namespace {
 
 uint32_t generate_random_number_with_fresh_seed(uint32_t min, uint32_t max) {
@@ -19,3 +22,5 @@ uint32_t generate_random_number_with_static_seed(uint32_t min, uint32_t max) {
 uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed /* = false */) {
 	return static_seed ? generate_random_number_with_static_seed(min, max) : generate_random_number_with_fresh_seed(min, max);
 }
+
+#endif
