@@ -55,7 +55,7 @@ inline int substringCount(const char* str, const char* subStr) {
 }
 /*************************************************/
 
-inline uint32_t generate_random_number(uint32_t min, uint32_t max) {
+inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* static_seed */ = false) {
 	return random(min, max);
 }
 
@@ -79,11 +79,7 @@ inline float convert_to_float(const std::string& s) {
 	return std::stof(s);
 }
 
-inline uint32_t generate_random_number(uint32_t min, uint32_t max) {
-	static std::random_device rd;
-	std::uniform_int_distribution<uint32_t> distribution(min, max);
-	return distribution(rd);
-}
+uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed = false);
 
 inline int substringCount(const std::string &str, const std::string &sub)
 {

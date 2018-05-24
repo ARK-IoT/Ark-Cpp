@@ -4,7 +4,7 @@
 #include "bip39/en_str.h"
 #include "utilities/platform.h"
 
-PGM_P en_table[] PROGMEM = {
+const char* const en_table[] /*PROGMEM*/ = {
 	STRING_VAR(abandon),
 	STRING_VAR(ability),
 	STRING_VAR(able),
