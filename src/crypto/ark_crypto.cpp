@@ -29,12 +29,12 @@ void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE
 	bi.getBigEndianBytes(priv_key);
 }
 
-Signature sign(const Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE]) {
+void sign(const uint8_t hash[32], const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[71]) {
 	const struct uECC_Curve_t * curve = uECC_secp256k1();
-	auto hash_bytes = ParseHex(hash.getValue());
-	uint8_t sig[71] = {};
-	auto ret = uECC_sign(priv_key, &hash_bytes[0], hash_bytes.size(), sig, curve);
-	return Signature(HexStr(sig, sig + 71).c_str());
+	signature[0] = 0x30;
+	
+	auto ret = uECC_sign(priv_key, hash, 64, signature, curve);
+	assert(ret == 1);
 }
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
