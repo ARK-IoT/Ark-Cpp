@@ -197,7 +197,6 @@ TEST(crypto, sign) {
 
 	message = "Not only is the Universe stranger than we think, it is stranger than we can think.";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	uint8_t signature[71] = {};
 	ARK::Crypto::sign(hash.value, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100ff466a9f1b7b273e2f4c3ffe032eb2e814121ed18ef84665d0f515360dab3dd002206fc95f5132e5ecfdc8e5e6e616cc77151455d46ed48f5589b7db7771a332b283",
@@ -208,7 +207,6 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	message = "Computer science is no more about computers than astronomy is about telescopes.";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	uint8_t signature[71] = {};
 	ARK::Crypto::sign(hash.value, d, signature);
 	ASSERT_STRCASEEQ(
 		"304402207186363571d65e084e7f02b0b77c3ec44fb1b257dee26274c38c928986fea45d02200de0b38e06807e46bda1f1e293f4f6323e854c86d58abdd00c46c16441085df6",
@@ -219,7 +217,6 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	message = "...if you aren't, at any given time, scandalized by code you wrote five or even three years ago, you're not learning anywhere near enough";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	uint8_t signature[71] = {};
 	ARK::Crypto::sign(hash.value, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100fbfe5076a15860ba8ed00e75e9bd22e05d230f02a936b653eb55b61c99dda48702200e68880ebb0050fe4312b1b1eb0899e1b82da89baa5b895f612619edf34cbd37",
@@ -230,7 +227,6 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	message = "The question of whether computers can think is like the question of whether submarines can swim.";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	uint8_t signature[71] = {};
 	ARK::Crypto::sign(hash.value, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100cde1302d83f8dd835d89aef803c74a119f561fbaef3eb9129e45f30de86abbf9022006ce643f5049ee1f27890467b77a6a8e11ec4661cc38cd8badf90115fbd03cef",

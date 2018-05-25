@@ -2,6 +2,8 @@
 #define ARK_CRYPTO_H
 
 #include "models/account.h"
+#include "Uint256.hpp"
+#include "Sha256hash.hpp"
 
 #include <string>
 #include <vector>
@@ -18,7 +20,8 @@ void get_private_key(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_
 void get_public_key(const uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed = true);
 std::string to_wif(uint8_t version, const uint8_t key[PRIVATE_KEY_SIZE], bool compressed = true);
 void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE_KEY_SIZE], bool& compressed);
-void sign(const uint8_t hash[32], const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[71]);
+void toDER(const Uint256& r, const Uint256& s, uint8_t signature[71]);
+void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[71]);
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key);
 
 Account create_account(uint8_t network, const char* const passphrase);

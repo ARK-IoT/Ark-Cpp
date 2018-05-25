@@ -5,8 +5,9 @@
 #include "Base58Check.hpp"
 #include "Uint256.hpp"
 #include "Sha256.hpp"
+#include "Sha256hash.hpp"
 #include "Ripemd160.hpp"
-
+#include "Ecdsa.hpp"
 #include "uECC.h"
 
 #include <vector>
@@ -29,12 +30,42 @@ void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE
 	bi.getBigEndianBytes(priv_key);
 }
 
-void sign(const uint8_t hash[32], const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[71]) {
-	const struct uECC_Curve_t * curve = uECC_secp256k1();
-	signature[0] = 0x30;
-	
-	auto ret = uECC_sign(priv_key, hash, 64, signature, curve);
-	assert(ret == 1);
+void toDER(const Uint256& r, const Uint256& s, uint8_t signature[71]) {
+//https://github.com/bitcoinjs/bip66/blob/master/index.js
+/*
+var lenR = r.length
+  var lenS = s.length
+  if (lenR === 0) throw new Error('R length is zero')
+  if (lenS === 0) throw new Error('S length is zero')
+  if (lenR > 33) throw new Error('R length is too long')
+  if (lenS > 33) throw new Error('S length is too long')
+  if (r[0] & 0x80) throw new Error('R value is negative')
+  if (s[0] & 0x80) throw new Error('S value is negative')
+  if (lenR > 1 && (r[0] === 0x00) && !(r[1] & 0x80)) throw new Error('R value excessively padded')
+  if (lenS > 1 && (s[0] === 0x00) && !(s[1] & 0x80)) throw new Error('S value excessively padded')
+
+  var signature = Buffer.allocUnsafe(6 + lenR + lenS)
+
+  // 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
+  signature[0] = 0x30
+  signature[1] = signature.length - 2
+  signature[2] = 0x02
+  signature[3] = r.length
+  r.copy(signature, 4)
+  signature[4 + lenR] = 0x02
+  signature[5 + lenR] = s.length
+  s.copy(signature, 6 + lenR)
+
+  return signature
+*/
+}
+
+void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[71]) {
+	Uint256 r;
+	Uint256 s;	
+	auto ret = Ecdsa::signWithHmacNonce(Uint256(priv_key), hash, r, s);
+	assert(ret);
+	toDER(r, s, signature);
 }
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
