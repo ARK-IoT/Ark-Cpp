@@ -53,6 +53,9 @@ set(COMMON_SRC
 
 set (BCL_SRC
 	${PROJECT_SOURCE_DIR}/bcl/cpp/Base58Check.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/CurvePoint.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/Ecdsa.cpp
+	${PROJECT_SOURCE_DIR}/bcl/cpp/FieldInt.cpp
 	${PROJECT_SOURCE_DIR}/bcl/cpp/Ripemd160.cpp
 	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256.cpp
 	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256Hash.cpp

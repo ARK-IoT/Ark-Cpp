@@ -182,14 +182,41 @@ TEST(crypto, from_wif) {
 	ASSERT_EQ(ARK::Constants::Networks::Network_ADV::main.wif, version);
 }
 
+TEST(crypto_bip66, toDER) {
+	Uint256 r("33A69CD2065432A30F3D1CE4EB0D59B8AB58C74F27C41A7FDB5696AD4E6108C9"); // dec: 23362334225185207751494092901091441011938859014081160902781146257181456271561
+	Uint256 s("6F807982866F785D3F6418D24163DDAE117B7DB4D5FDF0071DE069FA54342262"); // dec: 50433721247292933944369538617440297985091596895097604618403996029256432099938
+	uint8_t signature[70] = {};
+	ARK::Crypto::toDER(r, s, signature);
+	ASSERT_STRCASEEQ(
+		"3044022033a69cd2065432a30f3d1ce4eb0d59b8ab58c74f27c41a7fdb5696ad4e6108c902206f807982866f785d3f6418d24163ddae117b7db4d5fdf0071de069fa54342262",
+		HexStr(signature, signature + sizeof(signature)).c_str()
+	);
+
+	r = Uint256(""); // dec: 38341707918488238920692284707283974715538935465589664377561695343399725051885
+	s = Uint256(""); // dec: 3180566392414476763164587487324397066658063772201694230600609996154610926757
+	ARK::Crypto::toDER(r, s, signature);
+	ASSERT_STRCASEEQ(
+		"3044022054c4a33c6423d689378f160a7ff8b61330444abb58fb470f96ea16d99d4a2fed022007082304410efa6b2943111b6a4e0aaa7b7db55a07e9861d1fb3cb1f421044a5",
+		HexStr(signature, signature + sizeof(signature)).c_str()
+	);
+
+	r = Uint256(""); // dec: 115464191557905790016094131873849783294273568009648050793030031933291767741904
+	s = Uint256(""); // dec: 50562520307781850052192542766631199590053690478900449960232079510155113443971
+	ARK::Crypto::toDER(r, s, signature);
+	ASSERT_STRCASEEQ(
+		"3045022100ff466a9f1b7b273e2f4c3ffe032eb2e814121ed18ef84665d0f515360dab3dd002206fc95f5132e5ecfdc8e5e6e616cc77151455d46ed48f5589b7db7771a332b283",
+		HexStr(signature, signature + sizeof(signature)).c_str()
+	);
+}
+
 TEST(crypto, sign) {
 	uint8_t d[ARK::Crypto::PRIVATE_KEY_SIZE] = {};
 	std::vector<uint8_t> temp = ParseHex("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140");
 	std::memcpy(d, &temp[0], sizeof(d));
 	auto message = "Equations are more important to me, because politics is for the present, but an equation is something for eternity.";
 	auto hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	uint8_t signature[71] = {};
-	ARK::Crypto::sign(hash.value, d, signature);
+	uint8_t signature[70] = {};
+	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3044022054c4a33c6423d689378f160a7ff8b61330444abb58fb470f96ea16d99d4a2fed022007082304410efa6b2943111b6a4e0aaa7b7db55a07e9861d1fb3cb1f421044a5",
 		HexStr(signature, signature + sizeof(signature)).c_str()
@@ -197,7 +224,7 @@ TEST(crypto, sign) {
 
 	message = "Not only is the Universe stranger than we think, it is stranger than we can think.";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	ARK::Crypto::sign(hash.value, d, signature);
+	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100ff466a9f1b7b273e2f4c3ffe032eb2e814121ed18ef84665d0f515360dab3dd002206fc95f5132e5ecfdc8e5e6e616cc77151455d46ed48f5589b7db7771a332b283",
 		HexStr(signature, signature + sizeof(signature)).c_str()
@@ -207,7 +234,7 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	message = "Computer science is no more about computers than astronomy is about telescopes.";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	ARK::Crypto::sign(hash.value, d, signature);
+	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"304402207186363571d65e084e7f02b0b77c3ec44fb1b257dee26274c38c928986fea45d02200de0b38e06807e46bda1f1e293f4f6323e854c86d58abdd00c46c16441085df6",
 		HexStr(signature, signature + sizeof(signature)).c_str()
@@ -217,7 +244,7 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	message = "...if you aren't, at any given time, scandalized by code you wrote five or even three years ago, you're not learning anywhere near enough";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	ARK::Crypto::sign(hash.value, d, signature);
+	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100fbfe5076a15860ba8ed00e75e9bd22e05d230f02a936b653eb55b61c99dda48702200e68880ebb0050fe4312b1b1eb0899e1b82da89baa5b895f612619edf34cbd37",
 		HexStr(signature, signature + sizeof(signature)).c_str()
@@ -227,7 +254,7 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	message = "The question of whether computers can think is like the question of whether submarines can swim.";
 	hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	ARK::Crypto::sign(hash.value, d, signature);
+	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100cde1302d83f8dd835d89aef803c74a119f561fbaef3eb9129e45f30de86abbf9022006ce643f5049ee1f27890467b77a6a8e11ec4661cc38cd8badf90115fbd03cef",
 		HexStr(signature, signature + sizeof(signature)).c_str()

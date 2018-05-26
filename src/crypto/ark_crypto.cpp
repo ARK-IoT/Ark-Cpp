@@ -30,37 +30,25 @@ void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE
 	bi.getBigEndianBytes(priv_key);
 }
 
-void toDER(const Uint256& r, const Uint256& s, uint8_t signature[71]) {
+void toDER(const Uint256& r, const Uint256& s, uint8_t signature[70]) {
 //https://github.com/bitcoinjs/bip66/blob/master/index.js
-/*
-var lenR = r.length
-  var lenS = s.length
-  if (lenR === 0) throw new Error('R length is zero')
-  if (lenS === 0) throw new Error('S length is zero')
-  if (lenR > 33) throw new Error('R length is too long')
-  if (lenS > 33) throw new Error('S length is too long')
-  if (r[0] & 0x80) throw new Error('R value is negative')
-  if (s[0] & 0x80) throw new Error('S value is negative')
-  if (lenR > 1 && (r[0] === 0x00) && !(r[1] & 0x80)) throw new Error('R value excessively padded')
-  if (lenS > 1 && (s[0] === 0x00) && !(s[1] & 0x80)) throw new Error('S value excessively padded')
-
-  var signature = Buffer.allocUnsafe(6 + lenR + lenS)
 
   // 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
-  signature[0] = 0x30
-  signature[1] = signature.length - 2
-  signature[2] = 0x02
-  signature[3] = r.length
-  r.copy(signature, 4)
-  signature[4 + lenR] = 0x02
-  signature[5 + lenR] = s.length
-  s.copy(signature, 6 + lenR)
-
-  return signature
-*/
+  signature[0] = 0x30;
+  signature[1] = 70 - 2;
+  signature[2] = 0x02;
+  signature[3] = 32;
+  r.getBigEndianBytes(&signature[4]);
+  //r.copy(signature, 4)
+  signature[4 + 32] = 0x02;
+  //signature[4 + lenR] = 0x02
+  signature[5 + 32] = 32;
+  //signature[5 + lenR] = s.length
+  s.getBigEndianBytes(&signature[6 + 32]);
+  //s.copy(signature, 6 + lenR)
 }
 
-void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[71]) {
+void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[70]) {
 	Uint256 r;
 	Uint256 s;	
 	auto ret = Ecdsa::signWithHmacNonce(Uint256(priv_key), hash, r, s);
