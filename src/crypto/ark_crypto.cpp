@@ -30,30 +30,51 @@ void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE
 	bi.getBigEndianBytes(priv_key);
 }
 
-void toDER(const Uint256& r, const Uint256& s, uint8_t signature[70]) {
-//https://github.com/bitcoinjs/bip66/blob/master/index.js
-
-  // 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
-  signature[0] = 0x30;
-  signature[1] = 70 - 2;
-  signature[2] = 0x02;
-  signature[3] = 32;
-  r.getBigEndianBytes(&signature[4]);
-  //r.copy(signature, 4)
-  signature[4 + 32] = 0x02;
-  //signature[4 + lenR] = 0x02
-  signature[5 + 32] = 32;
-  //signature[5 + lenR] = s.length
-  s.getBigEndianBytes(&signature[6 + 32]);
-  //s.copy(signature, 6 + lenR)
+std::vector<uint8_t>& convert_to_der_buffer(std::vector<uint8_t>& buffer) {
+	if (buffer.size() > 1 && (buffer[0] & 0x80) != 0) {
+		buffer.insert(buffer.begin(), 0x00);
+	}
+	return buffer;
 }
 
-void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], uint8_t signature[70]) {
+void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::vector<uint8_t>& signature) {
+	// Adapted from https://github.com/bitcoinjs/bip66/blob/master/index.js
+	
+	const auto lenR = r.size();
+	const auto lenS = s.size();
+	assert(lenR != 0); // must be non zero
+	assert(lenS != 0);
+	assert(lenR <= 33); // must be less than 34 bytes
+	assert(lenS <= 33);
+	assert((r[0] & 0x80) == 0); // must not be negative
+	assert((s[0] & 0x80) == 0);
+	assert(lenR == 1 || r[0] != 0x00 || (r[1] & 0x80) != 0); //must have zero pad for negative number
+	assert(lenR == 1 || s[0] != 0x00 || (s[1] & 0x80) != 0);
+	
+	signature.clear();
+	signature.reserve(6 + lenR + lenS);
+
+	// 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
+	signature.push_back(0x30); // [0]
+	signature.push_back(static_cast<uint8_t>(signature.capacity() - 2)); // [1]
+	signature.push_back(0x02); // [2]
+	signature.push_back(static_cast<uint8_t>(lenR)); // [3]
+	signature.insert(signature.end(), r.begin(), r.end());  //[4]
+	signature.push_back(0x02); // [4 + lenR]
+	signature.push_back(static_cast<uint8_t>(lenS)); // [5 + lenR]
+	signature.insert(signature.end(), s.begin(), s.end());  //[6 + lenR]
+}
+
+void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& signature) {
 	Uint256 r;
 	Uint256 s;	
 	auto ret = Ecdsa::signWithHmacNonce(Uint256(priv_key), hash, r, s);
 	assert(ret);
-	toDER(r, s, signature);
+	std::vector<uint8_t> r_der(PRIVATE_KEY_SIZE);
+	r.getBigEndianBytes(&r_der[0]);
+	std::vector<uint8_t> s_der(PRIVATE_KEY_SIZE);
+	s.getBigEndianBytes(&s_der[0]);
+	toDER(convert_to_der_buffer(r_der), convert_to_der_buffer(s_der), signature);
 }
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {

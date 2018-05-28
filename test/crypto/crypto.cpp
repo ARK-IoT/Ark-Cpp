@@ -188,11 +188,11 @@ TEST(crypto, sign) {
 	std::memcpy(d, &temp[0], sizeof(d));
 	auto message = "Equations are more important to me, because politics is for the present, but an equation is something for eternity.";
 	auto hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(message), std::strlen(message));
-	uint8_t signature[70] = {};
+	std::vector<uint8_t> signature;
 	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3044022054c4a33c6423d689378f160a7ff8b61330444abb58fb470f96ea16d99d4a2fed022007082304410efa6b2943111b6a4e0aaa7b7db55a07e9861d1fb3cb1f421044a5",
-		HexStr(signature, signature + sizeof(signature)).c_str()
+		HexStr(signature).c_str()
 	);
 
 	message = "Not only is the Universe stranger than we think, it is stranger than we can think.";
@@ -200,7 +200,7 @@ TEST(crypto, sign) {
 	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100ff466a9f1b7b273e2f4c3ffe032eb2e814121ed18ef84665d0f515360dab3dd002206fc95f5132e5ecfdc8e5e6e616cc77151455d46ed48f5589b7db7771a332b283",
-		HexStr(signature, signature + sizeof(signature)).c_str()
+		HexStr(signature).c_str()
 	);
 
 	temp = ParseHex("69ec59eaa1f4f2e36b639716b7c30ca86d9a5375c7b38d8918bd9c0ebc80ba64");
@@ -210,7 +210,7 @@ TEST(crypto, sign) {
 	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"304402207186363571d65e084e7f02b0b77c3ec44fb1b257dee26274c38c928986fea45d02200de0b38e06807e46bda1f1e293f4f6323e854c86d58abdd00c46c16441085df6",
-		HexStr(signature, signature + sizeof(signature)).c_str()
+		HexStr(signature).c_str()
 	);
 
 	temp = ParseHex("00000000000000000000000000007246174ab1e92e9149c6e446fe194d072637");
@@ -220,7 +220,7 @@ TEST(crypto, sign) {
 	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100fbfe5076a15860ba8ed00e75e9bd22e05d230f02a936b653eb55b61c99dda48702200e68880ebb0050fe4312b1b1eb0899e1b82da89baa5b895f612619edf34cbd37",
-		HexStr(signature, signature + sizeof(signature)).c_str()
+		HexStr(signature).c_str()
 	);
 
 	temp = ParseHex("000000000000000000000000000000000000000000056916d0f9b31dc9b637f3");
@@ -230,6 +230,6 @@ TEST(crypto, sign) {
 	ARK::Crypto::sign(hash, d, signature);
 	ASSERT_STRCASEEQ(
 		"3045022100cde1302d83f8dd835d89aef803c74a119f561fbaef3eb9129e45f30de86abbf9022006ce643f5049ee1f27890467b77a6a8e11ec4661cc38cd8badf90115fbd03cef",
-		HexStr(signature, signature + sizeof(signature)).c_str()
+		HexStr(signature).c_str()
 	);
 }
