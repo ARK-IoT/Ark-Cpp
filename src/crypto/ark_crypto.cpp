@@ -31,17 +31,27 @@ void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE
 }
 
 std::vector<uint8_t>& convert_to_der_buffer(std::vector<uint8_t>& buffer) {
+	// if the sign bit is set, pad with a 0x00 byte
 	if (buffer.size() > 1 && (buffer[0] & 0x80) != 0) {
 		buffer.insert(buffer.begin(), 0x00);
 	}
 	return buffer;
 }
 
+void toDER(uint8_t packed_signature[PRIVATE_KEY_SIZE * 2], std::vector<uint8_t>& signature) {
+	std::vector<uint8_t> r(PRIVATE_KEY_SIZE);
+	std::vector<uint8_t> s(PRIVATE_KEY_SIZE);
+
+	std::memcpy(&r[0], packed_signature, PRIVATE_KEY_SIZE);
+	std::memcpy(&s[0], packed_signature + PRIVATE_KEY_SIZE, PRIVATE_KEY_SIZE);
+	toDER(convert_to_der_buffer(r), convert_to_der_buffer(s), signature);
+}
+
 void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::vector<uint8_t>& signature) {
 	// Adapted from https://github.com/bitcoinjs/bip66/blob/master/index.js
-	
-	const auto lenR = r.size();
-	const auto lenS = s.size();
+	printf("r-len: %d, s-len: %d\n", r.size(), s.size());
+	auto lenR = r.size();
+	auto lenS = s.size();
 	assert(lenR != 0); // must be non zero
 	assert(lenS != 0);
 	assert(lenR <= 33); // must be less than 34 bytes
@@ -51,12 +61,17 @@ void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::ve
 	assert(lenR == 1 || r[0] != 0x00 || (r[1] & 0x80) != 0); //must have zero pad for negative number
 	assert(lenR == 1 || s[0] != 0x00 || (s[1] & 0x80) != 0);
 	
+	auto it = r.begin();
+	while (lenR > 1 && *it == 0 && *(it + 1) < 0x80) { --lenR; ++it; }
+	it = s.begin();
+    while (lenS > 1 && *it == 0 && *(it + 1) < 0x80) { --lenS; ++it; }
+
 	signature.clear();
 	signature.reserve(6 + lenR + lenS);
 
 	// 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
 	signature.push_back(0x30); // [0]
-	signature.push_back(static_cast<uint8_t>(signature.capacity() - 2)); // [1]
+	signature.push_back(static_cast<uint8_t>(6 + lenR + lenS - 2)); // [1]
 	signature.push_back(0x02); // [2]
 	signature.push_back(static_cast<uint8_t>(lenR)); // [3]
 	signature.insert(signature.end(), r.begin(), r.end());  //[4]
@@ -75,6 +90,12 @@ void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], std:
 	std::vector<uint8_t> s_der(PRIVATE_KEY_SIZE);
 	s.getBigEndianBytes(&s_der[0]);
 	toDER(convert_to_der_buffer(r_der), convert_to_der_buffer(s_der), signature);
+	/*
+	const struct uECC_Curve_t * curve = uECC_secp256k1();
+	uint8_t buf[PRIVATE_KEY_SIZE * 2] = {};
+	auto ret = uECC_sign(priv_key, hash.value, 32, buf, curve);
+	assert(ret == 1);
+	toDER(buf, signature);*/
 }
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
