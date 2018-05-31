@@ -6,7 +6,7 @@
 #include "Base58Check.hpp"
 #include "Uint256.hpp"
 #include "Sha256.hpp"
-#include "Sha256hash.hpp"
+#include "Sha256Hash.hpp"
 #include "Ripemd160.hpp"
 #include "Ecdsa.hpp"
 #include "uECC.h"
