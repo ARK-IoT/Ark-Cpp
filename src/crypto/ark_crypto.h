@@ -3,7 +3,7 @@
 
 #include "models/account.h"
 #include "Uint256.hpp"
-#include "Sha256hash.hpp"
+#include "Sha256Hash.hpp"
 
 #include <string>
 #include <vector>
