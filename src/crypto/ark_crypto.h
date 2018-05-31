@@ -2,6 +2,7 @@
 #define ARK_CRYPTO_H
 
 #include "models/account.h"
+#include "models/transaction.h"
 #include "Uint256.hpp"
 #include "Sha256Hash.hpp"
 
@@ -25,8 +26,10 @@ void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::ve
 std::vector<uint8_t>& convert_to_der_buffer(std::vector<uint8_t>& buffer);
 void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& signature);
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key);
-
+bool validate_address(const char* const address);
 Account create_account(uint8_t network, const char* const passphrase);
+
+ARK::Transaction create_transaction(const char* const address, double amount, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] = nullptr, uint32_t version = 1, double fee_override = 0.1);
 
 }
 }

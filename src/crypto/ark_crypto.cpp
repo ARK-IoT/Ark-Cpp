@@ -103,6 +103,10 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 	return s;
 }
 
+bool validate_address(const char* const address) {
+	return false;
+}
+
 void get_keys(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
 	get_private_key(passphrase, priv_key);
 	get_public_key(priv_key, pub_key, compressed);
@@ -142,9 +146,71 @@ Account create_account(uint8_t network, const char* const passphrase) {
 	return Account(HexStr(pub_key).c_str(), address.c_str());
 }
 
+ARK::Transaction create_transaction(const char* const address, double amount, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] /* = nullptr*/, uint32_t version /* = 1 */, double fee_override /* = 0.1 */) {
+	assert(validate_address(address));
+	assert(amount != 0.0);
+	assert(secret != nullptr);
+	assert(vendor_field.size() <= 64);
+	return ARK::Transaction();
+	/*
+	https://github.com/ArkEcosystem/ark-js/blob/master/lib/transactions/transaction.js
+	if (!recipientId || !amount || !secret) return false;
+
+  if(!crypto.validateAddress(recipientId, version)){
+    throw new Error("Wrong recipientId");
+	}
+
+	var keys = secret;
+
+	if (!crypto.isECPair(secret)) {
+		keys = crypto.getKeys(secret);
+	}
+
+  if (!keys.publicKey) {
+    throw new Error("Invalid public key");
+	}
+
+	if (feeOverride && !Number.isInteger(feeOverride)) {
+		throw new Error('Not a valid fee')
+	}
+
+	var transaction = {
+		type: 0,
+		amount: amount,
+		fee: feeOverride || constants.fees.send,
+		recipientId: recipientId,
+		timestamp: slots.getTime(),
+		asset: {}
+	};
+
+  if(vendorField){
+    transaction.vendorField=vendorField;
+    if(transaction.vendorField.length > 64){
+			return null;
+		}
+  }
+
+	transaction.senderPublicKey = keys.publicKey;
+
+	crypto.sign(transaction, keys);
+
+	if (secondSecret) {
+		var secondKeys = secondSecret;
+		if (!crypto.isECPair(secondSecret)) {
+			secondKeys = crypto.getKeys(secondSecret);
+		}
+		crypto.secondSign(transaction, secondKeys);
+	}
+
+	transaction.id = crypto.getId(transaction);
+	return transaction;
+	*/
+}
+
 }
 }
 
+namespace {
 
 const signed char p_util_hexdigit[256] =
 { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -163,6 +229,8 @@ const signed char p_util_hexdigit[256] =
 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, };
+
+}
 
 signed char HexDigit(char c)
 {
