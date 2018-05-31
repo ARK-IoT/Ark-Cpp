@@ -6,6 +6,12 @@
 #include <string.h>
 
 typedef struct {
+    uint32_t s[8];
+    uint32_t buf[16]; /* In big endian */
+    size_t bytes;
+} secp256k1_sha256_t;
+
+typedef struct {
     secp256k1_sha256_t inner, outer;
 } secp256k1_hmac_sha256_t;
 
@@ -269,6 +275,38 @@ void secp256k1_rfc6979_hmac_sha256_finalize(secp256k1_rfc6979_hmac_sha256_t *rng
     memset(rng->k, 0, 32);
     memset(rng->v, 0, 32);
     rng->retry = 0;
+}
+
+int nonce_function_rfc6979(unsigned char *nonce32, const unsigned char *msg32, const unsigned char *key32, const unsigned char *algo16, void *data, unsigned int counter) {
+   unsigned char keydata[112];
+   int keylen = 64;
+   secp256k1_rfc6979_hmac_sha256_t rng;
+   unsigned int i;
+   /* We feed a byte array to the PRNG as input, consisting of:
+    * - the private key (32 bytes) and message (32 bytes), see RFC 6979 3.2d.
+    * - optionally 32 extra bytes of data, see RFC 6979 3.6 Additional Data.
+    * - optionally 16 extra bytes with the algorithm name.
+    * Because the arguments have distinct fixed lengths it is not possible for
+    *  different argument mixtures to emulate each other and result in the same
+    *  nonces.
+    */
+   memcpy(keydata, key32, 32);
+   memcpy(keydata + 32, msg32, 32);
+   if (data != NULL) {
+       memcpy(keydata + 64, data, 32);
+       keylen = 96;
+   }
+   if (algo16 != NULL) {
+       memcpy(keydata + keylen, algo16, 16);
+       keylen += 16;
+   }
+   secp256k1_rfc6979_hmac_sha256_initialize(&rng, keydata, keylen);
+   memset(keydata, 0, sizeof(keydata));
+   for (i = 0; i <= counter; i++) {
+       secp256k1_rfc6979_hmac_sha256_generate(&rng, nonce32, 32);
+   }
+   secp256k1_rfc6979_hmac_sha256_finalize(&rng);
+   return 1;
 }
 
 #endif

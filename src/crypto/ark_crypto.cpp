@@ -1,4 +1,5 @@
 #include "crypto/ark_crypto.h"
+#include "crypto/rfc6979.h"
 #include "utilities/platform.h"
 #include "constants/networks.h"
 
@@ -9,6 +10,7 @@
 #include "Ripemd160.hpp"
 #include "Ecdsa.hpp"
 #include "uECC.h"
+
 
 #include <vector>
 #include <string>
@@ -49,7 +51,6 @@ void toDER(uint8_t packed_signature[PRIVATE_KEY_SIZE * 2], std::vector<uint8_t>&
 
 void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::vector<uint8_t>& signature) {
 	// Adapted from https://github.com/bitcoinjs/bip66/blob/master/index.js
-	printf("r-len: %d, s-len: %d\n", r.size(), s.size());
 	auto lenR = r.size();
 	auto lenS = s.size();
 	assert(lenR != 0); // must be non zero
@@ -83,19 +84,15 @@ void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::ve
 void sign(const Sha256Hash& hash, const uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& signature) {
 	Uint256 r;
 	Uint256 s;	
-	auto ret = Ecdsa::signWithHmacNonce(Uint256(priv_key), hash, r, s);
+	uint8_t nonce32[32] = {};
+	nonce_function_rfc6979(nonce32, hash.value, priv_key, nullptr, nullptr, 0);
+	auto ret = Ecdsa::sign(Uint256(priv_key), hash, Uint256(nonce32), r, s);
 	assert(ret);
 	std::vector<uint8_t> r_der(PRIVATE_KEY_SIZE);
 	r.getBigEndianBytes(&r_der[0]);
 	std::vector<uint8_t> s_der(PRIVATE_KEY_SIZE);
 	s.getBigEndianBytes(&s_der[0]);
 	toDER(convert_to_der_buffer(r_der), convert_to_der_buffer(s_der), signature);
-	/*
-	const struct uECC_Curve_t * curve = uECC_secp256k1();
-	uint8_t buf[PRIVATE_KEY_SIZE * 2] = {};
-	auto ret = uECC_sign(priv_key, hash.value, 32, buf, curve);
-	assert(ret == 1);
-	toDER(buf, signature);*/
 }
 
 std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key) {
