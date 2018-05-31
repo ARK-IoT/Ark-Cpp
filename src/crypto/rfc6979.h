@@ -1,3 +1,12 @@
+/**********************************************************************
+ * Copyright (c) 2014 Pieter Wuille                                   *
+ * Distributed under the MIT software license, see the accompanying   *
+ * file COPYING or http://www.opensource.org/licenses/mit-license.php.*
+ *                                                                    *
+ * Adapted from:                                                      *
+ * https://github.com/bitcoin/bitcoin/tree/master/src/secp256k1/src   *
+ **********************************************************************/
+
 #ifndef ARK_CPP_CRYPTO_RFC6979_H
 #define ARK_CPP_CRYPTO_RFC6979_H
 
