@@ -120,7 +120,7 @@ void Base58Check::divide58(const uint8_t x[], uint8_t y[], size_t len) {
 bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubkeyHash[Ripemd160::HASH_LEN]) {
 	// Preliminary checks
 	assert(addrStr != nullptr && outPubkeyHash != nullptr);
-	if (std::strlen(addrStr) < 1 || std::strlen(addrStr) > 34 || addrStr[0] != '1')
+	if (std::strlen(addrStr) < 1 || std::strlen(addrStr) > 34)
 		return false;
 	
 	// Perform Base58 decoding
@@ -128,12 +128,8 @@ bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubk
 	if (!base58CheckToBytes(addrStr, decoded, sizeof(decoded) / sizeof(decoded[0])))
 		return false;
 	
-	// Check format byte
-	if (decoded[0] != 0x00)
-		return false;
-	
-	// Successfully set the output
-	std::memcpy(outPubkeyHash, &decoded[1], Ripemd160::HASH_LEN * sizeof(uint8_t));
+	// Successfully set the output and return the network marker with the hash
+	std::memcpy(outPubkeyHash, &decoded[0], Ripemd160::HASH_LEN * sizeof(uint8_t));
 	return true;
 }
 
@@ -141,16 +137,13 @@ bool Base58Check::privateKeyFromBase58Check(const char wifStr[53], Uint256 &outP
 	// Preliminary checks
 	assert(wifStr != nullptr);
 	// Only accept bitcoin version bytes
-	if (std::strlen(wifStr) != 52 || (wifStr[0] != 'L' && wifStr[0] != 'K'))
+	if (std::strlen(wifStr) != 52)
 		return false;
 	
 	uint8_t version;
 	bool compressed;
 
 	bool ret = privateKeyFromBase58Check(wifStr, outPrivKey, version, compressed);
-
-	// Check format bytes
-	if (version != 0x80 || !compressed) { return false; }
 
 	return ret;
 }
