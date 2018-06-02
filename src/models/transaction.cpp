@@ -3,19 +3,13 @@
 namespace ARK
 {
 /*************************************************
-*	Default: Empty Constructor
-**************************************************/
-ARK::Transaction::Transaction(){};
-/*************************************************/
-
-/*************************************************
 *	Constructor
 **************************************************/
 ARK::Transaction::Transaction(
 		const char *const newID,
 		const char *const newBlockID,
 		const char *const newHeight,
-		int 							newType,
+		int newType,
 		const char *const newTimestamp,
 		const char *const newAmount,
 		const char *const newFee,
@@ -25,20 +19,25 @@ ARK::Transaction::Transaction(
 		const char *const newSenderPublickey,
 		const char *const newSignature,
 		const char *const newConfirmations
-)
+) :
+	id_(newId),
+	blockid_(),
+	height_(),
+	type_(newType),
+	timestamp_(),
+	amount_(newAmount),
+	fee_(newFee),
+	vendorField_(),
+	senderId_(newSenderID),
+	recipientID_(newRecipientID),
+	senderPublicKey_(newSenderPublickey),
+	signature_(newSignature),
+	confirmations_()
 {
-	id_ = Hash(newID);
 	strncpy(blockid_, newBlockID, sizeof(blockid_) / sizeof(blockid_[0]));
 	strncpy(height_, newHeight, sizeof(height_) / sizeof(height_[0]));
-	type_ = newType;
 	strncpy(timestamp_, newTimestamp, sizeof(timestamp_) / sizeof(timestamp_[0]));
-	amount_ = Balance(newAmount);
-	fee_ = Balance(newFee);
 	strncpy(vendorField_, newVendorField, sizeof(vendorField_) / sizeof(vendorField_[0]));
-	senderId_ = Address(newSenderID);
-	recipientId_ = Address(newRecipientID);
-	senderPublicKey_ = Publickey(newSenderPublickey);
-	signature_ = Signature(newSignature);
 	strncpy(confirmations_, newConfirmations, sizeof(confirmations_) / sizeof(confirmations_[0]));
 }
 /*************************************************/

@@ -103,8 +103,10 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 	return s;
 }
 
-bool validate_address(const char* const address) {
-	return false;
+bool validate_address(const char* const address, uint8_t network) {
+	std::uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
+	Base58Check::pubkeyHashFromBase58Check(address, pub_key_hash);
+	return pub_key_hash[0] == network;
 }
 
 void get_keys(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed /* = true */) {
@@ -146,12 +148,27 @@ Account create_account(uint8_t network, const char* const passphrase) {
 	return Account(HexStr(pub_key).c_str(), address.c_str());
 }
 
-ARK::Transaction create_transaction(const char* const address, double amount, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] /* = nullptr*/, uint32_t version /* = 1 */, double fee_override /* = 0.1 */) {
-	assert(validate_address(address));
+void get_transaction_bytes(const Ark::Transaction& transaction, uint8_t buffer[512]) {
+}
+
+ARK::Transaction create_transaction(
+	uint8_t network, 
+	const char* const address, 
+	double amount, 
+	const std::string& vendor_field, 
+	uint8_t secret[PRIVATE_KEY_SIZE], 
+	uint8_t second_secret[PRIVATE_KEY_SIZE] /* = nullptr*/, 
+	uint32_t version /* = 1 */, 
+	uint64_t fee_override /* = ARK::Fees::send */
+) {
+	assert(validate_address(address, network));
 	assert(amount != 0.0);
 	assert(secret != nullptr);
 	assert(vendor_field.size() <= 64);
-	return ARK::Transaction();
+
+	return ARK::Transaction(
+		
+	);
 	/*
 	https://github.com/ArkEcosystem/ark-js/blob/master/lib/transactions/transaction.js
 	if (!recipientId || !amount || !secret) return false;

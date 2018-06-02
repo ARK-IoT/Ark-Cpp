@@ -14,4 +14,17 @@
 #include "constants/currencies.h"
 #include "constants/networks.h"
 
+namespace ARK {
+namespace Fees {
+
+// amounts in arktoshi
+const auto send = 10000000u;
+const auto vote = 100000000u;
+const auto delegate = 2500000000u;
+const auto second_signature = 500000000u;
+const auto multi_signature = 500000000u;
+
+}
+}
+
 #endif

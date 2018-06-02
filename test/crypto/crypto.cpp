@@ -40,6 +40,18 @@ TEST(crypto, generate_address) {
 	//);
 }
 
+TEST(crypto, validate_address) {
+	// valid
+	ASSERT_TRUE(ARK::Crypto::validate_address("AQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH", ARK::Constants::Networks::Network_ADV::main.pubKeyHash));
+	ASSERT_TRUE(ARK::Crypto::validate_address("D8WEzKygD4BYDngjXyWC84om6GBvBMkVFY", ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash));
+	ASSERT_TRUE(ARK::Crypto::validate_address("a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH", 0x52));
+
+	// invalid
+	ASSERT_FALSE(ARK::Crypto::validate_address("BQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH", ARK::Constants::Networks::Network_ADV::main.pubKeyHash));
+	ASSERT_FALSE(ARK::Crypto::validate_address("E8WEzKygD4BYDngjXyWC84om6GBvBMkVFY", ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash));
+	ASSERT_FALSE(ARK::Crypto::validate_address("b6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH", 0x52));
+}
+
 TEST(crypto, get_private_key) {
 	auto phrase = "seven age job canoe call lonely case same bounce giggle pluck mouse";
 	uint8_t priv_key[ARK::Crypto::PRIVATE_KEY_SIZE] = {};
