@@ -117,7 +117,7 @@ void Base58Check::divide58(const uint8_t x[], uint8_t y[], size_t len) {
 
 /*---- Public and private functions for Base58-to-bytes conversion ----*/
 
-bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubkeyHash[Ripemd160::HASH_LEN]) {
+bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubkeyHash[Ripemd160::HASH_LEN + 1]) {
 	// Preliminary checks
 	assert(addrStr != nullptr && outPubkeyHash != nullptr);
 	if (std::strlen(addrStr) < 1 || std::strlen(addrStr) > 34)
@@ -129,7 +129,7 @@ bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubk
 		return false;
 	
 	// Successfully set the output and return the network marker with the hash
-	std::memcpy(outPubkeyHash, &decoded[0], Ripemd160::HASH_LEN * sizeof(uint8_t));
+	std::memcpy(outPubkeyHash, &decoded[0], (Ripemd160::HASH_LEN + 1) * sizeof(uint8_t));
 	return true;
 }
 

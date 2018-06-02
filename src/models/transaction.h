@@ -1,8 +1,7 @@
-
-
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
+#include "constants/constants.h"
 #include "utilities/platform.h"
 #include "types/balance.h"
 #include "types/address.h"
@@ -19,7 +18,7 @@ namespace ARK
 /*************************************************
 *	ARK::Transaction
 **************************************************/
-struct Transaction : public Printable {
+class Transaction : public Printable {
 private:
 	Hash id_;
 	char blockid_[32];
@@ -46,20 +45,31 @@ public:
 	*	Constructor
 	**************************************************/
 	Transaction(
-			const char *const newID,
-			const char *const newBlockID,
-			const char *const newHeight,
-			int 							newType,
-			const char *const newTimestamp,
-			const char *const newAmount,
-			const char *const newFee,
-			const char *const newVendorField,
-			const char *const newSenderID,
-			const char *const newRecipientID,
-			const char *const newSenderPublickey,
-			const char *const newSignature,
-			const char *const newConfirmations
+		const char *const newID,
+		const char *const newBlockID,
+		const char *const newHeight,
+		int newType,
+		const char *const newTimestamp,
+		const char *const newAmount,
+		const char *const newFee,
+		const char *const newVendorField,
+		const char *const newSenderID,
+		const char *const newRecipientID,
+		const char *const newSenderPublickey,
+		const char *const newSignature,
+		const char *const newConfirmations
 	);
+
+	Transaction(
+		int newType,
+		const char *const newAmount,
+		const char *const newFee,
+		const char *const newSenderID,
+		const char *const newRecipientID,
+		const char *const newSenderPublickey,
+		const char *const newVendorField = nullptr
+	);
+
 	/*************************************************/
 
 	/*************************************************
@@ -83,6 +93,10 @@ public:
 	/*************************************************
 	*
 	**************************************************/
+	void sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
+	void second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
+	void generate_id();
+
 	virtual size_t printTo(Print &p) const;
 	/*************************************************/
 

@@ -1,11 +1,12 @@
 #include "models/transaction.h"
+#include "utilities/time.h"
 
 namespace ARK
 {
 /*************************************************
 *	Constructor
 **************************************************/
-ARK::Transaction::Transaction(
+Transaction::Transaction(
 		const char *const newID,
 		const char *const newBlockID,
 		const char *const newHeight,
@@ -20,7 +21,7 @@ ARK::Transaction::Transaction(
 		const char *const newSignature,
 		const char *const newConfirmations
 ) :
-	id_(newId),
+	id_(newID),
 	blockid_(),
 	height_(),
 	type_(newType),
@@ -29,7 +30,7 @@ ARK::Transaction::Transaction(
 	fee_(newFee),
 	vendorField_(),
 	senderId_(newSenderID),
-	recipientID_(newRecipientID),
+	recipientId_(newRecipientID),
 	senderPublicKey_(newSenderPublickey),
 	signature_(newSignature),
 	confirmations_()
@@ -40,12 +41,48 @@ ARK::Transaction::Transaction(
 	strncpy(vendorField_, newVendorField, sizeof(vendorField_) / sizeof(vendorField_[0]));
 	strncpy(confirmations_, newConfirmations, sizeof(confirmations_) / sizeof(confirmations_[0]));
 }
+
+Transaction::Transaction(
+	int newType,
+	const char *const newAmount,
+	const char *const newFee,
+	const char *const newSenderID,
+	const char *const newRecipientID,
+	const char *const newSenderPublickey,
+	const char *const newVendorField /* = nullptr */
+) : 
+	blockid_(),
+	height_(),
+	type_(newType),
+	timestamp_(),
+	amount_(newAmount),
+	fee_(newFee),
+	vendorField_(),
+	senderId_(newSenderID),
+	recipientId_(newRecipientID),
+	senderPublicKey_(newSenderPublickey),
+	confirmations_()
+{
+	// generate transaction timestamp
+	auto now = ARK::Utilities::get_time();
+	std::snprintf(timestamp_, sizeof(timestamp_), "%lld", now);
+}
 /*************************************************/
+
+void Transaction::sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
+
+}
+
+void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
+}
+
+void Transaction::generate_id() {
+}
 
 /*************************************************
 *
 **************************************************/
-size_t ARK::Transaction::printTo(Print &p) const
+size_t Transaction::printTo(Print &p) const
 {
 	size_t size = 0;
 		size += p.print("\nid: ");

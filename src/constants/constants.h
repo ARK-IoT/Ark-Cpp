@@ -9,22 +9,26 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include "../models/models.h"
-
 #include "constants/currencies.h"
 #include "constants/networks.h"
 
 namespace ARK {
-namespace Fees {
 
 // amounts in arktoshi
-const auto send = 10000000u;
-const auto vote = 100000000u;
-const auto delegate = 2500000000u;
-const auto second_signature = 500000000u;
-const auto multi_signature = 500000000u;
+const auto send_fee = 10000000u;
+const auto vote_fee = 100000000u;
+const auto delegate_fee = 2500000000u;
+const auto second_signature_fee = 500000000u;
+const auto multi_signature_fee = 500000000u;
+
+namespace Crypto {
+
+const auto PUBLIC_KEY_SIZE = 65u;
+const auto COMPRESSED_PUBLIC_KEY_SIZE = 33u;
+const auto PRIVATE_KEY_SIZE = 32u;
 
 }
+
 }
 
 #endif

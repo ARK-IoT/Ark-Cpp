@@ -13,10 +13,6 @@
 namespace ARK {
 namespace Crypto {
 
-const auto PUBLIC_KEY_SIZE = 65u;
-const auto COMPRESSED_PUBLIC_KEY_SIZE = 33u;
-const auto PRIVATE_KEY_SIZE = 32u;
-
 void get_keys(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed = true);
 void get_private_key(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE]);
 void get_public_key(const uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed = true);
@@ -30,8 +26,8 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 bool validate_address(const char* const address, uint8_t network);
 Account create_account(uint8_t network, const char* const passphrase);
 
-ARK::Transaction create_transaction(const char* const address, double amount, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] = nullptr, uint32_t version = 1, uint64_t fee_override = ARK::Fees::send);
-void get_transaction_bytes(const Ark::Transaction& transaction, uint8_t buffer[512]);
+ARK::Transaction create_transaction(const char* const address, double amount, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] = nullptr, uint32_t version = 1, uint64_t fee_override = ARK::send_fee);
+void get_transaction_bytes(const ARK::Transaction& transaction, uint8_t buffer[512]);
 
 }
 }

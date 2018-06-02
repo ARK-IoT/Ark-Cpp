@@ -3,6 +3,8 @@
 #ifndef CURRENCIES_H
 #define CURRENCIES_H
 
+#include "models/currency.h"
+
 namespace ARK
 {
 namespace Constants
