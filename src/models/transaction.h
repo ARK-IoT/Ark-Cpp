@@ -8,6 +8,9 @@
 #include "types/hash.h"
 #include "types/publickey.h"
 #include "types/signature.h"
+
+#include "Sha256Hash.hpp"
+
 #include <cstring>
 #include <cstdio>
 
@@ -95,6 +98,8 @@ public:
 	**************************************************/
 	void sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
 	void second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
+	void get_transaction_bytes(uint8_t buffer[512]);
+	void get_hash(uint8_t buffer[Sha256Hash::HASH_LEN], bool skip_signature = false, bool skip_second_signature = false);
 	void generate_id();
 
 	virtual size_t printTo(Print &p) const;

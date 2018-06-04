@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "crypto/ark_crypto.h"
+#include "crypto/util.h"
 #include "constants/networks.h"
 #include "Sha256.hpp"
 

@@ -1,5 +1,7 @@
 #include "models/transaction.h"
 #include "utilities/time.h"
+#include "crypto/util.h"
+#include "Sha256.hpp"
 
 namespace ARK
 {
@@ -70,13 +72,34 @@ Transaction::Transaction(
 /*************************************************/
 
 void Transaction::sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
+	/*
+	var hash = getHash(transaction, true, true);
 
+	var signature = keys.sign(hash).toDER().toString("hex");
+
+	if (!transaction.signature) {
+		transaction.signature = signature;
+	}
+	return signature;
+	*/
 }
 
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
 }
 
+void Transaction::get_transaction_bytes(uint8_t buffer[512]) {
+
+}
+
+void Transaction::get_hash(uint8_t buffer[Sha256Hash::HASH_LEN], bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
+
+}
+
 void Transaction::generate_id() {
+	uint8_t buf[512] = {};
+	get_transaction_bytes(buf);
+	auto hash = Sha256::getHash(buf, sizeof(buf));
+	id_ = Hash(HexStr(hash.value, hash.value + Sha256Hash::HASH_LEN).c_str());
 }
 
 /*************************************************
