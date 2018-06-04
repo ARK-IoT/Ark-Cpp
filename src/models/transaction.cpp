@@ -3,6 +3,8 @@
 #include "crypto/util.h"
 #include "Sha256.hpp"
 
+#include <cstdio>
+
 namespace ARK
 {
 /*************************************************
