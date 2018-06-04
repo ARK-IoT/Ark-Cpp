@@ -69,7 +69,7 @@ Transaction::Transaction(
 {
 	// generate transaction timestamp
 	auto now = ARK::Utilities::get_time();
-	std::snprintf(timestamp_, sizeof(timestamp_), "%lld", now);
+	snprintf(timestamp_, sizeof(timestamp_), "%lld", now);
 }
 /*************************************************/
 
