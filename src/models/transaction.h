@@ -18,6 +18,17 @@ static const auto TRANSACTION_MAX_SIZE = 600;
 
 namespace ARK
 {
+
+enum class TransactionType : uint8_t {
+	NORMAL = 0,
+	SIGNATURE = 1,
+	DELEGATE = 2,
+	VOTE = 3,
+	MULTI_SIGNATURE = 4
+};
+
+typedef typename std::underlying_type<TransactionType>::type TransactionTypeIntType;
+
 /*************************************************
 *	ARK::Transaction
 **************************************************/
@@ -26,8 +37,8 @@ private:
 	Hash id_;
 	char blockid_[32];
 	char height_[32];
-	int type_;
-	char timestamp_[32];
+	TransactionType type_;
+	uint32_t timestamp_;
 	Balance amount_;
 	Balance fee_;
 	char vendorField_[64];
@@ -51,8 +62,8 @@ public:
 		const char *const newID,
 		const char *const newBlockID,
 		const char *const newHeight,
-		int newType,
-		const char *const newTimestamp,
+		TransactionType newType,
+		uint32_t newTimestamp,
 		const char *const newAmount,
 		const char *const newFee,
 		const char *const newVendorField,
@@ -64,7 +75,7 @@ public:
 	);
 
 	Transaction(
-		int newType,
+		TransactionType newType,
 		const char *const newAmount,
 		const char *const newFee,
 		const char *const newSenderID,
@@ -81,8 +92,8 @@ public:
 	const char* id() const noexcept { return id_.getValue(); }
 	const char* block_id() const noexcept { return blockid_; }
 	const char* height() const noexcept { return height_; }
-	int type() const noexcept { return type_; }
-	const char* timestamp() const noexcept { return timestamp_; }
+	TransactionType type() const noexcept { return type_; }
+	uint32_t timestamp() const noexcept { return timestamp_; }
 	const Balance& amount() const noexcept { return amount_; }
 	const Balance& fee() const noexcept { return fee_; }
 	const char* vendor_field() const noexcept { return vendorField_; }
@@ -98,8 +109,8 @@ public:
 	**************************************************/
 	void sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
 	void second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
-	void get_transaction_bytes(uint8_t buffer[512]);
-	void get_hash(uint8_t buffer[Sha256Hash::HASH_LEN], bool skip_signature = false, bool skip_second_signature = false);
+	void get_transaction_bytes(uint8_t buffer[512], bool skip_signature = false, bool skip_second_signature = false);
+	Sha256Hash get_hash(bool skip_signature = false, bool skip_second_signature = false);
 	void generate_id();
 
 	virtual size_t printTo(Print &p) const;

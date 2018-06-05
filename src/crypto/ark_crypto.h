@@ -3,7 +3,6 @@
 
 #include "constants/constants.h"
 #include "models/account.h"
-#include "models/transaction.h"
 #include "Uint256.hpp"
 #include "Sha256Hash.hpp"
 
@@ -11,6 +10,9 @@
 #include <vector>
 
 namespace ARK {
+
+class Transaction;
+
 namespace Crypto {
 
 void get_keys(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed = true);
