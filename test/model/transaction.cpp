@@ -9,7 +9,7 @@ TEST(model, construct_transaction)
 		"14671461178414977683",
 		"1696504",
 		ARK::TransactionType::NORMAL,
-		"9656006",
+		9656006,
 		"51000",
 		"10000000",
 		"vendorField",
@@ -23,7 +23,7 @@ TEST(model, construct_transaction)
 	ASSERT_STREQ("14671461178414977683", transaction.block_id());
 	ASSERT_STREQ("1696504", transaction.height());
 	ASSERT_EQ(ARK::TransactionType::NORMAL, transaction.type());
-	ASSERT_STREQ("9656006", transaction.timestamp());
+	ASSERT_EQ(9656006u, transaction.timestamp());
 	ASSERT_STREQ("51000", transaction.amount().arktoshi());
 	ASSERT_STREQ("10000000", transaction.fee().arktoshi());
 	ASSERT_STREQ("vendorField", transaction.vendor_field());

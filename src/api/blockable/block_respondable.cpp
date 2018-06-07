@@ -34,7 +34,7 @@ size_t Height::printTo(Print &p) const
 		size += p.print("\nid: ");
 		size += p.print(this->id_);
 	return size;
-};
+}
 /*************************************************/
 
 /**************************************************************************************************/
@@ -45,20 +45,16 @@ size_t Height::printTo(Print &p) const
 Status::Status(
 		const char *const newEpoch,
 		const char *const newHeight,
-		const char *const newFee,
-		int               newMilestone,
+		double newFee,
+		int newMilestone,
 		const char *const newNethash,
-		const char *const newReward,
-		const char *const newSupply)
+		double newReward,
+		double newSupply
+) : epoch_(), height_(), fee_(newFee), milestone_(newMilestone), nethash_(newNethash), reward_(newReward), supply_(newSupply)
 {
 	strncpy(this->epoch_, newEpoch, sizeof(epoch_) / sizeof(epoch_[0]));
 	strncpy(this->height_, newHeight, sizeof(height_) / sizeof(height_[0]));
-	this->fee_ = Balance(newFee);
-	this->milestone_ = newMilestone;
-	this->nethash_ = Hash(newNethash);
-	this->reward_ = Balance(newReward);
-	this->supply_ = Balance(newSupply);
-};
+}
 /*************************************************/
 
 /*************************************************
@@ -67,31 +63,31 @@ Status::Status(
 size_t Status::printTo(Print &p) const
 {
 	size_t size = 0;
-		size += p.print("\nepoch: ");
-		size += p.print(this->epoch_);
+	size += p.print("\nepoch: ");
+	size += p.print(this->epoch_);
 
-		size += p.print("\nheight: ");
-		size += p.print(this->height_);
+	size += p.print("\nheight: ");
+	size += p.print(this->height_);
 
-		size += p.print("\nfee: ");
-		size += p.print(this->fee_.ark());
+	size += p.print("\nfee: ");
+	size += p.print(this->fee_.getValue());
 
-		size += p.print("\nmilestone: ");
-		size += p.print(this->milestone_);
+	size += p.print("\nmilestone: ");
+	size += p.print(this->milestone_);
 
-		size += p.print("\nnethash: ");
-		size += p.print(this->nethash_.getValue());
+	size += p.print("\nnethash: ");
+	size += p.print(this->nethash_.getValue());
 
-		size += p.print("\nreward: ");
-		size += p.print(this->reward_.ark());
+	size += p.print("\nreward: ");
+	size += p.print(this->reward_.getValue());
 
-		size += p.print("\nsupply: ");
-		size += p.print(this->supply_.ark());
-  return size;
-};
+	size += p.print("\nsupply: ");
+	size += p.print(this->supply_.getValue());
+	return size;
+}
 /*************************************************/
 
-};
-};
-};
-};
+}
+}
+}
+}

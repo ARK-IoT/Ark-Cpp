@@ -52,7 +52,7 @@ struct Delegate :
 				const char *const newUsername,
 				const char *const newAddress,
 				const char *const newPublicKey,
-				const char *const newVote,
+				double newVote,
 				int 							newProducedblocks,
 				int 							newMissedblocks,
 				int 							newRate,

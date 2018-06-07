@@ -13,33 +13,22 @@ namespace Respondable
 /*************************************************
 *	Constructor
 **************************************************/
-// Search::Search(
-// 		const char *const newUsername,
-// 		const char *const newAddress,
-// 		const char *const newPublickey,
-// 		const char *const newVote,
-// 		int 							newProducedBlocks,
-// 		int 							newMissedBlocks
-// )
-// {
-// 	strncpy(this->username_, newUsername, sizeof(username_) / sizeof(username_[0]));
-// };
-// Search::Search(
-// 		const char *const newUsername,
-// 		const char *const newAddress,
-// 		const char *const newPublickey,
-// 		const char *const newVote,
-// 		int 							newProducedBlocks,
-// 		int 							newMissedBlocks)
-// {
-// 	strncpy(this->username_, newUsername, sizeof(username_) / sizeof(username_[0]));
-// 	this->address_ = Address(newAddress);
-// 	this->publicKey_ = Publickey(newPublickey);
-// 	this->vote_ = Balance(newVote);
-// 	this->producedblocks_ = newProducedBlocks;
-// 	this->missedblocks_ = newMissedBlocks;
-// };
-/*************************************************/
+Search::Search(
+	const char *const newUsername,
+	const char *const newAddress,
+	const char *const newPublickey,
+	double newVote,
+	int newProducedBlocks,
+	int newMissedBlocks
+) : 
+	address_(Address(newAddress)),
+	publicKey_(Publickey(newPublickey)),
+	vote_(Balance(newVote)),
+	producedblocks_(newProducedBlocks),
+	missedblocks_(newMissedBlocks)
+{
+	strncpy(this->username_, newUsername, sizeof(username_) / sizeof(username_[0]));
+}
 
 /*************************************************
 *
@@ -57,7 +46,7 @@ size_t Search::printTo(Print &p) const
 		size += p.print(this->publicKey_.getValue());
 
 		size += p.print("\nvote: ");
-		size += p.print(this->vote_.ark());
+		size += p.print(this->vote_.getValue());
 
 		size += p.print("\nproducedblocks: ");
 		size += p.print(this->producedblocks_);
@@ -118,9 +107,9 @@ size_t Voters::printTo(Print &p) const
 *	Constructor
 **************************************************/
 ForgedByAccount::ForgedByAccount(
-		const char *const newFees,
-		const char *const newRewards,
-		const char *const newForged
+		double newFees,
+		double newRewards,
+		double newForged
 )
 {
 	this->fees_ = Balance(newFees);
@@ -136,11 +125,11 @@ size_t ForgedByAccount::printTo(Print &p) const
 {
 	size_t size = 0;
 		size += p.print("fees: ");
-		size += p.print(this->fees_.ark());
+		size += p.print(this->fees_.getValue());
 		size += p.print("\nrewards: ");
-		size += p.print(this->rewards_.ark());
+		size += p.print(this->rewards_.getValue());
 		size += p.print("\nforged: ");
-		size += p.print(this->forged_.ark());
+		size += p.print(this->forged_.getValue());
 	return size;
 }
 /*************************************************/

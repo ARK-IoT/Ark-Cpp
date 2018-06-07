@@ -26,13 +26,13 @@ struct Address :
 		public Printable
 {
 	protected:
-		char value_[ADDRESS_LENGTH + 1] = "\0";		/* (+ 1) for "\0"(null terminator) */
+		char value_[ADDRESS_LENGTH + 1];		/* (+ 1) for "\0"(null terminator) */
 
 	public:
 		/*************************************************
 		*	Constructor
 		**************************************************/
-		Address() : value_() {};
+		Address() = default;
 		/*************************************************/
 
 		/*************************************************
@@ -50,7 +50,9 @@ struct Address :
 		/*************************************************
 		*
 		**************************************************/
-		const char* getValue() const noexcept { return this->value_; }
+		const char* getValue() const noexcept { return value_; }
+
+		operator bool() const noexcept { return value_[0] != '\0'; }
 		/*************************************************/
 
 		/*************************************************

@@ -24,21 +24,25 @@
 class Balance
 {
 	private:
-		static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
-		static const auto ARK_SIZE = ((18 * sizeof(char)) + sizeof(int));
-		static const auto DECIMAL_PLACES = 8u;
+		//static const auto ARKTOSHI_SIZE = 17 * sizeof(int);
+		//static const auto ARK_SIZE = ((18 * sizeof(char)) + sizeof(int));
+		//static const auto DECIMAL_PLACES = 8u;
 
-		char arktoshi_[ARKTOSHI_SIZE] = { '\0' };
-		char ark_[ARK_SIZE] = { '\0' };
+		//char arktoshi_[ARKTOSHI_SIZE] = { '\0' };
+		//char ark_[ARK_SIZE] = { '\0' };
+		double value_;
 
 	public:
-		Balance() : arktoshi_(), ark_()
+		/*Balance() : arktoshi_(), ark_()
 		{
 			this->setBalance("0");
-		};
+		};*/
+		Balance() = default;
 
-		explicit Balance(const char* const balanceStr) : arktoshi_(), ark_()
+		explicit Balance(double value) : value_(value) { }
+		/*explicit Balance(const char* const balanceStr) : value_(atof(balanceStr)) //arktoshi_(), ark_()
 		{
+			
 			bool isNumeric = true;
 
 			for (auto i = 0u; i < strlen(balanceStr); ++i) {
@@ -50,42 +54,49 @@ class Balance
 			if (isNumeric) {
 				this->setBalance(balanceStr);
 			}
-		}
+		}*/
 
-		Balance(const Balance& other) : arktoshi_(), ark_() {
-			strcpy(arktoshi_, other.arktoshi_);
-			strcpy(ark_, other.ark_);
+		Balance(const Balance& other) : value_(other.value_) { //arktoshi_(), ark_() {
+			//strcpy(arktoshi_, other.arktoshi_);
+			//strcpy(ark_, other.ark_);
 		}
 		Balance& operator=(const Balance& other) {
 			if (this != &other) {
-				strcpy(arktoshi_, other.arktoshi_);
-				strcpy(ark_, other.ark_);
+				//strcpy(arktoshi_, other.arktoshi_);
+				//strcpy(ark_, other.ark_);
+				value_ = other.value_;
 			}
 			return *this;
 		}
 
-		Balance(Balance&& other) : arktoshi_(), ark_() {
-			strcpy(arktoshi_, other.arktoshi_);
-			strcpy(ark_, other.ark_);
-			other.arktoshi_[0] = '\0';
-			other.ark_[0] = '\0';
+		Balance(Balance&& other) : value_(other.value_) {//arktoshi_(), ark_() {
+			//strcpy(arktoshi_, other.arktoshi_);
+			//strcpy(ark_, other.ark_);
+			//other.arktoshi_[0] = '\0';
+			//other.ark_[0] = '\0';
+			other.value_ = 0.0;
 		}
 		Balance& operator=(Balance&& other) {
 			if (this != &other) {
-				strcpy(arktoshi_, other.arktoshi_);
-				strcpy(ark_, other.ark_);
-				other.arktoshi_[0] = '\0';
-				other.ark_[0] = '\0';
+				//strcpy(arktoshi_, other.arktoshi_);
+				//strcpy(ark_, other.ark_);
+				//other.arktoshi_[0] = '\0';
+				//other.ark_[0] = '\0';
+				value_ = other.value_;
+				other.value_ = 0.0;
 			}
 			return *this;
 		}
 
 
-		const char* ark() const { return ark_; }
-		const char* arktoshi() const { return arktoshi_; }
-
+		//const char* ark() const { return ark_; }
+		//const char* arktoshi() const { return arktoshi_; }
+		double getValue() const noexcept { return value_; }
+		void setValue(double value) noexcept { value_ = value; }
+		/*
 		void setArktoshi(const char* const balanceStr) {
-				strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
+			value_ = atoi(balanceStr);
+				//strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
 		}
 
 		void setArk(const char* const balanceStr)
@@ -127,7 +138,7 @@ class Balance
 				this->setArktoshi(_balanceStr);
 				this->setArk(_balanceStr);
 			}
-		};
+		};*/
 };
 
 #endif

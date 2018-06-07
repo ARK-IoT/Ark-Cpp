@@ -170,7 +170,7 @@ Balance ARK::API::Block::Gettable::fee(
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Block::getFee_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return Balance(parser->valueFor("fee").c_str());
+	return Balance(convert_to_double(parser->valueFor("fee")));
 };
 /*************************************************/
 
@@ -246,7 +246,7 @@ Balance ARK::API::Block::Gettable::reward(
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Block::getReward_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return Balance(parser->valueFor("reward").c_str());
+	return Balance(convert_to_double(parser->valueFor("reward")));
 };
 /*************************************************/
 
@@ -267,7 +267,7 @@ Balance ARK::API::Block::Gettable::supply(
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Block::getSupply_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return Balance(parser->valueFor("supply").c_str());
+	return Balance(convert_to_double(parser->valueFor("supply")));
 };
 /*************************************************/
 
@@ -294,15 +294,15 @@ ARK::API::Block::Respondable::Status ARK::API::Block::Gettable::status(
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Block::getStatus_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
+	return ARK::API::Block::Respondable::Status(
 		parser->valueFor("epoch").c_str(),
 		parser->valueFor("height").c_str(),
-		parser->valueFor("fee").c_str(),
+		convert_to_double(parser->valueFor("fee")),
 		convert_to_int(parser->valueFor("milestone").c_str()),
 		parser->valueFor("nethash").c_str(),
-		parser->valueFor("reward").c_str(),
-		parser->valueFor("supply").c_str()
-	};
+		convert_to_double(parser->valueFor("reward")),
+		convert_to_double(parser->valueFor("supply"))
+	);
 };
 /*************************************************/
 

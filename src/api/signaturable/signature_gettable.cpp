@@ -21,7 +21,7 @@ Balance ARK::API::Signature::Gettable::fee(ARK::Utilities::Network::Connector &n
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Signatures::fee_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return Balance(parser->valueFor("fee").c_str());
+	return Balance(convert_to_double(parser->valueFor("fee")));
 }
 /*************************************************/
 

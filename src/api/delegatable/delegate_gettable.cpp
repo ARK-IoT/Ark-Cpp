@@ -59,14 +59,14 @@ ARK::API::Delegate::Respondable::Search ARK::API::Delegate::Gettable::search(
 		strcat(uri, username);
 	auto callback = netConnector.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
+	return ARK::API::Delegate::Respondable::Search(
 		parser->subarrayValueIn("delegates", 0, "username").c_str(),
 		parser->subarrayValueIn("delegates", 0, "address").c_str(),
 		parser->subarrayValueIn("delegates", 0, "publicKey").c_str(),
-		parser->subarrayValueIn("delegates", 0, "vote").c_str(),
+		convert_to_double(parser->subarrayValueIn("delegates", 0, "vote")),
 		convert_to_int(parser->subarrayValueIn("delegates", 0, "producedblocks").c_str()),
 		convert_to_int(parser->subarrayValueIn("delegates", 0, "missedblocks").c_str())
-	};
+	);
 };
 /*************************************************/
 
@@ -203,7 +203,7 @@ Balance ARK::API::Delegate::Gettable::fee(
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Delegate::fee_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return Balance(parser->valueFor("fee").c_str());
+	return Balance(convert_to_double(parser->valueFor("fee")));
 };
 /*************************************************/
 

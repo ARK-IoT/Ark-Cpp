@@ -4,6 +4,7 @@
 #include "crypto/util.h"
 #include "crypto/ark_crypto.h"
 #include "Sha256.hpp"
+#include "Base58Check.hpp"
 
 #include <memory>
 
@@ -69,7 +70,7 @@ Transaction::Transaction(
 	confirmations_()
 {
 	// generate transaction timestamp
-	timestamp_ = ARK::Utilities::get_time();
+	timestamp_ = static_cast<uint32_t>(ARK::Utilities::get_time());
 }
 /*************************************************/
 
@@ -124,54 +125,36 @@ void Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature
 	size_t bb_index = 0;
 	bb[bb_index++] = static_cast<TransactionTypeIntType>(type_);
 	*reinterpret_cast<uint32_t* const>(bb.get() + bb_index) = timestamp_;
+	bb_index += sizeof(uint32_t);
+	for (auto b : ParseHex(senderPublicKey_.getValue())) {
+		bb[bb_index++] = b;
+	}
+	if (recipientId_) {
+		uint8_t pub_key_hash[Ripemd160::HASH_LEN + 1] = {};
+		Base58Check::pubkeyHashFromBase58Check(recipientId_.getValue(), pub_key_hash);
+		for (auto b : ParseHex(recipientId_.getValue())) {
+			bb[bb_index++] = b;
+		}
+	} else {
+		std::memset(bb.get() + bb_index, 0, Ripemd160::HASH_LEN + 1);
+		bb_index += Ripemd160::HASH_LEN + 1;
+	}
+
+	if (vendorField_[0] != '\0') {
+		auto vendor_field_bytes = ParseHex(vendorField_);
+		for (auto b : vendor_field_bytes) {
+			bb[bb_index++] = b;
+		}
+		auto byte_pad_length = 64 - vendor_field_bytes.size();
+		if (byte_pad_length > 0) {
+			std::memset(bb.get() + bb_index, 0, byte_pad_length);
+			bb_index += byte_pad_length;
+		}
+	}
+
+	*reinterpret_cast<double* const>(bb.get() + bb_index) = amount_.getValue();
+	bb_index += sizeof(double);
 	/*
-	
-
-	var bb = new ByteBuffer(1 + 4 + 32 + 8 + 8 + 21 + 64 + 64 + 64 + assetSize, true);
-	bb.writeByte(transaction.type);
-	bb.writeInt(transaction.timestamp);
-
-	var senderPublicKeyBuffer = new Buffer(transaction.senderPublicKey, "hex");
-	for (var i = 0; i < senderPublicKeyBuffer.length; i++) {
-		bb.writeByte(senderPublicKeyBuffer[i]);
-	}
-
-	if (transaction.recipientId) {
-		var recipient = bs58check.decode(transaction.recipientId);
-		for (var i = 0; i < recipient.length; i++) {
-			bb.writeByte(recipient[i]);
-		}
-	} else {
-		for (var i = 0; i < 21; i++) {
-			bb.writeByte(0);
-		}
-	}
-
-	if(transaction.vendorFieldHex){
-		var vf = new Buffer(transaction.vendorFieldHex,"hex");
-		var fillstart=vf.length;
-		for (i = 0; i < fillstart; i++) {
-			bb.writeByte(vf[i]);
-		}
-		for (i = fillstart; i < 64; i++) {
-			bb.writeByte(0);
-		}
-	}
-	else if (transaction.vendorField) {
-		var vf = new Buffer(transaction.vendorField);
-		var fillstart=vf.length;
-		for (i = 0; i < fillstart; i++) {
-			bb.writeByte(vf[i]);
-		}
-		for (i = fillstart; i < 64; i++) {
-			bb.writeByte(0);
-		}
-	} else {
-		for (i = 0; i < 64; i++) {
-			bb.writeByte(0);
-		}
-	}
-
 	bb.writeLong(transaction.amount);
 
 	bb.writeLong(transaction.fee);

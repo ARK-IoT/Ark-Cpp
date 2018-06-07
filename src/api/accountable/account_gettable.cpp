@@ -29,10 +29,10 @@ ARK::API::Account::Respondable::Balances ARK::API::Account::Gettable::balance(
 		strcat(uri, arkAddress.getValue());
 	auto callback = netManager.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
-		parser->valueFor("balance").c_str(),
-		parser->valueFor("unconfirmedBalance").c_str()
-	};
+	return ARK::API::Account::Respondable::Balances(
+		convert_to_double(parser->valueFor("balance")),
+		convert_to_double(parser->valueFor("unconfirmedBalance"))
+	);
 };
 /*************************************************/
 
@@ -86,7 +86,7 @@ Balance ARK::API::Account::Gettable::delegatesFee(
 		strcat(uri, arkAddress.getValue());
 	auto callback = netManager.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return Balance(parser->valueFor("fee").c_str());
+	return Balance(convert_to_double(parser->valueFor("fee")));
 };
 /*************************************************/
 
@@ -125,17 +125,17 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 		strcat(uri, arkAddress.getValue());
 	auto callback = netManager.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
+	return ARK::Delegate(
 		parser->subarrayValueIn("delegates", 0, "username").c_str(),
 		parser->subarrayValueIn("delegates", 0, "address").c_str(),
 		parser->subarrayValueIn("delegates", 0, "publicKey").c_str(),
-		parser->subarrayValueIn("delegates", 0, "vote").c_str(),
+		convert_to_double(parser->subarrayValueIn("delegates", 0, "vote")),
 		convert_to_int(parser->subarrayValueIn("delegates", 0, "producedblocks").c_str()),
 		convert_to_int(parser->subarrayValueIn("delegates", 0, "missedblocks").c_str()),
 		convert_to_int(parser->subarrayValueIn("delegates", 0, "rate").c_str()),
 		convert_to_float(parser->subarrayValueIn("delegates", 0, "approval").c_str()),
 		convert_to_float(parser->subarrayValueIn("delegates", 0, "productivity").c_str())
-	};
+	);
 };
 /*************************************************/
 
@@ -178,10 +178,10 @@ ARK::Account ARK::API::Account::Gettable::account(
 		* multisignatures & u_multisignatures returns an array of Transaction ID's (Hash type)
 		********************/
 
-	return {
+	return ARK::Account(
 		parser->valueIn("account", "address").c_str(),
-		parser->valueIn("account", "unconfirmedBalance").c_str(),
-		parser->valueIn("account", "balance").c_str(),
+		convert_to_double(parser->valueIn("account", "unconfirmedBalance")),
+		convert_to_double(parser->valueIn("account", "balance")),
 		parser->valueIn("account", "publicKey").c_str(),
 		convert_to_int(parser->valueIn("account", "unconfirmedSignature").c_str()),
 		convert_to_int(parser->valueIn("account", "secondSignature").c_str()),
@@ -192,7 +192,7 @@ ARK::Account ARK::API::Account::Gettable::account(
 		// parser->subarrayValueIn("account", 0, "u_multisignatures").c_str()	//	FIXME
 		// u_multisigsArray																										//	FIXME
 
-	};
+	);
 };
 /*************************************************/
 

@@ -56,8 +56,8 @@ struct Account :
 		**************************************************/
 		Account(
 				const char *const newAddress,
-				const char *const newUnconfirmedBalance,
-				const char *const newBalance,
+				double newUnconfirmedBalance,
+				double newBalance,
 				const char *const newPublickey,
 				int 							newUnconfirmedSignature,
 				int 							newSecondSignature,

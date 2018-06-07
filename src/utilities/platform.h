@@ -36,6 +36,11 @@ inline int convert_to_int(const std::string& s)
 
 inline float convert_to_float(const std::string& s)
 {
+	return static_cast<float>(atof(s.c_str()));
+}
+
+inline double convert_to_double(const std::string& s)
+{
 	return atof(s.c_str());
 }
 
@@ -77,6 +82,10 @@ inline int convert_to_int(const std::string& s) {
 
 inline float convert_to_float(const std::string& s) {
 	return std::stof(s);
+}
+
+inline double convert_to_double(const std::string& s) {
+	return std::stod(s);
 }
 
 uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed = false);

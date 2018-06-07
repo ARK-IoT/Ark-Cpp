@@ -28,11 +28,11 @@ struct Fees :
 		* Constructor
 		**************************************************/
 		Fees(
-			const char *const newSend,
-			const char *const newVote,
-			const char *const newDelegate,
-			const char *const newSS,
-			const char *const newMS
+			double newSend,
+			double newVote,
+			double newDelegate,
+			double newSS,
+			double newMS
 		);
 		/*************************************************/
 

@@ -1,5 +1,3 @@
-
-
 #ifndef DELEGATE_RESPONDABLE_H
 #define DELEGATE_RESPONDABLE_H
 
@@ -23,7 +21,7 @@ namespace Delegate
 namespace Respondable
 {
 /*************************************************
-*	ARK::API::Delegate::Respondable::search_t
+*	ARK::API::Delegate::Respondable::Search
 *
 *	@param: char[20]
 *	@param: Address
@@ -34,74 +32,45 @@ namespace Respondable
 *
 *	@brief:	Model for Delegate Search API Response
 **************************************************/
-// struct search_t
-// {
-// 	protected:
-// 		char 			username_[20 + 1];
-// 		Address 	address_;
-// 		Publickey publicKey_;
-// 		Balance 	vote_;
-// 		int 			producedblocks_;
-// 		int				missedblocks_;
-// };
-/*************************************************/
+struct Search : public Printable {
+private:
+	char username_[20 + 1];
+	Address address_;
+	Publickey publicKey_;
+	Balance vote_;
+	int producedblocks_;
+	int missedblocks_;
 
-/*************************************************
-*	ARK::API::Delegate::Respondable::Search
-*
-*	@brief:	Model for Delegate Search API Response
-**************************************************/
-struct Search :
-		// public search_t,
-		public Printable
-{
+public:
+	/*************************************************
+	*	Constructor
+	**************************************************/
+	Search(
+		const char *const newUsername,
+		const char *const newAddress,
+		const char *const newPublickey,
+		double newVote,
+		int newProducedBlocks,
+		int newMissedBlocks
+	);
+	/*************************************************/
 
-	protected:
-		char 			username_[20 + 1];
-		Address 	address_;
-		Publickey publicKey_;
-		Balance 	vote_;
-		int 			producedblocks_;
-		int				missedblocks_;
+	/*************************************************
+	*	Accessors
+	**************************************************/
+	const char* username() const noexcept { return username_; }
+	const Address& address() const noexcept { return address_; }
+	const Publickey& public_key() const noexcept { return publicKey_; }
+	const Balance& vote() const noexcept { return vote_; }
+	int produced_blocks() const noexcept { return producedblocks_; }
+	int missed_blocks() const noexcept { return missedblocks_; }
+	/*************************************************/
 
-	public:
-		/*************************************************
-		*	Constructor
-		**************************************************/
-		Search(
-				const char *const newUsername,
-				const char *const newAddress,
-				const char *const newPublickey,
-				const char *const newVote,
-				int								newProducedBlocks,
-				int								newMissedBlocks
-		): address_(Address(newAddress)),
-		publicKey_(Publickey(newPublickey)),
-		vote_(Balance(newVote)),
-		producedblocks_(newProducedBlocks),
-		missedblocks_(newMissedBlocks)
-		{
-			strncpy(this->username_, newUsername, sizeof(username_) / sizeof(username_[0]));
-		};
-		/*************************************************/
-
-		/*************************************************
-		*	Accessors
-		**************************************************/
-		const char* username() const noexcept { return username_; }
-		const Address& address() const noexcept { return address_; }
-		const Publickey& public_key() const noexcept { return publicKey_; }
-		const Balance& vote() const noexcept { return vote_; }
-		int produced_blocks() const noexcept { return producedblocks_; }
-		int missed_blocks() const noexcept { return missedblocks_; }
-		/*************************************************/
-
-		/*************************************************
-		*
-		**************************************************/
-		virtual size_t printTo(Print &p) const;
-		/*************************************************/
-	
+	/*************************************************
+	*
+	**************************************************/
+	virtual size_t printTo(Print &p) const;
+	/*************************************************/
 };
 /*************************************************/
 
@@ -160,7 +129,7 @@ struct Voters :
 /**************************************************************************************************/
 
 /*************************************************
-*	ARK::API::Delegate::Respondable::forged_by_account_t
+*	ARK::API::Delegate::Respondable::ForgedByAccount
 *
 *	@param:	const Balance
 *	@param:	const Balance
@@ -168,49 +137,37 @@ struct Voters :
 *
 *	@brief:	Model for Delegate Forging Totals API Response
 **************************************************/
-struct forged_by_account_t
+class ForgedByAccount : public Printable
 {
-	protected:
-		Balance fees_;
-		Balance rewards_;
-		Balance forged_;
-};
-/*************************************************/
+private:
+	Balance fees_;
+	Balance rewards_;
+	Balance forged_;
 
-/*************************************************
-*	ARK::API::Delegate::Respondable::ForgedByAccount
-*
-*	@brief: Model for Delegate Forging Totals API Response
-**************************************************/
-struct ForgedByAccount :
-		public forged_by_account_t,
-		Printable
-{
-	public:
-		/*************************************************
-		*	Constructor
-		**************************************************/
-		ForgedByAccount(
-				const char *const newFees,
-				const char *const newRewards,
-				const char *const newForged
-		);
-		/*************************************************/
+public:
+	/*************************************************
+	*	Constructor
+	**************************************************/
+	ForgedByAccount(
+			double newFees,
+			double newRewards,
+			double newForged
+	);
+	/*************************************************/
 
-		/*************************************************
-		*	Accessors
-		**************************************************/
-		const Balance& fees() const noexcept { return fees_; }
-		const Balance& rewards() const noexcept { return rewards_; }
-		const Balance& forged() const noexcept { return forged_; }
-		/*************************************************/
+	/*************************************************
+	*	Accessors
+	**************************************************/
+	const Balance& fees() const noexcept { return fees_; }
+	const Balance& rewards() const noexcept { return rewards_; }
+	const Balance& forged() const noexcept { return forged_; }
+	/*************************************************/
 
-		/*************************************************
-		*
-		**************************************************/
-		virtual size_t printTo(Print &p) const;
-		/*************************************************/
-
+	/*************************************************
+	*
+	**************************************************/
+	virtual size_t printTo(Print &p) const;
+	/*************************************************/
 };
 /*************************************************/
 

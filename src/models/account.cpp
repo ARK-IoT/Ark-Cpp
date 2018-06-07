@@ -8,8 +8,8 @@ namespace ARK {
 **************************************************/
 Account::Account(
 	const char *const newAddress,
-	const char *const newUnconfirmedBalance,
-	const char *const newBalance,
+	double newUnconfirmedBalance,
+	double newBalance,
 	const char *const newPublickey,
 	int 							newUnconfirmedSignature,
 	int 							newSecondSignature,
@@ -68,10 +68,10 @@ size_t Account::printTo(Print& p) const
 		size += p.print(address_.getValue());
 
 		size += p.print("\nunconfirmedBalance: ");
-		size += p.print(this->unconfirmedBalance_.ark());
+		size += p.print(this->unconfirmedBalance_.getValue());
 
 		size += p.print("\nbalance: ");
-		size += p.print(this->balance_.ark());
+		size += p.print(this->balance_.getValue());
 
 		size += p.print("\npublicKey: ");
 		size += p.print(this->publicKey_.getValue());

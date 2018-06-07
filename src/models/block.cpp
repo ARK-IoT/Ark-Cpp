@@ -14,9 +14,9 @@ Block::Block(
 		const char *const newHeight,
 		const char *const newPreviousBlock,
 		const char *const newNumberOfTransactions,
-		const char *const newTotalAmount,
-		const char *const newTotalFee,
-		const char *const newReward,
+		double newTotalAmount,
+		double newTotalFee,
+		double newReward,
 		const char *const newPayloadLength,
 		const char *const newPayloadHash,
 		const char *const newGeneratorPublickey,
@@ -70,13 +70,13 @@ size_t Block::printTo(Print &p) const
 		size += p.print(this->numberOfTransactions_);
 
 		size += p.print("\ntotalAmount: ");
-		size += p.print(this->totalAmount_.ark());
+		size += p.print(this->totalAmount_.getValue());
 
 		size += p.print("\ntotalFee: ");
-		size += p.print(this->totalFee_.ark());
+		size += p.print(this->totalFee_.getValue());
 
 		size += p.print("\nreward: ");
-		size += p.print(this->reward_.ark());
+		size += p.print(this->reward_.getValue());
 
 		size += p.print("\npayloadLength: ");
 		size += p.print(this->payloadLength_);

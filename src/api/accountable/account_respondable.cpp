@@ -10,13 +10,6 @@ namespace Account
 {
 namespace Respondable
 {
-/*************************************************
-*	ARK::API::Account::Respondable::Balances
-*
-*	@brief: Empty Initialization
-**************************************************/
-Balances::Balances() {};
-/*************************************************/
 
 /*************************************************
 *	ARK::API::Account::Respondable::Balances(const char* const, const char* const)
@@ -24,12 +17,10 @@ Balances::Balances() {};
 *	@brief: Constructed API Balances Response Object
 **************************************************/
 Balances::Balances(
-		const char *const newConfirmed,
-		const char *const newUnconfirmed
-)
+		double newConfirmed,
+		double newUnconfirmed
+) : confirmed_(newConfirmed), unconfirmed_(newUnconfirmed)
 {
-	this->confirmed_ = Balance(newConfirmed);
-	this->unconfirmed_ = Balance(newUnconfirmed);
 }
 /*************************************************/
 
@@ -41,10 +32,8 @@ Balances::Balances(
 Balances::Balances(
 		const Balance& newConfirmed,
 		const Balance& newUnconfirmed
-)
+) : confirmed_(newConfirmed), unconfirmed_(newUnconfirmed)
 {
-	this->confirmed_ = Balance(newConfirmed);
-	this->unconfirmed_ = Balance(newUnconfirmed);
 }
 /*************************************************/
 
@@ -54,14 +43,10 @@ Balances::Balances(
 size_t Balances::printTo(Print &p) const
 {
 	size_t size = 0;
-		size += p.print("\nconfirmed balance.ark: ");
-		size += p.print(this->confirmed_.ark());
-		size += p.print("\nconfirmed balance.arktoshi: ");
-		size += p.print(this->confirmed_.arktoshi());
-		size += p.print("\n\nunconfirmed balance.ark: ");
-		size += p.print(this->unconfirmed_.ark());
-		size += p.print("\nunconfirmed balance.arktoshi: ");
-		size += p.print(this->unconfirmed_.arktoshi());
+	size += p.print("\nconfirmed balance.ark: ");
+	size += p.print(confirmed_.getValue());
+	size += p.print("\n\nunconfirmed balance.ark: ");
+	size += p.print(unconfirmed_.getValue());
 	return size;
 };
 /*************************************************/

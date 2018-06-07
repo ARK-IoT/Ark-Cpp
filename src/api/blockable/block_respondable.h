@@ -73,7 +73,7 @@ struct Height :
 /**************************************************************************************************/
 
 /*************************************************
-*	ARK::API::Block::Respondable::status_t 
+*	ARK::API::Block::Respondable::Status 
 *
 *	@param: const char* epoch
 *	@param: const char* height
@@ -85,61 +85,48 @@ struct Height :
 *
 *	@brief:	Model for Block Status API Response
 **************************************************/
-struct status_t
-{
-	protected:
-		char epoch_[64]; //TODO: check sizes
-		char height_[64];
-		Balance fee_;
-		int milestone_;
-		Hash nethash_;
-		Balance reward_;
-		Balance supply_;
-};
-/*************************************************/
+struct Status : public Printable {
+private:
+	char epoch_[64]; //TODO: check sizes
+	char height_[64];
+	Balance fee_;
+	int milestone_;
+	Hash nethash_;
+	Balance reward_;
+	Balance supply_;
 
-/*************************************************
-*	ARK::API::Block::Respondable::Status 
-*
-*	@brief: Constructor Model for Block Status API Response
-**************************************************/
-struct Status :
-		public status_t,
-		Printable
-{
-	public:
-		/*************************************************
-		*	Constructor
-		**************************************************/
-		Status(
-				const char *const newEpoch,
-				const char *const newHeight,
-				const char *const newFee,
-				int 							newMilestone,
-				const char *const newNethash,
-				const char *const newReward,
-				const char *const newSupply
-		);
-		/*************************************************/
+public:
+	/*************************************************
+	*	Constructor
+	**************************************************/
+	Status(
+			const char *const newEpoch,
+			const char *const newHeight,
+			double newFee,
+			int newMilestone,
+			const char *const newNethash,
+			double newReward,
+			double newSupply
+	);
+	/*************************************************/
 
-		/*************************************************
-		*	Accessors
-		**************************************************/
-		const char* epoch() const noexcept { return epoch_; }
-		const char* height() const noexcept { return height_; }
-		const Balance& fee() const noexcept { return fee_; }
-		int milestone() const noexcept { return milestone_; }
-		const Hash& nethash() const noexcept { return nethash_; }
-		const Balance& reward() const noexcept { return reward_; }
-		const Balance& supply() const noexcept { return supply_; }
-		/*************************************************/
+	/*************************************************
+	*	Accessors
+	**************************************************/
+	const char* epoch() const noexcept { return epoch_; }
+	const char* height() const noexcept { return height_; }
+	const Balance& fee() const noexcept { return fee_; }
+	int milestone() const noexcept { return milestone_; }
+	const Hash& nethash() const noexcept { return nethash_; }
+	const Balance& reward() const noexcept { return reward_; }
+	const Balance& supply() const noexcept { return supply_; }
+	/*************************************************/
 
-		/*************************************************
-		*
-		**************************************************/
-		virtual size_t printTo(Print &p) const;
-		/*************************************************/
-		
+	/*************************************************
+	*
+	**************************************************/
+	virtual size_t printTo(Print &p) const;
+	/*************************************************/
 };
 /*************************************************/
 
