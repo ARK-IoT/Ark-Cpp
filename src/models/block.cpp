@@ -9,8 +9,8 @@ namespace ARK
 **************************************************/
 Block::Block(
 		const char *const newID,
-		int 							newVersion,
-		const char *const newTimestamp,
+		int newVersion,
+		uint32_t newTimestamp,
 		const char *const newHeight,
 		const char *const newPreviousBlock,
 		const char *const newNumberOfTransactions,
@@ -23,20 +23,20 @@ Block::Block(
 		const char *const newGeneratorID,
 		const char *const newBlockSignature,
 		const char *const newConfirmations,
-		const char *const newTotalForged
+		double newTotalForged
 ) :
 		version_(newVersion),
-		totalAmount_(Balance(newTotalAmount)),
-		totalFee_(Balance(newTotalFee)),
-		reward_(Balance(newReward)),
-		payloadHash_(Hash(newPayloadHash)),
-		generatorPublicKey_(Publickey(newGeneratorPublickey)),
-		generatorId_(Address(newGeneratorID)),
-		blockSignature_(Signature(newBlockSignature)),
-		totalForged_(Balance(newTotalForged))
+		timestamp_(newTimestamp),
+		totalAmount_(newTotalAmount),
+		totalFee_(newTotalFee),
+		reward_(newReward),
+		payloadHash_(newPayloadHash),
+		generatorPublicKey_(newGeneratorPublickey),
+		generatorId_(newGeneratorID),
+		blockSignature_(newBlockSignature),
+		totalForged_(newTotalForged)
 {
 	strncpy(this->id_, newID, sizeof(id_) / sizeof(id_[0]));
-	strncpy(this->timestamp_, newTimestamp, sizeof(timestamp_) / sizeof(timestamp_[0]));
 	strncpy(this->height_, newHeight, sizeof(height_) / sizeof(height_[0]));
 	strncpy(this->previousBlock_, newPreviousBlock, sizeof(previousBlock_) / sizeof(previousBlock_[0]));
 	strncpy(this->numberOfTransactions_, newNumberOfTransactions, sizeof(numberOfTransactions_) / sizeof(numberOfTransactions_[0]));
@@ -97,7 +97,7 @@ size_t Block::printTo(Print &p) const
 		size += p.print(this->confirmations_);
 
 		size += p.print("\ntotalForged: ");
-		size += p.print(this->totalForged_.ark());
+		size += p.print(this->totalForged_.getValue());
 	return size;
 }
 /*************************************************/

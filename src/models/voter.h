@@ -27,7 +27,7 @@ class Voter :
 				const char* const u, 
 				const char* const a, 
 				const char* const pk,
-				const char* const b
+				double b
 		);
 
 		const char* username() const noexcept { return username_; }

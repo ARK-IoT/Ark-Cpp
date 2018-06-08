@@ -46,24 +46,24 @@ ARK::Block ARK::API::Block::Gettable::block(
     strcat(uri, blockId);
   auto callback = netConnector.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-  return {
-    parser->valueIn("block", "id").c_str(),
-    convert_to_int(parser->valueIn("block", "version").c_str()),
-    parser->valueIn("block", "timestamp").c_str(),
-    parser->valueIn("block", "height").c_str(),
-    parser->valueIn("block", "previousBlock").c_str(),
-    parser->valueIn("block", "numberOfTransactions").c_str(),
-    parser->valueIn("block", "totalAmount").c_str(),
-    parser->valueIn("block", "totalFee").c_str(),
-    parser->valueIn("block", "reward").c_str(),
-    parser->valueIn("block", "payloadLength").c_str(),
-    parser->valueIn("block", "payloadHash").c_str(),
-    parser->valueIn("block", "generatorPublicKey").c_str(),
-    parser->valueIn("block", "generatorId").c_str(),
-    parser->valueIn("block", "blockSignature").c_str(),
-    parser->valueIn("block", "confirmations").c_str(),
-    parser->valueIn("block", "totalForged").c_str()
-	};
+	return ARK::Block(
+		parser->valueIn("block", "id").c_str(),
+		convert_to_int(parser->valueIn("block", "version")),
+		convert_to_int(parser->valueIn("block", "timestamp")),
+		parser->valueIn("block", "height").c_str(),
+		parser->valueIn("block", "previousBlock").c_str(),
+		parser->valueIn("block", "numberOfTransactions").c_str(),
+		convert_to_double(parser->valueIn("block", "totalAmount")),
+		convert_to_double(parser->valueIn("block", "totalFee")),
+		convert_to_double(parser->valueIn("block", "reward")),
+		parser->valueIn("block", "payloadLength").c_str(),
+		parser->valueIn("block", "payloadHash").c_str(),
+		parser->valueIn("block", "generatorPublicKey").c_str(),
+		parser->valueIn("block", "generatorId").c_str(),
+		parser->valueIn("block", "blockSignature").c_str(),
+		parser->valueIn("block", "confirmations").c_str(),
+		convert_to_double(parser->valueIn("block", "totalForged"))
+	);
 };
 /*************************************************/
 
@@ -198,13 +198,13 @@ ARK::Fees ARK::API::Block::Gettable::fees(
 {
 	auto callback = netConnector.callback(ARK::API::Paths::Block::getFees_s);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
-		parser->valueIn("fees", "send").c_str(),
-		parser->valueIn("fees", "vote").c_str(),
-		parser->valueIn("fees", "secondsignature").c_str(),
-		parser->valueIn("fees", "delegate").c_str(),
-		parser->valueIn("fees", "multisignature").c_str()
-	};
+	return ARK::Fees(
+		convert_to_double(parser->valueIn("fees", "send")),
+		convert_to_double(parser->valueIn("fees", "vote")),
+		convert_to_double(parser->valueIn("fees", "secondsignature")),
+		convert_to_double(parser->valueIn("fees", "delegate")),
+		convert_to_double(parser->valueIn("fees", "multisignature"))
+	);
 };
 /*************************************************/
 

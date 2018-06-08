@@ -5,7 +5,7 @@ ARK::Voter::Voter(
 		const char* const u, 
 		const char* const a, 
 		const char* const pk,
-		const char* const b
+		double b
 ) : username_(), address_(a), publicKey_(pk), balance_(b)
 {
 	strncpy(username_, u, sizeof(username_) / sizeof(username_[0]));
@@ -25,7 +25,7 @@ size_t ARK::Voter::printTo(Print& p) const
 	size += p.print(this->publicKey_.getValue());
 
 	size += p.print("\nbalance.ark: ");
-	size += p.print(this->balance_.ark());
+	size += p.print(this->balance_.getValue());
 
 	return size;
 }

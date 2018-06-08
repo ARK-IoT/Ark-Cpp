@@ -112,12 +112,12 @@ ARK::API::Delegate::Respondable::Voters ARK::API::Delegate::Gettable::voters(
 
 	for (int i = 0; i < voterCount; ++i)
 	{
-		voters[i] = {
+		voters[i] = ARK::Voter(
 			parser->subarrayValueIn("accounts", i, "username").c_str(),
 			parser->subarrayValueIn("accounts", i, "address").c_str(),
 			parser->subarrayValueIn("accounts", i, "publicKey").c_str(),
-			parser->subarrayValueIn("accounts", i, "balance").c_str()
-		};
+			convert_to_double(parser->subarrayValueIn("accounts", i, "balance"))
+		);
 	};
 	return voters;
 };
@@ -161,17 +161,17 @@ ARK::Delegate ARK::API::Delegate::Gettable::delegate(
 
 	auto callback = netConnector.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
+	return ARK::Delegate(
 		parser->valueIn("delegate", "username").c_str(),
 		parser->valueIn("delegate", "address").c_str(),
 		parser->valueIn("delegate", "publicKey").c_str(),
-		parser->valueIn("delegate", "vote").c_str(),
+		convert_to_double(parser->valueIn("delegate", "vote")),
 		convert_to_int(parser->valueIn("delegate", "producedblocks").c_str()),
 		convert_to_int(parser->valueIn("delegate", "missedblocks").c_str()),
 		convert_to_int(parser->valueIn("delegate", "rate").c_str()),
 		convert_to_float(parser->valueIn("delegate", "approval").c_str()),
 		convert_to_float(parser->valueIn("delegate", "productivity").c_str())
-	};
+	);
 };
 /*************************************************/
 
@@ -231,11 +231,11 @@ ARK::API::Delegate::Respondable::ForgedByAccount ARK::API::Delegate::Gettable::f
 		strcat(uri, generatorPublicKey.getValue());
 	auto callback = netConnector.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
-		parser->valueFor("fees").c_str(),
-		parser->valueFor("rewards").c_str(),
-		parser->valueFor("forged").c_str()
-	};
+	return ARK::API::Delegate::Respondable::ForgedByAccount(
+		convert_to_double(parser->valueFor("fees")),
+		convert_to_double(parser->valueFor("rewards")),
+		convert_to_double(parser->valueFor("forged"))
+	);
 };
 /*************************************************/
 

@@ -17,7 +17,7 @@
 *		{  
 *			"id":	String(lluint),
 *			"version":	int,
-*			"timestamp":	String(lluint),
+*			"timestamp":	uint32_t,
 *			"height":	uint,
 *			"previousBlock":	String(lluint),
 *			"numberOfTransactions": int,
@@ -47,7 +47,7 @@ struct Block :
 	protected:
 		char 			id_[MAX_UINT128_CHARS];
 		int 			version_;
-		char 			timestamp_[MAX_UINT128_CHARS];
+		uint32_t		timestamp_;
 		char 			height_[64];
 		char 			previousBlock_[MAX_UINT128_CHARS];
 		char 			numberOfTransactions_[64];
@@ -68,8 +68,8 @@ struct Block :
 		**************************************************/
 		Block(
 				const char *const newID,
-				int 							newVersion,
-				const char *const newTimestamp,
+				int newVersion,
+				uint32_t newTimestamp,
 				const char *const newHeight,
 				const char *const newPreviousBlock,
 				const char *const newNumberOfTransactions,
@@ -82,7 +82,7 @@ struct Block :
 				const char *const newGeneratorID,
 				const char *const newBlockSignature,
 				const char *const newConfirmations,
-				const char *const newTotalForged
+				double newTotalForged
 		);
 		/*************************************************/
 
@@ -91,7 +91,7 @@ struct Block :
 		**************************************************/
 		const char* id() const noexcept { return id_; }
 		int version() const noexcept { return version_; }
-		const char* timestamp() const noexcept { return timestamp_; }
+		uint32_t timestamp() const noexcept { return timestamp_; }
 		const char* height() const noexcept { return height_; }
 		const char* previous_block() const noexcept { return previousBlock_; }
 		const char* number_of_transactions() const noexcept { return numberOfTransactions_; }

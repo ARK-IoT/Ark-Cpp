@@ -185,13 +185,12 @@ ARK::Account ARK::API::Account::Gettable::account(
 		parser->valueIn("account", "publicKey").c_str(),
 		convert_to_int(parser->valueIn("account", "unconfirmedSignature").c_str()),
 		convert_to_int(parser->valueIn("account", "secondSignature").c_str()),
-		parser->valueIn("account", "secondPublicKey").c_str(),
+		parser->valueIn("account", "secondPublicKey").c_str()
 
 		// parser->subarrayValueIn("account", 0, "multisignatures").c_str(),	//	FIXME
 		// multisigsArray,																										//	FIXME
 		// parser->subarrayValueIn("account", 0, "u_multisignatures").c_str()	//	FIXME
 		// u_multisigsArray																										//	FIXME
-
 	);
 };
 /*************************************************/

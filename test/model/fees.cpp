@@ -5,15 +5,15 @@
 TEST(model, construct_fees)
 {
 	ARK::Fees fees(
-		"10000000",
-		"100000000",
-		"500000000",
-		"2500000000",
-		"500000000"
+		0.10000000,
+		1.00000000,
+		5.00000000,
+		25.00000000,
+		5.00000000
 	);
-	ASSERT_STREQ("10000000", fees.send().arktoshi());
-	ASSERT_STREQ("100000000", fees.vote().arktoshi());
-	ASSERT_STREQ("500000000", fees.delegate().arktoshi());
-	ASSERT_STREQ("2500000000", fees.second_signature().arktoshi());
-	ASSERT_STREQ("500000000", fees.multi_signature().arktoshi());
+	ASSERT_EQ(0.1, fees.send().getValue());
+	ASSERT_EQ(1.0, fees.vote().getValue());
+	ASSERT_EQ(5.0, fees.delegate().getValue());
+	ASSERT_EQ(25.0, fees.second_signature().getValue());
+	ASSERT_EQ(5.0, fees.multi_signature().getValue());
 }

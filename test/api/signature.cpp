@@ -11,8 +11,7 @@ TEST(api, test_signature_fees)
 {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	const auto signatures_fee = _arkManager.signaturesFee();
-	ASSERT_STREQ("5.00000000", signatures_fee.ark());
-	ASSERT_STREQ("500000000", signatures_fee.arktoshi());
+	ASSERT_EQ(5.0, signatures_fee.getValue());
 
 	/*  ==================================  */
 }

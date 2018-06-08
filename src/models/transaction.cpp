@@ -19,8 +19,8 @@ Transaction::Transaction(
 		const char *const newHeight,
 		TransactionType newType,
 		uint32_t newTimestamp,
-		const char *const newAmount,
-		const char *const newFee,
+		double newAmount,
+		double newFee,
 		const char *const newVendorField,
 		const char *const newSenderID,
 		const char *const newRecipientID,
@@ -50,8 +50,8 @@ Transaction::Transaction(
 
 Transaction::Transaction(
 	TransactionType newType,
-	const char *const newAmount,
-	const char *const newFee,
+	double newAmount,
+	double newFee,
 	const char *const newSenderID,
 	const char *const newRecipientID,
 	const char *const newSenderPublickey,
@@ -60,7 +60,7 @@ Transaction::Transaction(
 	blockid_(),
 	height_(),
 	type_(newType),
-	timestamp_(),
+	timestamp_(static_cast<uint32_t>(ARK::Utilities::get_time())),
 	amount_(newAmount),
 	fee_(newFee),
 	vendorField_(),
@@ -69,8 +69,6 @@ Transaction::Transaction(
 	senderPublicKey_(newSenderPublickey),
 	confirmations_()
 {
-	// generate transaction timestamp
-	timestamp_ = static_cast<uint32_t>(ARK::Utilities::get_time());
 }
 /*************************************************/
 
@@ -227,10 +225,10 @@ size_t Transaction::printTo(Print &p) const
 		size += p.print(this->timestamp_);
 
 		size += p.print("\namount: ");
-		size += p.print(this->amount_.ark());
+		size += p.print(this->amount_.getValue());
 
 		size += p.print("\nfee: ");
-		size += p.print(this->fee_.ark());
+		size += p.print(this->fee_.getValue());
 
 		size += p.print("\nvendorField: ");
 		size += p.print(this->vendorField_);

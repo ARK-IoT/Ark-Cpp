@@ -16,8 +16,8 @@ TEST(api, test_transaction)
 	ASSERT_STREQ("1696504", transaction.height());
 	ASSERT_EQ(ARK::TransactionType::NORMAL, transaction.type());
 	ASSERT_EQ(19637685u, transaction.timestamp());
-	ASSERT_STREQ("149", transaction.amount().arktoshi());
-	ASSERT_STREQ("10000000", transaction.fee().arktoshi());
+	ASSERT_EQ(0.00000149, transaction.amount().getValue());
+	ASSERT_EQ(0.1, transaction.fee().getValue());
 	ASSERT_STREQ("1ARK-GOLang is saying whoop whooop", transaction.vendor_field());
 	ASSERT_STREQ("DPJBH7wfE1msZMVDQLeJUPi31fJZodJCkU", transaction.sender_id().getValue());
 	ASSERT_STREQ("DFTzLwEHKKn3VGce6vZSueEmoPWpEZswhB", transaction.recipient_id().getValue());

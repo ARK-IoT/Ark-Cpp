@@ -64,8 +64,8 @@ public:
 		const char *const newHeight,
 		TransactionType newType,
 		uint32_t newTimestamp,
-		const char *const newAmount,
-		const char *const newFee,
+		double newAmount,
+		double newFee,
 		const char *const newVendorField,
 		const char *const newSenderID,
 		const char *const newRecipientID,
@@ -76,8 +76,8 @@ public:
 
 	Transaction(
 		TransactionType newType,
-		const char *const newAmount,
-		const char *const newFee,
+		double newAmount,
+		double newFee,
 		const char *const newSenderID,
 		const char *const newRecipientID,
 		const char *const newSenderPublickey,
