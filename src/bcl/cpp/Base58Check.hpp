@@ -45,7 +45,7 @@ class Base58Check final {
 	// Parses the given public address string. If the syntax and check digits are correct,
 	// then the output array is set to the decoded value and true is returned.
 	// Otherwise the output array is unchanged and false is returned. Not constant-time.
-	public: static bool pubkeyHashFromBase58Check(const char *addrStr, std::uint8_t outPubkeyHash[Ripemd160::HASH_LEN]);
+	public: static bool pubkeyHashFromBase58Check(const char *addrStr, std::uint8_t outPubkeyHash[Ripemd160::HASH_LEN + 1]);
 	
 	
 	// Parses the given compressed WIF string. If the syntax and check digits are correct,
