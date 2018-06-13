@@ -66,7 +66,11 @@ class Peerable :
     ARK::API::Peer::Respondable::Version peerVersion()
     {
       return ARK::API::Peer::Gettable::version(this->netConnector);
-    };
+    }
+
+	bool postTransaction(const uint8_t transaction[512]) {
+		auto callback = netConnector.callback(ARK::API::Paths::Peer::transactions_s);
+	}
     /*************************************************/
 
 };

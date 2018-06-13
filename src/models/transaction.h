@@ -46,6 +46,7 @@ private:
 	Address recipientId_;
 	Publickey senderPublicKey_;
 	Signature signature_;
+	Signature sign_signature_;
 	char confirmations_[64];
 
 public:
@@ -101,6 +102,7 @@ public:
 	const Address& recipient_id() const noexcept { return recipientId_; }
 	const Publickey& sender_publickey() const noexcept { return senderPublicKey_; }
 	const char* signature() const noexcept { return signature_.getValue(); }
+	const char* sign_signature() const noexcept { return sign_signature_.getValue(); }
 	const char* confirmations() const noexcept { return confirmations_; }
 	/*************************************************/
 

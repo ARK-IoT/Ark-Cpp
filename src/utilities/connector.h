@@ -52,6 +52,7 @@ class Connector :
 		bool disconnect();
 
 		std::string callback(const char* const request);
+		bool post(const char* const request);
 
 	private:  
 		const char* randomPeer() const;

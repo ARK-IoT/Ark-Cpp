@@ -7,6 +7,7 @@
 #include "Base58Check.hpp"
 
 #include <memory>
+#include <cassert>
 
 namespace ARK
 {
@@ -40,6 +41,7 @@ Transaction::Transaction(
 	recipientId_(newRecipientID),
 	senderPublicKey_(newSenderPublickey),
 	signature_(newSignature),
+	sign_signature_(),
 	confirmations_()
 {
 	strncpy(blockid_, newBlockID, sizeof(blockid_) / sizeof(blockid_[0]));
@@ -67,6 +69,8 @@ Transaction::Transaction(
 	senderId_(newSenderID),
 	recipientId_(newRecipientID),
 	senderPublicKey_(newSenderPublickey),
+	signature_(),
+	sign_signature_(),
 	confirmations_()
 {
 }
@@ -147,28 +151,34 @@ void Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature
 		}
 	}
 
-	*reinterpret_cast<double* const>(bb.get() + bb_index) = amount_.getValue();
-	bb_index += sizeof(double);
+	*reinterpret_cast<uint64_t* const>(bb.get() + bb_index) = convert_to_uint64(amount_.arktoshi());
+	bb_index += sizeof(uint64_t);
+
+	*reinterpret_cast<uint64_t* const>(bb.get() + bb_index) = convert_to_uint64(fee_.arktoshi());
+	bb_index += sizeof(uint64_t);
+
+	if (asset_size > 0) {
+		/*for (var i = 0; i < assetSize; i++) {
+			bb.writeByte(assetBytes[i]);
+		}*/
+	}
+
+	if (!skip_signature && signature_) {
+		for (auto b : ParseHex(signature_.getValue())) {
+			bb[bb_index++] = b;
+		}
+	}
+
+	if (!skip_second_signature && sign_signature_) {
+		for (auto b : ParseHex(sign_signature_.getValue())) {
+			bb[bb_index++] = b;
+		}
+	}
+
+	assert(bb_index < sizeof(buffer));
+
+	std::memcpy(buffer, bb.get(), sizeof(buffer));
 	/*
-	bb.writeLong(transaction.amount);
-	bb.writeLong(transaction.fee);
-	if (assetSize > 0) {
-	for (var i = 0; i < assetSize; i++) {
-	bb.writeByte(assetBytes[i]);
-	}
-	}
-	if (!skipSignature && transaction.signature) {
-	var signatureBuffer = new Buffer(transaction.signature, "hex");
-	for (var i = 0; i < signatureBuffer.length; i++) {
-	bb.writeByte(signatureBuffer[i]);
-	}
-	}
-	if (!skipSecondSignature && transaction.signSignature) {
-	var signSignatureBuffer = new Buffer(transaction.signSignature, "hex");
-	for (var i = 0; i < signSignatureBuffer.length; i++) {
-	bb.writeByte(signSignatureBuffer[i]);
-	}
-	}
 	bb.flip();
 	var arrayBuffer = new Uint8Array(bb.toArrayBuffer());
 	var buffer = [];

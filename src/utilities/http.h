@@ -42,6 +42,12 @@ class HTTPInterface
 				int port,
 				const char *const request
 		) = 0;
+
+	virtual bool post(
+		const char *const peer,
+		int port,
+		const char *const request
+	) = 0;
 };
 /*************************************************/
 

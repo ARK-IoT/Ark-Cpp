@@ -50,6 +50,8 @@ struct Signature :
 		*
 		**************************************************/
 		const char* getValue() const noexcept { return this->value_; }
+
+		operator bool() const noexcept { return value_[0] != '\0'; }
 		/*************************************************/
 
 		/*************************************************

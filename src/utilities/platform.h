@@ -39,6 +39,10 @@ inline float convert_to_float(const std::string& s)
 	return atof(s.c_str());
 }
 
+inline uint64_t convert_to_uint64(const std::string& s) {
+	return strtoull(s.c_str(), nullptr, 10);
+}
+
 /*************************************************
 * substringCount(const char *str, const char* substr)
 *
@@ -77,6 +81,10 @@ inline int convert_to_int(const std::string& s) {
 
 inline float convert_to_float(const std::string& s) {
 	return std::stof(s);
+}
+
+inline uint64_t convert_to_uint64(const std::string& s) {
+	return std::stoull(s);
 }
 
 uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed = false);

@@ -212,6 +212,10 @@ std::string Connector::callback(
 {
 	return this->http->get(this->networkPeer, this->networkPort, request);
 }
+
+bool Connector::post(const char* const request) {
+	return this->http->post(this->networkPeer, this->networkPort, request);
+}
 /*************************************************/
 
 };
