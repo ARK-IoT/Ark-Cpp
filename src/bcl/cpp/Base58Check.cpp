@@ -8,6 +8,8 @@
 
 #include <cassert>
 #include <cstring>
+#include <memory>
+
 #include "Base58Check.hpp"
 #include "Sha256.hpp"
 #include "Sha256Hash.hpp"
@@ -20,22 +22,26 @@ using std::size_t;
 
 /*---- Public and private functions for bytes-to-Base58 conversion ----*/
 
-void Base58Check::pubkeyHashToBase58Check(uint8_t version, const uint8_t pubkeyHash[Ripemd160::HASH_LEN], char outStr[35]) {
+void Base58Check::pubkeyHashToBase58Check(const uint8_t pubkeyHash[Ripemd160::HASH_LEN], uint8_t version, char outStr[36]) {
 	assert(pubkeyHash != nullptr && outStr != nullptr);
 	uint8_t toEncode[1 + Ripemd160::HASH_LEN + 4] = {};
-	toEncode[0] = version;  // Version byte
+	toEncode[0] = version;
 	std::memcpy(&toEncode[1], pubkeyHash, Ripemd160::HASH_LEN);
 	bytesToBase58Check(toEncode, sizeof(toEncode) - 4, outStr);
 }
 
 
-void Base58Check::privateKeyToBase58Check(uint8_t version, bool compressed, const Uint256 &privKey, char outStr[53]) {
+void Base58Check::privateKeyToBase58Check(const Uint256 &privKey, uint8_t version, bool compressed, char outStr[53]) {
 	assert(outStr != nullptr);
-	uint8_t toEncode[1 + 32 + 1 + 4] = {};
-	toEncode[0] = version;  // Version byte
+	auto encode_size = 32 + 1 + 4;
+	if (compressed) { ++encode_size; }
+	std::unique_ptr<uint8_t[]> toEncode(new uint8_t[encode_size]);
+	toEncode[0] = version;
 	privKey.getBigEndianBytes(&toEncode[1]);
-	toEncode[33] = compressed ? 0x01 : 0x00;  // Compressed marker
-	bytesToBase58Check(toEncode, sizeof(toEncode) - 4, outStr);
+	if (compressed) {
+		toEncode[33] = 0x01;  // Compressed marker
+	}
+	bytesToBase58Check(toEncode.get(), encode_size - 4, outStr);
 }
 
 
@@ -100,16 +106,13 @@ uint8_t Base58Check::mod58(const uint8_t x[], size_t len) {
 void Base58Check::divide58(const uint8_t x[], uint8_t y[], size_t len) {
 	assert(x != nullptr && y != nullptr);
 	std::memset(y, 0, len);
-	int dividend = 0;
+	unsigned int dividend = 0;
 	for (size_t i = 0; i < len; i++) {  // For each input and output byte
-		for (int j = 7; j >= 0; j--) {  // For each bit within the byte
-			assert(0 <= dividend && dividend < 58);
-			dividend = (dividend << 1) | ((x[i] >> j) & 1);  // Shift next input bit into right side
-			if (dividend >= 58) {
-				dividend -= 58;
-				y[i] |= 1 << j;  // Set current output bit
-			}
-		}
+		assert(dividend < 58);
+		dividend = (dividend << 8) | x[i];  // Shift next byte into right side
+		assert(dividend < 14848);
+		y[i] = static_cast<uint8_t>(dividend / 58);
+		dividend %= 58;
 	}
 }
 
@@ -117,10 +120,10 @@ void Base58Check::divide58(const uint8_t x[], uint8_t y[], size_t len) {
 
 /*---- Public and private functions for Base58-to-bytes conversion ----*/
 
-bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubkeyHash[Ripemd160::HASH_LEN + 1]) {
+bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubkeyHash[Ripemd160::HASH_LEN], uint8_t *version) {
 	// Preliminary checks
 	assert(addrStr != nullptr && outPubkeyHash != nullptr);
-	if (std::strlen(addrStr) < 1 || std::strlen(addrStr) > 34)
+	if (std::strlen(addrStr) < 25 || std::strlen(addrStr) > 34)
 		return false;
 	
 	// Perform Base58 decoding
@@ -128,40 +131,32 @@ bool Base58Check::pubkeyHashFromBase58Check(const char *addrStr, uint8_t outPubk
 	if (!base58CheckToBytes(addrStr, decoded, sizeof(decoded) / sizeof(decoded[0])))
 		return false;
 	
-	// Successfully set the output and return the network marker with the hash
-	std::memcpy(outPubkeyHash, &decoded[0], (Ripemd160::HASH_LEN + 1) * sizeof(uint8_t));
+	// Successfully set the output and version
+	std::memcpy(outPubkeyHash, &decoded[1], Ripemd160::HASH_LEN * sizeof(uint8_t));
+	if (version != nullptr)
+		*version = decoded[0];
 	return true;
 }
 
-bool Base58Check::privateKeyFromBase58Check(const char wifStr[53], Uint256 &outPrivKey) {
+
+bool Base58Check::privateKeyFromBase58Check(const char wifStr[53], Uint256 &outPrivKey, uint8_t *version, bool& compressed) {
 	// Preliminary checks
 	assert(wifStr != nullptr);
-	// Only accept bitcoin version bytes
-	if (std::strlen(wifStr) != 52)
+	if (std::strlen(wifStr) < 38 || std::strlen(wifStr) > 52)
 		return false;
 	
-	uint8_t version;
-	bool compressed;
-
-	bool ret = privateKeyFromBase58Check(wifStr, outPrivKey, version, compressed);
-
-	return ret;
-}
-
-bool Base58Check::privateKeyFromBase58Check(const char wifStr[53], Uint256 &outPrivKey, uint8_t& version, bool& compressed) {
-	// Preliminary checks
-	assert(wifStr != nullptr);
-	
 	// Perform Base58 decoding
-	uint8_t decoded[1 + 32 + 1 + 4];
+	uint8_t decoded[1 + 32 + 1 + 4] = {};
 	if (!base58CheckToBytes(wifStr, decoded, sizeof(decoded) / sizeof(decoded[0])))
 		return false;
 	
-	version = decoded[0];
+	// Check format byte
 	compressed = decoded[33] == 0x01;
-
-	// Successfully set the value
+	
+	// Successfully set the value and version
 	outPrivKey = Uint256(&decoded[1]);
+	if (version != nullptr)
+		*version = decoded[0];
 	return true;
 }
 

@@ -128,8 +128,9 @@ void Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature
 		bb[bb_index++] = b;
 	}
 	if (recipientId_) {
-		uint8_t pub_key_hash[Ripemd160::HASH_LEN + 1] = {};
-		Base58Check::pubkeyHashFromBase58Check(recipientId_.getValue(), pub_key_hash);
+		uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
+		uint8_t version = 0;
+		Base58Check::pubkeyHashFromBase58Check(recipientId_.getValue(), pub_key_hash, &version);
 		for (auto b : ParseHex(recipientId_.getValue())) {
 			bb[bb_index++] = b;
 		}

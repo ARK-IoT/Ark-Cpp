@@ -25,13 +25,13 @@ namespace Crypto {
 
 std::string to_wif(uint8_t version, const uint8_t key[PRIVATE_KEY_SIZE], bool compressed /* = true */) {
 	std::string s(53, '\0');
-	Base58Check::privateKeyToBase58Check(version, compressed, Uint256(HexStr(key, key + PRIVATE_KEY_SIZE).c_str()), &s[0]);
+	Base58Check::privateKeyToBase58Check(Uint256(HexStr(key, key + PRIVATE_KEY_SIZE).c_str()), version, compressed, &s[0]);
 	return s;
 }
 
 void from_wif(const std::string& wif, uint8_t& version, uint8_t priv_key[PRIVATE_KEY_SIZE], bool& compressed) {
 	Uint256 bi;
-	auto ret = Base58Check::privateKeyFromBase58Check(wif.c_str(), bi, version, compressed);
+	auto ret = Base58Check::privateKeyFromBase58Check(wif.c_str(), bi, &version, compressed);
 	assert(ret);
 	bi.getBigEndianBytes(priv_key);
 }
@@ -103,14 +103,15 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 	std::vector<uint8_t> seed(Ripemd160::HASH_LEN);
 	Ripemd160::getHash(&public_key[0], public_key.size(), &seed[0]);
 	std::string s(35, '\0');
-	Base58Check::pubkeyHashToBase58Check(network, &seed[0], &s[0]);
+	Base58Check::pubkeyHashToBase58Check(&seed[0], network, &s[0]);
 	return s;
 }
 
 bool validate_address(const char* const address, uint8_t network) {
 	std::uint8_t pub_key_hash[Ripemd160::HASH_LEN + 1] = {};
-	Base58Check::pubkeyHashFromBase58Check(address, pub_key_hash);
-	return pub_key_hash[0] == network;
+	uint8_t version = 0;;
+	Base58Check::pubkeyHashFromBase58Check(address, pub_key_hash, &version);
+	return version == network;
 }
 
 void get_keys(const char* const passphrase, uint8_t priv_key[PRIVATE_KEY_SIZE], std::vector<uint8_t>& pub_key, bool compressed /* = true */) {

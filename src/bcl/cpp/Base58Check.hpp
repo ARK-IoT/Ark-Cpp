@@ -15,56 +15,37 @@
 
 
 /* 
- * Converts a pubkey hash or a private key into a Base58Check ASCII string.
- * Provides just two static methods.
+ * Converts a pubkey hash or a private key to and from a Base58Check ASCII string.
  */
 class Base58Check final {
 	
-	// Exports the given 20-byte public key hash as a public address.
-	// The outStr array must have length >= 35 (including null terminator).
-	// The output text length is between 25 and 34 characters, inclusive. Not constant-time.
-	public: static void pubkeyHashToBase58Check(uint8_t version, const std::uint8_t pubkeyHash[Ripemd160::HASH_LEN], char outStr[35]);
-	public: static void pubkeyHashToBase58Check(const std::uint8_t pubkeyHash[Ripemd160::HASH_LEN], char outStr[35]) {
-		pubkeyHashToBase58Check(0x00, pubkeyHash, outStr);
-	}
+	// Exports the given 20-byte public key hash with the given version prefix byte as a public address.
+	// The outStr array must have length >= 36 (including null terminator).
+	// The output text length is between 25 and 35 characters, inclusive. Not constant-time.
+	public: static void pubkeyHashToBase58Check(const std::uint8_t pubkeyHash[Ripemd160::HASH_LEN], std::uint8_t version, char outStr[36]);
 	
 	
-	// Exports the given private key as compressed WIF using the given version byte and given compression flag
+	// Exports the given private key with the given version prefix byte as compressed WIF.
 	// The outStr array must have length >= 53 (including null terminator).
-	// The output text length is always 52 characters. Not constant-time.
-	public: static void privateKeyToBase58Check(uint8_t version, bool compressed, const Uint256 &privKey, char outStr[53]);
-
-	// Exports the given private key as compressed WIF using the default bitcoin version byte in a compressed format
-	// The outStr array must have length >= 53 (including null terminator).
-	// The output text length is always 52 characters. Not constant-time.
-	public: static void privateKeyToBase58Check(const Uint256 &privKey, char outStr[53]) {
-		privateKeyToBase58Check(0x80, true, privKey, outStr);
-	}
+	// The output text length is between 38 and 52 characters, inclusive. Not constant-time.
+	public: static void privateKeyToBase58Check(const Uint256 &privKey, std::uint8_t version, bool compressed, char outStr[53]);
 	
 	
-	// Parses the given public address string. If the syntax and check digits are correct,
-	// then the output array is set to the decoded value and true is returned.
-	// Otherwise the output array is unchanged and false is returned. Not constant-time.
-	public: static bool pubkeyHashFromBase58Check(const char *addrStr, std::uint8_t outPubkeyHash[Ripemd160::HASH_LEN + 1]);
+	// Parses the given public address string. If the syntax and check digits are correct, then the
+	// output array is set to the decoded value, the version byte is set if not null, and true is returned.
+	// Otherwise the output array and version are unchanged, and false is returned. Not constant-time.
+	public: static bool pubkeyHashFromBase58Check(const char *addrStr, std::uint8_t outPubkeyHash[Ripemd160::HASH_LEN], std::uint8_t *version);
 	
 	
-	// Parses the given compressed WIF string. If the syntax and check digits are correct,
-	// then the private key Uint256 is set to the decoded value and true is returned.
-	// Otherwise the Uint256 is unchanged and false is returned. Not constant-time.
-	// Defaults version byte to bitcoin 0x80 and compressed flag to true
+	// Parses the given compressed WIF string. If the syntax and check digits are correct, then the private key
+	// Uint256 is set to the decoded value, the version byte is set if not null, and true is returned.
+	// Otherwise the Uint256 and version are unchanged, and false is returned. Not constant-time.
 	// Note that the decoded integer may be outside the normal private key range of [1, CurvePoint::ORDER).
-	public: static bool privateKeyFromBase58Check(const char wifStr[53], Uint256 &outPrivKey);
-
-	// Parses the given compressed WIF string. If the syntax and check digits are correct,
-	// then the private key Uint256 is set to the decoded value and true is returned.
-	// Otherwise the Uint256 is unchanged and false is returned. Not constant-time.
-	// version is set to the WIF version byte and compressed is set to true if the address was compressed
-	// Note that the decoded integer may be outside the normal private key range of [1, CurvePoint::ORDER).
-	public: static bool privateKeyFromBase58Check(const char wifStr[53], Uint256 &outPrivKey, uint8_t& version, bool& compressed);
+	public: static bool privateKeyFromBase58Check(const char wifStr[53], Uint256 &outPrivKey, std::uint8_t *version, bool& compressed);
 	
 	
-	// Computes the 4-byte hash and converts the concatenated data to Base58Check.
-	// This overwrites data[0 <= i < len + 4]. The caller is responsible for the prefix byte,
+	// Computes the 4-byte hash of the given byte array and converts the concatenated data to Base58Check.
+	// This overwrites data[0 <= i < len + 4]. The caller is responsible for the prefix byte, leaving
 	// 4 free bytes starting at data[len], and allocating enough space in outStr. Not constant-time.
 	private: static void bytesToBase58Check(std::uint8_t data[], std::size_t dataLen, char *outStr);
 	
@@ -76,8 +57,8 @@ class Base58Check final {
 	private: static bool base58CheckToBytes(const char *inStr, std::uint8_t outData[], std::size_t outDataLen);
 	
 	
-	/* Unsigned big-endian arbitrary-precision arithmetic functions */
-	// Note: This differs from Uint256 because Uint256 is fixed-width, little-endian, and 32-bit-word-oriented.
+	/*-- Unsigned big-endian arbitrary-precision arithmetic functions --*/
+	// These algorithms differ from Uint256 because Uint256 is fixed-width, little-endian, and 32-bit-word-oriented.
 	
 	// Tests whether the given bigint is zero. Not constant-time.
 	private: static bool isZero(const std::uint8_t x[], std::size_t len);
