@@ -5,11 +5,11 @@
 
 #include "api/peerable/peer_respondable.h"
 #include "api/peerable/peer_gettable.h"
+#include "models/transaction.h"
 
-namespace ARK
-{
-namespace API
-{
+namespace ARK {
+namespace API {
+
 /*************************************************
 *	PUBLIC: ARK::API::Peerable
 *	public Peer::Gettable
@@ -68,8 +68,8 @@ class Peerable :
       return ARK::API::Peer::Gettable::version(this->netConnector);
     }
 
-	bool postTransaction(const uint8_t transaction[512]) {
-		auto callback = netConnector.callback(ARK::API::Paths::Peer::transactions_s);
+	bool postTransaction(const ARK::Transaction& transaction) {
+		auto callback = netConnector.post(ARK::API::Paths::Peer::transactions_s, transaction.json().c_str());
 		/* 
 		{
 		  type: 0, // Transaction type. 0 = Normal transaction.

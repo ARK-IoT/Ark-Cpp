@@ -114,7 +114,10 @@ public:
 	void get_transaction_bytes(uint8_t buffer[512], bool skip_signature = false, bool skip_second_signature = false);
 	Sha256Hash get_hash(bool skip_signature = false, bool skip_second_signature = false);
 	void generate_id();
+	/*************************************************/
 
+	/*************************************************/
+	std::string json() const;
 	virtual size_t printTo(Print &p) const;
 	/*************************************************/
 

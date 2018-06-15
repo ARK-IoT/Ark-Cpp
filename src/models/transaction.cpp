@@ -207,8 +207,11 @@ void Transaction::generate_id() {
 /*************************************************
 *
 **************************************************/
-size_t Transaction::printTo(Print &p) const
-{
+std::string Transaction::json() const {
+	return "";
+}
+
+size_t Transaction::printTo(Print &p) const {
 	size_t size = 0;
 		size += p.print("\nid: ");
 		size += p.print(this->id_.getValue());

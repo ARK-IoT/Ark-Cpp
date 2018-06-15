@@ -38,15 +38,16 @@ class HTTPInterface
     virtual ~HTTPInterface() { }
 
     virtual std::string get(
-				const char *const peer,
-				int port,
-				const char *const request
-		) = 0;
+		const char *const peer,
+		int port,
+		const char *const request
+	) = 0;
 
 	virtual bool post(
 		const char *const peer,
 		int port,
-		const char *const request
+		const char *const request_str,
+		const char* const data
 	) = 0;
 };
 /*************************************************/

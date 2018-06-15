@@ -141,7 +141,19 @@ TEST(crypto, to_wif) {
 		wif.c_str()
 	);
 
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, true);
+	ASSERT_STREQ(
+		"SDCe8styqokHi4pSe5jVRiYVV63Mef2TGsE1D4HhtGAL1DytHLtd",
+		wif.c_str()
+	);
+
 	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::main.wif, priv_key, false);
+	ASSERT_STREQ(
+		"6iHEQ5jbB9n9meZxCaFAAE39ii1zEyCCquca8GFCyvjSc1UFLp2",
+		wif.c_str()
+	);
+
+	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::devnet.wif, priv_key, false);
 	ASSERT_STREQ(
 		"6iHEQ5jbB9n9meZxCaFAAE39ii1zEyCCquca8GFCyvjSc1UFLp2",
 		wif.c_str()
