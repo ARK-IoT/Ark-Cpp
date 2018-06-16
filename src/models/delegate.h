@@ -48,6 +48,8 @@ struct Delegate :
 		/*************************************************
 		*	Constructor
 		**************************************************/
+		Delegate() = default;
+
 		Delegate(
 				const char *const newUsername,
 				const char *const newAddress,
@@ -74,6 +76,8 @@ struct Delegate :
 		double approval() const noexcept { return approval_; }
 		double productivity() const noexcept { return productivity_; }
 		/*************************************************/
+
+		operator bool() const noexcept { return username_[0] == '\0' && !address_ && !publicKey_ && !vote_; }
 
 		/*************************************************
 		*

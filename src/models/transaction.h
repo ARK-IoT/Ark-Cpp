@@ -79,9 +79,7 @@ public:
 		TransactionType newType,
 		const char *const newAmount,
 		const char *const newFee,
-		const char *const newSenderID,
 		const char *const newRecipientID,
-		const char *const newSenderPublickey,
 		const char *const newVendorField = nullptr
 	);
 
@@ -109,7 +107,7 @@ public:
 	/*************************************************
 	*
 	**************************************************/
-	void sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
+	void sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
 	void second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
 	void get_transaction_bytes(uint8_t buffer[512], bool skip_signature = false, bool skip_second_signature = false);
 	Sha256Hash get_hash(bool skip_signature = false, bool skip_second_signature = false);

@@ -55,9 +55,7 @@ Transaction::Transaction(
 	TransactionType newType,
 	const char *const newAmount,
 	const char *const newFee,
-	const char *const newSenderID,
 	const char *const newRecipientID,
-	const char *const newSenderPublickey,
 	const char *const newVendorField /* = nullptr */
 ) : 
 	blockid_(),
@@ -67,9 +65,9 @@ Transaction::Transaction(
 	amount_(newAmount),
 	fee_(newFee),
 	vendorField_(),
-	senderId_(newSenderID),
+	senderId_(),
 	recipientId_(newRecipientID),
-	senderPublicKey_(newSenderPublickey),
+	senderPublicKey_(),
 	signature_(),
 	sign_signature_(),
 	confirmations_()
@@ -77,11 +75,15 @@ Transaction::Transaction(
 }
 /*************************************************/
 
-void Transaction::sign(uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
+void Transaction::sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
 	auto hash = get_hash(true, true);
 	std::vector<uint8_t> signature;
 	ARK::Crypto::sign(hash, secret, signature);
 	signature_ = Signature(HexStr(signature).c_str());
+	std::vector<uint8_t> pub_key(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
+	ARK::Crypto::get_public_key(secret, pub_key);
+	senderPublicKey_ = Publickey(HexStr(pub_key).c_str());
+	senderId_ = Address(ARK::Crypto::get_address(network, pub_key).c_str());
 }
 
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {

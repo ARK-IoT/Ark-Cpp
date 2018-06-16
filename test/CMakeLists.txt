@@ -42,6 +42,7 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/types/hash.cpp
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 	${PROJECT_SOURCE_DIR}/types/signature.cpp
+	${PROJECT_SOURCE_DIR}/utilities/json.cpp
 	${PROJECT_SOURCE_DIR}/utilities/time.cpp
 )
 

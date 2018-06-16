@@ -86,6 +86,8 @@ class Balance
 		const char* arktoshi() const { return arktoshi_; }
 		double getValue() const { return atof(ark_); }
 
+		operator bool() const noexcept { arktoshi_[0] == '\0' && ark_[0] == '\0'; }
+
 		void setArktoshi(const char* const balanceStr) {
 				strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);
 		}
