@@ -108,8 +108,8 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 }
 
 bool validate_address(const char* const address, uint8_t network) {
-	std::uint8_t pub_key_hash[Ripemd160::HASH_LEN + 1] = {};
-	uint8_t version = 0;;
+	std::uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
+	uint8_t version = 0;
 	Base58Check::pubkeyHashFromBase58Check(address, pub_key_hash, &version);
 	return version == network;
 }

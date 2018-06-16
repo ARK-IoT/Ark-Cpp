@@ -5,6 +5,7 @@
 
 #include "utilities/platform.h"
 #include <cstring>
+#include <cassert>
 
 /********************************************************************************
 * Signature: 
@@ -34,6 +35,9 @@ struct Signature :
 		**************************************************/
 		Signature(const char* const signatureStr) : value_()
 		{
+			assert(std::strlen(signatureStr) <= sizeof(value_));
+			std::strncpy(value_, signatureStr, sizeof(value_));
+			/*
 			if (strlen(signatureStr) == SIGNATURE_LENGTH)
 			{
 				strncpy(this->value_, signatureStr, SIGNATURE_LENGTH);
@@ -43,6 +47,7 @@ struct Signature :
 			{
 				this->value_[0] = '\0';
 			}
+			*/
 		};
 		/*************************************************/
 

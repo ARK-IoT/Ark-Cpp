@@ -106,10 +106,13 @@ struct JSON :
 				{ "id", transaction.id() },													// Transaction ID.
 				{ "recipientId", transaction.recipient_id().getValue() }, // Recipient ID.
 				{ "senderPublicKey", transaction.sender_publickey().getValue() }, // Sender's public key.
-				{ "signSignature", transaction.sign_signature() }, // Sender's second passphrase signature.
-				{ "signature", transaction.signature() }, // Transaction signature.
+				{ "signature", transaction.signature().getValue() }, // Transaction signature.
 				{ "timestamp", transaction.timestamp() } // Based on UTC time of genesis since epoch.
 			};
+			const auto& sign_signature = transaction.sign_signature();
+			if (sign_signature) {
+				_json["signSignature"] = sign_signature.getValue(); // Sender's second passphrase signature.
+			}
 			return _json.dump();
 				/*
 				{

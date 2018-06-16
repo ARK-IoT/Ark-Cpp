@@ -76,14 +76,15 @@ Transaction::Transaction(
 /*************************************************/
 
 void Transaction::sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
-	auto hash = get_hash(true, true);
-	std::vector<uint8_t> signature;
-	ARK::Crypto::sign(hash, secret, signature);
-	signature_ = Signature(HexStr(signature).c_str());
 	std::vector<uint8_t> pub_key(ARK::Crypto::COMPRESSED_PUBLIC_KEY_SIZE);
 	ARK::Crypto::get_public_key(secret, pub_key);
 	senderPublicKey_ = Publickey(HexStr(pub_key).c_str());
 	senderId_ = Address(ARK::Crypto::get_address(network, pub_key).c_str());
+
+	auto hash = get_hash(true, true);
+	std::vector<uint8_t> signature;
+	ARK::Crypto::sign(hash, secret, signature);
+	signature_ = Signature(HexStr(signature).c_str());
 }
 
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
@@ -179,9 +180,9 @@ void Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature
 		}
 	}
 
-	assert(bb_index < sizeof(buffer));
+	assert(bb_index < 512);
 
-	std::memcpy(buffer, bb.get(), sizeof(buffer));
+	std::memcpy(buffer, bb.get(), 512);
 	/*
 	bb.flip();
 	var arrayBuffer = new Uint8Array(bb.toArrayBuffer());
