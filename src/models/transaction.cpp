@@ -1,6 +1,7 @@
 #include "models/transaction.h"
 #include "types/signature.h"
 #include "utilities/time.h"
+#include "utilities/json.h"
 #include "crypto/util.h"
 #include "crypto/ark_crypto.h"
 #include "Sha256.hpp"
@@ -208,7 +209,8 @@ void Transaction::generate_id() {
 *
 **************************************************/
 std::string Transaction::json() const {
-	return "";
+	auto json = ARK::Utilities::make_json_string();
+	return json->transactionToJson(*this);
 }
 
 size_t Transaction::printTo(Print &p) const {

@@ -99,6 +99,9 @@ struct JSON :
 		}
 		/*************************************************/
 
+		std::string transactionToJson(const Transaction& transaction) override {
+			return "";
+		}
 };
 
 }
@@ -107,7 +110,7 @@ struct JSON :
 * make_json_string
 **************************************************/
 std::unique_ptr<JSONInterface> make_json_string(
-		std::string json_str
+	std::string json_str /* = std::string() */
 )
 {
 	return std::unique_ptr<JSONInterface>(new JSON(json_str));
