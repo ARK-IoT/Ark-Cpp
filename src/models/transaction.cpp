@@ -90,7 +90,7 @@ void Transaction::sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
 }
 
-void Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
+size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
 	auto asset_size = 0;
 
 	switch (type_) {
@@ -182,7 +182,8 @@ void Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature
 
 	assert(bb_index < 512);
 
-	std::memcpy(buffer, bb.get(), 512);
+	std::memcpy(buffer, bb.get(), bb_index);
+	return bb_index;
 	/*
 	bb.flip();
 	var arrayBuffer = new Uint8Array(bb.toArrayBuffer());
