@@ -56,6 +56,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 		parser->valueIn("transaction", "recipientId").c_str(),
 		parser->valueIn("transaction", "senderPublicKey").c_str(),
 		parser->valueIn("transaction", "signature").c_str(),
+		parser->valueIn("transaction", "signSignature").c_str(),
 		parser->valueIn("transaction", "confirmations").c_str()
 	};
 }
@@ -121,6 +122,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			parser->valueIn("transaction", "recipientId").c_str(),
 			parser->valueIn("transaction", "senderPublicKey").c_str(),
 			parser->valueIn("transaction", "signature").c_str(),
+			parser->valueIn("transaction", "signSignature").c_str(),
 			parser->valueIn("transaction", "confirmations").c_str()
 		);
 	};
@@ -164,6 +166,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			parser->valueIn("transaction", "recipientId").c_str(),
 			parser->valueIn("transaction", "senderPublicKey").c_str(),
 			parser->valueIn("transaction", "signature").c_str(),
+			parser->valueIn("transaction", "signSignature").c_str(),
 			parser->valueIn("transaction", "confirmations").c_str()
 		);
 	};

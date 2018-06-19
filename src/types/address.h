@@ -5,6 +5,7 @@
 
 #include "utilities/platform.h"
 #include <cstring>
+#include <cassert>
 
 /*******************************************************************************
 * address: 
@@ -40,10 +41,11 @@ struct Address :
 		**************************************************/
 		explicit Address(const char* const addressStr) : value_()
 		{
-			if (strlen(addressStr) * ADDRESS_CHARACTER_WIDTH == ADDRESS_SIZE)
-			{
+			assert(std::strlen(addressStr) <= sizeof(value_));
+			//if (strlen(addressStr) * ADDRESS_CHARACTER_WIDTH == ADDRESS_SIZE)
+			//{
 				strncpy(value_, addressStr, ADDRESS_LENGTH);
-			}
+			//}
 		};
 		/*************************************************/
 

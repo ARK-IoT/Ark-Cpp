@@ -72,6 +72,7 @@ public:
 		const char *const newRecipientID,
 		const char *const newSenderPublickey,
 		const char *const newSignature,
+		const char *const newSignSignature,
 		const char *const newConfirmations
 	);
 

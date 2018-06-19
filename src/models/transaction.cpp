@@ -28,6 +28,7 @@ Transaction::Transaction(
 		const char *const newRecipientID,
 		const char *const newSenderPublickey,
 		const char *const newSignature,
+		const char *const newSignSignature,
 		const char *const newConfirmations
 ) :
 	id_(newID),
@@ -42,7 +43,7 @@ Transaction::Transaction(
 	recipientId_(newRecipientID),
 	senderPublicKey_(newSenderPublickey),
 	signature_(newSignature),
-	sign_signature_(),
+	sign_signature_(newSignSignature),
 	confirmations_()
 {
 	strncpy(blockid_, newBlockID, sizeof(blockid_) / sizeof(blockid_[0]));
@@ -128,14 +129,16 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 	bb[bb_index++] = static_cast<TransactionTypeIntType>(type_);
 	*reinterpret_cast<uint32_t* const>(bb.get() + bb_index) = timestamp_;
 	bb_index += sizeof(uint32_t);
-	for (auto b : ParseHex(senderPublicKey_.getValue())) {
+	const auto sender_public_key_buffer = ParseHex(senderPublicKey_.getValue());
+	for (auto b : sender_public_key_buffer) {
 		bb[bb_index++] = b;
 	}
 	if (recipientId_) {
 		uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
 		uint8_t version = 0;
 		Base58Check::pubkeyHashFromBase58Check(recipientId_.getValue(), pub_key_hash, &version);
-		for (auto b : ParseHex(recipientId_.getValue())) {
+		bb[bb_index++] = version;
+		for (auto b : pub_key_hash) {
 			bb[bb_index++] = b;
 		}
 	}
@@ -154,6 +157,10 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 			std::memset(bb.get() + bb_index, 0, byte_pad_length);
 			bb_index += byte_pad_length;
 		}
+	}
+	else {
+		std::memset(bb.get() + bb_index, 0, 64);
+		bb_index += 64;
 	}
 
 	*reinterpret_cast<uint64_t* const>(bb.get() + bb_index) = convert_to_uint64(amount_.arktoshi());
