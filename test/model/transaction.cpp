@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "models/transaction.h"
+#include "crypto/util.h"
 
 TEST(model, construct_transaction)
 {
@@ -37,7 +38,7 @@ TEST(model, construct_transaction)
 }
 
 TEST(model, transaction_get_transaction_bytes) {
-      	ARK::Transaction transaction(
+	ARK::Transaction transaction(
 		"13987348420913138422",
 		"",
 		"",
@@ -56,64 +57,112 @@ TEST(model, transaction_get_transaction_bytes) {
 	uint8_t buffer[512] = {};
 	auto length = transaction.get_transaction_bytes(buffer);
 	ASSERT_EQ(202u, length);
-/*
-    it("should return Buffer of transaction with second signature and buffer must be 266 length", function () {
-      var transaction = {
-        type: 0,
-        amount: 1000,
-        fee: 2000,
-        recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
-        timestamp: 141738,
-        asset: {},
-        senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-        signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
-        signSignature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
-        id: "13987348420913138422"
-      };
 
-      bytes = getBytes(transaction);
-      (bytes).should.be.ok;
-      (bytes).should.be.type("object");
-      (bytes.length).should.be.equal(266);
-    });
-  });
-	*/
+	transaction = ARK::Transaction(
+		"",
+		"",
+		"",
+		ARK::TransactionType::NORMAL,
+		27953413,
+		std::to_string(1000).c_str(),
+		std::to_string(10000000).c_str(),
+		"",
+		"",
+		"AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
+		"03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933", //"5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
+		"3045022100d657a99810e4a27ec7d8692096fdae49480ed31530a4de30ca05c2fc4f70ee3402204f96561c774bd76914c83b0c34eecfc2cd6c7f56369fb02c7dccd608087be501",
+		"",
+		""
+	);
+
+	length = transaction.get_transaction_bytes(buffer);
+	ASSERT_EQ(210u, length);
+	ASSERT_STREQ(
+		"000589aa0103a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933171dfc69b54c7fe901e91d5a9ab78388645e2427ea00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e80300000000000080969800000000003045022100d657a99810e4a27ec7d8692096fdae49480ed31530a4de30ca05c2fc4f70ee3402204f96561c774bd76914c83b0c34eecfc2cd6c7f56369fb02c7dccd608087be501",
+		HexStr(buffer, buffer + length).c_str()
+	);
+
+	transaction = ARK::Transaction(
+		"13987348420913138422",
+		"",
+		"",
+		ARK::TransactionType::NORMAL,
+		141738,
+		std::to_string(1000).c_str(),
+		std::to_string(2000).c_str(),
+		"",
+		"",
+		"AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
+		"5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
+		"618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
+		"618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
+		""
+	);
+
+	//should return Buffer of transaction with second signature and buffer must be 266 length
+	length = transaction.get_transaction_bytes(buffer);
+	ASSERT_EQ(266u, length);
 }
 
 TEST(model, transaction_get_id) {
-	/*
-	describe("#getId", function () {
-    var getId = crypto.getId;
+	ARK::Transaction transaction(
+		"",
+		"",
+		"",
+		ARK::TransactionType::NORMAL,
+		27953413,
+		std::to_string(1000).c_str(),
+		std::to_string(10000000).c_str(),
+		"",
+		"",
+		"AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
+		"03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933",
+		"3045022100d657a99810e4a27ec7d8692096fdae49480ed31530a4de30ca05c2fc4f70ee3402204f96561c774bd76914c83b0c34eecfc2cd6c7f56369fb02c7dccd608087be501",
+		"",
+		""
+	);
+	transaction.generate_id();
+	ASSERT_STREQ("9d327fb1f26f1824a727ee58df60d3c646513ffb930e1959ea893e7a882dbba8", transaction.id());
 
-    it("should be ok", function () {
-      (getId).should.be.ok;
-    });
-
-    it("should be a function", function () {
-      (getId).should.be.type("function");
-    });
-
-    it("should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491", function () {
-      var transaction = {
-        type: 0,
-        amount: 1000,
-        fee: 2000,
-        recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
-        timestamp: 141738,
-        asset: {},
-        senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-        signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a"
-      };
-
-      var id = getId(transaction);
-      (id).should.be.type("string").and.equal("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea");
-    });
-  });
-
-	*/
+	transaction = ARK::Transaction(
+		"",
+		"",
+		"",
+		ARK::TransactionType::NORMAL,
+		141738,
+		std::to_string(1000).c_str(),
+		std::to_string(2000).c_str(),
+		"",
+		"",
+		"AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
+		"5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
+		"618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
+		"",
+		""
+	);
+	transaction.generate_id();
+	ASSERT_STREQ("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea", transaction.id());
 }
 
 TEST(model, transaction_get_hash) {
+	ARK::Transaction transaction(
+		"",
+		"",
+		"",
+		ARK::TransactionType::NORMAL,
+		141738,
+		std::to_string(1000).c_str(),
+		std::to_string(2000).c_str(),
+		"",
+		"",
+		"AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
+		"5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
+		"618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
+		"",
+		""
+	);
+	const auto hash = transaction.get_hash();
+	
 	/*
 	describe("#getHash", function () {
     var getHash = crypto.getHash;
@@ -145,32 +194,5 @@ TEST(model, transaction_get_hash) {
     });
   });
 
-  describe("#getId", function () {
-    var getId = crypto.getId;
-
-    it("should be ok", function () {
-      (getId).should.be.ok;
-    });
-
-    it("should be a function", function () {
-      (getId).should.be.type("function");
-    });
-
-    it("should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491", function () {
-      var transaction = {
-        type: 0,
-        amount: 1000,
-        fee: 2000,
-        recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
-        timestamp: 141738,
-        asset: {},
-        senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-        signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a"
-      };
-
-      var id = getId(transaction);
-      (id).should.be.type("string").and.equal("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea");
-    });
-  });
-	*/
+  */
 }

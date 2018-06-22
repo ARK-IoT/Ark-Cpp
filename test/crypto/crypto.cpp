@@ -264,3 +264,7 @@ TEST(crypto, sign) {
 		HexStr(signature).c_str()
 	);
 }
+
+TEST(crypto, create_transaction) {
+
+}

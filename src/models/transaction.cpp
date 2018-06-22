@@ -211,8 +211,8 @@ Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_se
 
 void Transaction::generate_id() {
 	uint8_t buf[512] = {};
-	get_transaction_bytes(buf);
-	auto hash = Sha256::getHash(buf, sizeof(buf));
+	const auto length = get_transaction_bytes(buf);
+	auto hash = Sha256::getHash(buf, length);
 	id_ = Hash(HexStr(hash.value, hash.value + Sha256Hash::HASH_LEN).c_str());
 }
 
