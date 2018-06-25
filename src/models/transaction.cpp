@@ -203,10 +203,9 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 }
 
 Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
-	//return crypto.createHash("sha256").update(getBytes(transaction, skipSignature, skipSecondSignature)).digest();
 	uint8_t bytes[512] = {};
-	get_transaction_bytes(bytes, skip_signature, skip_second_signature);
-	return Sha256::getHash(bytes, sizeof(bytes));
+	const auto length = get_transaction_bytes(bytes, skip_signature, skip_second_signature);
+	return Sha256::getHash(bytes, length);
 }
 
 void Transaction::generate_id() {

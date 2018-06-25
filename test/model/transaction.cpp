@@ -162,6 +162,7 @@ TEST(model, transaction_get_hash) {
 		""
 	);
 	const auto hash = transaction.get_hash();
+	ASSERT_STREQ("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea", HexStr(hash.value, hash.value + hash.HASH_LEN).c_str());
 	
 	/*
 	describe("#getHash", function () {
