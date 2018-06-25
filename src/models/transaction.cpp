@@ -191,15 +191,6 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 
 	std::memcpy(buffer, bb.get(), bb_index);
 	return bb_index;
-	/*
-	bb.flip();
-	var arrayBuffer = new Uint8Array(bb.toArrayBuffer());
-	var buffer = [];
-	for (var i = 0; i < arrayBuffer.length; i++) {
-	buffer[i] = arrayBuffer[i];
-	}
-	return new Buffer(buffer);
-	*/
 }
 
 Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_second_signature /* = false */) {

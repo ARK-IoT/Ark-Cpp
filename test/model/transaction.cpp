@@ -163,37 +163,4 @@ TEST(model, transaction_get_hash) {
 	);
 	const auto hash = transaction.get_hash();
 	ASSERT_STREQ("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea", HexStr(hash.value, hash.value + hash.HASH_LEN).c_str());
-	
-	/*
-	describe("#getHash", function () {
-    var getHash = crypto.getHash;
-
-    it("should be ok", function () {
-      (getHash).should.be.ok;
-    });
-
-    it("should be a function", function () {
-      (getHash).should.be.type("function");
-    })
-
-    it("should return Buffer and Buffer most be 32 bytes length", function () {
-      var transaction = {
-        type: 0,
-        amount: 1000,
-        fee: 2000,
-        recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
-        timestamp: 141738,
-        asset: {},
-        senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-        signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
-      };
-
-      var result = getHash(transaction);
-      (result).should.be.ok;
-      (result).should.be.type("object");
-      (result.length).should.be.equal(32);
-    });
-  });
-
-  */
 }
