@@ -99,9 +99,9 @@ struct JSON :
 		
 		std::string transactionToJson(const Transaction& transaction) override {
 			_json = {
+				// TODO: Asset??, VendorField??
 				{ "type", static_cast<TransactionTypeIntType>(transaction.type()) },		// Transaction type. 0 = Normal transaction.
 				{ "amount", std::strtoull(transaction.amount().arktoshi(), nullptr, 10) },	// The amount to send expressed as an integer value.
-				{ "asset", {/* TODO:  add assert to ARK::Transaction */} },					// Transaction asset, dependent on tx type.
 				{ "fee", std::strtoull(transaction.fee().arktoshi(), nullptr, 10) },		// The transaction fee expressed as an integer value.
 				{ "id", transaction.id() },													// Transaction ID.
 				{ "recipientId", transaction.recipient_id().getValue() }, // Recipient ID.
@@ -112,6 +112,9 @@ struct JSON :
 			const auto& sign_signature = transaction.sign_signature();
 			if (sign_signature) {
 				_json["signSignature"] = sign_signature.getValue(); // Sender's second passphrase signature.
+			}
+			if (transaction.vendor_field()[0] != '\0') {
+				_json["vendorField"] = transaction.vendor_field();
 			}
 			return _json.dump();
 				/*
