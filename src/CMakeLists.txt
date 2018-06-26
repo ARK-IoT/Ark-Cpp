@@ -51,7 +51,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
 	${PROJECT_SOURCE_DIR}/utilities/platform.cpp
-	${PROJECT_SOURCE_DIR}/utilities/time.cpp
+	${PROJECT_SOURCE_DIR}/utilities/slots.cpp
 )
 
 set (BCL_SRC

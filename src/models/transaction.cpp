@@ -1,6 +1,6 @@
 #include "models/transaction.h"
 #include "types/signature.h"
-#include "utilities/time.h"
+#include "utilities/slots.h"
 #include "utilities/json.h"
 #include "crypto/util.h"
 #include "crypto/ark_crypto.h"
@@ -62,7 +62,7 @@ Transaction::Transaction(
 	blockid_(),
 	height_(),
 	type_(newType),
-	timestamp_(static_cast<uint32_t>(ARK::Utilities::get_time())),
+	timestamp_(static_cast<uint32_t>(ARK::Utilities::slots::get_time())),
 	amount_(newAmount),
 	fee_(newFee),
 	vendorField_(),
