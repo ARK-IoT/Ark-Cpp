@@ -95,6 +95,9 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 	auto asset_size = 0;
 
 	switch (type_) {
+	case TransactionType::NORMAL:
+		// Do Nothing
+		break;
 	case TransactionType::SIGNATURE:
 		//assetBytes = getSignatureBytes(transaction.asset.signature);
 		//assetSize = assetBytes.length;
