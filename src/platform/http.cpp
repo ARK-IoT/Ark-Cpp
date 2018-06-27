@@ -59,7 +59,7 @@ public:
 		int port,
 		const char *const request_str,
 		const char* const data
-	) {
+	) override {
 		std::ostringstream ss;
 		ss << peer << ":" << port;
 		Poco::Net::HTTPClientSession session(Poco::Net::SocketAddress(ss.str()));
