@@ -2,6 +2,7 @@
 #define ARK_UTILITIES_SLOTS_H
 
 #include <cstdint>
+#include <chrono>
 
 namespace ARK {
 namespace Utilities {
@@ -9,12 +10,12 @@ namespace Utilities {
 class slots {
 public:
 	static uint64_t get_epoch_time() {
-		return get_epoch_time(moment());
+		return get_epoch_time(std::chrono::system_clock::now().time_since_epoch().count());
 	}
 	static uint64_t get_epoch_time(uint64_t time);
-	static constexpr uint64_t begin_epoch_time();
+	static uint64_t begin_epoch_time();
 	static uint64_t get_time() {
-		return get_time(moment());
+		return get_time(std::chrono::system_clock::now().time_since_epoch().count());
 	}
 	static uint64_t get_time(uint64_t time);
 	static uint64_t get_real_time() {

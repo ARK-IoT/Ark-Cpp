@@ -8,12 +8,12 @@ namespace ARK {
 namespace Utilities {
 
 uint64_t slots::get_epoch_time(uint64_t time) {
-	const auto start = begin_epoch_time();
-
+	const auto start = begin_epoch_time() * 1000;
+	auto r = std::floor((time - start) / 1000);
 	return static_cast<uint64_t>(std::floor((time - start) / 1000));
 }
 
-constexpr uint64_t slots::begin_epoch_time() {
+uint64_t slots::begin_epoch_time() {
 	//2017-03-21T13:00:00Z
 	static const date::year_month_day epoch_date(date::year(2017), date::month(3), date::day(21));
 	static const date::time_of_day<std::chrono::hours> epoch_time(std::chrono::hours(13));
@@ -27,11 +27,11 @@ uint64_t slots::get_time(uint64_t time) {
 }
 
 uint64_t slots::get_real_time(uint64_t epoch_time) {
-	const auto start = static_cast<uint64_t>(std::floor(begin_epoch_time() / 1000)) * 1000;
+	const auto start = begin_epoch_time() * 1000;
 
 	return start + epoch_time * 1000;
 }
-
+/*
 uint64_t slots::get_slot_number(uint64_t epoch_time) {
 	return static_cast<uint64_t>(std::floor(epoch_time / get_constant<uint64_t>("blocktime")));
 }
@@ -51,6 +51,6 @@ uint64_t slots::get_last_slot(uint64_t next_slot) {
 bool slots::is_forging_allowed(uint64_t epoch_time) {
 	return std::floor(epoch_time / get_constant<uint64_t>("blocktime")) == std::floor((epoch_time + get_constant<uint64_t>("blocktime") / 2) / get_constant<uint64_t>("blocktime"));
 }
-
+*/
 }
 }

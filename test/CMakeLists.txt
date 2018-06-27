@@ -43,7 +43,7 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 	${PROJECT_SOURCE_DIR}/types/signature.cpp
 	${PROJECT_SOURCE_DIR}/utilities/json.cpp
-	${PROJECT_SOURCE_DIR}/utilities/time.cpp
+	${PROJECT_SOURCE_DIR}/utilities/slots.cpp
 )
 
 find_library(Ark-Cpp-tests NAMES Ark-Cpp-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
