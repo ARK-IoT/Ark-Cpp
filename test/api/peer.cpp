@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "api/api.h"
-
+#if 0
 TEST(api, test_peer_peer)
 {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
@@ -33,4 +33,22 @@ TEST(api, test_peer_version)
 	const auto version = _arkManager.peerVersion();
 	ASSERT_STREQ("1.1.1", version.version());
 	ASSERT_STREQ("", version.build());
+}
+#endif
+
+TEST(api, test_peer_post_transaction) {
+	//ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
+	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Mainnet);
+
+	const auto t = ARK::make_transaction(
+		//ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash,
+		ARK::Constants::Networks::Network_ADV::main.pubKeyHash,
+		//"DGUac5xr1cn7D2VVG7hEmV1cb1wfvbbc6p",
+		"AZwAnbjeoxcLcJWK1RJTy4mrR39vRcTbq1",
+		100000000,
+		"ark-cpp TX",
+		//"tower sponsor engine cram define bone agree mountain sad find place rug"
+		"eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink"
+	);
+	ASSERT_TRUE(_arkManager.postTransaction(t));
 }

@@ -123,6 +123,17 @@ public:
 };
 /*************************************************/
 
+ARK::Transaction make_transaction(
+	uint8_t network,
+	const char* const address,
+	uint64_t amount_in_arktoshi,
+	const std::string& vendor_field,
+	const char* const passphrase,
+	uint8_t* second_secret = nullptr,
+	uint32_t version = 1,
+	uint64_t fee_override = ARK::send_fee
+);
+
 };
 
 #endif

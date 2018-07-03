@@ -1,5 +1,8 @@
+#include "utilities/platform.h"  // include platform first to pick up patched STL std::to_string functions for IoT
+
 #include "utilities/slots.h"
 
+#undef round	// Undef round macro so IoT compiler doesn't confuse it with date's round template function
 #include "date/date.h"
 
 #include <cmath>

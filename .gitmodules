@@ -1,6 +1,6 @@
 [submodule "src/uECC"]
 	path = src/uECC
 	url = https://github.com/kmackay/micro-ecc
-[submodule "src/platform/date"]
-	path = src/platform/date
-	url = https://github.com/HowardHinnant/date.git
+[submodule "src/date"]
+	path = src/date
+	url = https://github.com/HowardHinnant/date

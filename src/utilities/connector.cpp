@@ -214,7 +214,7 @@ std::string Connector::callback(
 }
 
 bool Connector::post(const char* const request, const char* const data) {
-	return this->http->post(this->networkPeer, this->networkPort, request, data);
+	return this->http->post(this->network->nethash(), this->networkPeer, this->networkPort, request, data);
 }
 /*************************************************/
 

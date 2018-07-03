@@ -1,7 +1,13 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
+#include <sstream>
+
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
+
+#include <cstdio>
+
+#include "arduino/stl/details/to_string.h"
 
 #define USE_IOT
 
@@ -222,5 +228,12 @@ public:
 };
 
 #endif
+
+template <typename T>
+std::string convert_to_string(T t) {
+	std::ostringstream ss;
+	ss << t;
+	return ss.str();
+}
 
 #endif

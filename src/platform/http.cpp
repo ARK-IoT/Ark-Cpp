@@ -55,15 +55,20 @@ public:
 	}
 
 	bool post(
+		const Hash& nethash,
 		const char *const peer,
 		int port,
 		const char *const request_str,
 		const char* const data
-	) {
+	) override {
 		std::ostringstream ss;
 		ss << peer << ":" << port;
 		Poco::Net::HTTPClientSession session(Poco::Net::SocketAddress(ss.str()));
 		Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, request_str, Poco::Net::HTTPMessage::HTTP_1_1);
+		request.add("nethash", nethash.getValue());
+		request.add("version", "0.1.0");
+		request.add("port", "1");
+
 		// Set the request body
 		request.setContentLength(std::strlen(data));
 

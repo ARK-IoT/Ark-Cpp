@@ -4,6 +4,8 @@
 #define HTTP_H
 
 #include "platform.h"
+#include "types/hash.h"
+
 #include <memory>
 
 namespace ARK
@@ -44,6 +46,7 @@ class HTTPInterface
 	) = 0;
 
 	virtual bool post(
+		const Hash& nethash,
 		const char *const peer,
 		int port,
 		const char *const request_str,

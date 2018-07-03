@@ -258,4 +258,19 @@ size_t Transaction::printTo(Print &p) const {
 }
 /*************************************************/
 
+ARK::Transaction make_transaction(
+	uint8_t network,
+	const char* const address,
+	uint64_t amount_in_arktoshi,
+	const std::string& vendor_field,
+	const char* const passphrase,
+	uint8_t* second_secret /* = nullptr */,
+	uint32_t version /* = 1 */,
+	uint64_t fee_override /* = ARK::send_fee */
+) {
+	uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE] = {};
+	ARK::Crypto::get_private_key(passphrase, secret);
+	return ARK::Crypto::create_transaction(network, address, amount_in_arktoshi, vendor_field, secret, second_secret, version, fee_override);
+}
+
 };

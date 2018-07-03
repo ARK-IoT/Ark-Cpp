@@ -14,7 +14,7 @@ include_directories(
 	${PROJECT_SOURCE_DIR}/uint128_t
 	${PROJECT_SOURCE_DIR}/bcl/cpp
 	${PROJECT_SOURCE_DIR}/uECC
-	${PROJECT_SOURCE_DIR}/platform/date/include
+	${PROJECT_SOURCE_DIR}/date/include
 )
  
 find_package(nlohmann_json CONFIG REQUIRED)
