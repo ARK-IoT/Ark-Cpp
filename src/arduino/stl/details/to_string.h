@@ -24,17 +24,17 @@ namespace std {
 	}
 	inline std::string to_string(unsigned value) {
 		char buf[24] = {};
-		snprintf(buf, sizeof(buf), "%ul", value);
+		snprintf(buf, sizeof(buf), "%u", value);
 		return buf;
 	}
 	inline std::string to_string(unsigned long value) {
 		char buf[24] = {};
-		snprintf(buf, sizeof(buf), "%u", value);
+		snprintf(buf, sizeof(buf), "%lu", value);
 		return buf;
 	}
 	inline std::string to_string(unsigned long long value) {
 		char buf[24] = {};
-		snprintf(buf, sizeof(buf), "%ull", value);
+		snprintf(buf, sizeof(buf), "%llu", value);
 		return buf;
 	}
 	inline std::string to_string(float value) {
@@ -49,7 +49,7 @@ namespace std {
 	}
 	inline std::string to_string(long double value) {
 		char buf[24] = {};
-		snprintf(buf, sizeof(buf), "%lf", value);
+		snprintf(buf, sizeof(buf), "%Lf", value);
 		return buf;
 	}
 
@@ -138,17 +138,17 @@ namespace std {
 	}
 	inline std::wstring to_wstring(unsigned value) {
 		wchar_t buf[24] = {};
-		swprintf(buf, sizeof(buf), L"%ul", value);
+		swprintf(buf, sizeof(buf), L"%u", value);
 		return buf;
 	}
 	inline std::wstring to_wstring(unsigned long value) {
 		wchar_t buf[24] = {};
-		swprintf(buf, sizeof(buf), L"%u", value);
+		swprintf(buf, sizeof(buf), L"%lu", value);
 		return buf;
 	}
 	inline std::wstring to_wstring(unsigned long long value) {
 		wchar_t buf[24] = {};
-		swprintf(buf, sizeof(buf), L"%ull", value);
+		swprintf(buf, sizeof(buf), L"%llu", value);
 		return buf;
 	}
 	inline std::wstring to_wstring(float value) {
@@ -163,7 +163,7 @@ namespace std {
 	}
 	inline std::wstring to_wstring(long double value) {
 		wchar_t buf[24] = {};
-		swprintf(buf, sizeof(buf), L"%lf", value);
+		swprintf(buf, sizeof(buf), L"%Lf", value);
 		return buf;
 	}
 }

@@ -12,7 +12,6 @@ namespace Utilities {
 
 uint64_t slots::get_epoch_time(uint64_t time) {
 	const auto start = begin_epoch_time() * 1000;
-	auto r = std::floor((time - start) / 1000);
 	return static_cast<uint64_t>(std::floor((time - start) / 1000));
 }
 
