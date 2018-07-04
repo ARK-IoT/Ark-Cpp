@@ -7,7 +7,7 @@
 #include "crypto/util.h"
 
 TEST(utilities, transactionToJson) {
-	static const auto expected_json = "{"
+	const auto expected_json = "{"
 	"\"amount\":1000,"// The amount to send expressed as an integer value.
 		"\"fee\":10000000," // 0.1 ARK expressed as an integer value.
 		"\"id\":\"9d327fb1f26f1824a727ee58df60d3c646513ffb930e1959ea893e7a882dbba8\"," // Transaction ID.

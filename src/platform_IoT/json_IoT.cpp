@@ -20,7 +20,7 @@ struct JSON :
 		public JSONInterface
 {
 	private:
-		static const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
+		const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
 		std::string jsonStr;
 
 	public:

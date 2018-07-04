@@ -159,7 +159,7 @@ TEST(crypto, to_wif) {
 		wif.c_str()
 	);
 
-	static const auto priv_key_str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
+	const auto priv_key_str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
 	std::memcpy(&priv_key[0], priv_key_str, ARK::Crypto::PRIVATE_KEY_SIZE);
 	wif = ARK::Crypto::to_wif(ARK::Constants::Networks::Network_ADV::bitcoin.wif, priv_key, true);
 	ASSERT_STREQ(
