@@ -64,6 +64,9 @@ inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* stati
 #define PROGMEM
 #define PGM_P const char*
 
+#define pgm_read_ptr_far(p) (*p)
+#define strcpy_P strcpy
+
 #include <string>
 #include <random>
 #include <iostream>
