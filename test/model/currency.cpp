@@ -9,7 +9,7 @@ const auto ark_symbol = u8"Ѧ";
 
 TEST(model, construct_currency)
 {
-	ARK::Model::Currency currency(
+	const ARK::Model::Currency currency(
 		"ARK",
 		"ark",
 		ark_symbol

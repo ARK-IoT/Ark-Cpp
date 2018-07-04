@@ -4,7 +4,7 @@
 
 TEST(model, construct_block)
 {
-	ARK::Block block(
+	const ARK::Block block(
 		"5907849310697169543",
 		0,
 		"27400752",

@@ -2,11 +2,6 @@
 
 #include "api/api.h"
 
-namespace
-{
-	const Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
-}
-
 TEST(api, test_delegates_count)
 {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
@@ -48,6 +43,7 @@ TEST(api, test_delegate_user)
 TEST(api, test_delegate_pub_key)
 {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
+	const Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 	auto delegate = _arkManager.delegate(darkPubkey.getValue());
 	ASSERT_STREQ("sleepdeficit", delegate.username());
 	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", delegate.address().getValue());
@@ -82,6 +78,7 @@ TEST(api, test_delegate_fee)
 TEST(api, test_delegate_forged_by_account)
 {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
+	const Publickey darkPubkey("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456");
 	const auto forged_by_account = _arkManager.delegateForgedByAccount(darkPubkey);
 	ASSERT_STRNE("0.0", forged_by_account.fees().ark());
 	ASSERT_STRNE("0", forged_by_account.fees().arktoshi());

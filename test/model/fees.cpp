@@ -4,7 +4,7 @@
 
 TEST(model, construct_fees)
 {
-	ARK::Fees fees(
+	const ARK::Fees fees(
 		"10000000",
 		"100000000",
 		"500000000",

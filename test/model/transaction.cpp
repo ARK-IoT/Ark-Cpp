@@ -145,7 +145,7 @@ TEST(model, transaction_get_id) {
 }
 
 TEST(model, transaction_get_hash) {
-	ARK::Transaction transaction(
+	const ARK::Transaction transaction(
 		"",
 		"",
 		"",

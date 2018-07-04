@@ -90,7 +90,7 @@ void Transaction::sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
 }
 
-size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
+size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature /* = false */, bool skip_second_signature /* = false */) const {
 	auto asset_size = 0;
 
 	switch (type_) {
@@ -193,7 +193,7 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 	return bb_index;
 }
 
-Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
+Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_second_signature /* = false */) const {
 	uint8_t bytes[512] = {};
 	const auto length = get_transaction_bytes(bytes, skip_signature, skip_second_signature);
 	return Sha256::getHash(bytes, length);
