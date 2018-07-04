@@ -3,15 +3,21 @@
 #include "utilities/slots.h"
 
 TEST(utilities, slots_get_time) {
-	ASSERT_EQ(10u, ARK::Utilities::slots::get_time(1490101210000u));
+	//ASSERT_EQ(10ull, ARK::Utilities::slots::get_time(1490101210000));
+	// IoT does not support 64 bit in unit tests yet
+	ASSERT_TRUE(ARK::Utilities::slots::get_time(1490101210000) == 10ull);
 }
 
 TEST(utilities, slots_begin_epoch_time) {
-	ASSERT_EQ(1490101200u, ARK::Utilities::slots::begin_epoch_time());
+	//ASSERT_EQ(1490101200ull, ARK::Utilities::slots::begin_epoch_time());
+	// IoT does not support 64 bit in unit tests yet
+	ASSERT_TRUE(ARK::Utilities::slots::begin_epoch_time() == 1490101200ull);
 }
 
 TEST(utilities, slots_get_real_time) {
-	ASSERT_EQ(1490101210000u, ARK::Utilities::slots::get_real_time(10));
+	//ASSERT_EQ(1490101210000ull, ARK::Utilities::slots::get_real_time(10));
+	// IoT does not support 64 bit in unit tests yet
+	ASSERT_TRUE(ARK::Utilities::slots::get_real_time(10) == 1490101210000ull);
 }
 /*
 TEST(utilities, slots_get_slot_number) {

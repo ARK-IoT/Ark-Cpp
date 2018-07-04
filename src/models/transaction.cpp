@@ -8,7 +8,6 @@
 #include "Base58Check.hpp"
 
 #include <memory>
-#include <cassert>
 
 namespace ARK
 {
@@ -189,8 +188,6 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 			bb[bb_index++] = b;
 		}
 	}
-
-	assert(bb_index < 512);
 
 	std::memcpy(buffer, bb.get(), bb_index);
 	return bb_index;

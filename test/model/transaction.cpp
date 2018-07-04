@@ -24,7 +24,7 @@ TEST(model, construct_transaction)
 	ASSERT_STREQ("f93b1b635eaaeea21b26ebf1e10f62dc8874add6592737a1540d28ec9432eaa9", transaction.id());
 	ASSERT_STREQ("14671461178414977683", transaction.block_id());
 	ASSERT_STREQ("1696504", transaction.height());
-	ASSERT_EQ(ARK::TransactionType::NORMAL, transaction.type());
+	ASSERT_EQ(static_cast<ARK::TransactionTypeIntType>(ARK::TransactionType::NORMAL), static_cast<ARK::TransactionTypeIntType>(transaction.type()));
 	ASSERT_EQ(9656006, transaction.timestamp());
 	ASSERT_STREQ("51000", transaction.amount().arktoshi());
 	ASSERT_STREQ("10000000", transaction.fee().arktoshi());
