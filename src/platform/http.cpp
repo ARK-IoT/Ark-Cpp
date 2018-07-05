@@ -65,21 +65,21 @@ public:
 		ss << peer << ":" << port;
 		Poco::Net::HTTPClientSession session(Poco::Net::SocketAddress(ss.str()));
 		Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, request_str, Poco::Net::HTTPMessage::HTTP_1_1);
+		request.setContentType("application/json");
 		request.add("nethash", nethash.getValue());
-		request.add("version", "0.1.0");
-		request.add("port", "1");
+		//request.add("version", "1.3.0");
+		//request.add("port", "4001");
 
 		// Set the request body
 		request.setContentLength(std::strlen(data));
 
 		// sends request, returns open stream
 		auto& os = session.sendRequest(request);
-		os << data;  // sends the body
+		os << "{transactions: [" << data << "]} ";  // sends the body
 		os.flush();
 
 		Poco::Net::HTTPResponse response;
 		try {
-			session.sendRequest(request);
 			auto& rs = session.receiveResponse(response);
 			if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
 			{
