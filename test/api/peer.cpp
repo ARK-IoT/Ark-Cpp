@@ -46,8 +46,7 @@ TEST(api, test_peer_post_transaction) {
 		//"DGUac5xr1cn7D2VVG7hEmV1cb1wfvbbc6p",
 		"AeXM1xpkCrarUTBraEpnGnp2ZrAyRAQYqS",
 		00000001,
-		//"ark-cpp TX",
-		"",
+		"ark-cpp TX",
 		//"tower sponsor engine cram define bone agree mountain sad find place rug"
 		"eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink"
 	);
