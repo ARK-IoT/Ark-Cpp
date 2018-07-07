@@ -44,9 +44,10 @@ TEST(api, test_peer_post_transaction) {
 		//ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash,
 		ARK::Constants::Networks::Network_ADV::main.pubKeyHash,
 		//"DGUac5xr1cn7D2VVG7hEmV1cb1wfvbbc6p",
-		"AZwAnbjeoxcLcJWK1RJTy4mrR39vRcTbq1",
-		100000000,
-		"ark-cpp TX",
+		"AeXM1xpkCrarUTBraEpnGnp2ZrAyRAQYqS",
+		00000001,
+		//"ark-cpp TX",
+		"",
 		//"tower sponsor engine cram define bone agree mountain sad find place rug"
 		"eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink"
 	);

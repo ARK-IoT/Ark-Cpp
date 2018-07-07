@@ -72,6 +72,9 @@ Transaction::Transaction(
 	sign_signature_(),
 	confirmations_()
 {
+	if (newVendorField != nullptr) {
+		strncpy(vendorField_, newVendorField, sizeof(vendorField_) / sizeof(vendorField_[0]));
+	}
 }
 /*************************************************/
 

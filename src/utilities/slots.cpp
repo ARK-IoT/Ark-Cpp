@@ -11,7 +11,7 @@ namespace ARK {
 namespace Utilities {
 
 uint64_t slots::get_epoch_time(uint64_t time) {
-	const auto start = begin_epoch_time() * 1000;
+	const auto start = begin_epoch_time();
 	return static_cast<uint64_t>(std::floor((time - start) / 1000));
 }
 
@@ -21,7 +21,7 @@ uint64_t slots::begin_epoch_time() {
 	static const date::time_of_day<std::chrono::hours> epoch_time(std::chrono::hours(13));
 	static const auto epoch_days = static_cast<date::sys_days>(epoch_date).time_since_epoch();
 	
-	return std::chrono::duration_cast<std::chrono::seconds>(epoch_days).count() + std::chrono::duration_cast<std::chrono::seconds>(epoch_time.to_duration()).count();
+	return std::chrono::duration_cast<std::chrono::milliseconds>(epoch_days).count() + std::chrono::duration_cast<std::chrono::milliseconds>(epoch_time.to_duration()).count();
 }
 
 uint64_t slots::get_time(uint64_t time) {
@@ -29,8 +29,7 @@ uint64_t slots::get_time(uint64_t time) {
 }
 
 uint64_t slots::get_real_time(uint64_t epoch_time) {
-	const auto start = begin_epoch_time() * 1000;
-
+	const auto start = std::floor(begin_epoch_time() / 1000) * 1000;
 	return start + epoch_time * 1000;
 }
 /*

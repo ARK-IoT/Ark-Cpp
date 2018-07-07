@@ -74,7 +74,7 @@ public:
 	bool post(
 		const Hash& nethash,
 		const char *const peer,
-		int port,
+		uint16_t port,
 		const char *const request_str,
 		const char* const data
 	) override {
