@@ -37,6 +37,7 @@ TEST(api, test_peer_version)
 #endif
 
 TEST(api, test_peer_post_transaction) {
+#if 0
 	//ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Mainnet);
 
@@ -51,4 +52,5 @@ TEST(api, test_peer_post_transaction) {
 		"eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink"
 	);
 	ASSERT_TRUE(_arkManager.postTransaction(t));
+#endif
 }
