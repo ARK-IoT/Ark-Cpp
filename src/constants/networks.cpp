@@ -17,7 +17,7 @@ namespace Devnet
 		"167.114.29.34", "167.114.29.35",
 		"167.114.29.36"
 	};
-	const int port = 4002;
+	const uint16_t port = 4002;
 	const ARK::NetworkType type = NetworkType::DEV;
 };
 
@@ -38,7 +38,7 @@ namespace Mainnet
 		"193.70.72.84", "193.70.72.85", "193.70.72.86", "193.70.72.87",
 		"193.70.72.88", "193.70.72.89", "193.70.72.90"
 	};
-	const int port = 4001;
+	const uint16_t port = 4001;
 	const ARK::NetworkType type = NetworkType::MAIN;
 };
 
