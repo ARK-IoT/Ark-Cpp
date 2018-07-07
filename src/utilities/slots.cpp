@@ -29,7 +29,7 @@ uint64_t slots::get_time(uint64_t time) {
 }
 
 uint64_t slots::get_real_time(uint64_t epoch_time) {
-	const auto start = std::floor(begin_epoch_time() / 1000) * 1000;
+	const auto start = static_cast<uint64_t>(std::floor(begin_epoch_time() / 1000) * 1000);
 	return start + epoch_time * 1000;
 }
 /*
