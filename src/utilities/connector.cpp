@@ -16,7 +16,7 @@ Connector::Connector() :
     network(nullptr),
     netType(ARK::NetworkType::INVALID),
     networkPeer(),
-    networkPort(-1) {}
+    networkPort(std::numeric_limits<uint16_t>::max()) {}
 /*************************************************/
 
 /**************************************************************************************************/
@@ -59,7 +59,7 @@ Connector::Connector(
 		netType(other.netType),
 		networkPort(other.networkPort)
 {
-  strncpy(networkPeer, other.networkPeer, 16);
+  strncpy(networkPeer, other.networkPeer, sizeof(networkPeer));
 } 
 /*************************************************/
 
@@ -74,7 +74,7 @@ Connector& Connector::operator=(const Connector& other)
 	{
 		network = other.network;
 		netType = other.netType;
-		strncpy(networkPeer, other.networkPeer, 16);
+		strncpy(networkPeer, other.networkPeer, sizeof(networkPeer));
 		networkPort = other.networkPort;
 	}
 	return *this;
@@ -91,7 +91,7 @@ Connector::Connector(Connector&& other) :
 		netType(other.netType),
 		networkPort(other.networkPort)
 {
-  strncpy(networkPeer, other.networkPeer, 16);
+  strncpy(networkPeer, other.networkPeer, sizeof(networkPeer));
 }
 /*************************************************/
 
@@ -106,7 +106,7 @@ Connector& Connector::operator=(Connector&& other)
 	{
 		network = other.network;
 		netType = other.netType;
-		strncpy(networkPeer, other.networkPeer, 16);
+		strncpy(networkPeer, other.networkPeer, sizeof(networkPeer));
 		networkPort = other.networkPort;
 	}
 	return *this;
@@ -150,10 +150,10 @@ void Connector::connect(
 *
 **************************************************/
 void Connector::connectCustom(
-		const ARK::Network& network,
-		const char* peer,
-		int port)
-{
+	const ARK::Network& network,
+	const char* peer,
+	uint16_t port
+) {
 	this->netType = ARK::NetworkType::CUSTOM;
 	this->network = &network;
 	strncpy(this->networkPeer, peer, sizeof(this->networkPeer) / sizeof(this->networkPeer[0]));
@@ -169,8 +169,8 @@ void Connector::connectCustom(
 **************************************************/
 const char* Connector::randomPeer() const
 {
-	if ( this->netType == ARK::NetworkType::DEV
-			|| this->netType == ARK::NetworkType::MAIN )
+	if (this->netType == ARK::NetworkType::DEV
+		|| this->netType == ARK::NetworkType::MAIN)
 	{
 		ARK::Constants::Networks::randomPeer(this->netType);
 	}
@@ -184,10 +184,7 @@ const char* Connector::randomPeer() const
 * Checks this->NetworkType
 * Assigns ip & port to this
 **************************************************/
-void Connector::setNetworkPeer(
-		const char* peer
-)
-{
+void Connector::setNetworkPeer(const char* peer) {
 	if (this->netType == ARK::NetworkType::DEV)
 	{
 		this->networkPort = ARK::Constants::Networks::Devnet::port;

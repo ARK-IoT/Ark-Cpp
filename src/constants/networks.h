@@ -25,7 +25,7 @@ namespace Devnet
 	extern const Hash nethash;
 
 	extern const char* const seeds[6];
-	extern const int port;
+	extern const uint16_t port;
 	extern const ARK::NetworkType type;
 };
 
@@ -43,7 +43,7 @@ https://explorer.ark.io/
 */
 	extern const Hash nethash;
 	extern const char* const seeds[46];
-	extern const int port;
+	extern const uint16_t port;
 	extern const ARK::NetworkType type;
 };
 
