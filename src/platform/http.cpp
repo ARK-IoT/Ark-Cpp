@@ -59,8 +59,8 @@ public:
 		const char *const request_str,
 		const char* const data
 	) override {
-		Poco::Net::HTTPClientSession session(Poco::Net::SocketAddress(/*peer, port*/"104.238.173.75:4001"));
-		Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/peer/transactions", Poco::Net::HTTPMessage::HTTP_1_1);
+		Poco::Net::HTTPClientSession session(Poco::Net::SocketAddress(peer, port));
+		Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, request_str, Poco::Net::HTTPMessage::HTTP_1_1);
 		request.setContentType("application/json; charset=utf-8");
 		request.add("nethash", nethash.getValue());
 		request.add("version", "1.6.0");

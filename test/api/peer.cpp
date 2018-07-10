@@ -37,7 +37,10 @@ TEST(api, test_peer_version)
 #endif
 
 TEST(api, test_peer_post_transaction) {
-#if 0
+#if 0 // TODO: enable when devnet is working.  switch to devnet and delete mainnet addresses
+	const auto passphrase1 = "later knock problem deal swallow bonus menu game version merit salt lobster";	// D8FcqJonziwnSSoczuJQde19v2FzrMZuPA
+	const auto passphrase2 = "grocery tone repeat tone soldier entry plunge rich until canal age scene";	// DRAiWhynzcoSR1muJ1NnrF5MEqptyRm1sd
+
 	//ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Mainnet);
 
@@ -45,11 +48,12 @@ TEST(api, test_peer_post_transaction) {
 		//ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash,
 		ARK::Constants::Networks::Network_ADV::main.pubKeyHash,
 		//"DGUac5xr1cn7D2VVG7hEmV1cb1wfvbbc6p",
-		"AeXM1xpkCrarUTBraEpnGnp2ZrAyRAQYqS",
+		"AQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH",
 		00000001,
-		"ark-cpp TX",
-		//"tower sponsor engine cram define bone agree mountain sad find place rug"
-		"eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink"
+		"ark-cpp - unit test",
+		//"tower sponsor engine cram define bone agree mountain sad find place rug"  //DARK
+		// "eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink" // AQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH
+		"moon silk magnet unhappy protect water soft walnut hire tide street boss" // AeXM1xpkCrarUTBraEpnGnp2ZrAyRAQYqS
 	);
 	ASSERT_TRUE(_arkManager.postTransaction(t));
 #endif
