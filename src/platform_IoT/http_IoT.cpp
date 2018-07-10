@@ -3,6 +3,7 @@
 #if (defined ESP32 || defined ESP8266)
 
 #include "utilities/http.h"
+#include "utilities/json.h"
 
 #ifdef ESP8266
 
@@ -83,12 +84,28 @@ public:
 			// error
 			Serial.println("bad HTTP begin");
 		}
-		http.addHeader("nethash", nethash.getValue());
-		http.addHeader("version", "0.1.0");
-		http.addHeader("port", "1");
 
-		auto code = http.POST(data);
-		return code == HTTP_CODE_OK;
+		const auto json = std::string("{\"transactions\": [") + data + "]} ";
+
+		http.addHeader("Content-Length", std::to_string(json.length()).c_str());
+		http.addHeader("Content-Type", "application/json; charset=utf-8");
+		http.addHeader("nethash", nethash.getValue());
+		http.addHeader("version", "1.6.0");
+		http.addHeader("port", "1");
+		http.addHeader("os", "Ark-Cpp");
+
+		const auto code = http.POST(json.c_str());
+		if (code != HTTP_CODE_OK) { return false; }
+
+		const auto s = std::string(http.getString().c_str());
+		auto json_parser = ARK::Utilities::make_json_string(s);
+		Serial.print("HTTP POST Response: ");
+		Serial.println(s.c_str());
+		if (json_parser->valueFor("success") == "true") { return true; }
+		Serial.print("HTTP response error: ");
+		Serial.println(json_parser->valueFor("message").c_str());
+		Serial.println(json_parser->valueFor("error").c_str());
+		return false;
 	}
 	/*************************************************/
 };
