@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "api/api.h"
-#if 0
+
 TEST(api, test_peer_peer)
 {
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
@@ -34,12 +34,11 @@ TEST(api, test_peer_version)
 	ASSERT_STREQ("1.1.1", version.version());
 	ASSERT_STREQ("", version.build());
 }
-#endif
 
 TEST(api, test_peer_post_transaction) {
 #if 0 // TODO: enable when devnet is working.  switch to devnet and delete mainnet addresses
-	const auto passphrase1 = "later knock problem deal swallow bonus menu game version merit salt lobster";	// D8FcqJonziwnSSoczuJQde19v2FzrMZuPA
-	const auto passphrase2 = "grocery tone repeat tone soldier entry plunge rich until canal age scene";	// DRAiWhynzcoSR1muJ1NnrF5MEqptyRm1sd
+	//const auto passphrase1 = "later knock problem deal swallow bonus menu game version merit salt lobster";	// D8FcqJonziwnSSoczuJQde19v2FzrMZuPA
+	//const auto passphrase2 = "grocery tone repeat tone soldier entry plunge rich until canal age scene";	// DRAiWhynzcoSR1muJ1NnrF5MEqptyRm1sd
 
 	//ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Devnet);
 	ARK::API::Manager _arkManager(ARK::Constants::Networks::Model::Mainnet);
