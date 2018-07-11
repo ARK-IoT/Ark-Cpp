@@ -157,14 +157,6 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 		for (auto b : vendorField_) {
 			bb[bb_index++] = b;
 		}
-		/*for (auto b : vendor_field_bytes) {
-			bb[bb_index++] = b;
-		}
-		auto byte_pad_length = 64 - vendor_field_bytes.size();
-		if (byte_pad_length > 0) {
-			std::memset(bb.get() + bb_index, 0, byte_pad_length);
-			bb_index += byte_pad_length;
-		}*/
 	}
 	else {
 		std::memset(bb.get() + bb_index, 0, 64);
