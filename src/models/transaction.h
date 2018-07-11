@@ -112,7 +112,7 @@ public:
 	**************************************************/
 	void sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
 	void second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]);
-	size_t get_transaction_bytes(uint8_t buffer[270], bool skip_signature = false, bool skip_second_signature = false) const;
+	size_t get_transaction_bytes(bool skip_signature = false, bool skip_second_signature = false) const;
 	Sha256Hash get_hash(bool skip_signature = false, bool skip_second_signature = false) const;
 	void generate_id();
 	/*************************************************/
