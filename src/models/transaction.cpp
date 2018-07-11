@@ -93,7 +93,7 @@ void Transaction::sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
 }
 
-size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signature /* = false */, bool skip_second_signature /* = false */) const {
+size_t Transaction::get_transaction_bytes(uint8_t buffer[270], bool skip_signature /* = false */, bool skip_second_signature /* = false */) const {
 	auto asset_size = 0;
 
 	switch (type_) {
@@ -129,44 +129,43 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 		*/
 		break;
 	}
-	std::unique_ptr<uint8_t[]> bb(new uint8_t[1 + 4 + 32 + 8 + 8 + 21 + 64 + 64 + 64 + asset_size]);
 	size_t bb_index = 0;
-	bb[bb_index++] = static_cast<TransactionTypeIntType>(type_);
-	*reinterpret_cast<uint32_t* const>(bb.get() + bb_index) = timestamp_;
+	buffer[bb_index++] = static_cast<TransactionTypeIntType>(type_);
+	*reinterpret_cast<uint32_t* const>(buffer + bb_index) = timestamp_;
 	bb_index += sizeof(uint32_t);
 	const auto sender_public_key_buffer = ParseHex(senderPublicKey_.getValue());
 	for (auto b : sender_public_key_buffer) {
-		bb[bb_index++] = b;
+		buffer[bb_index++] = b;
 	}
 	if (recipientId_) {
 		uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
 		uint8_t version = 0;
 		Base58Check::pubkeyHashFromBase58Check(recipientId_.getValue(), pub_key_hash, &version);
-		bb[bb_index++] = version;
+		buffer[bb_index++] = version;
 		for (auto b : pub_key_hash) {
-			bb[bb_index++] = b;
+			buffer[bb_index++] = b;
 		}
 	}
 	else {
-		std::memset(bb.get() + bb_index, 0, Ripemd160::HASH_LEN + 1);
+		std::memset(buffer + bb_index, 0, Ripemd160::HASH_LEN + 1);
 		bb_index += Ripemd160::HASH_LEN + 1;
 	}
 
 	if (vendorField_[0] != '\0') {
 		auto vendor_field_bytes = ParseHex(vendorField_);
 		for (auto b : vendorField_) {
-			bb[bb_index++] = b;
+			buffer[bb_index++] = b;
 		}
 	}
 	else {
-		std::memset(bb.get() + bb_index, 0, 64);
+		std::memset(buffer + bb_index, 0, 64);
 		bb_index += 64;
 	}
 
-	*reinterpret_cast<uint64_t* const>(bb.get() + bb_index) = convert_to_uint64(amount_.arktoshi());
+	*reinterpret_cast<uint64_t* const>(buffer + bb_index) = convert_to_uint64(amount_.arktoshi());
 	bb_index += sizeof(uint64_t);
 
-	*reinterpret_cast<uint64_t* const>(bb.get() + bb_index) = convert_to_uint64(fee_.arktoshi());
+	*reinterpret_cast<uint64_t* const>(buffer + bb_index) = convert_to_uint64(fee_.arktoshi());
 	bb_index += sizeof(uint64_t);
 
 	if (asset_size > 0) {
@@ -177,22 +176,22 @@ size_t Transaction::get_transaction_bytes(uint8_t buffer[512], bool skip_signatu
 
 	if (!skip_signature && signature_) {
 		for (auto b : ParseHex(signature_.getValue())) {
-			bb[bb_index++] = b;
+			buffer[bb_index++] = b;
 		}
 	}
 
 	if (!skip_second_signature && sign_signature_) {
 		for (auto b : ParseHex(sign_signature_.getValue())) {
-			bb[bb_index++] = b;
+			buffer[bb_index++] = b;
 		}
 	}
 
-	std::memcpy(buffer, bb.get(), bb_index);
+	std::memcpy(buffer, buffer, bb_index);
 	return bb_index;
 }
 
 Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_second_signature /* = false */) const {
-	uint8_t bytes[512] = {};
+	uint8_t bytes[270] = {};
 	const auto length = get_transaction_bytes(bytes, skip_signature, skip_second_signature);
 	return Sha256::getHash(bytes, length);
 }
