@@ -48,6 +48,8 @@ private:
 	Signature signature_;
 	Signature sign_signature_;
 	char confirmations_[64];
+	
+	uint8_t buffer_[270];
 
 public:
 	/*************************************************
