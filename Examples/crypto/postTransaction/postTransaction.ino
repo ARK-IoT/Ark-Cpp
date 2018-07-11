@@ -3,21 +3,34 @@
 
 void postTransaction()
 {
-	// Creates a devnet account
+	// Select devnet
 	const auto network_id = ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash;
 
-	// Creates a mainnet account
+	// Select mainnet
 	//const auto network_id = ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash;
-	/*
-	// Randomly generate a 12 word passphrase using English words
-	const auto passphrase = ARK::Crypto::BIP39::generate_mnemonic();
-
-	const auto account = ARK::Crypto::create_account(network_id, passphrase);
-	Serial.print("Address: ");
-	Serial.println(account.address().getValue());
-
-	Serial.print("Public Key: ");
-	Serial.println(account.public_key().getValue());*/
+	
+	const auto recipient_address = ""; // Example: Devnet: DGUac5xr1cn7D2VVG7hEmV1cb1wfvbbc6p, Mainnet: AQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH
+	const auto amount_in_arktoshi = 00000001u;
+	const auto optional_vendor_field = "";
+	const auto passphrase = ""; // Example: word1 word2 word3 .... word12
+	
+	// Create the transaction
+	const auto t = ARK::make_transaction(
+		network_id,
+		recipient_address,
+		amount_in_arktoshi,
+		optional_vendor_field,
+		passphrase
+	);
+	
+	// Send the transaction to the blockchain
+	const auto success = _arkManager.postTransaction(t);
+	
+	Serial.print("Success: ");
+	Serial.println(success);
+	
+	Serial.print("Transaction Id: ");
+	Serial.println(t.id());
 }
 
 void setup()
