@@ -183,60 +183,6 @@ ARK::Transaction create_transaction(
 
 	transaction.generate_id();
 	return transaction;
-
-	/*
-	https://github.com/ArkEcosystem/ark-js/blob/master/lib/transactions/transaction.js
-	if (!recipientId || !amount || !secret) return false;
-
-  if(!crypto.validateAddress(recipientId, version)){
-    throw new Error("Wrong recipientId");
-	}
-
-	var keys = secret;
-
-	if (!crypto.isECPair(secret)) {
-		keys = crypto.getKeys(secret);
-	}
-
-  if (!keys.publicKey) {
-    throw new Error("Invalid public key");
-	}
-
-	if (feeOverride && !Number.isInteger(feeOverride)) {
-		throw new Error('Not a valid fee')
-	}
-
-	var transaction = {
-		type: 0,
-		amount: amount,
-		fee: feeOverride || constants.fees.send,
-		recipientId: recipientId,
-		timestamp: slots.getTime(),
-		asset: {}
-	};
-
-  if(vendorField){
-    transaction.vendorField=vendorField;
-    if(transaction.vendorField.length > 64){
-			return null;
-		}
-  }
-
-	transaction.senderPublicKey = keys.publicKey;
-
-	crypto.sign(transaction, keys);
-
-	if (secondSecret) {
-		var secondKeys = secondSecret;
-		if (!crypto.isECPair(secondSecret)) {
-			secondKeys = crypto.getKeys(secondSecret);
-		}
-		crypto.secondSign(transaction, secondKeys);
-	}
-
-	transaction.id = crypto.getId(transaction);
-	return transaction;
-	*/
 }
 
 }
