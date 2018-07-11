@@ -54,8 +54,8 @@ TEST(model, transaction_get_transaction_bytes) {
 		"",
 		""		
 	);
-	uint8_t buffer[512] = {};
-	auto length = transaction.get_transaction_bytes(buffer);
+	
+	auto length = transaction.get_transaction_bytes();
 	ASSERT_EQ(202u, length);
 
 	transaction = ARK::Transaction(
@@ -75,7 +75,8 @@ TEST(model, transaction_get_transaction_bytes) {
 		""
 	);
 
-	length = transaction.get_transaction_bytes(buffer);
+	uint8_t* buffer = nullptr;
+	length = transaction.get_transaction_bytes(false, false, &buffer);
 	ASSERT_EQ(210u, length);
 	ASSERT_STREQ(
 		"000589aa0103a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933171dfc69b54c7fe901e91d5a9ab78388645e2427ea00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e80300000000000080969800000000003045022100d657a99810e4a27ec7d8692096fdae49480ed31530a4de30ca05c2fc4f70ee3402204f96561c774bd76914c83b0c34eecfc2cd6c7f56369fb02c7dccd608087be501",
@@ -100,7 +101,7 @@ TEST(model, transaction_get_transaction_bytes) {
 	);
 
 	//should return Buffer of transaction with second signature and buffer must be 266 length
-	length = transaction.get_transaction_bytes(buffer);
+	length = transaction.get_transaction_bytes();
 	ASSERT_EQ(266u, length);
 }
 

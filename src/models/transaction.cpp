@@ -95,7 +95,7 @@ void Transaction::sign(uint8_t network, uint8_t secret[ARK::Crypto::PRIVATE_KEY_
 void Transaction::second_sign(uint8_t second_secret[ARK::Crypto::PRIVATE_KEY_SIZE]) {
 }
 
-size_t Transaction::get_transaction_bytes(bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
+size_t Transaction::get_transaction_bytes(bool skip_signature /* = false */, bool skip_second_signature /* = false */, uint8_t** buffer /* = nullptr */) {
 	auto asset_size = 0;
 
 	switch (type_) {
@@ -186,6 +186,10 @@ size_t Transaction::get_transaction_bytes(bool skip_signature /* = false */, boo
 		for (auto b : ParseHex(sign_signature_.getValue())) {
 			buffer_[bb_index++] = b;
 		}
+	}
+
+	if (buffer != nullptr) {
+		*buffer = buffer_;
 	}
 
 	return bb_index;
