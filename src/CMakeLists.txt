@@ -11,8 +11,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
 include_directories(
 	${PROJECT_SOURCE_DIR}
-	${PROJECT_SOURCE_DIR}/uint128_t
-	${PROJECT_SOURCE_DIR}/bcl/cpp
+	${PROJECT_SOURCE_DIR}/bcl
 	${PROJECT_SOURCE_DIR}/uECC
 	${PROJECT_SOURCE_DIR}/date/include
 )
@@ -55,15 +54,16 @@ set(COMMON_SRC
 )
 
 set (BCL_SRC
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Base58Check.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/CurvePoint.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Ecdsa.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/FieldInt.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Ripemd160.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Sha256Hash.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Uint256.cpp
-	${PROJECT_SOURCE_DIR}/bcl/cpp/Utils.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Base58Check.cpp
+	${PROJECT_SOURCE_DIR}/bcl/CurvePoint.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Ecdsa.cpp
+	${PROJECT_SOURCE_DIR}/bcl/FieldInt.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Ripemd160.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Sha256Hash.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Sha256.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Sha512.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Uint256.cpp
+	${PROJECT_SOURCE_DIR}/bcl/Utils.cpp
 )
 
 set (uECC_SRC

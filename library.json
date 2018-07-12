@@ -7,7 +7,7 @@
         "type": "git",
         "url": "https://github.com/Ark-IoT/Ark-Cpp.git"
     },
-    "version": "0.6.8",
+    "version": "0.8",
     "authors": {
         "name": "S. Downey(sleepdeficit",
         "email": "simon@ark.io",

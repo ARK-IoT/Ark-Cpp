@@ -7,12 +7,18 @@
 #include "constants/networks.h"
 #include "models/transaction.h"
 
-#include "Base58Check.hpp"
-#include "Uint256.hpp"
-#include "Sha256.hpp"
-#include "Sha256Hash.hpp"
-#include "Ripemd160.hpp"
-#include "Ecdsa.hpp"
+#include "bcl/Utils.hpp"
+#include "bcl/Base58Check.hpp"
+#include "bcl/CurvePoint.hpp"
+#include "bcl/Ecdsa.hpp"
+#include "bcl/FieldInt.hpp"
+#include "bcl/Ripemd160.hpp"
+#include "bcl/Sha256Hash.hpp"
+#include "bcl/Sha256.hpp"
+#include "bcl/Sha512.hpp"
+#include "bcl/Uint256.hpp"
+
+
 #include "uECC.h"
 
 
