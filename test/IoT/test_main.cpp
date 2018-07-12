@@ -2,7 +2,6 @@
 #include <Arduino.h>
 
 #include <AUnit.h>
-#include <NTPClient.h>
 
 #include <sys/time.h>                   // struct timeval
 
@@ -11,6 +10,7 @@
 #ifdef ESP8266
 
 #include <ESP8266WiFi.h>
+#include <ctime>
 
 #else
 
@@ -23,27 +23,9 @@
 namespace
 {
 
-char ssid[] = "your_ssid";     //  your network SSID (name)
-const char password[] = "your_password";  // your network password
+	char ssid[] = "your_ssid";     //  your network SSID (name)
+	const char password[] = "your_password";  // your network password
 
-WiFiUDP wifiUdp;
-NTPClient timeClient(wifiUdp);
-
-#define TZ              1       // (utc+) TZ in hours
-#define DST_MN          60      // use 60mn for summer time in some countries
-
-#define TZ_MN           ((TZ)*60)
-#define TZ_SEC          ((TZ)*3600)
-#define DST_SEC         ((DST_MN)*60)
-
-void initNTP() {
-  // Start NTP listener
-  timeClient.begin();
-  // Set timezone (UTC)
-  timeClient.setTimeOffset(0);
-  // Force update of time from NTP server
-  timeClient.forceUpdate();
-}
 
 void setup_network()
 {
@@ -85,15 +67,11 @@ void setup() {
 	while (!Serial); // for the Arduino Leonardo/Micro only
 	delay(100);
 	setup_network();
-	timeClient.begin();
+
 	aunit::TestRunner::setTimeout(0);
 	delay(1000);
-
-    // set the system clock
-	timeClient.update();
-	timeval tv = { static_cast<time_t>(timeClient.getEpochTime()), 0 };
-	timezone tz = { TZ_MN + DST_MN, 0 };
-	settimeofday(&tv, &tz);
+	
+    configTime(0, 60 * 60, "us.pool.ntp.org", nullptr, nullptr);
 
 	delay(500);
 
@@ -107,7 +85,6 @@ void setup() {
 }
 
 void loop() {
-    timeClient.update();
 	aunit::TestRunner::run();
 }
 

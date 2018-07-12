@@ -54,6 +54,6 @@ TEST(api, test_peer_post_transaction) {
 		// "eyebrow shoot dwarf pattern tattoo account grid treat lesson legend doll wink" // AQf97MEVnnJSYsJHfcrLTGH5J4GYSB5dLH
 		"moon silk magnet unhappy protect water soft walnut hire tide street boss" // AeXM1xpkCrarUTBraEpnGnp2ZrAyRAQYqS
 	);
-	ASSERT_TRUE(_arkManager.postTransaction(t));
+	ASSERT_TRUE(_arkManager.postTransaction(*t));
 #endif
 }

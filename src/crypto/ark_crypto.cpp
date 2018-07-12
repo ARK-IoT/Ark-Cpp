@@ -153,36 +153,36 @@ Account create_account(uint8_t network, const char* const passphrase) {
 	return Account(HexStr(pub_key).c_str(), address.c_str());
 }
 
-ARK::Transaction create_transaction(
+std::unique_ptr<ARK::Transaction> create_transaction(
 	uint8_t network, 
 	const char* const address, 
-	uint64_t amount_in_arktoshi,
+	uint32_t amount_in_arktoshi,
 	const std::string& vendor_field, 
 	uint8_t secret[PRIVATE_KEY_SIZE], 
 	uint8_t second_secret[PRIVATE_KEY_SIZE] /* = nullptr*/, 
 	uint32_t version /* = 1 */, 
-	uint64_t fee_override /* = ARK::send_fee */
+	uint32_t fee_override /* = ARK::send_fee */
 ) {
 	assert(validate_address(address, network));
 	assert(amount_in_arktoshi != 0u);
 	assert(secret != nullptr);
 	assert(vendor_field.size() <= 64u);
 
-	ARK::Transaction transaction(
+	std::unique_ptr<ARK::Transaction> transaction(new ARK::Transaction(
 		ARK::TransactionType::NORMAL, 
-		std::to_string(amount_in_arktoshi).c_str(), 
-		std::to_string(fee_override).c_str(), 
+		std::to_string(amount_in_arktoshi).c_str(),
+		std::to_string(fee_override).c_str(),
 		address, 
 		vendor_field.c_str()
-	);
-	transaction.sign(network, secret);
+	));
+	transaction->sign(network, secret);
 
 	if (second_secret != nullptr) {
-		transaction.second_sign(second_secret);
+		transaction->second_sign(second_secret);
 	}
 
-	transaction.generate_id();
-	return transaction;
+	transaction->generate_id();
+	return std::move(transaction);
 }
 
 }

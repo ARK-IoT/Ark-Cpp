@@ -44,7 +44,7 @@ Transaction::Transaction(
 	signature_(newSignature),
 	sign_signature_(newSignSignature),
 	confirmations_(),
-	buffer_()
+	buffer_(new uint8_t[TRANSACTION_MAX_SIZE])
 {
 	strncpy(blockid_, newBlockID, sizeof(blockid_) / sizeof(blockid_[0]));
 	strncpy(height_, newHeight, sizeof(height_) / sizeof(height_[0]));
@@ -72,7 +72,7 @@ Transaction::Transaction(
 	signature_(),
 	sign_signature_(),
 	confirmations_(),
-	buffer_()
+	buffer_(new uint8_t[TRANSACTION_MAX_SIZE])
 {
 	if (newVendorField != nullptr) {
 		strncpy(vendorField_, newVendorField, sizeof(vendorField_) / sizeof(vendorField_[0]));
@@ -132,42 +132,42 @@ size_t Transaction::get_transaction_bytes(bool skip_signature /* = false */, boo
 		break;
 	}
 	size_t bb_index = 0;
+
 	buffer_[bb_index++] = static_cast<TransactionTypeIntType>(type_);
-	*reinterpret_cast<uint32_t* const>(buffer_ + bb_index) = timestamp_;
+	std::memcpy(buffer_.get() + bb_index, &timestamp_, sizeof(timestamp_));
 	bb_index += sizeof(uint32_t);
 	const auto sender_public_key_buffer = ParseHex(senderPublicKey_.getValue());
-	for (auto b : sender_public_key_buffer) {
-		buffer_[bb_index++] = b;
-	}
+	std::memcpy(buffer_.get() + bb_index, &sender_public_key_buffer[0], sender_public_key_buffer.size());
+	bb_index += sender_public_key_buffer.size();
+
 	if (recipientId_) {
 		uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
 		uint8_t version = 0;
 		Base58Check::pubkeyHashFromBase58Check(recipientId_.getValue(), pub_key_hash, &version);
 		buffer_[bb_index++] = version;
-		for (auto b : pub_key_hash) {
-			buffer_[bb_index++] = b;
-		}
+		std::memcpy(buffer_.get() + bb_index, pub_key_hash, sizeof(pub_key_hash));
+		bb_index += sizeof(pub_key_hash);
 	}
 	else {
-		std::memset(buffer_ + bb_index, 0, Ripemd160::HASH_LEN + 1);
+		std::memset(buffer_.get() + bb_index, 0, Ripemd160::HASH_LEN + 1);
 		bb_index += Ripemd160::HASH_LEN + 1;
 	}
 
 	if (vendorField_[0] != '\0') {
-		auto vendor_field_bytes = ParseHex(vendorField_);
-		for (auto b : vendorField_) {
-			buffer_[bb_index++] = b;
-		}
+		std::memcpy(buffer_.get() + bb_index, vendorField_, sizeof(vendorField_));
+		bb_index += sizeof(vendorField_);
 	}
 	else {
-		std::memset(buffer_ + bb_index, 0, 64);
+		std::memset(buffer_.get() + bb_index, 0, 64);
 		bb_index += 64;
 	}
 
-	*reinterpret_cast<uint64_t* const>(buffer_ + bb_index) = convert_to_uint64(amount_.arktoshi());
+	uint64_t arktoshi = convert_to_uint64(amount_.arktoshi());
+	std::memcpy(buffer_.get() + bb_index, &arktoshi, sizeof(arktoshi));
 	bb_index += sizeof(uint64_t);
 
-	*reinterpret_cast<uint64_t* const>(buffer_ + bb_index) = convert_to_uint64(fee_.arktoshi());
+	arktoshi = convert_to_uint64(fee_.arktoshi());
+	std::memcpy(buffer_.get() + bb_index, &arktoshi, sizeof(arktoshi));
 	bb_index += sizeof(uint64_t);
 
 	if (asset_size > 0) {
@@ -177,19 +177,19 @@ size_t Transaction::get_transaction_bytes(bool skip_signature /* = false */, boo
 	}
 
 	if (!skip_signature && signature_) {
-		for (auto b : ParseHex(signature_.getValue())) {
-			buffer_[bb_index++] = b;
-		}
+		const auto& s = ParseHex(signature_.getValue());
+		std::memcpy(buffer_.get() + bb_index, &s[0], s.size());
+		bb_index += s.size();
 	}
 
 	if (!skip_second_signature && sign_signature_) {
-		for (auto b : ParseHex(sign_signature_.getValue())) {
-			buffer_[bb_index++] = b;
-		}
+		const auto& s = ParseHex(sign_signature_.getValue());
+		std::memcpy(buffer_.get() + bb_index, &s[0], s.size());
+		bb_index += s.size();
 	}
 
 	if (buffer != nullptr) {
-		*buffer = buffer_;
+		*buffer = buffer_.get();
 	}
 
 	return bb_index;
@@ -197,12 +197,12 @@ size_t Transaction::get_transaction_bytes(bool skip_signature /* = false */, boo
 
 Sha256Hash Transaction::get_hash(bool skip_signature /* = false */, bool skip_second_signature /* = false */) {
 	const auto length = get_transaction_bytes(skip_signature, skip_second_signature);
-	return Sha256::getHash(buffer_, length);
+	return Sha256::getHash(buffer_.get(), length);
 }
 
 void Transaction::generate_id() {
 	const auto length = get_transaction_bytes();
-	auto hash = Sha256::getHash(buffer_, length);
+	auto hash = Sha256::getHash(buffer_.get(), length);
 	id_ = Hash(HexStr(hash.value, hash.value + Sha256Hash::HASH_LEN).c_str());
 }
 
@@ -258,15 +258,15 @@ size_t Transaction::printTo(Print &p) const {
 }
 /*************************************************/
 
-ARK::Transaction make_transaction(
+std::unique_ptr<ARK::Transaction> make_transaction(
 	uint8_t network,
 	const char* const address,
-	uint64_t amount_in_arktoshi,
+	uint32_t amount_in_arktoshi,
 	const std::string& vendor_field,
 	const char* const passphrase,
 	uint8_t* second_secret /* = nullptr */,
 	uint32_t version /* = 1 */,
-	uint64_t fee_override /* = ARK::send_fee */
+	uint32_t fee_override /* = ARK::send_fee */
 ) {
 	uint8_t secret[ARK::Crypto::PRIVATE_KEY_SIZE] = {};
 	ARK::Crypto::get_private_key(passphrase, secret);

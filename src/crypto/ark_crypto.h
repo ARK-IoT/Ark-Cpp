@@ -8,6 +8,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace ARK {
 
@@ -28,7 +29,7 @@ std::string get_address(uint8_t network, const std::vector<uint8_t>& public_key)
 bool validate_address(const char* const address, uint8_t network);
 Account create_account(uint8_t network, const char* const passphrase);
 
-ARK::Transaction create_transaction(uint8_t network, const char* const address, uint64_t amount_in_arktoshi, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] = nullptr, uint32_t version = 1, uint64_t fee_override = ARK::send_fee);
+std::unique_ptr<ARK::Transaction> create_transaction(uint8_t network, const char* const address, uint32_t amount_in_arktoshi, const std::string& vendor_field, uint8_t secret[PRIVATE_KEY_SIZE], uint8_t second_secret[PRIVATE_KEY_SIZE] = nullptr, uint32_t version = 1, uint32_t fee_override = ARK::send_fee);
 void get_transaction_bytes(const ARK::Transaction& transaction, uint8_t buffer[512]);
 
 }

@@ -37,7 +37,7 @@ struct Unconfirmed :
 		*	Constructor
 		**************************************************/
 		Unconfirmed(
-				const ARK::Transaction *const newTX,
+				ARK::Transaction *const newTX,
 				int newCount
 		);
 		/*************************************************/

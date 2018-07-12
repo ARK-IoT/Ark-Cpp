@@ -13,6 +13,7 @@
 
 #include <cstring>
 #include <cstdio>
+#include <memory>
 
 static const auto TRANSACTION_MAX_SIZE = 600;
 
@@ -49,7 +50,7 @@ private:
 	Signature sign_signature_;
 	char confirmations_[64];
 	
-	uint8_t buffer_[270];
+	std::unique_ptr<uint8_t[]> buffer_;
 
 public:
 	/*************************************************
@@ -125,15 +126,15 @@ public:
 };
 /*************************************************/
 
-ARK::Transaction make_transaction(
+std::unique_ptr<ARK::Transaction> make_transaction(
 	uint8_t network,
 	const char* const address,
-	uint64_t amount_in_arktoshi,
+	uint32_t amount_in_arktoshi,
 	const std::string& vendor_field,
 	const char* const passphrase,
 	uint8_t* second_secret = nullptr,
 	uint32_t version = 1,
-	uint64_t fee_override = ARK::send_fee
+	uint32_t fee_override = ARK::send_fee
 );
 
 };
