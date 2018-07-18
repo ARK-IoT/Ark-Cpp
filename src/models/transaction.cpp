@@ -4,8 +4,8 @@
 #include "utilities/json.h"
 #include "crypto/util.h"
 #include "crypto/ark_crypto.h"
-#include "Sha256.hpp"
-#include "Base58Check.hpp"
+#include "bcl/Sha256.hpp"
+#include "bcl/Base58Check.hpp"
 
 #include <memory>
 

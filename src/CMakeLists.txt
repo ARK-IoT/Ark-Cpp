@@ -13,7 +13,6 @@ include_directories(
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/bcl
 	${PROJECT_SOURCE_DIR}/uECC
-	${PROJECT_SOURCE_DIR}/date/include
 )
  
 find_package(nlohmann_json CONFIG REQUIRED)

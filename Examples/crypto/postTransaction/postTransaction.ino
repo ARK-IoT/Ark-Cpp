@@ -24,13 +24,18 @@ void postTransaction()
 	);
 	
 	// Send the transaction to the blockchain
-	const auto success = _arkManager.postTransaction(t);
+	ARK::Network network = ARK::Constants::Networks::Model::Devnet;
+	//ARK::Network network = ARK::Constants::Networks::Model::Mainnet;
+
+	ARK::API::Manager arkManager(network);
+
+	const auto success = _arkManager.postTransaction(*t);
 	
 	Serial.print("Success: ");
 	Serial.println(success);
 	
 	Serial.print("Transaction Id: ");
-	Serial.println(t.id());
+	Serial.println(t->id());
 }
 
 void setup()

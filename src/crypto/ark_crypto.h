@@ -3,8 +3,8 @@
 
 #include "constants/constants.h"
 #include "models/account.h"
-#include "Uint256.hpp"
-#include "Sha256Hash.hpp"
+#include "bcl/Uint256.hpp"
+#include "bcl/Sha256Hash.hpp"
 
 #include <string>
 #include <vector>

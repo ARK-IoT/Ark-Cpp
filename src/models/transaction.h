@@ -9,7 +9,7 @@
 #include "types/publickey.h"
 #include "types/signature.h"
 
-#include "Sha256Hash.hpp"
+#include "bcl/Sha256Hash.hpp"
 
 #include <cstring>
 #include <cstdio>
