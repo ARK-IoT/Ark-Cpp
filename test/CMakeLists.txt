@@ -26,6 +26,7 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/api/signature.cpp
 	${PROJECT_SOURCE_DIR}/api/transaction.cpp	
 	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
+	${PROJECT_SOURCE_DIR}/crypto/bip66.cpp
 	${PROJECT_SOURCE_DIR}/crypto/crypto.cpp
 	${PROJECT_SOURCE_DIR}/model/account.cpp
 	${PROJECT_SOURCE_DIR}/model/block.cpp
@@ -41,6 +42,8 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/types/hash.cpp
 	${PROJECT_SOURCE_DIR}/types/publickey.cpp
 	${PROJECT_SOURCE_DIR}/types/signature.cpp
+	${PROJECT_SOURCE_DIR}/utilities/json.cpp
+	${PROJECT_SOURCE_DIR}/utilities/slots.cpp
 )
 
 find_library(Ark-Cpp-tests NAMES Ark-Cpp-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})

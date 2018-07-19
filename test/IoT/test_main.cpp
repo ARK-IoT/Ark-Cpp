@@ -1,12 +1,16 @@
 #if (defined PLATFORMIO && defined UNIT_TEST)
+#include <Arduino.h>
 
 #include <AUnit.h>
+
+#include <sys/time.h>                   // struct timeval
 
 #if (defined ESP8266 || defined ESP32)
 
 #ifdef ESP8266
 
 #include <ESP8266WiFi.h>
+#include <ctime>
 
 #else
 
@@ -14,11 +18,14 @@
 
 #endif // ESP8266
 
+#include <WiFiUdp.h>
+
 namespace
 {
 
-char ssid[] = "your_ssid";     //  your network SSID (name)
-const char password[] = "your_password";  // your network password
+	char ssid[] = "your_ssid";     //  your network SSID (name)
+	const char password[] = "your_password";  // your network password
+
 
 void setup_network()
 {
@@ -60,8 +67,21 @@ void setup() {
 	while (!Serial); // for the Arduino Leonardo/Micro only
 	delay(100);
 	setup_network();
+
 	aunit::TestRunner::setTimeout(0);
 	delay(1000);
+	
+    configTime(0, 60 * 60, "us.pool.ntp.org", nullptr, nullptr);
+
+	delay(500);
+
+	// Examples to turn on specific tests for debugging
+	//aunit::TestRunner::exclude("*");
+	//aunit::TestRunner::include("api_test_peer_post_transaction");
+	//aunit::TestRunner::include("utilities_slots_begin_epoch_time");
+	//aunit::TestRunner::include("utilities_slots_get_real_time");
+	//aunit::TestRunner::include("utilities_slots_get_time");
+	//aunit::TestRunner::include("utilities_transactionToJson");
 }
 
 void loop() {

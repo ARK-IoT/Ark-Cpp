@@ -35,6 +35,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/api/transactionable/transaction_respondable.cpp
 	${PROJECT_SOURCE_DIR}/api/manager.cpp
 	${PROJECT_SOURCE_DIR}/crypto/ark_crypto.cpp
+	${PROJECT_SOURCE_DIR}/crypto/util.cpp
 	${PROJECT_SOURCE_DIR}/bip39/bip39.cpp
 	${PROJECT_SOURCE_DIR}/constants/networks.cpp
 	${PROJECT_SOURCE_DIR}/models/account.cpp
@@ -48,6 +49,7 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/models/voter.cpp
 	${PROJECT_SOURCE_DIR}/utilities/connector.cpp
 	${PROJECT_SOURCE_DIR}/utilities/platform.cpp
+	${PROJECT_SOURCE_DIR}/utilities/slots.cpp
 )
 
 set (BCL_SRC

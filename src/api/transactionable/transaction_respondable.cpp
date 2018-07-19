@@ -14,7 +14,7 @@ namespace Respondable
 *	Constructor
 **************************************************/
 Unconfirmed::Unconfirmed(
-		const ARK::Transaction* const newTx,
+		ARK::Transaction* const newTx,
 		int newCount
 )
 {
@@ -22,7 +22,7 @@ Unconfirmed::Unconfirmed(
 	assert((unsigned int)this->count_ <= transactions_.size());
 	for (int i = 0u; i < this->count_; ++i)
 	{
-		this->transactions_[i] = newTx[i];
+		this->transactions_[i] = std::move(newTx[i]);
 	}
 }
 /*************************************************/

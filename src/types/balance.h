@@ -5,6 +5,7 @@
 
 #include <cstring>
 #include <cctype>
+#include <cstdlib>
 
 /********************************************************************************
 * Currently very verbose, needs bigint implementation using pow(10,8)
@@ -83,6 +84,9 @@ class Balance
 
 		const char* ark() const { return ark_; }
 		const char* arktoshi() const { return arktoshi_; }
+		double getValue() const { return atof(ark_); }
+
+		operator bool() const noexcept { return arktoshi_[0] == '\0' && ark_[0] == '\0'; }
 
 		void setArktoshi(const char* const balanceStr) {
 				strncpy(arktoshi_, balanceStr, ARKTOSHI_SIZE);

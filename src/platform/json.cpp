@@ -4,6 +4,7 @@
 
 #ifndef USE_IOT
 
+#include "models/transaction.h"
 #include "utilities/json.h"
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
@@ -31,7 +32,7 @@ struct JSON :
 		**************************************************/
 		JSON(
 				std::string _jsonStr
-		) : _json(json::parse(_jsonStr)) {}
+		) : _json(!_jsonStr.empty() ? json::parse(_jsonStr) : json()) {}
 		/*************************************************/
 
 		/*************************************************/
@@ -96,6 +97,42 @@ struct JSON :
 		};
 		/*************************************************/
 		
+		std::string transactionToJson(const Transaction& transaction) override {
+			_json = {
+				// TODO: Asset??, VendorField??
+				{ "type", static_cast<TransactionTypeIntType>(transaction.type()) },		// Transaction type. 0 = Normal transaction.
+				{ "amount", std::strtoull(transaction.amount().arktoshi(), nullptr, 10) },	// The amount to send expressed as an integer value.
+				{ "fee", std::strtoull(transaction.fee().arktoshi(), nullptr, 10) },		// The transaction fee expressed as an integer value.
+				{ "id", transaction.id() },													// Transaction ID.
+				{ "recipientId", transaction.recipient_id().getValue() }, // Recipient ID.
+				{ "senderPublicKey", transaction.sender_publickey().getValue() }, // Sender's public key.
+				{ "signature", transaction.signature().getValue() }, // Transaction signature.
+				{ "timestamp", transaction.timestamp() } // Based on UTC time of genesis since epoch.
+			};
+			const auto& sign_signature = transaction.sign_signature();
+			if (sign_signature) {
+				_json["signSignature"] = sign_signature.getValue(); // Sender's second passphrase signature.
+			}
+			if (transaction.vendor_field()[0] != '\0') {
+				_json["vendorField"] = transaction.vendor_field();
+			}
+			return _json.dump();
+				/*
+				{
+				type: 0, // Transaction type. 0 = Normal transaction.
+				amount: 100000000000, // The amount to send expressed as an integer value.
+				asset: {}, // Transaction asset, dependent on tx type.
+				fee: 100000000, // 0.1 ARK expressed as an integer value.
+				id: "500224999259823996", // Transaction ID.
+				recipientId: "AGihocTkwDygiFvmg6aG8jThYTic47GzU9", // Recipient ID.
+				senderPublicKey: "56e106a1d4a53dbe22cac52fefd8fc4123cfb4ee482f8f25a4fc72eb459b38a5", // Sender's public key.
+				signSignature: "03fdd33bed30270b97e77ada44764cc8628f6ad3bbd84718571695262a5a18baa37bd76a62dd25bc21beacd61eaf2c63af0cf34edb0d191d225f4974cd3aa509", // Sender's second passphrase signature.
+				signature: "9419ca3cf11ed2e3fa4c63bc9a4dc18b5001648e74522bc0f22bda46a188e462da4785e5c71a43cfc0486af08d447b9340ba8b93258c4c7f50798060fff2d709", // Transaction signature.
+				timestamp: 27953413 // Based on UTC time of genesis since epoch.
+				}
+				*/
+		}
+
 	private:
 		/*************************************************/
 		std::string get_value(
@@ -119,7 +156,7 @@ struct JSON :
 
 /*************************************************/
 std::unique_ptr<JSONInterface> make_json_string(
-		std::string json_str
+		std::string json_str /* = std::string()*/
 )
 {
 	return std::unique_ptr<JSONInterface>(new JSON(json_str));

@@ -22,10 +22,10 @@ namespace Devnet
 	https://dexplorer.ark.io/
 	30
 */
+	const size_t NUM_SEEDS = 5;
 	extern const Hash nethash;
-
-	extern const char* const seeds[6];
-	extern const int port;
+	extern const char* const seeds[NUM_SEEDS];
+	extern const uint16_t port;
 	extern const ARK::NetworkType type;
 };
 
@@ -41,9 +41,10 @@ ARK
 https://explorer.ark.io/
 23
 */
+	const size_t NUM_SEEDS = 32;
 	extern const Hash nethash;
-	extern const char* const seeds[46];
-	extern const int port;
+	extern const char* const seeds[NUM_SEEDS];
+	extern const uint16_t port;
 	extern const ARK::NetworkType type;
 };
 

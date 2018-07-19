@@ -4,6 +4,8 @@
 #define HTTP_H
 
 #include "platform.h"
+#include "types/hash.h"
+
 #include <memory>
 
 namespace ARK
@@ -38,10 +40,18 @@ class HTTPInterface
     virtual ~HTTPInterface() { }
 
     virtual std::string get(
-				const char *const peer,
-				int port,
-				const char *const request
-		) = 0;
+		const char *const peer,
+		int port,
+		const char *const request
+	) = 0;
+
+	virtual bool post(
+		const Hash& nethash,
+		const char *const peer,
+		uint16_t port,
+		const char *const request_str,
+		const char* const data
+	) = 0;
 };
 /*************************************************/
 

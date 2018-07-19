@@ -1,7 +1,13 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
+#include <sstream>
+
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
+
+#include <cstdio>
+
+#include "arduino/stl/details/to_string.h"
 
 #define USE_IOT
 
@@ -39,6 +45,10 @@ inline float convert_to_float(const std::string& s)
 	return atof(s.c_str());
 }
 
+inline uint64_t convert_to_uint64(const std::string& s) {
+	return strtoull(s.c_str(), nullptr, 10);
+}
+
 /*************************************************
 * substringCount(const char *str, const char* substr)
 *
@@ -64,6 +74,9 @@ inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* stati
 #define PROGMEM
 #define PGM_P const char*
 
+#define pgm_read_ptr_far(p) (*p)
+#define strcpy_P strcpy
+
 #include <string>
 #include <random>
 #include <iostream>
@@ -77,6 +90,10 @@ inline int convert_to_int(const std::string& s) {
 
 inline float convert_to_float(const std::string& s) {
 	return std::stof(s);
+}
+
+inline uint64_t convert_to_uint64(const std::string& s) {
+	return std::stoull(s);
 }
 
 uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed = false);
@@ -214,5 +231,12 @@ public:
 };
 
 #endif
+
+template <typename T>
+std::string convert_to_string(T t) {
+	std::ostringstream ss;
+	ss << t;
+	return ss.str();
+}
 
 #endif

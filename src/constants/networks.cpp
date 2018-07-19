@@ -12,33 +12,53 @@ namespace Networks
 namespace Devnet
 {
 	const Hash nethash = "578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23";
-	const char* const seeds[6] = {
+	const char* const seeds[NUM_SEEDS] = {
 		"167.114.29.32", "167.114.29.33",
 		"167.114.29.34", "167.114.29.35",
 		"167.114.29.36"
 	};
-	const int port = 4002;
+	const uint16_t port = 4002;
 	const ARK::NetworkType type = NetworkType::DEV;
 };
 
 namespace Mainnet
 {
 	const Hash nethash = "6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988";
-	const char* const seeds[46] = {
-		"5.39.9.240", "5.39.9.241", "5.39.9.242", "5.39.9.243",
-		"5.39.9.244", "5.39.9.250", "5.39.9.251", "5.39.9.252",
-		"5.39.9.253", "5.39.9.254", "5.39.9.255", "5.39.53.48",
-		"5.39.53.49", "5.39.53.50", "5.39.53.51", "5.39.53.52",
-		"5.39.53.53", "5.39.53.54", "5.39.53.55",
-		"37.59.129.160", "37.59.129.161", "37.59.129.162", "37.59.129.163",
-		"37.59.129.164", "37.59.129.165", "37.59.129.166", "37.59.129.167",
-		"37.59.129.168", "37.59.129.169", "37.59.129.170", "37.59.129.171",
-		"37.59.129.172", "37.59.129.173", "37.59.129.174", "37.59.129.175",
-		"193.70.72.80", "193.70.72.81", "193.70.72.82", "193.70.72.83",
-		"193.70.72.84", "193.70.72.85", "193.70.72.86", "193.70.72.87",
-		"193.70.72.88", "193.70.72.89", "193.70.72.90"
+	const char* const seeds[NUM_SEEDS] = {
+		"5.39.9.240",
+		"5.39.9.241",
+		"5.39.9.242",
+		"5.39.9.243",
+		"5.39.9.244",
+		"5.39.9.245",
+		"5.39.9.246",
+		"5.39.9.247",
+		"5.39.9.248",
+		"5.39.9.249",
+		"5.39.9.250",
+		"5.39.9.251",
+		"5.39.9.252",
+		"5.39.9.253",
+		"5.39.9.254",
+		"5.39.9.255",
+		"54.38.48.160",
+		"54.38.48.161",
+		"54.38.48.162",
+		"54.38.48.163",
+		"54.38.48.164",
+		"54.38.48.165",
+		"54.38.48.166",
+		"54.38.48.167",
+		"54.38.48.168",
+		"54.38.48.169",
+		"54.38.48.170",
+		"54.38.48.171",
+		"54.38.48.172",
+		"54.38.48.173",
+		"54.38.48.174",
+		"54.38.48.175"
 	};
-	const int port = 4001;
+	const uint16_t port = 4001;
 	const ARK::NetworkType type = NetworkType::MAIN;
 };
 
@@ -46,19 +66,19 @@ namespace Mainnet
 const char *randomPeer(ARK::NetworkType netType)
 {
 	switch (netType) {
-		case DEV: return ARK::Constants::Networks::Devnet::seeds[generate_random_number(0, 5)];		break;
-		case MAIN: return ARK::Constants::Networks::Devnet::seeds[generate_random_number(0, 45)];	break;
-		case CUSTOM: return "Error: method yet not available for custom networks";break;
-		default: return "Error: Nethash Invalid";		break;
+		case DEV: return ARK::Constants::Networks::Devnet::seeds[generate_random_number(0, ARK::Constants::Networks::Devnet::NUM_SEEDS)];
+		case MAIN: return ARK::Constants::Networks::Mainnet::seeds[generate_random_number(0, ARK::Constants::Networks::Mainnet::NUM_SEEDS)];
+		case CUSTOM: return "Error: method yet not available for custom networks";
+		default: return "Error: Nethash Invalid";
 	}
 }
 
 int getPort(ARK::NetworkType netType)
 {
 	switch (netType) {
-		case DEV: return ARK::Constants::Networks::Devnet::port;		break;
-		case MAIN: return ARK::Constants::Networks::Devnet::port;		break;
-		default: return -1;			break;
+		case DEV: return ARK::Constants::Networks::Devnet::port;
+		case MAIN: return ARK::Constants::Networks::Mainnet::port;
+		default: return -1;
 	}
 }
 

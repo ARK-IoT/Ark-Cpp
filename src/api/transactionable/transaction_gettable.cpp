@@ -47,8 +47,8 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 		parser->valueIn("transaction", "id").c_str(),
 		parser->valueIn("transaction", "blockid").c_str(),
 		parser->valueIn("transaction", "height").c_str(),
-		convert_to_int(parser->valueIn("transaction", "type").c_str()),
-		parser->valueIn("transaction", "timestamp").c_str(),
+		static_cast<TransactionType>(convert_to_int(parser->valueIn("transaction", "type").c_str())),
+		static_cast<uint32_t>(convert_to_int(parser->valueIn("transaction", "timestamp").c_str())),
 		parser->valueIn("transaction", "amount").c_str(),
 		parser->valueIn("transaction", "fee").c_str(),
 		parser->valueIn("transaction", "vendorField").c_str(),
@@ -56,6 +56,7 @@ ARK::Transaction ARK::API::Transaction::Gettable::transaction(
 		parser->valueIn("transaction", "recipientId").c_str(),
 		parser->valueIn("transaction", "senderPublicKey").c_str(),
 		parser->valueIn("transaction", "signature").c_str(),
+		parser->valueIn("transaction", "signSignature").c_str(),
 		parser->valueIn("transaction", "confirmations").c_str()
 	};
 }
@@ -112,8 +113,8 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			parser->valueIn("transaction", "id").c_str(),
 			parser->valueIn("transaction", "blockid").c_str(),
 			parser->valueIn("transaction", "height").c_str(),
-			convert_to_int(parser->valueIn("transaction", "type").c_str()),
-			parser->valueIn("transaction", "timestamp").c_str(),
+			static_cast<TransactionType>(convert_to_int(parser->valueIn("transaction", "type").c_str())),
+			convert_to_int(parser->valueIn("transaction", "timestamp").c_str()),
 			parser->valueIn("transaction", "amount").c_str(),
 			parser->valueIn("transaction", "fee").c_str(),
 			parser->valueIn("transaction", "vendorField").c_str(),
@@ -121,6 +122,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			parser->valueIn("transaction", "recipientId").c_str(),
 			parser->valueIn("transaction", "senderPublicKey").c_str(),
 			parser->valueIn("transaction", "signature").c_str(),
+			parser->valueIn("transaction", "signSignature").c_str(),
 			parser->valueIn("transaction", "confirmations").c_str()
 		);
 	};
@@ -155,8 +157,8 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			parser->valueIn("transaction", "id").c_str(),
 			parser->valueIn("transaction", "blockid").c_str(),
 			parser->valueIn("transaction", "height").c_str(),
-			convert_to_int(parser->valueIn("transaction", "type").c_str()),
-			parser->valueIn("transaction", "timestamp").c_str(),
+			static_cast<TransactionType>(convert_to_int(parser->valueIn("transaction", "type").c_str())),
+			convert_to_int(parser->valueIn("transaction", "timestamp").c_str()),
 			parser->valueIn("transaction", "amount").c_str(),
 			parser->valueIn("transaction", "fee").c_str(),
 			parser->valueIn("transaction", "vendorField").c_str(),
@@ -164,6 +166,7 @@ ARK::API::Transaction::Respondable::Unconfirmed ARK::API::Transaction::Gettable:
 			parser->valueIn("transaction", "recipientId").c_str(),
 			parser->valueIn("transaction", "senderPublicKey").c_str(),
 			parser->valueIn("transaction", "signature").c_str(),
+			parser->valueIn("transaction", "signSignature").c_str(),
 			parser->valueIn("transaction", "confirmations").c_str()
 		);
 	};

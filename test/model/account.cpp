@@ -6,7 +6,7 @@ TEST(model, construct_account)
 {
 	// Hash msigArray[] = { Hash("") };
 	// Hash u_msigArray[] = { Hash("") };
-	ARK::Account account(
+	const ARK::Account account(
 		"DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA",
 		"100000000",//Balance("100000000"),
 		"100000000", //Balance("100000000"),
@@ -32,7 +32,7 @@ TEST(model, construct_account)
 TEST(model, make_account) {
 	const auto passphrase = "bullet parade snow bacon mutual deposit brass floor staff list concert ask";
 
-	auto account = ARK::make_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, passphrase);
+	const auto account = ARK::make_account(ARK::Constants::Networks::Network_ADV::devnet.pubKeyHash, passphrase);
 
 	ASSERT_STREQ("DStZXkgpEjxbG355nQ26vnkp95p24U9tsV", account.address().getValue());
 	ASSERT_STREQ("029fdf41a7d69d8efc7b236c21b9509a23d862ea4ed8b13a56e31eee58dbfd97b4", account.public_key().getValue());

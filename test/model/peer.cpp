@@ -4,7 +4,7 @@
 
 TEST(model, construct_peer)
 {
-	ARK::Peer peer(
+	const ARK::Peer peer(
 		"167.114.29.55",
 		4002,
 		"1.1.1",

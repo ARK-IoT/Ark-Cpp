@@ -9,6 +9,9 @@
 
 namespace ARK
 {
+
+class Transaction;
+
 namespace Utilities
 {
 /**************************************************
@@ -69,6 +72,8 @@ class JSONInterface
 				const char *const subkey
 		) = 0;
 		/*************************************************/
+
+		virtual std::string transactionToJson(const ARK::Transaction& transaction) = 0;
 };
 /*************************************************/
 
@@ -77,7 +82,7 @@ class JSONInterface
 /**************************************************
 *	JSON object factory
 **************************************************/
-std::unique_ptr<JSONInterface> make_json_string(std::string str);
+std::unique_ptr<JSONInterface> make_json_string(std::string str = std::string());
 /*************************************************/
 
 };

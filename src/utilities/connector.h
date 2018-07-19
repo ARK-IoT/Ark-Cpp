@@ -34,7 +34,7 @@ class Connector :
 		ARK::NetworkType netType;
 
 		char networkPeer[16];
-		int networkPort;
+		uint16_t networkPort;
 
 	public:
 		Connector();
@@ -47,11 +47,12 @@ class Connector :
 		Connector& operator=(Connector&& other);
 
 		void connect(const ARK::Network& network);
-		void connectCustom(const ARK::Network& network, const char* peer, int port);
+		void connectCustom(const ARK::Network& network, const char* peer, uint16_t port);
 
 		bool disconnect();
 
 		std::string callback(const char* const request);
+		bool post(const char* const request, const char* const data);
 
 	private:  
 		const char* randomPeer() const;

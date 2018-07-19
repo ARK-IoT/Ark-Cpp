@@ -125,7 +125,10 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 		strcat(uri, arkAddress.getValue());
 	auto callback = netManager.callback(uri);
 	auto parser = ARK::Utilities::make_json_string(callback);
-	return {
+	if (parser->valueFor("delegates") == "[]") {
+		return ARK::Delegate();
+	}
+	return ARK::Delegate(
 		parser->subarrayValueIn("delegates", 0, "username").c_str(),
 		parser->subarrayValueIn("delegates", 0, "address").c_str(),
 		parser->subarrayValueIn("delegates", 0, "publicKey").c_str(),
@@ -135,7 +138,7 @@ ARK::Delegate ARK::API::Account::Gettable::delegates(
 		convert_to_int(parser->subarrayValueIn("delegates", 0, "rate").c_str()),
 		convert_to_float(parser->subarrayValueIn("delegates", 0, "approval").c_str()),
 		convert_to_float(parser->subarrayValueIn("delegates", 0, "productivity").c_str())
-	};
+	);
 };
 /*************************************************/
 

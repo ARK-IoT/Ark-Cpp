@@ -2,14 +2,10 @@
 
 #include "api/api.h"
 
-namespace
-{
-	const Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
-}
-
 TEST(api, test_account_balance)
 {
 	ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);	
+	const Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 	const auto account_balance = arkManager.accountBalance(darkAddress);
 	auto balanceCon = account_balance.confirmed().ark();
 	ASSERT_STRNE("0.0", balanceCon);
@@ -20,6 +16,7 @@ TEST(api, test_account_balance)
 
 TEST(api, test_account_public_key)
 {
+	const Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 	ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);
 	ASSERT_STREQ("0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456", arkManager.accountPublickey(darkAddress).getValue());
 }
@@ -27,6 +24,7 @@ TEST(api, test_account_public_key)
 TEST(api, test_account_delegates_fee)
 {
 	ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);
+	const Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 	const auto delegates_fee = arkManager.accountDelegatesFee(darkAddress);
 	ASSERT_STREQ("25.00000000", delegates_fee.ark());
 	ASSERT_STREQ("2500000000", delegates_fee.arktoshi());
@@ -35,6 +33,7 @@ TEST(api, test_account_delegates_fee)
 TEST(api, test_account_delegates)
 {
 	ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);
+	const Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 	const auto delegate = arkManager.accountDelegates(darkAddress);
 	ASSERT_STREQ("sleepdeficit", delegate.username());
 	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", delegate.address().getValue());
@@ -51,7 +50,8 @@ TEST(api, test_account_delegates)
 
 TEST(api, test_account)
 {
-	ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);	
+	ARK::API::Manager arkManager(ARK::Constants::Networks::Model::Devnet);
+	const Address darkAddress("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA");
 	const auto account = arkManager.account(darkAddress);
 	ASSERT_STREQ("DHQ4Fjsyiop3qBR4otAjAu6cBHkgRELqGA", account.address().getValue());
 	const auto& unconfirmed_balance = account.unconfirmed_balance();

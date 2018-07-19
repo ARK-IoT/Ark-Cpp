@@ -76,6 +76,7 @@ namespace Peer
 	const auto get_s = "/api/peers/get";
 	const auto peers_s = "/api/peers";
 	const auto version_s = "/api/peers/version";
+	const auto transactions_s = "/peer/transactions";
 };
 /*************************************************/
 /**************************************************************************************************/
