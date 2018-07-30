@@ -70,7 +70,7 @@ void toDER(const std::vector<uint8_t>& r, const std::vector<uint8_t>& s, std::ve
 	assert((r[0] & 0x80) == 0); // must not be negative
 	assert((s[0] & 0x80) == 0);
 	assert(lenR == 1 || r[0] != 0x00 || (r[1] & 0x80) != 0); //must have zero pad for negative number
-	assert(lenR == 1 || s[0] != 0x00 || (s[1] & 0x80) != 0);
+	assert(lenS == 1 || s[0] != 0x00 || (s[1] & 0x80) != 0);
 	
 	auto it = r.begin();
 	while (lenR > 1 && *it == 0 && *(it + 1) < 0x80) { --lenR; ++it; }
