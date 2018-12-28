@@ -2,6 +2,14 @@
   <img src="https://github.com/Ark-IoT/ark-cpp/blob/master/ark_cpp_logo.png"/>
 </p>
 
+
+## THIS LIBRARY IS DEPRECATED AND IS NO LONGER MAINTAINED
+**This Repo is archived for historical reference**
+
+**You can find the current Ark Cpp SDK's at the following links:**  
+https://github.com/ArkEcosystem/cpp-client  
+https://github.com/ArkEcosystem/cpp-crypto
+
 # Ark for Machines v0.8 
 
 ![language](https://img.shields.io/badge/language-Cpp/C++-blue.svg?style=flat) 
